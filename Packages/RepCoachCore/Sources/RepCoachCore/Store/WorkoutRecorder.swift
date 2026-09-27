@@ -1,0 +1,93 @@
+import Foundation
+import SwiftData
+
+/// Writes today's workout. Every change is saved straight away, so a crash or a flat battery loses nothing.
+public struct WorkoutRecorder {
+    public let context: ModelContext
+    public var calendar: Calendar
+
+    public init(context: ModelContext, calendar: Calendar = .current) {
+        self.context = context
+        self.calendar = calendar
+    }
+
+    /// The session for `dayKey` started on the same calendar day as `date`, if any.
+    public func session(for dayKey: String, on date: Date = .now) throws -> WorkoutSession? {
+        let start = calendar.startOfDay(for: date)
+        guard let end = calendar.date(byAdding: .day, value: 1, to: start) else { return nil }
+        let key = dayKey
+        var descriptor = FetchDescriptor<WorkoutSession>(
+            predicate: #Predicate { $0.dayKey == key && $0.date >= start && $0.date < end },
+            sortBy: [SortDescriptor(\.date)]
+        )
+        descriptor.fetchLimit = 1
+        return try context.fetch(descriptor).first
+    }
+
+    /// Today's session for `dayKey`, started now if there isn't one yet.
+    public func startSession(for dayKey: String, on date: Date = .now, isDeload: Bool) throws -> WorkoutSession {
+        if let existing = try session(for: dayKey, on: date) { return existing }
+        let session = WorkoutSession(date: date, dayKey: dayKey, isDeload: isDeload)
+        context.insert(session)
+        try context.save()
+        return session
+    }
+
+    /// The log for `exerciseId` in `session`, created on first use.
+    public func log(for exerciseId: String, in session: WorkoutSession) throws -> ExerciseLog {
+        if let existing = session.log(for: exerciseId) { return existing }
+        let log = ExerciseLog(exerciseId: exerciseId, order: session.logs.count)
+        context.insert(log)
+        log.session = session
+        try context.save()
+        return log
+    }
+
+    @discardableResult
+    public func addSet(to log: ExerciseLog, weight: Double, reps: Int, seconds: Int? = nil,
+                       at date: Date = .now) throws -> SetLog {
+        let index = (log.sets.map(\.index).max() ?? 0) + 1
+        let set = SetLog(index: index, weight: weight, reps: reps, seconds: seconds, timestamp: date)
+        context.insert(set)
+        set.log = log
+        try context.save()
+        return set
+    }
+
+    /// Removes the most recent set and reopens the item. Returns the removed set, or nil if there was none.
+    @discardableResult
+    public func removeLastSet(from log: ExerciseLog) throws -> LoggedSet? {
+        guard let last = log.sets.max(by: { $0.index < $1.index }) else { return nil }
+        let removed = last.loggedSet
+        log.sets.removeAll { $0.persistentModelID == last.persistentModelID }
+        context.delete(last)
+        log.completedAt = nil
+        log.skipped = false
+        try context.save()
+        return removed
+    }
+
+    public func complete(_ log: ExerciseLog, at date: Date = .now) throws {
+        log.completedAt = date
+        log.skipped = false
+        try context.save()
+    }
+
+    public func skip(_ log: ExerciseLog, at date: Date = .now) throws {
+        log.completedAt = date
+        log.skipped = true
+        try context.save()
+    }
+
+    /// Puts a finished or skipped item back on the list. Logged sets are kept.
+    public func reopen(_ log: ExerciseLog) throws {
+        log.completedAt = nil
+        log.skipped = false
+        try context.save()
+    }
+
+    public func finish(_ session: WorkoutSession, at date: Date = .now) throws {
+        session.endedAt = date
+        try context.save()
+    }
+}
