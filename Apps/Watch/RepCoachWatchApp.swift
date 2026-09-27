@@ -1,31 +1,25 @@
 import SwiftUI
+import SwiftData
 import RepCoachCore
 
-// Placeholder so the project builds on day one. Milestone 2 in CLAUDE.md replaces this
-// with the real Today → Set → Rest flow described in docs/SPEC.md.
 @main
 struct RepCoachWatchApp: App {
+    @State private var app: AppModel
+    @State private var workout: WorkoutModel
+
+    init() {
+        let app = AppModel()
+        _app = State(initialValue: app)
+        _workout = State(initialValue: WorkoutModel(today: app.today))
+    }
+
     var body: some Scene {
         WindowGroup {
-            TodayPlaceholderView()
+            TodayView()
+                .environment(app.today)
+                .environment(app.settings)
+                .environment(workout)
         }
-    }
-}
-
-struct TodayPlaceholderView: View {
-    private let day: PlanDay? = try? Plan.bundled().day(for: .now)
-
-    var body: some View {
-        NavigationStack {
-            List(day?.items ?? []) { item in
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(item.name).font(.headline)
-                    if let display = item.display {
-                        Text(display).font(.footnote).foregroundStyle(.secondary)
-                    }
-                }
-            }
-            .navigationTitle(day?.title ?? "RepCoach")
-        }
+        .modelContainer(app.container)
     }
 }

@@ -1,34 +1,20 @@
 import SwiftUI
+import SwiftData
 import RepCoachCore
 
-// Placeholder so the project builds on day one. Milestone 3 in CLAUDE.md replaces this
-// with History, Plan and Settings as described in docs/SPEC.md.
 @main
 struct RepCoachApp: App {
+    @State private var app = AppModel()
+
     var body: some Scene {
         WindowGroup {
-            PlanPlaceholderView()
+            RootView()
+                .environment(app)
+                .environment(app.today)
+                .environment(app.settings)
+                .tint(Theme.volt)
+                .preferredColorScheme(.dark)
         }
-    }
-}
-
-struct PlanPlaceholderView: View {
-    private let plan: Plan? = try? Plan.bundled()
-
-    var body: some View {
-        NavigationStack {
-            List(plan?.days ?? []) { day in
-                Section(day.title) {
-                    ForEach(day.items) { item in
-                        HStack {
-                            Text(item.name)
-                            Spacer()
-                            Text(item.display ?? "").foregroundStyle(.secondary)
-                        }
-                    }
-                }
-            }
-            .navigationTitle("RepCoach")
-        }
+        .modelContainer(app.container)
     }
 }

@@ -24,18 +24,21 @@ targets:
   RepCoach:
     type: application
     platform: iOS
-    sources: [Apps/iOS]
+    sources: [Apps/iOS, Apps/Shared]
     dependencies:
       - package: RepCoachCore
       - target: RepCoachWatch
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach
+        TARGETED_DEVICE_FAMILY: "1"
     info:
       path: Apps/iOS/Info.plist
       properties:
         CFBundleDisplayName: RepCoach
         UILaunchScreen: {}
+        UIUserInterfaceStyle: Dark
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         NSHealthShareUsageDescription: RepCoach reads your heart rate from strength workouts.
         NSHealthUpdateUsageDescription: RepCoach saves your strength workouts to Health.
     entitlements:
@@ -46,7 +49,7 @@ targets:
   RepCoachWatch:
     type: application
     platform: watchOS
-    sources: [Apps/Watch]
+    sources: [Apps/Watch, Apps/Shared]
     dependencies:
       - package: RepCoachCore
     settings:
