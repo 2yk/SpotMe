@@ -98,6 +98,19 @@ final class ProgressionEngineTests: XCTestCase {
         XCTAssertEqual(ProgressionEngine.estimated1RM(weight: 20, reps: 10), 26.67, accuracy: 0.001)
     }
 
+    // MARK: reps and timed kinds
+
+    func testReachedTopOfRange() {
+        func top(_ reps: [Int], _ top: Int, _ planned: Int) -> Bool {
+            ProgressionEngine.reachedTopOfRange(reps.map { LoggedSet(weight: 0, reps: $0) }, top: top, plannedSets: planned)
+        }
+        XCTAssertTrue(top([12, 12, 12], 12, 3), "every set at the top")
+        XCTAssertFalse(top([12, 11, 12], 12, 3), "one set short")
+        XCTAssertFalse(top([12, 12], 12, 3), "too few sets")
+        XCTAssertTrue(top([46, 45, 50], 45, 3), "timed, past the max")
+        XCTAssertTrue(top([15, 15, 15, 9], 15, 3), "extra sets ignored")
+    }
+
     func testRounding() {
         XCTAssertEqual(ProgressionEngine.roundNearest(17, to: 2.5), 17.5)
         XCTAssertEqual(ProgressionEngine.roundNearest(85, to: 10), 90)

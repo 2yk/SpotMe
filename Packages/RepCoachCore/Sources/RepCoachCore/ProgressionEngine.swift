@@ -174,6 +174,15 @@ public enum ProgressionEngine {
         max(1, Int((Double(amrap) * percent).rounded()))
     }
 
+    // MARK: reps and timed kinds
+
+    /// Every planned set reached the top of the range (seconds for timed sets). These kinds get no automatic
+    /// weight change; the app says "Top of range. Add weight or make it harder next time."
+    public static func reachedTopOfRange(_ sets: [LoggedSet], top: Int, plannedSets: Int) -> Bool {
+        let done = sets.prefix(plannedSets)
+        return done.count >= plannedSets && done.allSatisfy { $0.reps >= top }
+    }
+
     // MARK: Charts
 
     /// Epley estimated one-rep max, for progress charts only.

@@ -65,6 +65,12 @@ def volume_reps(amrap, pct=0.6):
 def e1rm(w, r):
     return round(w * (1 + r / 30), 2)
 
+def reached_top(sets, top, planned):
+    """reps and timed kinds: every planned set reached the top of the range (seconds for timed).
+    No weight change follows; the app says "Top of range. Add weight or make it harder next time." """
+    done = sets[:planned]
+    return len(done) >= planned and all(s >= top for s in done)
+
 P = dict(sets=3, repMin=8, repMax=12, inc=2.5)
 PU = dict(sets=5, repMin=3, repMax=5, inc=2.5, need=2)
 LP = dict(sets=4, repMin=8, repMax=12, inc=10.0)
@@ -95,6 +101,11 @@ cases = [
  ("volume: amrap 13", volume_reps(13)),
  ("volume: amrap 1", volume_reps(1)),
  ("e1rm: 20kg x 10", e1rm(20, 10)),
+ ("top: every set at the top", reached_top([12, 12, 12], 12, 3)),
+ ("top: one set short", reached_top([12, 11, 12], 12, 3)),
+ ("top: too few sets", reached_top([12, 12], 12, 3)),
+ ("top: timed, past the max", reached_top([46, 45, 50], 45, 3)),
+ ("top: extra sets ignored", reached_top([15, 15, 15, 9], 15, 3)),
 ]
 for name, res in cases:
     print(f"{name:45s} -> {res}")
