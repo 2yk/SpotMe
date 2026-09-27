@@ -1,0 +1,67 @@
+# XcodeGen spec. Generate the Xcode project with:  xcodegen generate
+# Before building for a device, set DEVELOPMENT_TEAM to your Apple Developer Team ID.
+name: RepCoach
+options:
+  bundleIdPrefix: com.yeshu
+  deploymentTarget:
+    iOS: "18.0"
+    watchOS: "11.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+packages:
+  RepCoachCore:
+    path: Packages/RepCoachCore
+
+targets:
+  RepCoach:
+    type: application
+    platform: iOS
+    sources: [Apps/iOS]
+    dependencies:
+      - package: RepCoachCore
+      - target: RepCoachWatch
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach
+    info:
+      path: Apps/iOS/Info.plist
+      properties:
+        CFBundleDisplayName: RepCoach
+        UILaunchScreen: {}
+        NSHealthShareUsageDescription: RepCoach reads your heart rate from strength workouts.
+        NSHealthUpdateUsageDescription: RepCoach saves your strength workouts to Health.
+    entitlements:
+      path: Apps/iOS/RepCoach.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+
+  RepCoachWatch:
+    type: application
+    platform: watchOS
+    sources: [Apps/Watch]
+    dependencies:
+      - package: RepCoachCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach.watchkitapp
+    info:
+      path: Apps/Watch/Info.plist
+      properties:
+        CFBundleDisplayName: RepCoach
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.yeshu.RepCoach
+        WKBackgroundModes: [workout-processing]
+        NSHealthShareUsageDescription: RepCoach reads your heart rate during strength workouts.
+        NSHealthUpdateUsageDescription: RepCoach saves your strength workouts to Health.
+    entitlements:
+      path: Apps/Watch/RepCoachWatch.entitlements
+      properties:
+        com.apple.developer.healthkit: true
