@@ -35,6 +35,33 @@ final class PlanTests: XCTestCase {
         XCTAssertEqual(pullUps.restSec, 180)
     }
 
+    func testWithoutRunsDropsOnlyTheRuns() throws {
+        let plan = try Plan.bundled()
+        let runs = plan.days.flatMap(\.items).filter(\.isRun).map(\.exerciseId)
+        XCTAssertEqual(runs, ["recovery-run", "speed-intervals", "recovery-run", "tempo-run", "long-run"])
+
+        let gym = plan.withoutRuns()
+        XCTAssertEqual(gym.days.map(\.key), plan.days.map(\.key))
+        XCTAssertEqual(gym.days.flatMap(\.items).count, 77 - 5)
+        XCTAssertEqual(gym.day(forWeekday: 2)?.items.first?.exerciseId, "monday-warmup")
+        // "Legs · Muscle + Running Durability" is gym work, not a run.
+        XCTAssertEqual(gym.day(forWeekday: 3)?.items.filter { $0.group.contains("Running") }.count, 7)
+        XCTAssertFalse(try XCTUnwrap(gym.day(forWeekday: 1)).items.isEmpty)
+    }
+
+    func testWithoutRunsTakesTheRunOutOfFocusAndTime() throws {
+        let gym = try Plan.bundled().withoutRuns()
+        XCTAssertEqual(gym.days.map { "\($0.focus) | \($0.time)" }, [
+            "Pull A · Strength & Thickness | ~65 min gym",
+            "Legs · Run-Supportive | ~55 min gym",
+            "Push A · Chest & Shoulders + Core A | ~70 min",
+            "Pull B · Pull-up Endurance | ~65 min gym",
+            "Push B · Arms Focus + Core C | ~70 min gym",
+            "Full Rest | Nothing planned",
+            "Mobility + Core B | ~30 min",
+        ])
+    }
+
     func testDeloadEverySixthWeek() throws {
         let plan = try Plan.bundled()
         var cal = Calendar(identifier: .gregorian)

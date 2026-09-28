@@ -62,7 +62,7 @@ private struct DayCard: View {
                     Text(today.day.title).eyebrow(Theme.volt, size: 12)
                     if today.isDeload { Chip(text: "Deload week", tint: Theme.ember) }
                 }
-                Text(today.day.shortFocus)
+                Text(today.day.focus)
                     .font(.rounded(.title2, .bold))
                     .fixedSize(horizontal: false, vertical: true)
                 Label(today.day.time, systemImage: "clock")

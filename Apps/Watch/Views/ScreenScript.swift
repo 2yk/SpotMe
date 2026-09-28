@@ -6,14 +6,16 @@ import RepCoachCore
 @MainActor
 enum ScreenScript {
     static func run(today: TodayModel, workout: WorkoutModel, path: Binding<[TodayView.Route]>,
-                    choosingDay: Binding<Bool>) {
+                    choosingDay: Binding<Bool>, confirmingFinish: Binding<Bool>) {
         guard let screen = LaunchOptions.screen else { return }
-        if ["workout", "rest", "alldone"].contains(screen) {
+        if ["workout", "rest", "alldone", "finish-dialog"].contains(screen) {
             workout.health.pretendRunning(heartRate: 128, minutes: 24)
         }
         switch screen {
         case "alldone":
             completeEverything(today)
+        case "finish-dialog":
+            confirmingFinish.wrappedValue = true
         case "finish":
             // With `-sync YES`: finish the demo day so the watch sends it (and its history) to the phone.
             completeEverything(today)
@@ -27,10 +29,6 @@ enum ScreenScript {
                 workout.begin([item])
                 path.wrappedValue = [.exercise]
             }
-        case "start":
-            // A finished session and no workout running: the Start button shows (needs `-healthkit YES`).
-            if let session = today.session { try? today.recorder.finish(session) }
-            today.refresh()
         case "summary":
             workout.summary = WorkoutModel.Summary(savedToHealth: true, duration: 62 * 60 + 14,
                                                    averageHeartRate: 124, energy: 342, sets: 27)
@@ -97,9 +95,9 @@ enum ScreenScript {
         today.refresh()
     }
 
-    /// `-screen bottom` and `-screen start`: scroll Today to its end.
+    /// `-screen bottom`: scroll Today to its end.
     static func scroll(_ proxy: ScrollViewProxy, today: TodayModel) async {
-        guard ["bottom", "start"].contains(LaunchOptions.screen) else { return }
+        guard LaunchOptions.screen == "bottom" else { return }
         try? await Task.sleep(for: .seconds(0.5))
         proxy.scrollTo(TodayView.endOfList, anchor: .bottom)
     }

@@ -12,7 +12,8 @@ final class AppModel {
 
     init() {
         do {
-            plan = try Plan.bundled()
+            // Runs are logged in Nike Run Club, so they never show here.
+            plan = try Plan.bundled().withoutRuns()
         } catch {
             fatalError("plan.json is missing from the app bundle: \(error)")
         }

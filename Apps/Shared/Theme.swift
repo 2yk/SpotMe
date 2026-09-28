@@ -145,7 +145,6 @@ extension PlanItem {
         case .percentOfMax: return "repeat"
         case .checklist:
             let group = group.lowercased()
-            if group.contains("run") { return "figure.run" }
             if group.contains("warmup") { return "flame" }
             if group.contains("cooldown") { return "figure.cooldown" }
             if group.contains("mobility") { return "figure.flexibility" }
@@ -157,13 +156,4 @@ extension PlanItem {
 
     /// Weight is entered for weighted items and optional for loadable ones.
     var takesWeight: Bool { kind == .weighted || loadable == true }
-}
-
-extension PlanDay {
-    /// The gym part of the focus: "Pull A · Strength & Thickness" from
-    /// "Recovery Run + Pull A · Strength & Thickness". Runs belong to Nike Run Club.
-    var shortFocus: String {
-        guard let plus = focus.range(of: " + "), focus[..<plus.lowerBound].hasSuffix("Run") else { return focus }
-        return String(focus[plus.upperBound...])
-    }
 }

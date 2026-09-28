@@ -8,7 +8,7 @@ Not an App Store product. No accounts, no analytics, no third-party dependencies
 
 - Trains early morning in a commercial gym in India. Phone stays in the bag; **the watch is the only screen during a session.**
 - Apple Watch + iPhone, paid Apple Developer account.
-- Runs are handled by Nike Run Club. In this app, runs are just checklist items.
+- Runs are handled by Nike Run Club and don't appear in this app. `plan.json` still lists them (as checklist items in "Run · NRC …" groups); the apps leave them out.
 - Units: kg only.
 - Back injury history: the plan is spine-safe. Never suggest exercises that are not in the plan.
 
@@ -20,7 +20,7 @@ Not an App Store product. No accounts, no analytics, no third-party dependencies
 
 | Kind | Logged as | Example |
 |---|---|---|
-| `checklist` | Tap done. Show `steps` or `note` | Recovery Run, Warmup, Cooldown, Neck |
+| `checklist` | Tap done. Show `steps` or `note` | Warmup, Cooldown, Neck, Mobility |
 | `weighted` | Weight + reps per set | Incline DB Press 4 × 6–10 |
 | `reps` | Reps per set; weight optional if `loadable` | Hanging Leg Raise 3 × 8–12 |
 | `timed` | Seconds per set (built-in timer); weight optional if `loadable` | Weighted Plank 3 × 30–45s |
@@ -55,7 +55,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 **Today**
 - Opens on today's weekday. Crown scrolls. A small toggle reaches other days.
-- Top: "Up next" card with the item name, the prescription and today's target weight (e.g. "4 × 6–10 · 22.5 kg · +reps").
+- Top: **Start workout** (until a Health workout is running; then its heart rate and time), then the "Up next" card with the item name, the prescription and today's target weight (e.g. "4 × 6–10 · 22.5 kg · +reps").
 - Below: remaining items in order. Finished items move to the bottom, dimmed with a checkmark (same behaviour as his web tracker).
 - Tapping any remaining item makes it "up next" (for when a machine is busy). Swipe action: Skip.
 - Progress: "7 / 15" in the navigation bar.
@@ -79,9 +79,9 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 **Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Same weight next time · aim for more reps"), then back to Today.
 
 **Workout session (HealthKit)**
-- Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) when the first set of the day is logged, or from a Start button.
+- Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) only from **Start workout** at the top of Today. Sets logged without it stay in the app and never reach Health (for a session logged after the fact).
 - Keeps the app frontmost during the session, collects heart rate and energy, and saves the workout to Health when ended.
-- End from Today ("Finish workout") or automatically offered when every item is done.
+- End from Today ("Finish workout") or automatically offered when every item is done. Finishing asks whether to save the workout to Health or discard it; the sets are kept either way.
 - Must survive the wrist dropping and the screen sleeping (Always On shows the rest timer).
 
 ## iPhone app

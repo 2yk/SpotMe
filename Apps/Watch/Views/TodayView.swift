@@ -14,7 +14,7 @@ struct TodayView: View {
         case checklist(PlanItem)
     }
 
-    /// Scroll target for the Start / Finish workout button.
+    /// Scroll target for the Finish workout button.
     static let endOfList = "end-of-list"
 
     var body: some View {
@@ -48,14 +48,24 @@ struct TodayView: View {
                 WorkoutSummaryView(summary: summary)
             }
             .confirmationDialog("Finish workout?", isPresented: $confirmingFinish) {
-                Button("Finish") { Task { await workout.finishWorkout() } }
+                if workout.health.isRunning {
+                    Button("Save to Health") { Task { await workout.finishWorkout() } }
+                    Button("Don't save to Health", role: .destructive) {
+                        Task { await workout.finishWorkout(saveToHealth: false) }
+                    }
+                } else {
+                    Button("Finish") { Task { await workout.finishWorkout() } }
+                }
                 Button("Keep going", role: .cancel) {}
             } message: {
-                Text(workout.health.isRunning ? "It will be saved to Health." : "Marks today's session done.")
+                Text(workout.health.isRunning ? "Your sets stay in SpotMe either way." : "Marks today's session done.")
             }
         }
         #if DEBUG
-        .task { ScreenScript.run(today: today, workout: workout, path: $path, choosingDay: $choosingDay) }
+        .task {
+            ScreenScript.run(today: today, workout: workout, path: $path, choosingDay: $choosingDay,
+                             confirmingFinish: $confirmingFinish)
+        }
         #endif
     }
 
@@ -69,6 +79,14 @@ struct TodayView: View {
                 WorkoutBar()
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
+            } else if workout.canStart, !today.queue.isComplete {
+                // On top so a gym session starts with one tap. Without it, sets stay out of Health.
+                Button { workout.startWorkout() } label: {
+                    Label("Start workout", systemImage: "play.fill")
+                }
+                .buttonStyle(SecondaryButtonStyle(tint: Theme.volt))
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
             }
 
             if today.queue.isComplete {
@@ -125,14 +143,6 @@ struct TodayView: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
                     .id(Self.endOfList)
-            } else if workout.canStart, !workout.canFinish {
-                Button { workout.startWorkout() } label: {
-                    Label("Start workout", systemImage: "play.fill")
-                }
-                .buttonStyle(SecondaryButtonStyle(tint: Theme.volt))
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
-                .id(Self.endOfList)
             }
         }
     }
@@ -152,7 +162,7 @@ struct TodayView: View {
         }
     }
 
-    /// Checklist items only: never starts the Health workout.
+    /// Checklist items: one tap to done.
     private func tickOff(_ item: PlanItem) {
         withAnimation(.snappy) { today.complete(item) }
         Haptics.play(.logged)
@@ -178,7 +188,7 @@ private struct DayHeader: View {
                                 .background(Capsule().fill(Theme.ember))
                         }
                     }
-                    Text(day.shortFocus)
+                    Text(day.focus)
                         .font(.rounded(.footnote, .medium))
                         .foregroundStyle(Theme.secondary)
                         .lineLimit(2)

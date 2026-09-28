@@ -49,7 +49,7 @@ final class ExerciseFlow {
         var coaching: [Coach.Line?]
     }
 
-    /// - Parameter onSetLogged: called after each set is saved; the first one starts the Health workout.
+    /// - Parameter onSetLogged: called after each set is saved.
     init(items: [PlanItem], today: TodayModel, onSetLogged: @escaping () -> Void = {}) {
         self.items = items
         self.today = today

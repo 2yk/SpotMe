@@ -19,8 +19,6 @@ final class WorkoutModel {
     private(set) var flow: ExerciseFlow?
     /// Shown once after Finish workout.
     var summary: Summary?
-    /// Set after a failed automatic start (e.g. Health access denied) so every set doesn't retry.
-    @ObservationIgnored private var autoStartFailed = false
     /// Called with the session after Finish workout, to send it to the phone.
     @ObservationIgnored var onSessionFinished: ((WorkoutSession) -> Void)?
 
@@ -48,23 +46,32 @@ final class WorkoutModel {
         health.isRunning || today.session.map { $0.endedAt == nil && $0.logs.contains { !$0.sets.isEmpty } } == true
     }
 
-    /// The Start button: whether the day has anything with sets to log.
+    /// The Start button: no Health workout yet, the day has sets to log, and today's session isn't finished.
+    /// It's the only way a Health workout starts, so a session logged after the fact stays out of Health.
     var canStart: Bool {
         LaunchOptions.healthKit && health.isAvailable && health.state == .idle
             && today.day.items.contains { $0.kind != .checklist }
+            && today.session?.endedAt == nil
     }
 
     func startWorkout() {
         Task { await health.start() }
     }
 
-    /// Ends the Health workout, if one is running, and marks today's session finished.
-    func finishWorkout() async {
+    /// Ends the Health workout, if one is running, saving it to Health or discarding it,
+    /// and marks today's session finished.
+    func finishWorkout(saveToHealth: Bool = true) async {
         flow?.stop()
         let started = health.startedAt ?? today.session?.date
         let average = health.averageHeartRate
         let energy = health.energy
-        let workoutId = await health.finish()
+        let workoutId: UUID?
+        if saveToHealth {
+            workoutId = await health.finish()
+        } else {
+            health.discard()
+            workoutId = nil
+        }
         if let session = today.session {
             if let workoutId { session.healthKitWorkoutId = workoutId }
             try? today.recorder.finish(session)
@@ -76,18 +83,10 @@ final class WorkoutModel {
         today.refresh()
     }
 
-    /// Called after every logged set. The first set of the day starts the Health workout; ticking checklist
-    /// items (runs included) never does. Logging after Finish reopens the session.
+    /// Called after every logged set. Logging after Finish reopens the session.
     private func setLogged() {
-        guard let session = today.session else { return }
-        if session.endedAt != nil {
-            session.endedAt = nil
-            try? today.context.save()
-        }
-        guard LaunchOptions.healthKit, !autoStartFailed, health.state == .idle,
-              session.healthKitWorkoutId == nil else { return }
-        Task {
-            if await !health.start() { autoStartFailed = true }
-        }
+        guard let session = today.session, session.endedAt != nil else { return }
+        session.endedAt = nil
+        try? today.context.save()
     }
 }

@@ -19,7 +19,7 @@ struct DayPickerView: View {
                             Text(day.title)
                                 .font(.rounded(.body, .semibold))
                                 .foregroundStyle(day.key == today.dayKey ? Theme.volt : .white)
-                            Text(day.shortFocus)
+                            Text(day.focus)
                                 .font(.rounded(.footnote))
                                 .foregroundStyle(Theme.secondary)
                                 .lineLimit(2)

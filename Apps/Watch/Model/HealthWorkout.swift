@@ -4,7 +4,7 @@ import OSLog
 
 /// The HealthKit side of a gym session: a traditional strength training workout that keeps the app running
 /// with the wrist down, collects heart rate and energy, and is saved to Health at the end.
-/// Strength only. Runs are Nike Run Club's and never start one.
+/// Only the Start workout button starts one.
 @MainActor @Observable
 final class HealthWorkout: NSObject {
     /// One per app: the system hands a crashed workout back through the app delegate.
@@ -74,6 +74,14 @@ final class HealthWorkout: NSObject {
             reset()
             return nil
         }
+    }
+
+    /// Ends the workout without saving anything to Health.
+    func discard() {
+        guard let session, let builder, state == .running else { return }
+        session.end()
+        builder.discardWorkout()
+        reset()
     }
 
     /// Picks the workout back up after the system relaunched the app mid-session.
