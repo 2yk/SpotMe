@@ -9,6 +9,8 @@ import RepCoachCore
 /// The phone confirms what it stored; anything unconfirmed is sent again when the app next comes forward.
 /// The phone's settings and plan edits arrive as the application context and are applied only between
 /// sessions, so targets never move mid-workout. The Health switch moves no targets and applies at once.
+/// The watch's own application context tells the phone which sessions it has and which it discarded: the
+/// phone sends back any the watch lost (a reinstalled app) and deletes the discarded ones.
 @MainActor @Observable
 final class WatchSync: NSObject {
     @ObservationIgnored private let today: TodayModel
@@ -24,6 +26,7 @@ final class WatchSync: NSObject {
     private static let pendingKey = "pendingSyncContext"
     private static let appliedKey = "appliedSyncContextSentAt"
     private static let historySentKey = "sentHistoryToPhone"
+    private static let discardedKey = "discardedSessionIds"
 
     init(today: TodayModel, settings: SettingsStore, defaults: UserDefaults = .standard) {
         self.today = today
@@ -62,14 +65,26 @@ final class WatchSync: NSObject {
         sendStatus()
     }
 
-    /// Tells the phone the watch's Health access, for its Settings screen. Latest wins.
+    /// Tells the phone the watch's Health access and which sessions it has and discarded. Latest wins.
     func sendStatus() {
-        guard LaunchOptions.sync, canSend, let access = healthAccess() else { return }
+        guard LaunchOptions.sync, canSend else { return }
+        let status = WatchStatus(healthAccess: healthAccess(),
+                                 sessions: (try? today.recorder.sessionIds()) ?? [],
+                                 deleted: discardedIds.compactMap(UUID.init(uuidString:)))
         do {
-            try WCSession.default.updateApplicationContext(WatchStatus(healthAccess: access).applicationContext)
+            try WCSession.default.updateApplicationContext(status.applicationContext)
         } catch {
             Logger.sync.error("Couldn't send the watch status: \(error.localizedDescription)")
         }
+    }
+
+    /// A workout was discarded: stop offering it, and have the phone delete its copy and never send it back.
+    func sessionDiscarded(_ id: UUID) {
+        let key = id.uuidString
+        unsent.remove(key)
+        awaiting.remove(key)
+        discardedIds = Array((discardedIds.filter { $0 != key } + [key]).suffix(200))
+        sendStatus()
     }
 
     /// Applies the phone's latest settings and overrides, unless a session is under way.
@@ -100,6 +115,12 @@ final class WatchSync: NSObject {
     private var awaiting: Set<String> {
         get { Set(defaults.stringArray(forKey: Self.awaitingKey) ?? []) }
         set { defaults.set(Array(newValue), forKey: Self.awaitingKey) }
+    }
+
+    /// Sessions discarded here, most recent last, so neither side brings them back.
+    private var discardedIds: [String] {
+        get { defaults.stringArray(forKey: Self.discardedKey) ?? [] }
+        set { defaults.set(newValue, forKey: Self.discardedKey) }
     }
 
     /// Connected and the phone app is there; until then sessions just wait in their lists.
@@ -171,6 +192,20 @@ final class WatchSync: NSObject {
     fileprivate func receivedContext(_ context: SyncContext) {
         received(context)
     }
+
+    /// A session the phone sent back because this watch didn't have it. What's already here always wins.
+    fileprivate func restored(_ payload: SessionPayload) {
+        guard !discardedIds.contains(payload.id.uuidString) else { return }
+        do {
+            guard try payload.insertIfMissing(into: today.context) else { return }
+        } catch {
+            Logger.sync.error("Couldn't restore a session from the phone: \(error.localizedDescription)")
+            return
+        }
+        Logger.sync.notice("Restored session \(payload.id.uuidString, privacy: .public) from the phone")
+        today.refresh()
+        sendStatus()
+    }
 }
 
 extension WatchSync: WCSessionDelegate {
@@ -184,6 +219,12 @@ extension WatchSync: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
         guard let context = SyncContext(applicationContext: applicationContext) else { return }
         Task { @MainActor in self.receivedContext(context) }
+    }
+
+    /// Sessions the phone sends back after the watch lost them.
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        guard let payload = SessionPayload(userInfo: userInfo) else { return }
+        Task { @MainActor in self.restored(payload) }
     }
 
     nonisolated func sessionCompanionAppInstalledDidChange(_ session: WCSession) {

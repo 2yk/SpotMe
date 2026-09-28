@@ -94,6 +94,57 @@ final class SyncTests: StoreTestCase {
         XCTAssertNil(WatchStatus(applicationContext: context))
     }
 
+    func testStatusesFromBeforeSessionListsStillRead() throws {
+        let old = ["watchStatus": Data(#"{"healthAccess":"denied"}"#.utf8)]
+        XCTAssertEqual(WatchStatus(applicationContext: old), WatchStatus(healthAccess: .denied))
+    }
+
+    /// A reinstalled watch app starts empty: the phone sends back what the watch lost, and nothing else.
+    func testRestoreSendsTheWatchOnlyWhatItLost() throws {
+        let mondayId = try loggedMonday().id
+        try logSession("hip-thrust", on: sept(22), dayKey: "tuesday", [(60, 12)])
+        for session in try context.fetch(FetchDescriptor<WorkoutSession>()) {
+            try SessionPayload(session).upsert(into: phone)
+        }
+        XCTAssertEqual(try recorder.deleteSessions([mondayId]), 1)
+
+        let status = WatchStatus(healthAccess: .allowed, sessions: try recorder.sessionIds())
+        let phoneSessions = try phone.fetch(FetchDescriptor<WorkoutSession>())
+        XCTAssertEqual(status.missing(fromPhone: phoneSessions.map(\.id)), [mondayId])
+
+        let lost = try XCTUnwrap(phoneSessions.first { $0.id == mondayId })
+        XCTAssertTrue(try SessionPayload(lost).insertIfMissing(into: context))
+        XCTAssertEqual(try history.history(for: "weighted-pull-ups"), [sets([(15, 5), (15, 5), (15, 4)])])
+        XCTAssertEqual(Set(try recorder.sessionIds()), Set(phoneSessions.map(\.id)))
+    }
+
+    /// The watch keeps logging after the phone's copy was made; the phone's older copy never replaces it.
+    func testARestoredCopyNeverOverwritesTheWatch() throws {
+        let tuesday = try logSession("hip-thrust", on: sept(22), dayKey: "tuesday", [(60, 12)])
+        try SessionPayload(tuesday).upsert(into: phone)
+        try recorder.addSet(to: try recorder.log(for: "hip-thrust", in: tuesday), weight: 60, reps: 11,
+                            at: sept(22, hour: 7))
+
+        let phoneCopy = try XCTUnwrap(try phone.fetch(FetchDescriptor<WorkoutSession>()).first)
+        XCTAssertFalse(try SessionPayload(phoneCopy).insertIfMissing(into: context))
+        XCTAssertEqual(try history.history(for: "hip-thrust"), [sets([(60, 12), (60, 11)])])
+    }
+
+    /// Discarding on the watch deletes the phone's copy, and the phone never sends it back.
+    func testDiscardedSessionsLeaveThePhoneForGood() throws {
+        let tuesday = try logSession("hip-thrust", on: sept(22), dayKey: "tuesday", [(60, 12), (60, 11)])
+        let id = tuesday.id
+        try SessionPayload(tuesday).upsert(into: phone)
+        try recorder.delete(tuesday)
+
+        let status = WatchStatus(healthAccess: nil, sessions: try recorder.sessionIds(), deleted: [id])
+        let phoneRecorder = WorkoutRecorder(context: phone)
+        XCTAssertEqual(status.missing(fromPhone: try phoneRecorder.sessionIds()), [])
+        XCTAssertEqual(try phoneRecorder.deleteSessions(status.deleted), 1)
+        XCTAssertEqual(try phone.fetchCount(FetchDescriptor<SetLog>()), 0)
+        XCTAssertEqual(try context.fetchCount(FetchDescriptor<SetLog>()), 0)
+    }
+
     // MARK: Phone → watch
 
     func testContextReplacesTheWatchOverrides() throws {

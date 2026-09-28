@@ -9,13 +9,35 @@ public enum HealthAccess: String, Codable, Sendable {
     case denied
 }
 
-/// What the watch tells the phone about itself (WatchConnectivity application context, latest wins),
-/// for the phone's Settings screen.
+/// What the watch tells the phone about itself (WatchConnectivity application context, latest wins): its Health
+/// access for the phone's Settings, and which sessions it has and has discarded, so the phone can send back
+/// sessions the watch lost (a reinstalled watch app) and delete the ones it discarded.
 public struct WatchStatus: Codable, Equatable, Sendable {
-    public var healthAccess: HealthAccess
+    /// nil when the watch can't use Health at all.
+    public var healthAccess: HealthAccess?
+    /// Every session stored on the watch.
+    public var sessions: [UUID]
+    /// Sessions discarded on the watch, most recent last.
+    public var deleted: [UUID]
 
-    public init(healthAccess: HealthAccess) {
+    public init(healthAccess: HealthAccess?, sessions: [UUID] = [], deleted: [UUID] = []) {
         self.healthAccess = healthAccess
+        self.sessions = sessions
+        self.deleted = deleted
+    }
+
+    /// Statuses sent before the session lists existed read as empty lists.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        healthAccess = try container.decodeIfPresent(HealthAccess.self, forKey: .healthAccess)
+        sessions = try container.decodeIfPresent([UUID].self, forKey: .sessions) ?? []
+        deleted = try container.decodeIfPresent([UUID].self, forKey: .deleted) ?? []
+    }
+
+    /// Of the phone's sessions, the ones to send the watch: missing there and not discarded there.
+    public func missing(fromPhone phone: some Sequence<UUID>) -> [UUID] {
+        let known = Set(sessions).union(deleted)
+        return phone.filter { !known.contains($0) }
     }
 
     // MARK: WatchConnectivity

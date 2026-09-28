@@ -104,13 +104,14 @@ struct StartInline: View {
     }
 }
 
-/// The Cradle mark in volt, or in the watch face's tint where the face asks for one.
+/// The Cradle mark, drawn: complications drop images that are too large, shapes always render.
+/// The dot takes the watch face's accent colour where the face tints complications.
 struct MarkImage: View {
     var body: some View {
-        Image("Mark")
-            .resizable()
-            .scaledToFit()
-            .foregroundStyle(Theme.volt)
-            .widgetAccentable()
+        ZStack {
+            CradleShape(part: .cradle).fill(.white)
+            CradleShape(part: .dot).fill(Theme.volt).widgetAccentable()
+        }
+        .aspectRatio(CradleShape.aspectRatio, contentMode: .fit)
     }
 }

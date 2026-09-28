@@ -5,7 +5,8 @@ import WatchConnectivity
 import RepCoachCore
 
 /// Phone side of WatchConnectivity. Stores every session the watch sends, one copy per session UUID, and sends
-/// the watch the current settings and plan overrides whenever they change.
+/// the watch the current settings and plan overrides whenever they change. From the watch's status it deletes
+/// the sessions discarded there and sends back any the watch lost, so a reinstalled watch app gets its history.
 @MainActor @Observable
 final class PhoneSync: NSObject {
     enum WatchState: Equatable {
@@ -19,6 +20,8 @@ final class PhoneSync: NSObject {
     private(set) var lastSent: Date?
     /// Whether the watch may save workouts to Health, as it last reported; nil until it has.
     private(set) var watchHealthAccess: HealthAccess?
+    /// Bumped whenever stored sessions change, for screens that list them.
+    private(set) var sessionsChanged = 0
 
     @ObservationIgnored private let context: ModelContext
     @ObservationIgnored private let settings: SettingsStore
@@ -27,6 +30,13 @@ final class PhoneSync: NSObject {
     private static let receivedKey = "lastSessionReceivedAt"
     private static let receivedIdsKey = "receivedSessionIds"
     private static let healthAccessKey = "watchHealthAccess"
+    private static let discardedKey = "discardedSessionIds"
+
+    /// Sessions discarded on the watch, most recent last: deleted here and never stored or sent back again.
+    private var discardedIds: [String] {
+        get { defaults.stringArray(forKey: Self.discardedKey) ?? [] }
+        set { defaults.set(Array(newValue.suffix(500)), forKey: Self.discardedKey) }
+    }
 
     /// The sessions stored most recently, sent back so the watch stops re-sending them.
     private var receivedIds: [String] {
@@ -65,6 +75,9 @@ final class PhoneSync: NSObject {
     }
 
     fileprivate func received(_ payload: SessionPayload) {
+        let id = payload.id.uuidString
+        // A transfer can land after the watch discarded its session; keep it deleted.
+        guard !discardedIds.contains(id) else { return }
         do {
             try payload.upsert(into: context)
         } catch {
@@ -73,16 +86,59 @@ final class PhoneSync: NSObject {
         }
         lastReceived = .now
         defaults.set(lastReceived, forKey: Self.receivedKey)
-        let id = payload.id.uuidString
         receivedIds = receivedIds.filter { $0 != id } + [id]
+        sessionsChanged += 1
         Logger.sync.notice("Stored session \(id, privacy: .public)")
         today.refresh()
         sendContext()
     }
 
     fileprivate func receivedStatus(_ status: WatchStatus) {
-        watchHealthAccess = status.healthAccess
-        defaults.set(status.healthAccess.rawValue, forKey: Self.healthAccessKey)
+        if let access = status.healthAccess {
+            watchHealthAccess = access
+            defaults.set(access.rawValue, forKey: Self.healthAccessKey)
+        }
+        deleteDiscarded(status.deleted)
+        sendMissing(to: status)
+    }
+
+    /// Deletes the phone's copies of sessions discarded on the watch.
+    private func deleteDiscarded(_ ids: [UUID]) {
+        let new = ids.map(\.uuidString).filter { !discardedIds.contains($0) }
+        guard !new.isEmpty else { return }
+        discardedIds += new
+        do {
+            let deleted = try WorkoutRecorder(context: context).deleteSessions(ids)
+            guard deleted > 0 else { return }
+            Logger.sync.notice("Deleted \(deleted) session(s) discarded on the watch")
+            sessionsChanged += 1
+            today.refresh()
+        } catch {
+            Logger.sync.error("Couldn't delete discarded sessions: \(error.localizedDescription)")
+        }
+    }
+
+    /// Sends the watch every session it doesn't have, e.g. after its app was deleted and installed again.
+    /// Transfers still waiting in the system's queue aren't sent twice.
+    private func sendMissing(to status: WatchStatus) {
+        let session = WCSession.default
+        guard LaunchOptions.sync, WCSession.isSupported(), session.activationState == .activated,
+              session.isPaired, session.isWatchAppInstalled else { return }
+        do {
+            let discarded = Set(discardedIds)
+            let queued = Set(session.outstandingUserInfoTransfers.compactMap { SessionPayload(userInfo: $0.userInfo)?.id })
+            let wanted = Set(status.missing(fromPhone: try WorkoutRecorder(context: context).sessionIds()))
+                .subtracting(queued)
+                .filter { !discarded.contains($0.uuidString) }
+            guard !wanted.isEmpty else { return }
+            let sessions = try context.fetch(FetchDescriptor<WorkoutSession>()).filter { wanted.contains($0.id) }
+            for stored in sessions {
+                session.transferUserInfo(SessionPayload(stored).userInfo)
+            }
+            Logger.sync.notice("Sent the watch \(sessions.count) session(s) it was missing")
+        } catch {
+            Logger.sync.error("Couldn't send the watch its missing sessions: \(error.localizedDescription)")
+        }
     }
 
     fileprivate func watchChanged(paired: Bool, installed: Bool) {

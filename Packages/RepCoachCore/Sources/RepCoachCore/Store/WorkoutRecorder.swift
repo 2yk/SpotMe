@@ -104,4 +104,26 @@ public struct WorkoutRecorder {
         let moments = session.logs.flatMap { log in [log.completedAt].compactMap { $0 } + log.sets.map(\.timestamp) }
         try finish(session, at: moments.max() ?? session.date)
     }
+
+    /// Deletes a session and everything logged in it: a discarded workout.
+    public func delete(_ session: WorkoutSession) throws {
+        context.delete(session)
+        try context.save()
+    }
+
+    /// Deletes the stored sessions among `ids`. Returns how many there were.
+    @discardableResult
+    public func deleteSessions(_ ids: some Sequence<UUID>) throws -> Int {
+        let wanted = Set(ids)
+        guard !wanted.isEmpty else { return 0 }
+        let doomed = try context.fetch(FetchDescriptor<WorkoutSession>()).filter { wanted.contains($0.id) }
+        doomed.forEach(context.delete)
+        try context.save()
+        return doomed.count
+    }
+
+    /// Every stored session's id, for comparing with the other device.
+    public func sessionIds() throws -> [UUID] {
+        try context.fetch(FetchDescriptor<WorkoutSession>(sortBy: [SortDescriptor(\.date)])).map(\.id)
+    }
 }

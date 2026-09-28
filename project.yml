@@ -66,9 +66,8 @@ targets:
     sources:
       - Apps/Watch
       - Apps/Shared
-      # The complication's views and mark, for the debug gallery that screenshots them.
+      # The complication's views, for the debug gallery that screenshots them.
       - Apps/Widgets/StartWorkoutViews.swift
-      - Apps/Widgets/Assets.xcassets
     dependencies:
       - package: RepCoachCore
       - target: RepCoachWidgets
@@ -103,6 +102,7 @@ targets:
     sources:
       - Apps/Widgets
       - Apps/Shared/Theme.swift
+      - Apps/Shared/CradleMark.swift
     dependencies:
       - package: RepCoachCore
     settings:

@@ -52,7 +52,7 @@ struct HistoryScreen: View {
                 #endif
             }
             .refreshable { model.load(plan: app.plan, context: context) }
-            .onChange(of: sync.lastReceived) { model.load(plan: app.plan, context: context) }
+            .onChange(of: sync.sessionsChanged) { model.load(plan: app.plan, context: context) }
         }
     }
 

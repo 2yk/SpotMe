@@ -60,6 +60,17 @@ public struct SessionPayload: Codable, Equatable, Sendable {
 
     // MARK: Storing
 
+    /// Stores the session only if this device doesn't have it, so a copy restored from the other device never
+    /// overwrites what's here. Returns whether it was stored.
+    @discardableResult
+    public func insertIfMissing(into context: ModelContext) throws -> Bool {
+        let id = id
+        guard try context.fetchCount(FetchDescriptor<WorkoutSession>(predicate: #Predicate { $0.id == id })) == 0
+        else { return false }
+        try upsert(into: context)
+        return true
+    }
+
     /// Inserts the session, or replaces the stored copy with the same id, so re-sends never duplicate anything.
     @discardableResult
     public func upsert(into context: ModelContext) throws -> WorkoutSession {
