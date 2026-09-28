@@ -56,9 +56,19 @@ struct SettingsScreen: View {
                 }
                 .listRowBackground(Theme.card)
 
-                Section("About") {
+                Section {
                     LabeledContent("Plan", value: "v\(app.plan.planVersion) · \(app.plan.days.map(\.items.count).reduce(0, +)) items")
                     LabeledContent("App", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")
+                } header: {
+                    Text("About")
+                } footer: {
+                    Image("Wordmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 36)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 32)
+                        .accessibilityLabel("SpotMe")
                 }
                 .listRowBackground(Theme.card)
             }

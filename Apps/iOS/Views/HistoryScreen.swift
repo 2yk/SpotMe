@@ -142,9 +142,11 @@ private struct HistoryRow: View {
 private struct EmptyHistory: View {
     var body: some View {
         VStack(spacing: 14) {
-            Image(systemName: "applewatch.radiowaves.left.and.right")
-                .font(.system(size: 44, weight: .semibold))
-                .foregroundStyle(Theme.volt)
+            Image("Mark")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 76, height: 76)
+                .accessibilityHidden(true)
             Text("No sessions yet").font(.rounded(.title2, .bold))
             Text("Log a workout on your watch. Finished sessions show up here once they sync.")
                 .font(.rounded(.body))

@@ -40,6 +40,7 @@ targets:
         CFBundleDisplayName: SpotMe
         UILaunchScreen:
           UIColorName: LaunchBackground
+          UIImageName: Mark
         UIUserInterfaceStyle: Dark
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         NSHealthShareUsageDescription: SpotMe reads your heart rate from strength workouts.
