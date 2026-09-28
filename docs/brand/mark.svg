@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="540" viewBox="122 130 780 780">
+<defs><filter id="m-blur" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1424" height="1424" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="38"/></filter><radialGradient id="m-dot" cx="0.36" cy="0.32" r="0.78"><stop offset="0" stop-color="#DFFF87"/><stop offset="0.6" stop-color="#CCFF3D"/><stop offset="1" stop-color="#A5D52B"/></radialGradient><linearGradient id="m-w" gradientUnits="userSpaceOnUse" x1="261" y1="439" x2="763" y2="751"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C4C8CF"/></linearGradient></defs>
+<g opacity="0.6" filter="url(#m-blur)"><circle cx="512" cy="439" r="165" fill="#CCFF3D"/></g><circle cx="512" cy="439" r="150" fill="url(#m-dot)"/><path d="M760.56 404.07A251 251 0 1 1 263.44 404.07" fill="none" stroke="url(#m-w)" stroke-width="122" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
