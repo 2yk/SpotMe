@@ -4,6 +4,8 @@
 name: RepCoach
 options:
   bundleIdPrefix: com.yeshu
+  # Marks the project as checked by this Xcode, so it stops offering "recommended settings".
+  xcodeVersion: "27.0"
   deploymentTarget:
     iOS: "18.0"
     watchOS: "11.0"
@@ -16,6 +18,10 @@ settings:
     SWIFT_VERSION: "5.0"
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
+    # Xcode 27's recommended settings.
+    DEAD_CODE_STRIPPING: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    STRING_CATALOG_GENERATE_SYMBOLS: YES
 
 packages:
   RepCoachCore:
