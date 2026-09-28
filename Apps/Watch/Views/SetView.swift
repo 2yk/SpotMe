@@ -28,8 +28,9 @@ struct SetView: View {
                         .focusable()
                         .focused($focus, equals: .weight)
                         .focusEffectDisabled()
-                        .digitalCrownRotation($flow.weight, from: 0, through: 400, by: flow.increment,
-                                              sensitivity: .medium, isContinuous: false,
+                        // Detents only: the value moves a whole increment per click, never in between.
+                        .digitalCrownRotation(detent: $flow.weight, from: 0, through: 400, by: flow.increment,
+                                              sensitivity: .low, isContinuous: false,
                                               isHapticFeedbackEnabled: true)
                         .onTapGesture { focus = .weight }
                 }
@@ -38,7 +39,7 @@ struct SetView: View {
                     .focusable()
                     .focused($focus, equals: .reps)
                     .focusEffectDisabled()
-                    .digitalCrownRotation($flow.reps, from: 0, through: 100, by: 1, sensitivity: .medium,
+                    .digitalCrownRotation(detent: $flow.reps, from: 0, through: 100, by: 1, sensitivity: .low,
                                           isContinuous: false, isHapticFeedbackEnabled: true)
                     .onTapGesture { focus = .reps }
             }

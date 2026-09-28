@@ -36,8 +36,8 @@ struct HoldView: View {
                         .focusable()
                         .focused($weightFocused)
                         .focusEffectDisabled()
-                        .digitalCrownRotation($flow.weight, from: 0, through: 200, by: item.increment ?? 2.5,
-                                              sensitivity: .medium, isContinuous: false,
+                        .digitalCrownRotation(detent: $flow.weight, from: 0, through: 200,
+                                              by: item.increment ?? 2.5, sensitivity: .low, isContinuous: false,
                                               isHapticFeedbackEnabled: true)
                         .onTapGesture { weightFocused = true }
                     }
