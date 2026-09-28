@@ -89,13 +89,15 @@ final class WatchSync: NSObject {
         set { defaults.set(Array(newValue), forKey: Self.awaitingKey) }
     }
 
-    private var isActivated: Bool {
+    /// Connected and the phone app is there; until then sessions just wait in their lists.
+    private var canSend: Bool {
         WCSession.isSupported() && WCSession.default.activationState == .activated
+            && WCSession.default.isCompanionAppInstalled
     }
 
     private func flush() {
         let ids = unsent
-        guard !ids.isEmpty, isActivated else { return }
+        guard !ids.isEmpty, canSend else { return }
         let sessions = ((try? today.context.fetch(FetchDescriptor<WorkoutSession>())) ?? [])
             .filter { ids.contains($0.id.uuidString) }
         for session in sessions {
@@ -108,7 +110,7 @@ final class WatchSync: NSObject {
     /// Offers unconfirmed sessions again, skipping any whose transfer is still waiting in the system's queue so
     /// a phone left out of range doesn't collect duplicates.
     private func resendUnconfirmed() {
-        guard isActivated else { return }
+        guard canSend else { return }
         let queued = Set(WCSession.default.outstandingUserInfoTransfers.compactMap {
             SessionPayload(userInfo: $0.userInfo)?.id.uuidString
         })
@@ -144,7 +146,10 @@ final class WatchSync: NSObject {
     }
 
     fileprivate func companionInstalledChanged(_ installed: Bool) {
-        if installed { sendHistoryOnce() }
+        guard installed else { return }
+        sendHistoryOnce()
+        resendUnconfirmed()
+        flush()
     }
 
     fileprivate func receivedContext(_ context: SyncContext) {
