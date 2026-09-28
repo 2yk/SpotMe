@@ -1,7 +1,7 @@
 import SwiftUI
 import RepCoachCore
 
-/// RepCoach's dark look, shared by the watch and the phone.
+/// SpotMe's dark look, shared by the watch and the phone.
 enum Theme {
     /// Signature accent: lifts, primary buttons, progress.
     static let volt = Color(red: 0.80, green: 1.00, blue: 0.24)

@@ -32,16 +32,18 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "1"
     info:
       path: Apps/iOS/Info.plist
       properties:
-        CFBundleDisplayName: RepCoach
-        UILaunchScreen: {}
+        CFBundleDisplayName: SpotMe
+        UILaunchScreen:
+          UIColorName: LaunchBackground
         UIUserInterfaceStyle: Dark
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        NSHealthShareUsageDescription: RepCoach reads your heart rate from strength workouts.
-        NSHealthUpdateUsageDescription: RepCoach saves your strength workouts to Health.
+        NSHealthShareUsageDescription: SpotMe reads your heart rate from strength workouts.
+        NSHealthUpdateUsageDescription: SpotMe saves your strength workouts to Health.
     entitlements:
       path: Apps/iOS/RepCoach.entitlements
       properties:
@@ -56,15 +58,16 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach.watchkitapp
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     info:
       path: Apps/Watch/Info.plist
       properties:
-        CFBundleDisplayName: RepCoach
+        CFBundleDisplayName: SpotMe
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.yeshu.RepCoach
         WKBackgroundModes: [workout-processing]
-        NSHealthShareUsageDescription: RepCoach reads your heart rate during strength workouts.
-        NSHealthUpdateUsageDescription: RepCoach saves your strength workouts to Health.
+        NSHealthShareUsageDescription: SpotMe reads your heart rate during strength workouts.
+        NSHealthUpdateUsageDescription: SpotMe saves your strength workouts to Health.
     entitlements:
       path: Apps/Watch/RepCoachWatch.entitlements
       properties:
