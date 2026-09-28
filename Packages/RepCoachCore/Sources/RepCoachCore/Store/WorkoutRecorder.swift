@@ -90,4 +90,18 @@ public struct WorkoutRecorder {
         session.endedAt = date
         try context.save()
     }
+
+    /// Sessions from before `date`'s day that were never finished, e.g. when Finish workout wasn't tapped.
+    public func unfinishedSessions(before date: Date = .now) throws -> [WorkoutSession] {
+        let start = calendar.startOfDay(for: date)
+        return try context.fetch(FetchDescriptor<WorkoutSession>(
+            predicate: #Predicate { $0.endedAt == nil && $0.date < start },
+            sortBy: [SortDescriptor(\.date)]))
+    }
+
+    /// Finishes a forgotten session at the last moment anything was logged in it.
+    public func finishAtLastActivity(_ session: WorkoutSession) throws {
+        let moments = session.logs.flatMap { log in [log.completedAt].compactMap { $0 } + log.sets.map(\.timestamp) }
+        try finish(session, at: moments.max() ?? session.date)
+    }
 }
