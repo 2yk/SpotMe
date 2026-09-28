@@ -4,6 +4,7 @@ import RepCoachCore
 struct SettingsScreen: View {
     @Environment(SettingsStore.self) private var store
     @Environment(AppModel.self) private var app
+    @Environment(PhoneSync.self) private var sync
 
     var body: some View {
         @Bindable var store = store
@@ -29,13 +30,29 @@ struct SettingsScreen: View {
                 .listRowBackground(Theme.card)
 
                 Section {
+                    LabeledContent {
+                        Text(watchStatus.text).foregroundStyle(watchStatus.color)
+                    } label: {
+                        Label("Apple Watch", systemImage: "applewatch")
+                    }
+                    LabeledContent {
+                        Text(sync.lastReceived.map { $0.formatted(.relative(presentation: .named)) } ?? "None yet")
+                    } label: {
+                        Label("Last session in", systemImage: "arrow.down.circle")
+                    }
                     Toggle(isOn: $store.settings.restHaptics) {
                         Label("Rest timer haptics", systemImage: "applewatch.radiowaves.left.and.right")
                     }
+                    Button {
+                        sync.sendContext()
+                    } label: {
+                        Label("Send plan to watch", systemImage: "arrow.triangle.2.circlepath")
+                    }
+                    .disabled(sync.watchState != .ready)
                 } header: {
                     Text("Watch")
                 } footer: {
-                    Text("A tap at 10 seconds left and another when rest is over.")
+                    Text("Sessions arrive after Finish workout on the watch, even if the phone was out of range. Rest haptics: a tap at 10 seconds left and another when rest is over.")
                 }
                 .listRowBackground(Theme.card)
 
@@ -52,6 +69,15 @@ struct SettingsScreen: View {
     }
 
     private var settings: TrainingSettings { store.settings }
+
+    private var watchStatus: (text: String, color: Color) {
+        switch sync.watchState {
+        case .ready: ("Connected", Theme.mint)
+        case .appNotInstalled: ("App not installed", Theme.ember)
+        case .notPaired: ("Not paired", Theme.ember)
+        case .unsupported: ("Unavailable", Theme.tertiary)
+        }
+    }
 
     private var scheduled: Binding<Bool> {
         Binding(

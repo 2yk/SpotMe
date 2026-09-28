@@ -4,6 +4,7 @@ import RepCoachCore
 struct RootView: View {
     @Environment(TodayModel.self) private var today
     @Environment(SettingsStore.self) private var settings
+    @Environment(PhoneSync.self) private var sync
     @Environment(\.scenePhase) private var scenePhase
     @State private var tab = RootTab.today
 
@@ -26,7 +27,10 @@ struct RootView: View {
                 SettingsScreen()
             }
         }
-        .onChange(of: settings.settings) { today.refresh() }
+        .onChange(of: settings.settings) {
+            today.refresh()
+            sync.sendContext()
+        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { today.wake() }
         }

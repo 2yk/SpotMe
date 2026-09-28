@@ -168,4 +168,5 @@ extension TodayModel {
 
 extension Logger {
     static let store = Logger(subsystem: "com.yeshu.RepCoach", category: "store")
+    static let sync = Logger(subsystem: "com.yeshu.RepCoach", category: "sync")
 }

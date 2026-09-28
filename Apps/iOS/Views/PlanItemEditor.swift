@@ -8,6 +8,7 @@ struct PlanItemEditor: View {
     let item: PlanItem
     @Environment(\.modelContext) private var context
     @Environment(TodayModel.self) private var today
+    @Environment(PhoneSync.self) private var sync
     @Query private var allSettings: [ExerciseSettings]
 
     private static let increments: [Double] = [1, 1.25, 2, 2.5, 5, 10]
@@ -90,7 +91,7 @@ struct PlanItemEditor: View {
                     Section {
                         Button("Reset to plan", role: .destructive) { update { $0 = ExerciseOverrides() } }
                     } footer: {
-                        Text("History is kept. Changes reach the watch at its next session once sync is on.")
+                        Text("History is kept. The watch picks up changes before its next session.")
                     }
                     .listRowBackground(Theme.card)
                 }
@@ -140,6 +141,7 @@ struct PlanItemEditor: View {
             context.insert(created)
         }
         try? context.save()
+        sync.sendContext()
     }
 }
 

@@ -7,6 +7,7 @@ import RepCoachCore
 struct HistoryScreen: View {
     @Environment(AppModel.self) private var app
     @Environment(\.modelContext) private var context
+    @Environment(PhoneSync.self) private var sync
     @State private var model = HistoryModel()
     @State private var path: [String] = []
 
@@ -51,6 +52,7 @@ struct HistoryScreen: View {
                 #endif
             }
             .refreshable { model.load(plan: app.plan, context: context) }
+            .onChange(of: sync.lastReceived) { model.load(plan: app.plan, context: context) }
         }
     }
 

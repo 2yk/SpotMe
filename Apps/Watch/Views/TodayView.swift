@@ -5,7 +5,6 @@ import RepCoachCore
 struct TodayView: View {
     @Environment(TodayModel.self) private var today
     @Environment(WorkoutModel.self) private var workout
-    @Environment(\.scenePhase) private var scenePhase
     @State private var path: [Route] = []
     @State private var choosingDay = false
     @State private var confirmingFinish = false
@@ -54,9 +53,6 @@ struct TodayView: View {
             } message: {
                 Text(workout.health.isRunning ? "It will be saved to Health." : "Marks today's session done.")
             }
-        }
-        .onChange(of: scenePhase) { _, phase in
-            if phase == .active { today.wake() }
         }
         #if DEBUG
         .task { ScreenScript.run(today: today, workout: workout, path: $path, choosingDay: $choosingDay) }

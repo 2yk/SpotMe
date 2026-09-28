@@ -7,6 +7,7 @@ struct PlanScreen: View {
     @Environment(AppModel.self) private var app
     @Environment(TodayModel.self) private var today
     @Environment(\.modelContext) private var context
+    @Environment(PhoneSync.self) private var sync
     @Query private var settings: [ExerciseSettings]
     @State private var dayKey: String?
     @State private var path: [PlanItem] = []
@@ -82,6 +83,7 @@ struct PlanScreen: View {
         settings.forEach(context.delete)
         try? context.save()
         today.refresh()
+        sync.sendContext()
     }
 }
 

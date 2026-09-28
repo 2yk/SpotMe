@@ -21,6 +21,8 @@ final class WorkoutModel {
     var summary: Summary?
     /// Set after a failed automatic start (e.g. Health access denied) so every set doesn't retry.
     @ObservationIgnored private var autoStartFailed = false
+    /// Called with the session after Finish workout, to send it to the phone.
+    @ObservationIgnored var onSessionFinished: ((WorkoutSession) -> Void)?
 
     init(today: TodayModel, health: HealthWorkout? = nil) {
         self.today = today
@@ -66,6 +68,7 @@ final class WorkoutModel {
         if let session = today.session {
             if let workoutId { session.healthKitWorkoutId = workoutId }
             try? today.recorder.finish(session)
+            onSessionFinished?(session)
         }
         let sets = today.session?.logs.reduce(0) { $0 + $1.sets.count } ?? 0
         summary = Summary(savedToHealth: workoutId != nil, duration: started.map { Date.now.timeIntervalSince($0) },

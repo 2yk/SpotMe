@@ -56,4 +56,6 @@ enum LaunchOptions {
     /// HealthKit workouts. Off in demo mode, so screenshots don't stop at the Health permission sheet,
     /// unless `-healthkit YES` is passed too.
     static var healthKit: Bool { !demo || UserDefaults.standard.bool(forKey: "healthkit") }
+    /// Watch–phone sync. Off in demo mode so made-up sessions never reach a real device, unless `-sync YES`.
+    static var sync: Bool { !demo || UserDefaults.standard.bool(forKey: "sync") }
 }
