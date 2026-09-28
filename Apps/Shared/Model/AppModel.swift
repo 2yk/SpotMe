@@ -29,7 +29,8 @@ final class AppModel {
             do {
                 let container = try RepCoachStore.makeContainer(inMemory: true)
                 try DemoData.seed(container.mainContext, plan: plan, weeks: LaunchOptions.demoWeeks,
-                                  inProgress: LaunchOptions.dayKey ?? plan.day(for: .now)?.key)
+                                  inProgress: LaunchOptions.demoFresh ? nil
+                                      : LaunchOptions.dayKey ?? plan.day(for: .now)?.key)
                 return container
             } catch {
                 fatalError("Couldn't build the demo store: \(error)")
@@ -50,6 +51,8 @@ enum LaunchOptions {
     static var demo: Bool { UserDefaults.standard.bool(forKey: "demo") }
     /// `-weeks 0`: how many weeks of demo history; 0 shows first sessions.
     static var demoWeeks: Int { UserDefaults.standard.string(forKey: "weeks").flatMap(Int.init) ?? 8 }
+    /// `-fresh YES`: demo history without a session under way today.
+    static var demoFresh: Bool { UserDefaults.standard.bool(forKey: "fresh") }
     /// `-day monday`: open on another plan day.
     static var dayKey: String? { UserDefaults.standard.string(forKey: "day") }
     /// `-screen rest`: with `-demo`, drive the UI to a screen for screenshots. Debug builds only.

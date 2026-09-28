@@ -1,24 +1,25 @@
 import SwiftUI
 import RepCoachCore
 
-/// The watch home: up next on top, then what's left, then what's done.
+/// The watch home: one button to start (or continue) the workout, then the day's items in plan order, then
+/// what's done. Tapping an item does it now; the workout then carries on through the rest by itself.
 struct TodayView: View {
     @Environment(TodayModel.self) private var today
     @Environment(WorkoutModel.self) private var workout
     @State private var path: [Route] = []
     @State private var choosingDay = false
     @State private var confirmingFinish = false
+    @State private var confirmingDiscard = false
 
     enum Route: Hashable {
-        case exercise
-        case checklist(PlanItem)
+        case workout
         #if DEBUG
         /// Screenshots of the complication.
         case complications
         #endif
     }
 
-    /// Scroll target for the Finish workout button.
+    /// Scroll target for the buttons at the end of the list.
     static let endOfList = "end-of-list"
 
     var body: some View {
@@ -34,15 +35,8 @@ struct TodayView: View {
             .containerBackground(Theme.volt.gradient.opacity(0.3), for: .navigation)
             .navigationDestination(for: Route.self) { route in
                 switch route {
-                case .exercise:
-                    if let flow = workout.flow {
-                        ExerciseView(flow: flow) {
-                            workout.end()
-                            path.removeAll()
-                        }
-                    }
-                case .checklist(let item):
-                    ChecklistView(item: item) { path.removeAll() }
+                case .workout:
+                    WorkoutScreen(onList: { path.removeAll() }, onFinish: askToFinish)
                 #if DEBUG
                 case .complications:
                     ComplicationGallery()
@@ -69,7 +63,13 @@ struct TodayView: View {
             } message: {
                 Text(workout.health.isRunning ? "Your sets stay in SpotMe either way." : "Marks today's session done.")
             }
-            .alert("Workout not started", isPresented: startProblemShown) {
+            .confirmationDialog("Discard workout?", isPresented: $confirmingDiscard) {
+                Button("Discard", role: .destructive) { withAnimation(.snappy) { workout.discardWorkout() } }
+                Button("Keep it", role: .cancel) {}
+            } message: {
+                Text("Everything logged today is deleted, here and on your iPhone. Nothing is saved to Health.")
+            }
+            .alert("Not saving to Health", isPresented: startProblemShown) {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text(workout.startProblem ?? "")
@@ -78,7 +78,7 @@ struct TodayView: View {
         #if DEBUG
         .task {
             ScreenScript.run(today: today, workout: workout, path: $path, choosingDay: $choosingDay,
-                             confirmingFinish: $confirmingFinish, open: open)
+                             confirmingFinish: $confirmingFinish, confirmingDiscard: $confirmingDiscard, open: open)
         }
         #endif
     }
@@ -93,32 +93,26 @@ struct TodayView: View {
                 WorkoutBar()
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
-            } else if workout.canStart, !today.queue.isComplete {
-                // On top so a gym session starts with one tap. Without it, sets stay out of Health.
-                Button { workout.startWorkout() } label: {
-                    Label("Start workout", systemImage: "play.fill")
-                }
-                .buttonStyle(SecondaryButtonStyle(tint: Theme.volt))
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
             }
 
             if today.queue.isComplete {
-                AllDoneCard(count: today.queue.totalCount,
-                            onFinish: workout.canFinish ? { confirmingFinish = true } : nil)
+                AllDoneCard(count: today.queue.totalCount, onFinish: workout.canFinish ? askToFinish : nil)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
-            } else if !today.queue.upNext.isEmpty {
-                Button { start(today.queue.upNext) } label: {
-                    UpNextCard(items: today.queue.upNext)
+            } else {
+                StartButton(started: workout.hasStarted, next: workout.currentName) {
+                    workout.startOrContinue()
+                    path = [.workout]
                 }
-                .buttonStyle(.plain)
                 .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 6, trailing: 0))
             }
 
-            ForEach(today.queue.remaining) { item in
-                Button { withAnimation(.snappy) { today.promote(item) } } label: {
+            ForEach(openItems) { item in
+                Button {
+                    workout.open(item)
+                    path = [.workout]
+                } label: {
                     ItemRow(item: item)
                 }
                 .swipeActions(edge: .trailing) {
@@ -151,49 +145,80 @@ struct TodayView: View {
                 }
             }
 
-            if workout.canFinish, !today.queue.isComplete {
-                Button("Finish workout") { confirmingFinish = true }
-                    .buttonStyle(SecondaryButtonStyle(tint: Theme.pulse))
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
-                    .id(Self.endOfList)
+            if workout.canFinish || workout.canDiscard {
+                VStack(spacing: 10) {
+                    if workout.canFinish, !today.queue.isComplete {
+                        Button("Finish workout", action: askToFinish)
+                            .buttonStyle(SecondaryButtonStyle(tint: Theme.pulse))
+                    }
+                    if workout.canDiscard {
+                        Button { confirmingDiscard = true } label: {
+                            Label("Discard workout", systemImage: "trash")
+                                .font(.rounded(.footnote, .semibold))
+                                .foregroundStyle(Theme.ember)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                .id(Self.endOfList)
             }
         }
     }
 
-    /// Complication taps: spotme://start opens today and starts its workout; spotme://today just opens today.
+    /// Everything still to do, in plan order.
+    private var openItems: [PlanItem] {
+        today.day.items.filter { !today.status(of: $0).isFinished }
+    }
+
+    private func askToFinish() {
+        path.removeAll()
+        confirmingFinish = true
+    }
+
+    /// Complication taps: spotme://start opens today and gets the workout going; spotme://today just opens today.
     private func open(_ url: URL) {
         guard url.scheme == "spotme" else { return }
         path.removeAll()
         today.showToday()
-        if url.host == "start", workout.canStart, !today.queue.isComplete {
-            workout.startWorkout()
-        }
+        guard url.host == "start", !today.queue.isComplete else { return }
+        workout.startOrContinue()
+        path = [.workout]
     }
 
     private var startProblemShown: Binding<Bool> {
         Binding(get: { workout.startProblem != nil }, set: { if !$0 { workout.startProblem = nil } })
     }
 
-    private func start(_ items: [PlanItem]) {
-        guard let first = items.first else { return }
-        if first.kind == .checklist {
-            // One tap to done; warmups open their steps first.
-            if first.steps == nil {
-                tickOff(first)
-            } else {
-                path.append(.checklist(first))
-            }
-        } else {
-            workout.begin(items)
-            path.append(.exercise)
-        }
-    }
-
-    /// Checklist items: one tap to done.
+    /// Checklist items, from the list: one swipe to done.
     private func tickOff(_ item: PlanItem) {
         withAnimation(.snappy) { today.complete(item) }
         Haptics.play(.logged)
+    }
+}
+
+/// The one big button: Start workout, or Continue with what's next.
+private struct StartButton: View {
+    let started: Bool
+    let next: String?
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 0) {
+                Label(started ? "Continue" : "Start workout", systemImage: "play.fill")
+                if started, let next {
+                    Text(next)
+                        .font(.rounded(.caption2, .semibold))
+                        .lineLimit(1)
+                        .opacity(0.7)
+                }
+            }
+            .padding(.vertical, 4)
+        }
+        .buttonStyle(PrimaryButtonStyle(tint: Theme.volt))
     }
 }
 

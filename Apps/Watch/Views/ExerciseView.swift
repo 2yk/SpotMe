@@ -1,18 +1,20 @@
 import SwiftUI
 import RepCoachCore
 
-/// Hosts one exercise: the set screen, the rest timer and the summary, in place.
+/// Hosts one exercise: the set screen, the rest timer, and the break before the next one, in place.
 struct ExerciseView: View {
+    @Environment(WorkoutModel.self) private var workout
     @Bindable var flow: ExerciseFlow
-    let onDone: () -> Void
+    let onList: () -> Void
+    let onFinish: () -> Void
 
     var body: some View {
         content
-            .navigationTitle(isResting ? "" : flow.currentItem.name)
+            .navigationTitle(showsTitle ? flow.currentItem.name : "")
             .toolbar {
-                if flow.canUndo, !flow.isFinished {
+                if flow.canUndo {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button { withAnimation(.snappy) { flow.undo() } } label: {
+                        Button { withAnimation(.snappy) { workout.undoLastSet() } } label: {
                             Image(systemName: "arrow.uturn.backward")
                         }
                         .accessibilityLabel("Undo last set")
@@ -35,20 +37,20 @@ struct ExerciseView: View {
         case .rest(let rest):
             RestView(flow: flow, rest: rest)
         case .finished(let summaries):
-            FinishedView(summaries: summaries, onDone: onDone,
-                         onUndo: flow.canUndo ? { withAnimation(.snappy) { flow.undo() } } : nil)
+            NextUpView(summaries: summaries, onList: onList, onFinish: onFinish)
         }
     }
 
-    private var isResting: Bool {
-        if case .rest = flow.phase { true } else { false }
+    /// Only the set screen has room for the exercise's name.
+    private var showsTitle: Bool {
+        if case .set = flow.phase { true } else { false }
     }
 
     private var tint: Color {
         switch flow.phase {
         case .set: flow.currentItem.tint
         case .rest: Theme.ice
-        case .finished: Theme.mint
+        case .finished: workout.breakTime == nil ? Theme.mint : Theme.ice
         }
     }
 }

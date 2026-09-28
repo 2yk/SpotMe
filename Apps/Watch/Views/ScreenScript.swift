@@ -6,16 +6,29 @@ import RepCoachCore
 @MainActor
 enum ScreenScript {
     static func run(today: TodayModel, workout: WorkoutModel, path: Binding<[TodayView.Route]>,
-                    choosingDay: Binding<Bool>, confirmingFinish: Binding<Bool>, open: (URL) -> Void) {
+                    choosingDay: Binding<Bool>, confirmingFinish: Binding<Bool>, confirmingDiscard: Binding<Bool>,
+                    open: (URL) -> Void) {
         guard let screen = LaunchOptions.screen else { return }
-        if ["workout", "rest", "alldone", "finish-dialog"].contains(screen) {
+        if ["workout", "rest", "alldone", "finish-dialog", "next", "next-picker"].contains(screen) {
             workout.health.pretendRunning(heartRate: 128, minutes: 24)
+        }
+        func show(_ items: [PlanItem]) {
+            workout.show(items)
+            path.wrappedValue = [.workout]
         }
         switch screen {
         case "alldone":
             completeEverything(today)
+        case "alldone-screen":
+            completeEverything(today)
+            workout.advance()
+            path.wrappedValue = [.workout]
         case "finish-dialog":
             confirmingFinish.wrappedValue = true
+        case "discard":
+            confirmingDiscard.wrappedValue = true
+        case "discarded":
+            workout.discardWorkout()
         case "start-denied":
             workout.startProblem = WorkoutModel.accessDeniedMessage
         case "complications":
@@ -27,59 +40,44 @@ enum ScreenScript {
             // With `-sync YES`: finish the demo day so the watch sends it (and its history) to the phone.
             completeEverything(today)
             Task { await workout.finishWorkout() }
-        case "firsttime", "firsttime-card":
+        case "firsttime":
             // The first weighted item not started today; with `-weeks 0` it has no history either.
             guard let item = today.day.items.first(where: { $0.kind == .weighted && today.log(for: $0) == nil })
             else { return }
-            today.promote(item)
-            if screen == "firsttime" {
-                workout.begin([item])
-                path.wrappedValue = [.exercise]
-            }
+            show([item])
         case "summary":
             workout.summary = WorkoutModel.Summary(savedToHealth: true, duration: 62 * 60 + 14,
                                                    averageHeartRate: 124, energy: 342, sets: 27)
         case "days":
             choosingDay.wrappedValue = true
         case "checklist":
-            if let item = today.day.items.first(where: { $0.steps != nil }) {
-                path.wrappedValue = [.checklist(item)]
-            }
+            if let item = today.day.items.first(where: { $0.steps != nil }) { show([item]) }
         case "hold":
             guard let item = today.day.items.first(where: { $0.kind == .timed }) else { return }
-            workout.begin([item])
-            path.wrappedValue = [.exercise]
+            show([item])
             workout.flow?.startHold()
         case "superset", "superset-next", "superset-rest":
-            guard let item = today.day.items.first(where: { $0.supersetGroup != nil }) else { return }
-            today.promote(item)
+            guard let group = today.day.items.first(where: { $0.supersetGroup != nil })?.supersetGroup else { return }
+            show(today.day.items.filter { $0.supersetGroup == group })
             guard screen != "superset" else { return }
-            workout.begin(today.queue.upNext)
-            path.wrappedValue = [.exercise]
             // A1 goes straight to B1; B1 is followed by the pair's rest.
             workout.flow?.logSet()
             if screen == "superset-rest" { workout.flow?.logSet() }
         case "amrap", "volume":
             guard let item = today.day.items.first(where: { $0.kind == .amrap }) else { return }
-            today.promote(item)
-            workout.begin([item])
+            show([item])
+            guard screen == "volume" else { return }
+            // Logging the max-rep set finishes it; the break then shows the volume sets at 60% of it.
             workout.flow?.reps = 12
             workout.flow?.logSet()
-            if screen == "volume" {
-                workout.end()
-                if let volume = today.day.items.first(where: { $0.kind == .percentOfMax }) { today.promote(volume) }
-            } else {
-                path.wrappedValue = [.exercise]
-            }
-        case "set", "rest", "finished":
-            workout.begin(today.queue.upNext)
-            path.wrappedValue = [.exercise]
+        case "set", "rest", "next", "next-picker":
+            show(today.queue.upNext)
             guard let flow = workout.flow else { return }
             if screen == "rest" {
                 // One rep under the range, so the rest screen shows the engine dropping the weight.
                 flow.reps = Double((flow.currentTarget.repMin ?? 6) - 1)
                 flow.logSet()
-            } else if screen == "finished" {
+            } else if screen != "set" {
                 while flow.current != nil {
                     flow.reps = Double(flow.currentTarget.repMax ?? 10)
                     flow.logSet()

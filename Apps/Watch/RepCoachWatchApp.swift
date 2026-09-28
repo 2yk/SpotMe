@@ -23,7 +23,9 @@ struct RepCoachWatchApp: App {
         workout.onSessionFinished = { [weak sync] session in
             sync?.send(session)
             sync?.applyPendingIfIdle()
+            sync?.sendStatus()
         }
+        workout.onSessionDiscarded = { [weak sync] id in sync?.sessionDiscarded(id) }
         workout.onStartAttempted = { [weak sync] in sync?.sendStatus() }
         sync.activate()
         _app = State(initialValue: app)

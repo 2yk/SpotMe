@@ -42,6 +42,7 @@ final class ExerciseFlow {
     @ObservationIgnored private var timers: [Task<Void, Never>] = []
     @ObservationIgnored private let today: TodayModel
     @ObservationIgnored private let onSetLogged: () -> Void
+    @ObservationIgnored private let onFinished: () -> Void
 
     private struct Snapshot {
         var stepIndex: Int
@@ -49,11 +50,15 @@ final class ExerciseFlow {
         var coaching: [Coach.Line?]
     }
 
-    /// - Parameter onSetLogged: called after each set is saved.
-    init(items: [PlanItem], today: TodayModel, onSetLogged: @escaping () -> Void = {}) {
+    /// - Parameters:
+    ///   - onSetLogged: called after each set is saved.
+    ///   - onFinished: called when the last set is logged, to move the workout on.
+    init(items: [PlanItem], today: TodayModel, onSetLogged: @escaping () -> Void = {},
+         onFinished: @escaping () -> Void = {}) {
         self.items = items
         self.today = today
         self.onSetLogged = onSetLogged
+        self.onFinished = onFinished
         targets = items.map { today.target(for: $0) }
         steps = SetSequence.steps(sets: targets.map(\.sets), rest: items.map { $0.restSec ?? 60 })
         workingWeight = targets.map { $0.weight ?? 0 }
@@ -276,8 +281,12 @@ final class ExerciseFlow {
                                      line: summary(item, target: targets[index], sets: sets, deload: session.isDeload)))
         }
         phase = .finished(summaries)
-        if haptic { Haptics.play(.exerciseDone) }
         today.refresh()
+        // Only a set logged just now moves the workout on; reopening a finished exercise doesn't.
+        if haptic {
+            Haptics.play(.exerciseDone)
+            onFinished()
+        }
     }
 
     private func summary(_ item: PlanItem, target: ItemTarget, sets: [LoggedSet], deload: Bool) -> Coach.Line {

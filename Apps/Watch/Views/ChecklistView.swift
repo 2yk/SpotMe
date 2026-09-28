@@ -1,11 +1,10 @@
 import SwiftUI
 import RepCoachCore
 
-/// Runs, warmups, mobility and cooldowns: read the steps, tap Done.
+/// Warmups, mobility, neck work and cooldowns: read the steps, tap Done, and the workout moves on.
 struct ChecklistView: View {
-    @Environment(TodayModel.self) private var today
+    @Environment(WorkoutModel.self) private var workout
     let item: PlanItem
-    let onDone: () -> Void
 
     var body: some View {
         ScrollView {
@@ -43,13 +42,14 @@ struct ChecklistView: View {
                         }
                     }
                 }
-                Button("Done") {
-                    today.complete(item)
-                    Haptics.play(.logged)
-                    onDone()
-                }
-                .buttonStyle(PrimaryButtonStyle(tint: Theme.mint))
-                .padding(.top, 2)
+                Button("Done") { workout.finishChecklist(item) }
+                    .buttonStyle(PrimaryButtonStyle(tint: Theme.mint))
+                    .padding(.top, 2)
+                Button("Skip") { workout.finishChecklist(item, skipped: true) }
+                    .buttonStyle(.plain)
+                    .font(.rounded(.footnote, .semibold))
+                    .foregroundStyle(Theme.secondary)
+                    .frame(maxWidth: .infinity)
             }
         }
         .navigationTitle(item.group)
