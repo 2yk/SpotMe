@@ -59,9 +59,15 @@ targets:
   RepCoachWatch:
     type: application
     platform: watchOS
-    sources: [Apps/Watch, Apps/Shared]
+    sources:
+      - Apps/Watch
+      - Apps/Shared
+      # The complication's views and mark, for the debug gallery that screenshots them.
+      - Apps/Widgets/StartWorkoutViews.swift
+      - Apps/Widgets/Assets.xcassets
     dependencies:
       - package: RepCoachCore
+      - target: RepCoachWidgets
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach.watchkitapp
@@ -75,7 +81,30 @@ targets:
         WKBackgroundModes: [workout-processing]
         NSHealthShareUsageDescription: SpotMe reads your heart rate during strength workouts.
         NSHealthUpdateUsageDescription: SpotMe saves your strength workouts to Health.
+        # spotme://start from the complication.
+        CFBundleURLTypes:
+          - CFBundleURLName: com.yeshu.RepCoach.watchkitapp
+            CFBundleURLSchemes: [spotme]
     entitlements:
       path: Apps/Watch/RepCoachWatch.entitlements
       properties:
         com.apple.developer.healthkit: true
+
+  # Watch face complication: today's session, one tap to start it.
+  RepCoachWidgets:
+    type: app-extension
+    platform: watchOS
+    sources:
+      - Apps/Widgets
+      - Apps/Shared/Theme.swift
+    dependencies:
+      - package: RepCoachCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach.watchkitapp.widgets
+    info:
+      path: Apps/Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: SpotMe
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension

@@ -6,7 +6,7 @@ import RepCoachCore
 @MainActor
 enum ScreenScript {
     static func run(today: TodayModel, workout: WorkoutModel, path: Binding<[TodayView.Route]>,
-                    choosingDay: Binding<Bool>, confirmingFinish: Binding<Bool>) {
+                    choosingDay: Binding<Bool>, confirmingFinish: Binding<Bool>, open: (URL) -> Void) {
         guard let screen = LaunchOptions.screen else { return }
         if ["workout", "rest", "alldone", "finish-dialog"].contains(screen) {
             workout.health.pretendRunning(heartRate: 128, minutes: 24)
@@ -18,6 +18,11 @@ enum ScreenScript {
             confirmingFinish.wrappedValue = true
         case "start-denied":
             workout.startProblem = WorkoutModel.accessDeniedMessage
+        case "complications":
+            path.wrappedValue = [.complications]
+        case "tap-start":
+            // What a complication tap delivers (simctl can't open links on watchOS).
+            open(URL(string: "spotme://start")!)
         case "finish":
             // With `-sync YES`: finish the demo day so the watch sends it (and its history) to the phone.
             completeEverything(today)

@@ -12,6 +12,10 @@ struct TodayView: View {
     enum Route: Hashable {
         case exercise
         case checklist(PlanItem)
+        #if DEBUG
+        /// Screenshots of the complication.
+        case complications
+        #endif
     }
 
     /// Scroll target for the Finish workout button.
@@ -39,8 +43,13 @@ struct TodayView: View {
                     }
                 case .checklist(let item):
                     ChecklistView(item: item) { path.removeAll() }
+                #if DEBUG
+                case .complications:
+                    ComplicationGallery()
+                #endif
                 }
             }
+            .onOpenURL(perform: open)
             .sheet(isPresented: $choosingDay) {
                 DayPickerView()
             }
@@ -69,7 +78,7 @@ struct TodayView: View {
         #if DEBUG
         .task {
             ScreenScript.run(today: today, workout: workout, path: $path, choosingDay: $choosingDay,
-                             confirmingFinish: $confirmingFinish)
+                             confirmingFinish: $confirmingFinish, open: open)
         }
         #endif
     }
@@ -149,6 +158,16 @@ struct TodayView: View {
                     .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
                     .id(Self.endOfList)
             }
+        }
+    }
+
+    /// Complication taps: spotme://start opens today and starts its workout; spotme://today just opens today.
+    private func open(_ url: URL) {
+        guard url.scheme == "spotme" else { return }
+        path.removeAll()
+        today.showToday()
+        if url.host == "start", workout.canStart, !today.queue.isComplete {
+            workout.startWorkout()
         }
     }
 

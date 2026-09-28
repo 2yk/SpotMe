@@ -67,6 +67,13 @@ final class TodayModel {
         refresh()
     }
 
+    /// Back to today's plan day, following the date again.
+    func showToday() {
+        guard let key = plan.day(for: .now, calendar: calendar)?.key else { return }
+        select(key)
+        followsToday = true
+    }
+
     /// Call when the app comes to the foreground: picks up a new day after midnight.
     func wake() {
         if followsToday, let key = plan.day(for: .now, calendar: calendar)?.key, key != dayKey {

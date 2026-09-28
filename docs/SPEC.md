@@ -85,6 +85,10 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - End from Today ("Finish workout") or automatically offered when every item is done. Finishing asks whether to save the workout to Health or discard it; the sets are kept either way.
 - Must survive the wrist dropping and the screen sleeping (Always On shows the rest timer).
 
+**Complication ("Start workout")**
+- Circular, corner, rectangular and inline. Shows today's session from the plan ("Pull A · Strength & Thickness"; "Rest day" on Saturday), refreshed at midnight.
+- Tapping it opens SpotMe on today and starts the workout, as Start workout does; on a rest day it only opens the app.
+
 ## iPhone app
 
 - **Today:** same list, read-mostly (useful for checking the day before training).
