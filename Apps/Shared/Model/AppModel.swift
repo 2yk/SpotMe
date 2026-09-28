@@ -27,7 +27,7 @@ final class AppModel {
         if LaunchOptions.demo {
             do {
                 let container = try RepCoachStore.makeContainer(inMemory: true)
-                try DemoData.seed(container.mainContext, plan: plan,
+                try DemoData.seed(container.mainContext, plan: plan, weeks: LaunchOptions.demoWeeks,
                                   inProgress: LaunchOptions.dayKey ?? plan.day(for: .now)?.key)
                 return container
             } catch {
@@ -47,8 +47,13 @@ final class AppModel {
 enum LaunchOptions {
     /// `-demo YES`: an in-memory store with eight weeks of made-up history. Debug builds only.
     static var demo: Bool { UserDefaults.standard.bool(forKey: "demo") }
+    /// `-weeks 0`: how many weeks of demo history; 0 shows first sessions.
+    static var demoWeeks: Int { UserDefaults.standard.string(forKey: "weeks").flatMap(Int.init) ?? 8 }
     /// `-day monday`: open on another plan day.
     static var dayKey: String? { UserDefaults.standard.string(forKey: "day") }
     /// `-screen rest`: with `-demo`, drive the UI to a screen for screenshots. Debug builds only.
     static var screen: String? { demo ? UserDefaults.standard.string(forKey: "screen") : nil }
+    /// HealthKit workouts. Off in demo mode, so screenshots don't stop at the Health permission sheet,
+    /// unless `-healthkit YES` is passed too.
+    static var healthKit: Bool { !demo || UserDefaults.standard.bool(forKey: "healthkit") }
 }

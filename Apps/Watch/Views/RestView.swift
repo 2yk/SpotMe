@@ -3,6 +3,7 @@ import RepCoachCore
 
 /// Countdown between sets, with the next set's target and the engine's one-line reason.
 struct RestView: View {
+    @Environment(HealthWorkout.self) private var health
     let flow: ExerciseFlow
     let rest: ExerciseFlow.Rest
 
@@ -22,7 +23,16 @@ struct RestView: View {
                             .monospacedDigit()
                             .multilineTextAlignment(.center)
                             .lineLimit(1)
-                        Text("Rest").eyebrow(Theme.ice, size: 10)
+                        if let bpm = health.heartRate {
+                            HStack(spacing: 3) {
+                                Image(systemName: "heart.fill").font(.system(size: 10, weight: .bold))
+                                Text("\(Int(bpm.rounded()))").font(.number(13)).monospacedDigit()
+                            }
+                            .foregroundStyle(Theme.pulse)
+                            .accessibilityLabel("Heart rate \(Int(bpm.rounded()))")
+                        } else {
+                            Text("Rest").eyebrow(Theme.ice, size: 10)
+                        }
                     }
                 }
                 .frame(width: ring, height: ring)

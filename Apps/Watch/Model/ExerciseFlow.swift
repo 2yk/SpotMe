@@ -41,6 +41,7 @@ final class ExerciseFlow {
     private var undoStack: [Snapshot] = []
     @ObservationIgnored private var timers: [Task<Void, Never>] = []
     @ObservationIgnored private let today: TodayModel
+    @ObservationIgnored private let onSetLogged: () -> Void
 
     private struct Snapshot {
         var stepIndex: Int
@@ -48,9 +49,11 @@ final class ExerciseFlow {
         var coaching: [Coach.Line?]
     }
 
-    init(items: [PlanItem], today: TodayModel) {
+    /// - Parameter onSetLogged: called after each set is saved; the first one starts the Health workout.
+    init(items: [PlanItem], today: TodayModel, onSetLogged: @escaping () -> Void = {}) {
         self.items = items
         self.today = today
+        self.onSetLogged = onSetLogged
         targets = items.map { today.target(for: $0) }
         steps = SetSequence.steps(sets: targets.map(\.sets), rest: items.map { $0.restSec ?? 60 })
         workingWeight = targets.map { $0.weight ?? 0 }
@@ -114,6 +117,7 @@ final class ExerciseFlow {
         }
         undoStack.append(Snapshot(stepIndex: stepIndex, workingWeight: workingWeight, coaching: coaching))
         Haptics.play(.logged)
+        onSetLogged()
 
         if item.kind == .weighted, let p = Prescription(item: item) {
             let next = ProgressionEngine.nextSet(for: p, weight: loggedWeight, reps: loggedReps,

@@ -54,14 +54,33 @@ struct UpNextCard: View {
                     Chip(text: Coach.tag(session, increment: item.increment ?? 2.5), tint: item.tint)
                 }
             }
-        } else {
-            Text(item.kind == .checklist ? item.group : Format.prescription(item, target))
+        } else if item.kind == .checklist {
+            Text(item.group)
                 .font(.rounded(.footnote, .medium))
                 .foregroundStyle(Theme.secondary)
                 .lineLimit(1)
-            if item.kind == .checklist, let display = item.display, display != "—" {
-                Text(display).font(.number(26)).padding(.top, 1)
-            } else if item.takesWeight, let weight = target.weight, weight > 0 {
+            HStack(alignment: .center) {
+                if let display = item.display, display != "—" {
+                    Text(display).font(.number(26))
+                }
+                Spacer(minLength: 4)
+                // Tapping the card ticks it off; warmups open their steps.
+                Image(systemName: item.steps == nil ? "checkmark.circle.fill" : "list.number")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(Theme.ice)
+            }
+            if item.steps == nil, let note = item.note {
+                Text(note)
+                    .font(.rounded(.caption2, .medium))
+                    .foregroundStyle(Theme.secondary)
+                    .lineLimit(3)
+            }
+        } else {
+            Text(Format.prescription(item, target))
+                .font(.rounded(.footnote, .medium))
+                .foregroundStyle(Theme.secondary)
+                .lineLimit(1)
+            if item.takesWeight, let weight = target.weight, weight > 0 {
                 HStack(alignment: .firstTextBaseline, spacing: 3) {
                     Text(Format.weight(weight)).font(.number(28)).monospacedDigit()
                     Text("kg").font(.rounded(.footnote, .bold)).foregroundStyle(Theme.secondary)

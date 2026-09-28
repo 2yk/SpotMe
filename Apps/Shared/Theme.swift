@@ -79,6 +79,21 @@ struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
+/// Outlined capsule: a secondary action, like Start workout.
+struct SecondaryButtonStyle: ButtonStyle {
+    var tint = Theme.volt
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.rounded(.headline, .bold))
+            .foregroundStyle(tint)
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .background(Capsule().fill(tint.opacity(configuration.isPressed ? 0.25 : 0.12)))
+            .overlay(Capsule().strokeBorder(tint.opacity(0.6), lineWidth: 1.5))
+            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
+    }
+}
+
 /// A progress ring with a soft track and a rounded, gradient arc.
 struct ProgressRing: View {
     var progress: Double
