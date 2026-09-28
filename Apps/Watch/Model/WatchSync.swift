@@ -8,7 +8,7 @@ import RepCoachCore
 /// delivers whenever the phone is reachable, so a whole session can be logged with the phone out of range.
 /// The phone confirms what it stored; anything unconfirmed is sent again when the app next comes forward.
 /// The phone's settings and plan edits arrive as the application context and are applied only between
-/// sessions, so targets never move mid-workout.
+/// sessions, so targets never move mid-workout. The Health switch moves no targets and applies at once.
 @MainActor @Observable
 final class WatchSync: NSObject {
     @ObservationIgnored private let today: TodayModel
@@ -133,6 +133,7 @@ final class WatchSync: NSObject {
         awaiting.subtract(confirmed)
         if !confirmed.isEmpty { Logger.sync.notice("The phone confirmed \(confirmed.count) session(s)") }
         if let applied = defaults.object(forKey: Self.appliedKey) as? Date, context.sentAt <= applied { return }
+        settings.settings.healthWorkouts = context.settings.healthWorkouts
         guard let data = try? JSONEncoder().encode(context) else { return }
         defaults.set(data, forKey: Self.pendingKey)
         applyPendingIfIdle()

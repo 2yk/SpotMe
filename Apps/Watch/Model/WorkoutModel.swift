@@ -46,10 +46,11 @@ final class WorkoutModel {
         health.isRunning || today.session.map { $0.endedAt == nil && $0.logs.contains { !$0.sets.isEmpty } } == true
     }
 
-    /// The Start button: no Health workout yet, the day has sets to log, and today's session isn't finished.
-    /// It's the only way a Health workout starts, so a session logged after the fact stays out of Health.
+    /// The Start button: Health workouts are on in the phone's Settings, none is running yet, the day has sets
+    /// to log, and today's session isn't finished. It's the only way a Health workout starts, so a session
+    /// logged after the fact stays out of Health.
     var canStart: Bool {
-        LaunchOptions.healthKit && health.isAvailable && health.state == .idle
+        LaunchOptions.healthKit && today.settings.healthWorkouts && health.isAvailable && health.state == .idle
             && today.day.items.contains { $0.kind != .checklist }
             && today.session?.endedAt == nil
     }

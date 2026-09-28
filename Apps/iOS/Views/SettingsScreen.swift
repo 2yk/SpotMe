@@ -30,6 +30,19 @@ struct SettingsScreen: View {
                 .listRowBackground(Theme.card)
 
                 Section {
+                    Toggle(isOn: $store.settings.healthWorkouts) {
+                        Label("Save workouts to Health", systemImage: "heart.fill")
+                    }
+                } header: {
+                    Text("Apple Health")
+                } footer: {
+                    Text(settings.healthWorkouts
+                         ? "Start workout on the watch records a strength training workout with your heart rate and saves it to Health when you finish."
+                         : "The watch hides Start workout. Sets you log stay in SpotMe and nothing goes to Health.")
+                }
+                .listRowBackground(Theme.card)
+
+                Section {
                     LabeledContent {
                         Text(watchStatus.text).foregroundStyle(watchStatus.color)
                     } label: {

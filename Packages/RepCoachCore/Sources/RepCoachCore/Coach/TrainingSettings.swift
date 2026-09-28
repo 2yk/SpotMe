@@ -8,11 +8,25 @@ public struct TrainingSettings: Codable, Hashable, Sendable {
     public var manualDeloadSetOn: Date?
     /// Haptics at 10 seconds left and at the end of rest.
     public var restHaptics: Bool
+    /// Start workout on the watch records a strength training workout in Apple Health.
+    /// Off: the watch has no Start button and sets stay in the app.
+    public var healthWorkouts: Bool
 
-    public init(programStart: Date? = nil, manualDeloadSetOn: Date? = nil, restHaptics: Bool = true) {
+    public init(programStart: Date? = nil, manualDeloadSetOn: Date? = nil, restHaptics: Bool = true,
+                healthWorkouts: Bool = true) {
         self.programStart = programStart
         self.manualDeloadSetOn = manualDeloadSetOn
         self.restHaptics = restHaptics
+        self.healthWorkouts = healthWorkouts
+    }
+
+    /// Settings saved before a switch existed get its default.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        programStart = try container.decodeIfPresent(Date.self, forKey: .programStart)
+        manualDeloadSetOn = try container.decodeIfPresent(Date.self, forKey: .manualDeloadSetOn)
+        restHaptics = try container.decodeIfPresent(Bool.self, forKey: .restHaptics) ?? true
+        healthWorkouts = try container.decodeIfPresent(Bool.self, forKey: .healthWorkouts) ?? true
     }
 
     /// 1-based program week containing `date`; nil without a start date or before it.

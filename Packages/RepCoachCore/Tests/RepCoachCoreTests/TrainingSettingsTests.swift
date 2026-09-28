@@ -13,6 +13,18 @@ final class TrainingSettingsTests: XCTestCase {
         calendar.date(from: DateComponents(year: 2026, month: month, day: day, hour: 7))!
     }
 
+    func testSettingsSavedBeforeTheHealthSwitchKeepHealthOn() throws {
+        let saved = #"{"programStart":780710400,"restHaptics":false}"#
+        let settings = try JSONDecoder().decode(TrainingSettings.self, from: Data(saved.utf8))
+        XCTAssertTrue(settings.healthWorkouts)
+        XCTAssertFalse(settings.restHaptics)
+        XCTAssertEqual(settings.programStart, Date(timeIntervalSinceReferenceDate: 780710400))
+
+        var off = settings
+        off.healthWorkouts = false
+        XCTAssertEqual(try JSONDecoder().decode(TrainingSettings.self, from: JSONEncoder().encode(off)), off)
+    }
+
     func testProgramWeeks() {
         let settings = TrainingSettings(programStart: date(9, 28))
         XCTAssertEqual(settings.programWeek(on: date(9, 28), calendar: calendar), 1)
