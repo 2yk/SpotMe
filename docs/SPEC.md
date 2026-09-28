@@ -80,6 +80,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 **Workout session (HealthKit)**
 - Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) only from **Start workout** at the top of Today. Sets logged without it stay in the app and never reach Health (for a session logged after the fact). The button shows only while "Save workouts to Health" is on in the iPhone's Settings.
+- Health access belongs to the watch app: watchOS asks on the watch the first time Start workout is tapped, and it's changed later in the iPhone's Health app (profile picture → Apps → SpotMe). If saving workouts isn't allowed, Start workout says so and where to fix it. The watch reports its access to the phone, whose Settings show it.
 - Keeps the app frontmost during the session, collects heart rate and energy, and saves the workout to Health when ended.
 - End from Today ("Finish workout") or automatically offered when every item is done. Finishing asks whether to save the workout to Health or discard it; the sets are kept either way.
 - Must survive the wrist dropping and the screen sleeping (Always On shows the rest timer).
@@ -89,7 +90,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - **Today:** same list, read-mostly (useful for checking the day before training).
 - **History:** per exercise, sessions newest first with every set. A Swift Charts line of top-set weight and estimated 1RM (Epley) over time.
 - **Plan:** view all days; edit per exercise: increment, rep range, sets, rest, starting weight. "Reset to bundled plan" keeps history.
-- **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off hides Start workout on the watch).
+- **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off hides Start workout on the watch), the watch's Health access and a shortcut to the Health app.
 - **Body log (optional, milestone 4):** flexed arm and waist, every 2 weeks. Warn if waist is up more than 1 inch while arms haven't changed.
 
 ## Data and sync
@@ -98,7 +99,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId?), `ExerciseLog` (session, exerciseId, order, completedAt?), `SetLog` (log, index, weight, reps, seconds?, timestamp), `ExerciseSettings` (exerciseId, overrides for increment/rep range/sets/rest/startWeight).
 - **The watch works fully without the phone nearby.** It keeps its own store and the history it needs for targets.
 - WatchConnectivity:
-  - Watch → phone: each finished `WorkoutSession` (with its logs) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID.
+  - Watch → phone: each finished `WorkoutSession` (with its logs) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID. The watch's Health access goes in the watch's own application context.
   - Phone → watch: plan overrides and settings via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
 - Nothing is deleted automatically.
 

@@ -82,6 +82,18 @@ final class SyncTests: StoreTestCase {
         XCTAssertNil(SessionPayload(userInfo: ["session": Data("nope".utf8)]))
     }
 
+    func testWatchStatusSurvivesTheTrip() throws {
+        for access in [HealthAccess.notAsked, .allowed, .denied] {
+            let sent = WatchStatus(healthAccess: access)
+            XCTAssertEqual(WatchStatus(applicationContext: sent.applicationContext), sent)
+        }
+        // Each side's application context is only ever read as its own kind.
+        let status = WatchStatus(healthAccess: .allowed).applicationContext
+        let context = SyncContext(settings: TrainingSettings(), overrides: [:]).applicationContext
+        XCTAssertNil(SyncContext(applicationContext: status))
+        XCTAssertNil(WatchStatus(applicationContext: context))
+    }
+
     // MARK: Phone → watch
 
     func testContextReplacesTheWatchOverrides() throws {

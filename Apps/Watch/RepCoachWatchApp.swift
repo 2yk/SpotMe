@@ -16,10 +16,15 @@ struct RepCoachWatchApp: App {
         let workout = WorkoutModel(today: app.today)
         let sync = WatchSync(today: app.today, settings: app.settings)
         sync.isBusy = { [weak workout] in workout?.canFinish ?? false }
+        sync.healthAccess = { [weak workout] in
+            guard LaunchOptions.healthKit, let health = workout?.health, health.isAvailable else { return nil }
+            return health.access
+        }
         workout.onSessionFinished = { [weak sync] session in
             sync?.send(session)
             sync?.applyPendingIfIdle()
         }
+        workout.onStartAttempted = { [weak sync] in sync?.sendStatus() }
         sync.activate()
         _app = State(initialValue: app)
         _workout = State(initialValue: workout)

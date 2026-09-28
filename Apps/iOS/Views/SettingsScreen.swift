@@ -5,6 +5,7 @@ struct SettingsScreen: View {
     @Environment(SettingsStore.self) private var store
     @Environment(AppModel.self) private var app
     @Environment(PhoneSync.self) private var sync
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         @Bindable var store = store
@@ -33,12 +34,22 @@ struct SettingsScreen: View {
                     Toggle(isOn: $store.settings.healthWorkouts) {
                         Label("Save workouts to Health", systemImage: "heart.fill")
                     }
+                    if settings.healthWorkouts {
+                        LabeledContent {
+                            Text(healthAccess.text).foregroundStyle(healthAccess.color)
+                        } label: {
+                            Label("Watch access", systemImage: "lock.shield")
+                        }
+                        Button {
+                            if let url = URL(string: "x-apple-health://") { openURL(url) }
+                        } label: {
+                            Label("Open the Health app", systemImage: "arrow.up.forward.app")
+                        }
+                    }
                 } header: {
                     Text("Apple Health")
                 } footer: {
-                    Text(settings.healthWorkouts
-                         ? "Start workout on the watch records a strength training workout with your heart rate and saves it to Health when you finish."
-                         : "The watch hides Start workout. Sets you log stay in SpotMe and nothing goes to Health.")
+                    Text(healthFooter)
                 }
                 .listRowBackground(Theme.card)
 
@@ -99,6 +110,33 @@ struct SettingsScreen: View {
         case .appNotInstalled: ("App not installed", Theme.ember)
         case .notPaired: ("Not paired", Theme.ember)
         case .unsupported: ("Unavailable", Theme.tertiary)
+        }
+    }
+
+    /// The watch's own Health access: watchOS asks on the watch, the Health app on the iPhone changes it.
+    private var healthAccess: (text: String, color: Color) {
+        switch sync.watchHealthAccess {
+        case .allowed: ("Allowed", Theme.mint)
+        case .denied: ("Not allowed", Theme.ember)
+        case .notAsked: ("Not asked yet", Theme.secondary)
+        case nil: ("Unknown", Theme.tertiary)
+        }
+    }
+
+    private var healthFooter: String {
+        guard settings.healthWorkouts else {
+            return "The watch hides Start workout. Sets you log stay in SpotMe and nothing goes to Health."
+        }
+        let manage = "To change it: Health app → your profile picture → Apps → SpotMe."
+        switch sync.watchHealthAccess {
+        case .denied:
+            return "Your watch isn't allowed to save workouts, so Start workout can't record one. In the Health app, "
+                + "tap your profile picture, then Apps → SpotMe, and turn everything on."
+        case .notAsked:
+            return "Your watch asks for Health access the first time you tap Start workout. " + manage
+        default:
+            return "Start workout on the watch records a strength training workout with your heart rate and saves "
+                + "it to Health when you finish. " + manage
         }
     }
 

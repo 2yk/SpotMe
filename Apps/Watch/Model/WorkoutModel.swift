@@ -19,6 +19,10 @@ final class WorkoutModel {
     private(set) var flow: ExerciseFlow?
     /// Shown once after Finish workout.
     var summary: Summary?
+    /// Why Start workout didn't start, shown as an alert.
+    var startProblem: String?
+    /// Called after each Start workout, when Health may have just been allowed or refused, to tell the phone.
+    @ObservationIgnored var onStartAttempted: (() -> Void)?
     /// Called with the session after Finish workout, to send it to the phone.
     @ObservationIgnored var onSessionFinished: ((WorkoutSession) -> Void)?
 
@@ -56,8 +60,16 @@ final class WorkoutModel {
     }
 
     func startWorkout() {
-        Task { await health.start() }
+        Task {
+            let started = await health.start()
+            onStartAttempted?()
+            guard !started else { return }
+            startProblem = health.access == .denied ? Self.accessDeniedMessage : "The workout didn't start. Try again."
+        }
     }
+
+    static let accessDeniedMessage = "SpotMe isn't allowed to save workouts. On your iPhone, open the Health app, "
+        + "tap your profile picture, then Apps → SpotMe, and turn everything on."
 
     /// Ends the Health workout, if one is running, saving it to Health or discarding it,
     /// and marks today's session finished.

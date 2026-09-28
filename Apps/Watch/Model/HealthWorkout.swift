@@ -1,6 +1,7 @@
 import Foundation
 import HealthKit
 import OSLog
+import RepCoachCore
 
 /// The HealthKit side of a gym session: a traditional strength training workout that keeps the app running
 /// with the wrist down, collects heart rate and energy, and is saved to Health at the end.
@@ -26,18 +27,35 @@ final class HealthWorkout: NSObject {
     @ObservationIgnored private var session: HKWorkoutSession?
     @ObservationIgnored private var builder: HKLiveWorkoutBuilder?
 
+    private static let shareTypes: Set<HKSampleType> = [HKObjectType.workoutType()]
+    private static let readTypes: Set<HKObjectType> = [
+        HKQuantityType(.heartRate), HKQuantityType(.activeEnergyBurned), HKObjectType.workoutType(),
+    ]
+
     var isAvailable: Bool { HKHealthStore.isHealthDataAvailable() }
     var isRunning: Bool { state == .running }
+    /// Whether SpotMe may save workouts. Asked the first time Start workout is tapped; after that only the
+    /// Health app on the iPhone changes it.
+    var access: HealthAccess {
+        switch store.authorizationStatus(for: HKObjectType.workoutType()) {
+        case .sharingAuthorized: .allowed
+        case .sharingDenied: .denied
+        default: .notAsked
+        }
+    }
 
-    /// Starts the workout, asking for Health access the first time. Returns false if it couldn't start.
+    /// Starts the workout, asking for Health access the first time. Returns false if it couldn't start,
+    /// including when saving workouts isn't allowed.
     @discardableResult
     func start() async -> Bool {
         guard isAvailable, state == .idle else { return state == .running }
         state = .starting
         do {
-            try await store.requestAuthorization(
-                toShare: [HKObjectType.workoutType()],
-                read: [HKQuantityType(.heartRate), HKQuantityType(.activeEnergyBurned), HKObjectType.workoutType()])
+            try await store.requestAuthorization(toShare: Self.shareTypes, read: Self.readTypes)
+            guard store.authorizationStatus(for: HKObjectType.workoutType()) == .sharingAuthorized else {
+                reset()
+                return false
+            }
             let configuration = HKWorkoutConfiguration()
             configuration.activityType = .traditionalStrengthTraining
             configuration.locationType = .indoor

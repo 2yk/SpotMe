@@ -16,6 +16,8 @@ enum ScreenScript {
             completeEverything(today)
         case "finish-dialog":
             confirmingFinish.wrappedValue = true
+        case "start-denied":
+            workout.startProblem = WorkoutModel.accessDeniedMessage
         case "finish":
             // With `-sync YES`: finish the demo day so the watch sends it (and its history) to the phone.
             completeEverything(today)

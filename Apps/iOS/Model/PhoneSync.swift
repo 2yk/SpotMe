@@ -17,6 +17,8 @@ final class PhoneSync: NSObject {
     private(set) var lastReceived: Date?
     /// When settings and overrides last went to the watch.
     private(set) var lastSent: Date?
+    /// Whether the watch may save workouts to Health, as it last reported; nil until it has.
+    private(set) var watchHealthAccess: HealthAccess?
 
     @ObservationIgnored private let context: ModelContext
     @ObservationIgnored private let settings: SettingsStore
@@ -24,6 +26,7 @@ final class PhoneSync: NSObject {
     @ObservationIgnored private let defaults: UserDefaults
     private static let receivedKey = "lastSessionReceivedAt"
     private static let receivedIdsKey = "receivedSessionIds"
+    private static let healthAccessKey = "watchHealthAccess"
 
     /// The sessions stored most recently, sent back so the watch stops re-sending them.
     private var receivedIds: [String] {
@@ -37,6 +40,7 @@ final class PhoneSync: NSObject {
         self.today = today
         self.defaults = defaults
         lastReceived = defaults.object(forKey: Self.receivedKey) as? Date
+        watchHealthAccess = defaults.string(forKey: Self.healthAccessKey).flatMap(HealthAccess.init(rawValue:))
     }
 
     func activate() {
@@ -76,6 +80,11 @@ final class PhoneSync: NSObject {
         sendContext()
     }
 
+    fileprivate func receivedStatus(_ status: WatchStatus) {
+        watchHealthAccess = status.healthAccess
+        defaults.set(status.healthAccess.rawValue, forKey: Self.healthAccessKey)
+    }
+
     fileprivate func watchChanged(paired: Bool, installed: Bool) {
         watchState = !paired ? .notPaired : !installed ? .appNotInstalled : .ready
         sendContext()
@@ -87,7 +96,16 @@ extension PhoneSync: WCSessionDelegate {
                              error: Error?) {
         let paired = session.isPaired
         let installed = session.isWatchAppInstalled
-        Task { @MainActor in self.watchChanged(paired: paired, installed: installed) }
+        let status = WatchStatus(applicationContext: session.receivedApplicationContext)
+        Task { @MainActor in
+            if let status { self.receivedStatus(status) }
+            self.watchChanged(paired: paired, installed: installed)
+        }
+    }
+
+    nonisolated func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
+        guard let status = WatchStatus(applicationContext: applicationContext) else { return }
+        Task { @MainActor in self.receivedStatus(status) }
     }
 
     nonisolated func sessionWatchStateDidChange(_ session: WCSession) {

@@ -16,6 +16,8 @@ final class WatchSync: NSObject {
     @ObservationIgnored private let defaults: UserDefaults
     /// True while a session is under way; supplied by the app.
     @ObservationIgnored var isBusy: () -> Bool = { false }
+    /// Whether SpotMe may save workouts to Health; supplied by the app, nil when Health isn't in use.
+    @ObservationIgnored var healthAccess: () -> HealthAccess? = { nil }
 
     private static let unsentKey = "unsentSessionIds"
     private static let awaitingKey = "sessionsAwaitingPhone"
@@ -57,6 +59,17 @@ final class WatchSync: NSObject {
         resendUnconfirmed()
         flush()
         applyPendingIfIdle()
+        sendStatus()
+    }
+
+    /// Tells the phone the watch's Health access, for its Settings screen. Latest wins.
+    func sendStatus() {
+        guard LaunchOptions.sync, canSend, let access = healthAccess() else { return }
+        do {
+            try WCSession.default.updateApplicationContext(WatchStatus(healthAccess: access).applicationContext)
+        } catch {
+            Logger.sync.error("Couldn't send the watch status: \(error.localizedDescription)")
+        }
     }
 
     /// Applies the phone's latest settings and overrides, unless a session is under way.
@@ -144,6 +157,7 @@ final class WatchSync: NSObject {
         if companionInstalled { sendHistoryOnce() }
         resendUnconfirmed()
         flush()
+        sendStatus()
     }
 
     fileprivate func companionInstalledChanged(_ installed: Bool) {
@@ -151,6 +165,7 @@ final class WatchSync: NSObject {
         sendHistoryOnce()
         resendUnconfirmed()
         flush()
+        sendStatus()
     }
 
     fileprivate func receivedContext(_ context: SyncContext) {

@@ -60,6 +60,11 @@ struct TodayView: View {
             } message: {
                 Text(workout.health.isRunning ? "Your sets stay in SpotMe either way." : "Marks today's session done.")
             }
+            .alert("Workout not started", isPresented: startProblemShown) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(workout.startProblem ?? "")
+            }
         }
         #if DEBUG
         .task {
@@ -145,6 +150,10 @@ struct TodayView: View {
                     .id(Self.endOfList)
             }
         }
+    }
+
+    private var startProblemShown: Binding<Bool> {
+        Binding(get: { workout.startProblem != nil }, set: { if !$0 { workout.startProblem = nil } })
     }
 
     private func start(_ items: [PlanItem]) {
