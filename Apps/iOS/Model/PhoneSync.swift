@@ -23,6 +23,13 @@ final class PhoneSync: NSObject {
     @ObservationIgnored private let today: TodayModel
     @ObservationIgnored private let defaults: UserDefaults
     private static let receivedKey = "lastSessionReceivedAt"
+    private static let receivedIdsKey = "receivedSessionIds"
+
+    /// The sessions stored most recently, sent back so the watch stops re-sending them.
+    private var receivedIds: [String] {
+        get { defaults.stringArray(forKey: Self.receivedIdsKey) ?? [] }
+        set { defaults.set(Array(newValue.suffix(300)), forKey: Self.receivedIdsKey) }
+    }
 
     init(context: ModelContext, settings: SettingsStore, today: TodayModel, defaults: UserDefaults = .standard) {
         self.context = context
@@ -44,7 +51,8 @@ final class PhoneSync: NSObject {
         let session = WCSession.default
         guard session.activationState == .activated, session.isPaired, session.isWatchAppInstalled else { return }
         do {
-            let payload = SyncContext(settings: settings.settings, overrides: try SyncContext.overrides(in: context))
+            let payload = SyncContext(settings: settings.settings, overrides: try SyncContext.overrides(in: context),
+                                      received: receivedIds.compactMap(UUID.init))
             try session.updateApplicationContext(payload.applicationContext)
             lastSent = .now
         } catch {
@@ -61,7 +69,11 @@ final class PhoneSync: NSObject {
         }
         lastReceived = .now
         defaults.set(lastReceived, forKey: Self.receivedKey)
+        let id = payload.id.uuidString
+        receivedIds = receivedIds.filter { $0 != id } + [id]
+        Logger.sync.notice("Stored session \(id, privacy: .public)")
         today.refresh()
+        sendContext()
     }
 
     fileprivate func watchChanged(paired: Bool, installed: Bool) {
@@ -92,7 +104,11 @@ extension PhoneSync: WCSessionDelegate {
     }
 
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        guard let payload = SessionPayload(userInfo: userInfo) else { return }
+        guard let payload = SessionPayload(userInfo: userInfo) else {
+            Logger.sync.error("Ignored a transfer that isn't a session (keys: \(userInfo.keys.sorted(), privacy: .public))")
+            return
+        }
+        Logger.sync.notice("Received session \(payload.id.uuidString, privacy: .public) from the watch")
         Task { @MainActor in self.received(payload) }
     }
 }

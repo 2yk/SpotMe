@@ -2,16 +2,21 @@ import Foundation
 import SwiftData
 
 /// What the phone sends the watch (WatchConnectivity application context, latest wins): settings and plan
-/// overrides. The watch applies it between sessions, never in the middle of one.
+/// overrides, which the watch applies between sessions and never in the middle of one, plus the sessions the
+/// phone has stored, so the watch knows what it no longer needs to re-send.
 public struct SyncContext: Codable, Equatable, Sendable {
     public var settings: TrainingSettings
     /// By exerciseId; exercises as in plan.json are absent.
     public var overrides: [String: ExerciseOverrides]
+    /// Ids of the sessions the phone most recently stored.
+    public var received: [UUID]
     public var sentAt: Date
 
-    public init(settings: TrainingSettings, overrides: [String: ExerciseOverrides], sentAt: Date = .now) {
+    public init(settings: TrainingSettings, overrides: [String: ExerciseOverrides], received: [UUID] = [],
+                sentAt: Date = .now) {
         self.settings = settings
         self.overrides = overrides
+        self.received = received
         self.sentAt = sentAt
     }
 

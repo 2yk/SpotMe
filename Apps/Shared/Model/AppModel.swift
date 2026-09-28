@@ -53,6 +53,8 @@ enum LaunchOptions {
     static var dayKey: String? { UserDefaults.standard.string(forKey: "day") }
     /// `-screen rest`: with `-demo`, drive the UI to a screen for screenshots. Debug builds only.
     static var screen: String? { demo ? UserDefaults.standard.string(forKey: "screen") : nil }
+    /// `-tab history`: open the phone app on a tab. Navigation only, so it works without `-demo`.
+    static var tab: String? { UserDefaults.standard.string(forKey: "tab") }
     /// HealthKit workouts. Off in demo mode, so screenshots don't stop at the Health permission sheet,
     /// unless `-healthkit YES` is passed too.
     static var healthKit: Bool { !demo || UserDefaults.standard.bool(forKey: "healthkit") }

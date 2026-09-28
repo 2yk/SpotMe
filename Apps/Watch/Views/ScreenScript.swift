@@ -13,15 +13,11 @@ enum ScreenScript {
         }
         switch screen {
         case "alldone":
-            for item in today.day.items where !today.status(of: item).isFinished {
-                if item.kind == .checklist {
-                    today.complete(item)
-                } else if let log = try? today.recorder.log(for: item.exerciseId, in: today.startSession()) {
-                    _ = try? today.recorder.addSet(to: log, weight: today.target(for: item).weight ?? 0, reps: 10)
-                    try? today.recorder.complete(log)
-                }
-            }
-            today.refresh()
+            completeEverything(today)
+        case "finish":
+            // With `-sync YES`: finish the demo day so the watch sends it (and its history) to the phone.
+            completeEverything(today)
+            Task { await workout.finishWorkout() }
         case "firsttime", "firsttime-card":
             // The first weighted item not started today; with `-weeks 0` it has no history either.
             guard let item = today.day.items.first(where: { $0.kind == .weighted && today.log(for: $0) == nil })
@@ -87,6 +83,18 @@ enum ScreenScript {
         default:
             break
         }
+    }
+
+    private static func completeEverything(_ today: TodayModel) {
+        for item in today.day.items where !today.status(of: item).isFinished {
+            if item.kind == .checklist {
+                today.complete(item)
+            } else if let log = try? today.recorder.log(for: item.exerciseId, in: today.startSession()) {
+                _ = try? today.recorder.addSet(to: log, weight: today.target(for: item).weight ?? 0, reps: 10)
+                try? today.recorder.complete(log)
+            }
+        }
+        today.refresh()
     }
 
     /// `-screen bottom` and `-screen start`: scroll Today to its end.

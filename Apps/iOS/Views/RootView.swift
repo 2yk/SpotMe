@@ -36,7 +36,7 @@ struct RootView: View {
         }
         #if DEBUG
         .task {
-            switch LaunchOptions.screen {
+            switch LaunchOptions.screen ?? LaunchOptions.tab {
             case "history", "exercise": tab = .history
             case "plan", "editor": tab = .plan
             case "settings": tab = .settings

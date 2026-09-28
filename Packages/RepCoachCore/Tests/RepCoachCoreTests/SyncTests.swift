@@ -96,6 +96,7 @@ final class SyncTests: StoreTestCase {
             settings: TrainingSettings(programStart: sept(28), restHaptics: false),
             overrides: ["hammer-curl": ExerciseOverrides(sets: 4, restSec: 60),
                         "leg-press": ExerciseOverrides(increment: 5)],
+            received: [UUID(), UUID()],
             sentAt: sept(27))
         let received = try XCTUnwrap(SyncContext(applicationContext: sent.applicationContext))
         XCTAssertEqual(received, sent)
