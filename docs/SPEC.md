@@ -32,18 +32,20 @@ Not an App Store product. No accounts, no analytics, no third-party dependencies
 
 ## Progression rules (implemented in `ProgressionEngine`, already tested)
 
+**A session's working weight** is the weight of its first set, or a heavier one reached during it with at least the bottom of the range (the app raised it after a set that was too light, or it was changed by hand). A heavier attempt that fell short of the range doesn't count. The rules below look at the planned number of sets.
+
 **Starting a weighted exercise (double progression)**
 1. No history → ask for a starting weight (Digital Crown), reps target = rep range.
-2. Every set of the last session hit the top of the rep range at the same weight (for `sessionsAtTopToProgress` sessions, 2 for weighted pull-ups) → **add one increment**.
-3. The last two sessions at this weight both missed (a set under the range, a mid-session drop, or fewer sets) → **drop ~10%, at least one increment**.
-4. Otherwise → **same weight, aim to add reps**.
+2. Every set of the last session reached the top of the rep range without going back under its working weight (for `sessionsAtTopToProgress` sessions at the same working weight, 2 for weighted pull-ups) → **working weight + one increment**.
+3. The last two sessions at this working weight both missed (a set at or under it below the range, a drop under it, or fewer sets) → **drop ~10%, at least one increment**.
+4. Otherwise → **the last working weight, aim to add reps**. A raise within a session carries over to the next one.
 5. Deload week (every 6th week from the program start date, or toggled manually) → half the sets (rounded up), weight × 0.85 rounded to the nearest increment. Deload sessions are saved but excluded from progression history.
 
 **Between sets**
 - Reps below the range → next set lighter: 5% per missing rep, capped at 20%, always at least one increment, rounded down to the increment.
-- Reps 3+ above the top of the range and not the last set → next set one increment heavier.
+- Reps 2+ above the top of the range and not the last set → the weight felt light, so the next set is heavier: the weight this set's effort would lift for the top of the range (Epley), rounded down to the increment; at least one increment, at most two.
 - Otherwise → same weight.
-- Show the reason in one short line, e.g. "6 reps, below 8 · drop to 17.5 kg" or "Too light · 22.5 kg next".
+- Show the reason in one short line: "6 reps, below 8 · drop to 17.5 kg", "14 reps, above 12 · up to 22.5 kg", "Top of range · stay at 20 kg" or "In range · stay at 20 kg".
 
 **Pull-up endurance (Thursday):** volume-set reps = round(0.6 × today's max-rep set). If today's AMRAP isn't logged yet, use the last one.
 
@@ -83,7 +85,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 **Checklist items:** Done or Skip in the workout; one swipe to done in the list. Warmups show their steps as a scrollable list.
 
-**Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Same weight next time · aim for more reps") on the break screen before the next item.
+**Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Next time 20 kg · aim for more reps") on the break screen before the next item.
 
 **Workout session (HealthKit)**
 - Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) with Start workout, or when an exercise is opened, while "Save workouts to Health" is on in the iPhone's Settings and today's session isn't finished. With the switch off, nothing reaches Health (for a session logged after the fact).

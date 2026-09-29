@@ -65,6 +65,40 @@ final class ProgressionEngineTests: XCTestCase {
                        SessionTarget(weight: 90, sets: 2, reason: .deload))
     }
 
+    // MARK: firstTarget after a weight change within the session
+
+    func testARaiseMidSessionCarriesToNextTime() {
+        XCTAssertEqual(ProgressionEngine.firstTarget(for: p, history: [s([(20, 15), (22.5, 12), (22.5, 11)])]),
+                       SessionTarget(weight: 22.5, sets: 3, reason: .repeatWeight))
+    }
+
+    func testARaisedSessionAtTheTopIncreasesFromTheRaise() {
+        XCTAssertEqual(ProgressionEngine.firstTarget(for: p, history: [s([(20, 15), (22.5, 12), (22.5, 12)])]),
+                       SessionTarget(weight: 25, sets: 3, reason: .increase))
+    }
+
+    func testAHeavierAttemptThatFellShortIsNotAMiss() {
+        XCTAssertEqual(ProgressionEngine.firstTarget(for: p, history: [s([(20, 12), (20, 12), (22.5, 4)])]),
+                       SessionTarget(weight: 20, sets: 3, reason: .repeatWeight))
+    }
+
+    func testDroppingAfterTheFirstSetIsNotTheTop() {
+        XCTAssertEqual(ProgressionEngine.firstTarget(for: p, history: [s([(20, 12), (17.5, 12), (17.5, 12)])]),
+                       SessionTarget(weight: 20, sets: 3, reason: .repeatWeight))
+    }
+
+    func testARaiseThatFellShortGoesBackToTheFirstWeight() {
+        XCTAssertEqual(ProgressionEngine.firstTarget(for: p, history: [s([(20, 15), (22.5, 7), (22.5, 7)])]),
+                       SessionTarget(weight: 20, sets: 3, reason: .repeatWeight))
+    }
+
+    func testWorkingWeight() {
+        XCTAssertEqual(ProgressionEngine.workingWeight(s([(20, 15), (22.5, 12), (22.5, 11)]), p: p), 22.5)
+        XCTAssertEqual(ProgressionEngine.workingWeight(s([(20, 12), (20, 12), (22.5, 4)]), p: p), 20)
+        XCTAssertEqual(ProgressionEngine.workingWeight(s([(22.5, 5), (20, 8), (20, 7)]), p: p), 22.5)
+        XCTAssertNil(ProgressionEngine.workingWeight([], p: p))
+    }
+
     // MARK: nextSet
 
     func testNextSet() {
@@ -73,11 +107,18 @@ final class ProgressionEngineTests: XCTestCase {
             (p, 20, 7, 1, 3, .init(weight: 17.5, reason: .dropWeight)),
             (p, 20, 3, 1, 3, .init(weight: 15, reason: .dropWeight)),
             (p, 20, 10, 1, 3, .init(weight: 20, reason: .keep)),
+            (p, 20, 13, 1, 3, .init(weight: 20, reason: .keep)),
+            (p, 20, 14, 1, 3, .init(weight: 22.5, reason: .raiseWeight)),
             (p, 20, 15, 1, 3, .init(weight: 22.5, reason: .raiseWeight)),
             (p, 20, 15, 3, 3, .init(weight: 20, reason: .keep)),
-            (p, 20, 14, 1, 3, .init(weight: 20, reason: .keep)),
-            (lateral, 8, 12, 1, 3, .init(weight: 6, reason: .dropWeight)),
+            (p, 20, 25, 1, 3, .init(weight: 25, reason: .raiseWeight)),
+            (p, 20, 40, 1, 3, .init(weight: 25, reason: .raiseWeight)),
+            (legPress, 100, 16, 1, 4, .init(weight: 110, reason: .raiseWeight)),
             (legPress, 100, 5, 2, 4, .init(weight: 80, reason: .dropWeight)),
+            (lateral, 8, 12, 1, 3, .init(weight: 6, reason: .dropWeight)),
+            (lateral, 8, 22, 1, 3, .init(weight: 9, reason: .raiseWeight)),
+            (pullUp, 15, 7, 1, 5, .init(weight: 17.5, reason: .raiseWeight)),
+            (pullUp, 0, 8, 1, 5, .init(weight: 2.5, reason: .raiseWeight)),
         ]
         for (pres, w, r, i, n, expected) in cases {
             XCTAssertEqual(ProgressionEngine.nextSet(for: pres, weight: w, reps: r, setIndex: i, totalSets: n), expected,

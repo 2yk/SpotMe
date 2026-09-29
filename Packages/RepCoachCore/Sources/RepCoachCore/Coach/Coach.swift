@@ -16,15 +16,16 @@ public enum Coach {
         }
     }
 
-    /// Between sets of a weighted exercise: "6 reps, below 8 · drop to 17.5 kg", "Too light · 22.5 kg next".
+    /// Between sets of a weighted exercise: "6 reps, below 8 · drop to 17.5 kg", "14 reps, above 12 · up to
+    /// 22.5 kg", "Top of range · stay at 20 kg".
     public static func nextSet(_ next: NextSetTarget, reps: Int, repMin: Int, repMax: Int) -> Line {
         switch next.reason {
         case .dropWeight:
             Line("\(reps) reps, below \(repMin) · drop to \(Format.kg(next.weight))", .down)
         case .raiseWeight:
-            Line("Too light · \(Format.kg(next.weight)) next", .up)
-        case .keep where reps > repMax:
-            Line("Above range · stay at \(Format.kg(next.weight))", .neutral)
+            Line("\(reps) reps, above \(repMax) · up to \(Format.kg(next.weight))", .up)
+        case .keep where reps >= repMax:
+            Line("Top of range · stay at \(Format.kg(next.weight))", .up)
         case .keep:
             Line("In range · stay at \(Format.kg(next.weight))", .neutral)
         }
@@ -52,7 +53,8 @@ public enum Coach {
         }
     }
 
-    /// After the last set of a weighted exercise: "All sets 10 · next time 22.5 kg".
+    /// After the last set of a weighted exercise: "All sets 10 · next time 22.5 kg", "Next time 20 kg · aim for
+    /// more reps".
     /// - Parameters:
     ///   - today: the sets just logged.
     ///   - next: `ProgressionEngine.firstTarget` with today's sets at the front of the history.
@@ -69,11 +71,10 @@ public enum Coach {
         case .decrease:
             return Line("Two tough sessions · next time \(Format.kg(next.weight ?? 0))", .down)
         case .repeatWeight, .firstTime, .deload:
-            if let weight = today.first?.weight,
-               ProgressionEngine.isAtTop(today, weight: weight, p: prescription) {
+            if ProgressionEngine.isAtTop(today, p: prescription) {
                 return Line("At the top · repeat it next time to go up", .up)
             }
-            return Line("Same weight next time · aim for more reps", .neutral)
+            return Line("Next time \(Format.kg(next.weight ?? 0)) · aim for more reps", .neutral)
         }
     }
 

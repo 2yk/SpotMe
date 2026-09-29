@@ -63,11 +63,13 @@ final class CoachLineTests: XCTestCase {
 
     func testOtherNextSetLines() {
         XCTAssertEqual(Coach.nextSet(.init(weight: 22.5, reason: .raiseWeight), reps: 15, repMin: 8, repMax: 12),
-                       Coach.Line("Too light · 22.5 kg next", .up))
+                       Coach.Line("15 reps, above 12 · up to 22.5 kg", .up))
         XCTAssertEqual(Coach.nextSet(.init(weight: 20, reason: .keep), reps: 10, repMin: 8, repMax: 12),
                        Coach.Line("In range · stay at 20 kg", .neutral))
+        XCTAssertEqual(Coach.nextSet(.init(weight: 20, reason: .keep), reps: 12, repMin: 8, repMax: 12),
+                       Coach.Line("Top of range · stay at 20 kg", .up))
         XCTAssertEqual(Coach.nextSet(.init(weight: 20, reason: .keep), reps: 13, repMin: 8, repMax: 12),
-                       Coach.Line("Above range · stay at 20 kg", .neutral))
+                       Coach.Line("Top of range · stay at 20 kg", .up))
     }
 
     func testTags() {
@@ -103,7 +105,12 @@ final class CoachLineTests: XCTestCase {
         XCTAssertEqual(summary([(20, 10), (20, 10), (20, 10)]), Coach.Line("All sets 10 · next time 22.5 kg", .up))
         XCTAssertEqual(summary([(20, 11), (20, 10), (20, 12)]), Coach.Line("Top of the range · next time 22.5 kg", .up))
         XCTAssertEqual(summary([(20, 9), (20, 8), (20, 8)]),
-                       Coach.Line("Same weight next time · aim for more reps", .neutral))
+                       Coach.Line("Next time 20 kg · aim for more reps", .neutral))
+        // Raised after a set that was too light: next time starts from the raise.
+        XCTAssertEqual(summary([(20, 12), (22.5, 9), (22.5, 8)]),
+                       Coach.Line("Next time 22.5 kg · aim for more reps", .neutral))
+        XCTAssertEqual(summary([(20, 12), (22.5, 10), (22.5, 10)]),
+                       Coach.Line("Top of the range · next time 25 kg", .up))
         XCTAssertEqual(summary([(20, 5), (20, 5), (20, 5)], before: [missed]),
                        Coach.Line("Two tough sessions · next time 17.5 kg", .down))
         XCTAssertEqual(summary([(17.5, 10), (17.5, 10)], deload: true),

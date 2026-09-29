@@ -60,7 +60,7 @@ public enum NextSetReason: String, Codable, Sendable {
     case keep
     /// Reps fell below the range: lighter next set.
     case dropWeight
-    /// Reps were 3+ above the range: heavier next set.
+    /// Reps were 2+ above the range: heavier next set.
     case raiseWeight
 }
 
@@ -96,13 +96,13 @@ public enum ProgressionEngine {
     ///   Each session is its sets in the order performed.
     public static func firstTarget(for p: Prescription, history: [[LoggedSet]], deload: Bool = false) -> SessionTarget {
         let sets = deload ? Int((Double(p.sets) / 2).rounded(.up)) : p.sets
-        guard let last = history.first, let work = last.first?.weight else {
+        guard let last = history.first, let work = workingWeight(last, p: p) else {
             return SessionTarget(weight: nil, sets: sets, reason: .firstTime)
         }
 
         var consecutiveTop = 0
         for session in history {
-            if session.first?.weight == work && isAtTop(session, weight: work, p: p) {
+            if workingWeight(session, p: p) == work && isAtTop(session, p: p) {
                 consecutiveTop += 1
             } else {
                 break
@@ -115,7 +115,7 @@ public enum ProgressionEngine {
             weight = work + p.increment
             reason = .increase
         } else if history.count >= 2,
-                  history[1].first?.weight == work,
+                  workingWeight(history[1], p: p) == work,
                   missed(history[0], p: p), missed(history[1], p: p) {
             var reduced = roundDown(work * 0.9, to: p.increment)
             if reduced > work - p.increment { reduced = work - p.increment }
@@ -133,18 +133,33 @@ public enum ProgressionEngine {
         return SessionTarget(weight: twoDecimals(weight), sets: sets, reason: reason)
     }
 
-    /// Every prescribed set at or above `weight` and at or above the top of the rep range.
-    static func isAtTop(_ session: [LoggedSet], weight: Double, p: Prescription) -> Bool {
-        let working = Array(session.prefix(p.sets))
-        guard working.count >= p.sets else { return false }
-        return working.allSatisfy { $0.weight >= weight && $0.reps >= p.repMax }
+    /// The weight a session was trained at: the first set's, or a heavier one reached within it with at least
+    /// the bottom of the range (a raise after a set that was too light, or a change by hand). A heavier attempt
+    /// that fell short of the range doesn't count. nil for a session without sets.
+    public static func workingWeight(_ session: [LoggedSet], p: Prescription) -> Double? {
+        let working = session.prefix(p.sets)
+        guard let first = working.first?.weight else { return nil }
+        return working.filter { $0.reps >= p.repMin }.map(\.weight).reduce(first, max)
     }
 
-    /// Too few sets, any set under the range, or the weight had to be dropped mid-session.
+    /// Every planned set at the top of the range or above, never going back under the working weight.
+    public static func isAtTop(_ session: [LoggedSet], p: Prescription) -> Bool {
+        let working = Array(session.prefix(p.sets))
+        guard working.count >= p.sets, let weight = workingWeight(working, p: p) else { return false }
+        return working.allSatisfy { $0.reps >= p.repMax } && !droppedBelow(weight, in: working)
+    }
+
+    /// Too few sets, a set at or under the working weight below the range, or a drop under the working weight.
     static func missed(_ session: [LoggedSet], p: Prescription) -> Bool {
         let working = Array(session.prefix(p.sets))
-        guard let first = working.first?.weight, working.count >= p.sets else { return true }
-        return working.contains { $0.reps < p.repMin || $0.weight < first }
+        guard working.count >= p.sets, let weight = workingWeight(working, p: p) else { return true }
+        return working.contains { $0.reps < p.repMin && $0.weight <= weight } || droppedBelow(weight, in: working)
+    }
+
+    /// The weight went back under `weight` after reaching it.
+    static func droppedBelow(_ weight: Double, in sets: [LoggedSet]) -> Bool {
+        guard let reached = sets.firstIndex(where: { $0.weight >= weight }) else { return false }
+        return sets[reached...].contains { $0.weight < weight }
     }
 
     // MARK: Within a session
@@ -161,8 +176,12 @@ public enum ProgressionEngine {
             if next > weight - p.increment { next = weight - p.increment }
             return NextSetTarget(weight: max(twoDecimals(next), 0), reason: .dropWeight)
         }
-        if reps >= p.repMax + 3 && setIndex < totalSets {
-            return NextSetTarget(weight: twoDecimals(weight + p.increment), reason: .raiseWeight)
+        if reps >= p.repMax + 2 && setIndex < totalSets {
+            // The weight this set's effort would lift for the top of the range, rounded down: at least one
+            // increment heavier, at most two.
+            let top = roundDown(estimated1RM(weight: weight, reps: reps) / (1 + Double(p.repMax) / 30), to: p.increment)
+            let next = min(max(top, weight + p.increment), weight + 2 * p.increment)
+            return NextSetTarget(weight: twoDecimals(next), reason: .raiseWeight)
         }
         return NextSetTarget(weight: weight, reason: .keep)
     }
