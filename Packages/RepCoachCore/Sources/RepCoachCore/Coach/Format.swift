@@ -16,6 +16,18 @@ public enum Format {
         "\(weight(kg)) kg"
     }
 
+    /// "14.25″"
+    public static func inches(_ inches: Double) -> String {
+        "\(weight(inches))″"
+    }
+
+    /// "+0.5″", "−0.25″", "±0″": a change in inches, with its sign.
+    public static func inchesChange(_ change: Double) -> String {
+        let rounded = (change * 100).rounded() / 100
+        if rounded == 0 { return "±0″" }
+        return (rounded > 0 ? "+" : "−") + inches(abs(rounded))
+    }
+
     /// "6–10", or "15" when both ends match.
     public static func range(_ low: Int, _ high: Int) -> String {
         low == high ? "\(low)" : "\(low)–\(high)"

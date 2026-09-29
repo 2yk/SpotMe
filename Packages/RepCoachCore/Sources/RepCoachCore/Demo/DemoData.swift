@@ -5,6 +5,24 @@ import SwiftData
 /// Weeks of plausible training for the simulator, previews and screenshots. Debug builds only; never touches
 /// the on-disk store because the apps only seed an in-memory container.
 public enum DemoData {
+    /// Arm and waist every two weeks, the last `lastDaysAgo` days ago, with the arms creeping up. With
+    /// `waistWarning` the last one has the waist up an inch and a half while the arms stay put.
+    public static func seedBody(_ context: ModelContext, entries: Int = 5, lastDaysAgo: Int = 3, today: Date = .now,
+                                calendar: Calendar = .current, waistWarning: Bool = false) throws {
+        let arms = [14.0, 14.25, 14.25, 14.5, 14.75, 15.0]
+        let waists = [32.0, 32.0, 32.25, 32.25, 32.5, 32.5]
+        let count = min(entries, arms.count)
+        for index in 0..<count {
+            let daysAgo = lastDaysAgo + 14 * (count - 1 - index)
+            guard let date = calendar.date(byAdding: .day, value: -daysAgo, to: today) else { continue }
+            let last = index == count - 1
+            let arm = last && waistWarning ? arms[max(0, index - 1)] : arms[index]
+            let waist = last && waistWarning ? waists[max(0, index - 1)] + 1.5 : waists[index]
+            context.insert(BodyMeasurement(date: date, arm: arm, waist: waist))
+        }
+        try context.save()
+    }
+
     /// Fills `context` with a session of every plan day for each of the past `weeks`, with weights chosen by
     /// `ProgressionEngine` and reps that creep up until the weight goes up.
     /// - Parameter dayKey: also start today's session for this plan day: the leading checklist items done

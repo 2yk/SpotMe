@@ -1,10 +1,13 @@
 import SwiftUI
+import SwiftData
 import RepCoachCore
 
 /// The day's plan, read-mostly: handy for checking tomorrow's session the night before.
 struct TodayScreen: View {
     @Environment(TodayModel.self) private var today
+    @Query(sort: \BodyMeasurement.date, order: .reverse) private var measurements: [BodyMeasurement]
     @State private var detail: PlanItem?
+    @State private var measuring = false
 
     var body: some View {
         NavigationStack {
@@ -14,6 +17,11 @@ struct TodayScreen: View {
                         withAnimation(.snappy) { today.select(key) }
                     }
                     DayCard()
+                    // Only once the body log is in use: a nudge when the two weeks are up.
+                    if !measurements.isEmpty, BodyLog.isDue(measurements.map(\.entry)) {
+                        Button { measuring = true } label: { BodyLogDue() }
+                            .buttonStyle(.plain)
+                    }
                     if today.queue.isComplete {
                         AllDoneHero(count: today.queue.totalCount)
                     }
@@ -35,6 +43,9 @@ struct TodayScreen: View {
             .navigationTitle(today.isToday ? "Today" : today.day.title)
             .sheet(item: $detail) { item in
                 ItemDetailSheet(item: item)
+            }
+            .sheet(isPresented: $measuring) {
+                AddMeasurementSheet(last: measurements.first)
             }
             #if DEBUG
             .task {
@@ -78,6 +89,29 @@ private struct DayCard: View {
         }
         .padding(18)
         .card(Theme.card, radius: 24)
+    }
+}
+
+/// Two weeks since the last arm and waist measurement.
+private struct BodyLogDue: View {
+    var body: some View {
+        HStack(spacing: 14) {
+            Image(systemName: "ruler")
+                .font(.system(size: 17, weight: .bold))
+                .foregroundStyle(Theme.volt)
+                .frame(width: 36, height: 36)
+                .background(Circle().fill(Theme.volt.opacity(0.17)))
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Body log due").font(.rounded(.body, .semibold))
+                Text("Measure your flexed arm and waist").font(.rounded(.subheadline)).foregroundStyle(Theme.secondary)
+            }
+            Spacer(minLength: 8)
+            Image(systemName: "plus.circle.fill")
+                .font(.system(size: 22))
+                .foregroundStyle(Theme.volt)
+        }
+        .padding(14)
+        .card(Theme.card, radius: 20)
     }
 }
 

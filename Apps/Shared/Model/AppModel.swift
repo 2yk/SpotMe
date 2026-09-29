@@ -32,6 +32,10 @@ final class AppModel {
                                   inProgress: LaunchOptions.demoFresh ? nil
                                       : LaunchOptions.dayKey ?? plan.day(for: .now)?.key)
                 if LaunchOptions.sampleEdits { try seedSampleEdits(container.mainContext, plan: plan) }
+                if LaunchOptions.demoWeeks > 0 {
+                    try DemoData.seedBody(container.mainContext, lastDaysAgo: LaunchOptions.screen == "body-due" ? 16 : 3,
+                                          waistWarning: LaunchOptions.screen == "body-warning")
+                }
                 return container
             } catch {
                 fatalError("Couldn't build the demo store: \(error)")

@@ -87,6 +87,24 @@ public final class ExerciseSettings {
     }
 }
 
+/// Flexed upper arm and waist, measured about every two weeks, in inches. iPhone only.
+@Model
+public final class BodyMeasurement {
+    @Attribute(.unique) public var id: UUID
+    public var date: Date
+    /// Flexed upper arm, at its widest.
+    public var arm: Double
+    /// Waist, at the navel.
+    public var waist: Double
+
+    public init(id: UUID = UUID(), date: Date = .now, arm: Double, waist: Double) {
+        self.id = id
+        self.date = date
+        self.arm = arm
+        self.waist = waist
+    }
+}
+
 /// The user's `PlanEdits` (exercises added, removed or moved, and their own exercises), JSON-encoded in one row.
 @Model
 public final class PlanEditsRecord {

@@ -11,15 +11,18 @@ struct HistoryScreen: View {
     @State private var model = HistoryModel()
     @State private var path: [String] = []
     @State private var export = SetsExport(csv: "", date: .now, sessions: 0)
+    @State private var showsBody = false
 
     var body: some View {
         NavigationStack(path: $path) {
             ScrollView {
-                if model.exercises.isEmpty {
-                    EmptyHistory()
-                } else {
-                    VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: 22) {
+                    if model.exercises.isEmpty {
+                        bodyCard
+                        EmptyHistory()
+                    } else {
                         WeeklySetsCard(weeks: model.weeks, sessions: model.sessionCount)
+                        bodyCard
                         ForEach(days, id: \.self) { day in
                             let exercises = model.exercises.filter { $0.dayTitle == day }
                             CardSection(title: day) {
@@ -31,9 +34,9 @@ struct HistoryScreen: View {
                             }
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 32)
                 }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 32)
             }
             .scrollIndicators(.hidden)
             .background(Theme.canvas)
@@ -46,6 +49,7 @@ struct HistoryScreen: View {
                     .accessibilityLabel("Export all sets as CSV")
                 }
             }
+            .navigationDestination(isPresented: $showsBody) { BodyLogScreen() }
             .navigationDestination(for: String.self) { id in
                 if let exercise = model.exercises.first(where: { $0.id == id }) {
                     ExerciseHistoryScreen(exercise: exercise)
@@ -54,6 +58,7 @@ struct HistoryScreen: View {
             .task {
                 load()
                 #if DEBUG
+                if ["body", "body-warning", "body-add"].contains(LaunchOptions.screen) { showsBody = true }
                 if LaunchOptions.screen == "exercise",
                    let first = model.exercises.first(where: { $0.item.kind == .weighted }) {
                     path = [first.id]
@@ -64,6 +69,11 @@ struct HistoryScreen: View {
             .onChange(of: sync.sessionsChanged) { load() }
             .onChange(of: today.editedPlan) { load() }
         }
+    }
+
+    private var bodyCard: some View {
+        Button { showsBody = true } label: { BodyLogCard() }
+            .buttonStyle(.plain)
     }
 
     private func load() {
