@@ -24,6 +24,7 @@ struct CountdownRing<Label: View>: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
                         .foregroundStyle(countdown.isPaused ? Theme.secondary : .white)
+                        .accessibilityIdentifier("countdown")
                     if countdown.isPaused {
                         Text("Paused").eyebrow(Theme.amber, size: digits < 28 ? 8 : 10)
                     } else {

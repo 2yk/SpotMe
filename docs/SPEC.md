@@ -107,19 +107,19 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 - **Today:** the day's card and the same list, read-mostly (useful for checking the day before training). Nothing is highlighted.
 - **History:** per exercise, sessions newest first with every set. A Swift Charts line of top-set weight and estimated 1RM (Epley) over time.
-- **Plan:** view all days; edit per exercise: increment, rep range, sets, rest, starting weight. "Reset to bundled plan" keeps history.
+- **Plan:** view all days as the user has them. Tap an exercise to rename it or change its increment, rep range, sets, rest and starting weight (a new name shows everywhere the exercise does), or remove it from the day. Swipe to remove; Edit to reorder; **Add exercise** (+) for a new one (name, logged as weight and reps, reps, timed or tick-off, section, prescription) or one from another day, which keeps its history. Added exercises go after the day's last exercise, ahead of the cooldown. "Reset Monday to the plan" and "Reset everything to the plan" keep history. plan.json never changes.
 - **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off hides Start workout on the watch), the watch's Health access and a shortcut to the Health app.
 - **Body log (optional, milestone 4):** flexed arm and waist, every 2 weeks. Warn if waist is up more than 1 inch while arms haven't changed.
 
 ## Data and sync
 
 - SwiftData on both devices.
-- Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId?), `ExerciseLog` (session, exerciseId, order, completedAt?), `SetLog` (log, index, weight, reps, seconds?, timestamp), `ExerciseSettings` (exerciseId, overrides for increment/rep range/sets/rest/startWeight).
+- Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId?), `ExerciseLog` (session, exerciseId, order, completedAt?), `SetLog` (log, index, weight, reps, seconds?, timestamp), `ExerciseSettings` (exerciseId, overrides for name/increment/rep range/sets/rest/startWeight), `PlanEditsRecord` (the user's `PlanEdits`: each changed day's exercise order, and the exercises they created, with ids starting "custom-").
 - **The watch works fully without the phone nearby.** It keeps its own store and the history it needs for targets.
 - WatchConnectivity:
   - Watch → phone: each finished `WorkoutSession` (with its logs) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID.
   - The watch's own application context (`WatchStatus`): its Health access, the ids of every session it has, and the ids it discarded. The phone deletes discarded sessions and never stores them again, and sends back (via `transferUserInfo`) every session the watch doesn't have, so a reinstalled watch app gets its history and today's progress back. A restored copy never overwrites a session the watch has.
-  - Phone → watch: plan overrides and settings via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
+  - Phone → watch: settings, exercise overrides and plan edits via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
 - Nothing is deleted automatically; only Discard workout deletes.
 
 ## Out of scope

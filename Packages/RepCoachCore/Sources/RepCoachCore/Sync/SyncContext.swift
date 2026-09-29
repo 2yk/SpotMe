@@ -1,23 +1,36 @@
 import Foundation
 import SwiftData
 
-/// What the phone sends the watch (WatchConnectivity application context, latest wins): settings and plan
-/// overrides, which the watch applies between sessions and never in the middle of one, plus the sessions the
-/// phone has stored, so the watch knows what it no longer needs to re-send.
+/// What the phone sends the watch (WatchConnectivity application context, latest wins): settings, exercise
+/// overrides and plan edits, which the watch applies between sessions and never in the middle of one, plus the
+/// sessions the phone has stored, so the watch knows what it no longer needs to re-send.
 public struct SyncContext: Codable, Equatable, Sendable {
     public var settings: TrainingSettings
     /// By exerciseId; exercises as in plan.json are absent.
     public var overrides: [String: ExerciseOverrides]
+    /// Exercises added, removed or moved, and the user's own exercises.
+    public var plan: PlanEdits
     /// Ids of the sessions the phone most recently stored.
     public var received: [UUID]
     public var sentAt: Date
 
-    public init(settings: TrainingSettings, overrides: [String: ExerciseOverrides], received: [UUID] = [],
-                sentAt: Date = .now) {
+    public init(settings: TrainingSettings, overrides: [String: ExerciseOverrides], plan: PlanEdits = PlanEdits(),
+                received: [UUID] = [], sentAt: Date = .now) {
         self.settings = settings
         self.overrides = overrides
+        self.plan = plan
         self.received = received
         self.sentAt = sentAt
+    }
+
+    /// Contexts from before plan edits existed carry none.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        settings = try container.decode(TrainingSettings.self, forKey: .settings)
+        overrides = try container.decode([String: ExerciseOverrides].self, forKey: .overrides)
+        plan = try container.decodeIfPresent(PlanEdits.self, forKey: .plan) ?? PlanEdits()
+        received = try container.decodeIfPresent([UUID].self, forKey: .received) ?? []
+        sentAt = try container.decode(Date.self, forKey: .sentAt)
     }
 
     /// The overrides stored in `context`, keyed by exerciseId.
@@ -25,6 +38,12 @@ public struct SyncContext: Codable, Equatable, Sendable {
         let rows = try context.fetch(FetchDescriptor<ExerciseSettings>())
         return Dictionary(rows.filter { !$0.overrides.isEmpty }.map { ($0.exerciseId, $0.overrides) },
                           uniquingKeysWith: { first, _ in first })
+    }
+
+    /// Makes the plan's customisation in `context` exactly this: the overrides and the plan edits.
+    public func applyPlan(to context: ModelContext) throws {
+        try applyOverrides(to: context)
+        try plan.save(to: context)
     }
 
     /// Makes the overrides in `context` exactly these: changed rows are updated, missing ones added, and rows

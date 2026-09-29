@@ -51,19 +51,28 @@ final class HistoryModel {
         return calendar
     }()
 
-    func load(plan: Plan, context: ModelContext) {
+    /// Titles exercises that are on no day any more, but have history.
+    static let notInPlan = "Not in the plan"
+
+    /// - Parameters:
+    ///   - plan: as the user has it, edits and names applied (`TodayModel.editedPlan`).
+    ///   - library: every exercise, for history of ones taken off every day (`TodayModel.library`).
+    func load(plan: Plan, library: [PlanItem], context: ModelContext) {
         let calendar = Self.calendar
         let store = HistoryStore(context: context)
         var seen = Set<String>()
         var exercises: [Exercise] = []
-        for day in plan.days {
-            for item in day.items where item.kind != .checklist && seen.insert(item.exerciseId).inserted {
-                let entries = (try? store.entries(for: item.exerciseId)) ?? []
-                guard !entries.isEmpty else { continue }
-                let points = entries.reversed().map { point(for: $0, kind: item.kind) }
-                exercises.append(Exercise(item: item, dayTitle: day.title, entries: entries, points: points))
-            }
+        func add(_ item: PlanItem, dayTitle: String) {
+            guard item.kind != .checklist, seen.insert(item.exerciseId).inserted else { return }
+            let entries = (try? store.entries(for: item.exerciseId)) ?? []
+            guard !entries.isEmpty else { return }
+            let points = entries.reversed().map { point(for: $0, kind: item.kind) }
+            exercises.append(Exercise(item: item, dayTitle: dayTitle, entries: entries, points: points))
         }
+        for day in plan.days {
+            day.items.forEach { add($0, dayTitle: day.title) }
+        }
+        library.forEach { add($0, dayTitle: Self.notInPlan) }
         self.exercises = exercises
         sessionCount = (try? context.fetchCount(FetchDescriptor<WorkoutSession>())) ?? 0
 

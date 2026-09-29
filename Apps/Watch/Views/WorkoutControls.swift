@@ -99,6 +99,7 @@ private struct ControlButton: View {
             .opacity(isEnabled ? 1 : 0.35)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(title)
     }
 }
 

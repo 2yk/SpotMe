@@ -2,40 +2,66 @@ import SwiftUI
 import SwiftData
 import RepCoachCore
 
-/// Per-exercise overrides, stored in `ExerciseSettings`. plan.json itself is never changed.
+/// One exercise: its name and prescription, stored as overrides in `ExerciseSettings` (plan.json itself is never
+/// changed), and taking it off the day. A new name shows everywhere the exercise does; history is kept.
 struct PlanItemEditor: View {
-    /// As bundled, without overrides.
-    let item: PlanItem
+    let exerciseId: String
+    /// The plan's own day it was opened from.
+    let day: PlanDay
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     @Environment(TodayModel.self) private var today
     @Environment(PhoneSync.self) private var sync
     @Query private var allSettings: [ExerciseSettings]
+    @State private var name = ""
+    @State private var confirmingRemove = false
 
-    private static let increments: [Double] = [1, 1.25, 2, 2.5, 5, 10]
+    private static let increments: [Double] = [0.5, 1, 1.25, 2, 2.5, 5, 10]
 
-    private var settings: ExerciseSettings? { allSettings.first { $0.exerciseId == item.exerciseId } }
+    /// As the plan (or the user, for their own exercise) defined it, before overrides.
+    private var item: PlanItem {
+        today.baseItem(exerciseId) ?? PlanItem(name: "Exercise", exerciseId: exerciseId, group: "", kind: .checklist)
+    }
+    private var settings: ExerciseSettings? { allSettings.first { $0.exerciseId == exerciseId } }
     private var overrides: ExerciseOverrides { settings?.overrides ?? ExerciseOverrides() }
     private var effective: PlanItem { item.applying(overrides) }
     private var hasReps: Bool { item.kind == .weighted || item.kind == .reps }
+    private var isOnDay: Bool { today.planEdits.itemIds(for: day).contains(exerciseId) }
 
     var body: some View {
         Form {
             Section {
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack(spacing: 14) {
-                        ItemBadge(item: item, size: 48)
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(item.group).eyebrow(item.tint, size: 11)
-                            Text(item.name).font(.rounded(.title2, .bold))
-                        }
-                    }
-                    if let note = item.note {
-                        Text(note).font(.rounded(.subheadline)).foregroundStyle(Theme.secondary)
+                HStack(spacing: 14) {
+                    ItemBadge(item: item, size: 48)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(item.group).eyebrow(item.tint, size: 11)
+                        Text(effective.name).font(.rounded(.title2, .bold))
                     }
                 }
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 4, leading: 4, bottom: 8, trailing: 4))
+                if let note = item.note {
+                    Text(note)
+                        .font(.rounded(.subheadline))
+                        .foregroundStyle(Theme.secondary)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 8, trailing: 4))
+                }
             }
+
+            Section {
+                TextField(item.name, text: $name)
+                    .textInputAutocapitalization(.words)
+                    .submitLabel(.done)
+                    .onSubmit(saveName)
+            } header: {
+                Text("Name")
+            } footer: {
+                if overrides.name != nil {
+                    Text("In the plan: \(item.name)")
+                }
+            }
+            .listRowBackground(Theme.card)
 
             if let steps = item.steps {
                 Section("Steps") {
@@ -86,25 +112,58 @@ struct PlanItemEditor: View {
                     }
                     .listRowBackground(Theme.card)
                 }
+            }
 
-                if !overrides.isEmpty {
-                    Section {
-                        Button("Reset to plan", role: .destructive) { update { $0 = ExerciseOverrides() } }
-                    } footer: {
-                        Text("History is kept. The watch picks up changes before its next session.")
+            if !overrides.isEmpty {
+                Section {
+                    Button("Reset to plan", role: .destructive) {
+                        update { $0 = ExerciseOverrides() }
+                        name = item.name
                     }
-                    .listRowBackground(Theme.card)
+                } footer: {
+                    Text("History is kept. The watch picks up changes before its next session.")
                 }
+                .listRowBackground(Theme.card)
+            }
+
+            if isOnDay {
+                Section {
+                    Button("Remove from \(day.title)", role: .destructive) { confirmingRemove = true }
+                } footer: {
+                    Text("Its history is kept, and you can add it back with Add exercise.")
+                }
+                .listRowBackground(Theme.card)
             }
         }
         .scrollContentBackground(.hidden)
         .background(Theme.canvas)
-        .navigationTitle(item.name)
+        .navigationTitle(effective.name)
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear { today.refresh() }
+        .confirmationDialog("Remove \(effective.name) from \(day.title)?", isPresented: $confirmingRemove,
+                            titleVisibility: .visible) {
+            Button("Remove", role: .destructive) {
+                today.editPlan { $0.remove(exerciseId, from: day) }
+                sync.sendContext()
+                dismiss()
+            }
+        }
+        .onAppear { name = effective.name }
+        .onDisappear {
+            saveName()
+            today.refresh()
+        }
     }
 
     // MARK: Bindings
+
+    /// A blank name, or the plan's own, clears the override.
+    private func saveName() {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let wanted = trimmed.isEmpty || trimmed == item.name ? nil : trimmed
+        guard wanted != overrides.name else { return }
+        update { $0.name = wanted }
+        if trimmed.isEmpty { name = item.name }
+    }
 
     /// Setting the plan's own value clears the override.
     private func number(_ key: WritableKeyPath<ExerciseOverrides, Int?>, plan: Int) -> Binding<Int> {
@@ -136,11 +195,12 @@ struct PlanItemEditor: View {
         } else if let settings {
             settings.overrides = next
         } else {
-            let created = ExerciseSettings(exerciseId: item.exerciseId)
+            let created = ExerciseSettings(exerciseId: exerciseId)
             created.overrides = next
             context.insert(created)
         }
         try? context.save()
+        today.refresh()
         sync.sendContext()
     }
 }

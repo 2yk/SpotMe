@@ -2,6 +2,8 @@ import Foundation
 
 /// The user's changes to one exercise. nil means "as in plan.json".
 public struct ExerciseOverrides: Codable, Hashable, Sendable {
+    /// A new name, everywhere the exercise appears.
+    public var name: String?
     public var increment: Double?
     public var repMin: Int?
     public var repMax: Int?
@@ -10,8 +12,9 @@ public struct ExerciseOverrides: Codable, Hashable, Sendable {
     /// Used for the first session, when there's no history to go on.
     public var startWeight: Double?
 
-    public init(increment: Double? = nil, repMin: Int? = nil, repMax: Int? = nil, sets: Int? = nil,
-                restSec: Int? = nil, startWeight: Double? = nil) {
+    public init(name: String? = nil, increment: Double? = nil, repMin: Int? = nil, repMax: Int? = nil,
+                sets: Int? = nil, restSec: Int? = nil, startWeight: Double? = nil) {
+        self.name = name
         self.increment = increment
         self.repMin = repMin
         self.repMax = repMax
@@ -28,6 +31,7 @@ extension PlanItem {
     public func applying(_ overrides: ExerciseOverrides?) -> PlanItem {
         guard let overrides else { return self }
         var item = self
+        if let value = overrides.name { item.name = value }
         if let value = overrides.increment { item.increment = value }
         if let value = overrides.repMin { item.repMin = value }
         if let value = overrides.repMax { item.repMax = value }
@@ -40,10 +44,11 @@ extension PlanItem {
 extension ExerciseSettings {
     public var overrides: ExerciseOverrides {
         get {
-            ExerciseOverrides(increment: increment, repMin: repMin, repMax: repMax, sets: sets,
+            ExerciseOverrides(name: name, increment: increment, repMin: repMin, repMax: repMax, sets: sets,
                               restSec: restSec, startWeight: startWeight)
         }
         set {
+            name = newValue.name
             increment = newValue.increment
             repMin = newValue.repMin
             repMax = newValue.repMax

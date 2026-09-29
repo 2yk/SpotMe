@@ -62,7 +62,8 @@ targets:
   RepCoachWatch:
     type: application
     platform: watchOS
-    scheme: {}
+    scheme:
+      testTargets: [RepCoachWatchUITests]
     sources:
       - Apps/Watch
       - Apps/Shared
@@ -94,6 +95,19 @@ targets:
       path: Apps/Watch/RepCoachWatch.entitlements
       properties:
         com.apple.developer.healthkit: true
+
+  # Taps through the workout on the watch simulator, against the demo store.
+  RepCoachWatchUITests:
+    type: bundle.ui-testing
+    platform: watchOS
+    sources: [Tests/WatchUITests]
+    dependencies:
+      - target: RepCoachWatch
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yeshu.RepCoach.watchkitapp.uitests
+        TEST_TARGET_NAME: RepCoachWatch
+        GENERATE_INFOPLIST_FILE: YES
 
   # Watch face complication: today's session, one tap to start it.
   RepCoachWidgets:

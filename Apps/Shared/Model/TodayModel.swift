@@ -12,8 +12,14 @@ final class TodayModel {
     @ObservationIgnored var calendar = Calendar.current
 
     private(set) var dayKey: String
-    /// The plan day with the user's overrides applied.
+    /// The plan day with the user's edits and overrides applied.
     private(set) var day: PlanDay
+    /// The whole plan as the user has it: their edits to the days, and each exercise's overrides.
+    private(set) var editedPlan: Plan
+    /// Exercises added, removed or moved, and the user's own exercises.
+    private(set) var planEdits = PlanEdits()
+    /// Per exercise, by exerciseId.
+    private(set) var overrides: [String: ExerciseOverrides] = [:]
     private(set) var session: WorkoutSession?
     private(set) var queue: TodayQueue
     private(set) var targets: [String: ItemTarget] = [:]
@@ -31,6 +37,7 @@ final class TodayModel {
         let day = requested ?? plan.day(for: .now) ?? plan.days[0]
         self.dayKey = day.key
         self.day = day
+        self.editedPlan = plan
         self.followsToday = requested == nil
         self.queue = TodayQueue(items: day.items, statuses: [:])
         refresh()
@@ -52,6 +59,29 @@ final class TodayModel {
     /// Today's log of `item`, if it has been started.
     func log(for item: PlanItem) -> ExerciseLog? {
         session?.log(for: item.exerciseId)
+    }
+
+    /// Every exercise there is, overrides applied: the plan's and the user's own, on a day or not.
+    var library: [PlanItem] {
+        planEdits.library(plan: plan).map { $0.applying(overrides[$0.exerciseId]) }
+    }
+
+    /// An exercise as the plan (or the user, for their own) defined it, before overrides.
+    func baseItem(_ exerciseId: String) -> PlanItem? {
+        plan.days.lazy.flatMap(\.items).first { $0.exerciseId == exerciseId } ?? planEdits.custom[exerciseId]
+    }
+
+    /// Changes the plan's days, stores the change and shows it.
+    func editPlan(_ change: (inout PlanEdits) -> Void) {
+        var edits = planEdits
+        change(&edits)
+        guard edits != planEdits else { return }
+        do {
+            try edits.save(to: context)
+        } catch {
+            Logger.store.error("Couldn't save the plan: \(error.localizedDescription)")
+        }
+        refresh()
     }
 
     /// Previous non-deload sessions of an exercise, newest first, leaving out today's.
@@ -94,8 +124,14 @@ final class TodayModel {
         let overrides = Dictionary(
             ((try? context.fetch(FetchDescriptor<ExerciseSettings>())) ?? []).map { ($0.exerciseId, $0.overrides) },
             uniquingKeysWith: { first, _ in first })
-        guard var day = plan.days.first(where: { $0.key == dayKey }) else { return }
-        day.items = day.items.map { $0.applying(overrides[$0.exerciseId]) }
+        update(\.overrides, overrides)
+        update(\.planEdits, PlanEdits.load(from: context))
+        var edited = planEdits.applied(to: plan)
+        for index in edited.days.indices {
+            edited.days[index].items = edited.days[index].items.map { $0.applying(overrides[$0.exerciseId]) }
+        }
+        update(\.editedPlan, edited)
+        guard let day = edited.days.first(where: { $0.key == dayKey }) else { return }
         update(\.day, day)
         update(\.statuses, session?.statuses ?? [:])
 

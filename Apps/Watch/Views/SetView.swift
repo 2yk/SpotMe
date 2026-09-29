@@ -85,6 +85,7 @@ struct StepperRow: View {
         HStack(spacing: 0) {
             StepButton(symbol: "minus", tint: tint, size: height - 10) { change(by: -1) }
                 .disabled(value - step < range.lowerBound - 0.001)
+                .accessibilityLabel(field == .weight ? "Less weight" : "Fewer reps")
             HStack(alignment: .firstTextBaseline, spacing: 3) {
                 Text(format(value))
                     .font(.number(height * 0.64))
@@ -98,8 +99,16 @@ struct StepperRow: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle())
             .onTapGesture { focus.wrappedValue = field }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(field == .weight ? "Weight" : "Reps")
+            .accessibilityValue("\(format(value)) \(unit)")
+            .accessibilityIdentifier(field == .weight ? "weight-value" : "reps-value")
+            .accessibilityAdjustableAction { direction in
+                change(by: direction == .increment ? 1 : -1)
+            }
             StepButton(symbol: "plus", tint: tint, size: height - 10) { change(by: 1) }
                 .disabled(value + step > range.upperBound + 0.001)
+                .accessibilityLabel(field == .weight ? "More weight" : "More reps")
         }
         .padding(.horizontal, 5)
         .frame(height: height)
@@ -125,12 +134,7 @@ struct StepperRow: View {
             self.anchor = nil
             clicks = 0
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(unit)
-        .accessibilityValue("\(format(value)) \(unit)")
-        .accessibilityAdjustableAction { direction in
-            change(by: direction == .increment ? 1 : -1)
-        }
+        .accessibilityElement(children: .contain)
     }
 
     private func change(by steps: Double) {
@@ -164,6 +168,5 @@ private struct StepButton: View {
                 .background(Circle().fill(Theme.cardRaised))
         }
         .buttonStyle(.plain)
-        .accessibilityHidden(true)
     }
 }

@@ -5,7 +5,7 @@ import RepCoachCore
 
 /// Every exercise with logged sets, grouped by plan day, newest numbers first.
 struct HistoryScreen: View {
-    @Environment(AppModel.self) private var app
+    @Environment(TodayModel.self) private var today
     @Environment(\.modelContext) private var context
     @Environment(PhoneSync.self) private var sync
     @State private var model = HistoryModel()
@@ -43,7 +43,7 @@ struct HistoryScreen: View {
                 }
             }
             .task {
-                model.load(plan: app.plan, context: context)
+                load()
                 #if DEBUG
                 if LaunchOptions.screen == "exercise",
                    let first = model.exercises.first(where: { $0.item.kind == .weighted }) {
@@ -51,9 +51,14 @@ struct HistoryScreen: View {
                 }
                 #endif
             }
-            .refreshable { model.load(plan: app.plan, context: context) }
-            .onChange(of: sync.sessionsChanged) { model.load(plan: app.plan, context: context) }
+            .refreshable { load() }
+            .onChange(of: sync.sessionsChanged) { load() }
+            .onChange(of: today.editedPlan) { load() }
         }
+    }
+
+    private func load() {
+        model.load(plan: today.editedPlan, library: today.library, context: context)
     }
 
     private var days: [String] {

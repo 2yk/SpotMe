@@ -2,7 +2,9 @@ import SwiftUI
 import SwiftData
 import RepCoachCore
 
-/// All seven days. Tap an exercise to change its sets, reps, rest, increment or start weight.
+/// All seven days as the user has them. Tap an exercise to rename it or change its sets, reps, rest, increment
+/// or start weight. Swipe to remove it from the day, Edit to reorder, Add exercise for a new one or one from
+/// another day. plan.json itself never changes; history is always kept.
 struct PlanScreen: View {
     @Environment(AppModel.self) private var app
     @Environment(TodayModel.self) private var today
@@ -10,78 +12,163 @@ struct PlanScreen: View {
     @Environment(PhoneSync.self) private var sync
     @Query private var settings: [ExerciseSettings]
     @State private var dayKey: String?
-    @State private var path: [PlanItem] = []
+    @State private var path: [String] = []
+    @State private var editing = false
+    @State private var adding = false
     @State private var confirmingReset = false
 
     var body: some View {
-        let day = app.plan.days.first { $0.key == (dayKey ?? today.dayKey) } ?? app.plan.days[0]
-        let overrides = Dictionary(settings.map { ($0.exerciseId, $0.overrides) }, uniquingKeysWith: { first, _ in first })
+        let key = dayKey ?? today.dayKey
+        let day = today.editedPlan.days.first { $0.key == key } ?? today.editedPlan.days[0]
+        // The plan's own day, which edits are made against.
+        let original = app.plan.days.first { $0.key == day.key } ?? app.plan.days[0]
+        let edited = Set(settings.filter { !$0.overrides.isEmpty }.map(\.exerciseId))
+        let planned = Set(original.items.map(\.exerciseId))
         NavigationStack(path: $path) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
-                    DayStrip(days: app.plan.days, selected: day.key) { key in
-                        withAnimation(.snappy) { dayKey = key }
-                    }
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(day.focus).font(.rounded(.title3, .bold))
-                        Label(day.time, systemImage: "clock")
-                            .font(.rounded(.subheadline, .medium))
-                            .foregroundStyle(Theme.secondary)
-                    }
-                    .padding(.horizontal, 6)
-                    ForEach(day.sections) { section in
-                        CardSection(title: section.title) {
-                            ForEach(section.items) { item in
-                                NavigationLink(value: item) {
-                                    PlanRow(item: item, overrides: overrides[item.exerciseId])
-                                }
-                                .buttonStyle(.plain)
-                                if item.id != section.items.last?.id { RowDivider() }
-                            }
+            List {
+                Section {
+                    VStack(alignment: .leading, spacing: 18) {
+                        DayStrip(days: app.plan.days, selected: day.key) { key in
+                            withAnimation(.snappy) { dayKey = key }
                         }
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(day.focus).font(.rounded(.title3, .bold))
+                            Label(day.time, systemImage: "clock")
+                                .font(.rounded(.subheadline, .medium))
+                                .foregroundStyle(Theme.secondary)
+                        }
+                        .padding(.horizontal, 6)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 6, trailing: 0))
+                }
+
+                if editing {
+                    Section {
+                        ForEach(day.items) { item in
+                            PlanRow(item: item, edited: edited.contains(item.exerciseId),
+                                    added: !planned.contains(item.exerciseId), showsGroup: true)
+                        }
+                        .onMove { source, destination in move(source, to: destination, in: day, original: original) }
+                        .onDelete { offsets in
+                            offsets.map { day.items[$0].exerciseId }.forEach { remove($0, from: original) }
+                        }
+                    } header: {
+                        Text("Drag to reorder").eyebrow(Theme.tertiary, size: 12)
+                    }
+                    .listRowBackground(Theme.card)
+                } else {
+                    ForEach(day.sections) { section in
+                        Section {
+                            ForEach(section.items) { item in
+                                NavigationLink(value: item.exerciseId) {
+                                    PlanRow(item: item, edited: edited.contains(item.exerciseId),
+                                            added: !planned.contains(item.exerciseId), showsGroup: false)
+                                }
+                                .swipeActions {
+                                    Button("Remove", systemImage: "trash", role: .destructive) {
+                                        withAnimation { remove(item.exerciseId, from: original) }
+                                    }
+                                }
+                            }
+                        } header: {
+                            Text(section.title).eyebrow(Theme.tertiary, size: 12)
+                        }
+                        .listRowBackground(Theme.card)
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 32)
+
+                Section {
+                    Button { adding = true } label: {
+                        Label("Add exercise", systemImage: "plus.circle.fill")
+                            .font(.rounded(.body, .semibold))
+                            .foregroundStyle(Theme.volt)
+                    }
+                } footer: {
+                    if today.planEdits.isEdited(original) {
+                        Text("\(day.title) is changed from the plan. Its history is kept either way.")
+                    }
+                }
+                .listRowBackground(Theme.card)
             }
-            .scrollIndicators(.hidden)
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
             .background(Theme.canvas)
+            .environment(\.editMode, .constant(editing ? .active : .inactive))
             .navigationTitle("Plan")
-            .navigationDestination(for: PlanItem.self) { item in
-                PlanItemEditor(item: item)
+            .navigationDestination(for: String.self) { exerciseId in
+                PlanItemEditor(exerciseId: exerciseId, day: original)
+            }
+            .sheet(isPresented: $adding) {
+                AddExerciseSheet(day: original)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     Menu {
-                        Button("Reset all to bundled plan", systemImage: "arrow.counterclockwise", role: .destructive) {
+                        Button("Reset \(day.title) to the plan", systemImage: "arrow.uturn.backward") {
+                            withAnimation { today.editPlan { $0.reset(original) }; sync.sendContext() }
+                        }
+                        .disabled(!today.planEdits.isEdited(original))
+                        Button("Reset everything to the plan", systemImage: "arrow.counterclockwise",
+                               role: .destructive) {
                             confirmingReset = true
                         }
-                        .disabled(settings.isEmpty)
+                        .disabled(settings.isEmpty && today.planEdits.isEmpty)
                     } label: {
                         Image(systemName: "ellipsis")
                     }
                     .accessibilityLabel("More")
                 }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button { adding = true } label: {
+                        Image(systemName: "plus")
+                    }
+                    .accessibilityLabel("Add exercise")
+                    Button(editing ? "Done" : "Edit") {
+                        withAnimation(.snappy) { editing.toggle() }
+                    }
+                    .fontWeight(editing ? .bold : .regular)
+                }
             }
-            .confirmationDialog("Reset every exercise to the bundled plan?", isPresented: $confirmingReset,
+            .confirmationDialog("Reset every day and exercise to the plan?", isPresented: $confirmingReset,
                                 titleVisibility: .visible) {
-                Button("Reset all", role: .destructive, action: resetAll)
+                Button("Reset everything", role: .destructive, action: resetAll)
             } message: {
-                Text("Your history is kept.")
+                Text("Names, prescriptions and added or removed exercises go back to the plan. Your history is kept.")
             }
             #if DEBUG
             .task {
-                if LaunchOptions.screen == "editor", let item = day.items.first(where: { $0.kind == .weighted }) {
-                    path = [item]
+                switch LaunchOptions.screen {
+                case "editor":
+                    if let item = day.items.first(where: { $0.kind == .weighted }) { path = [item.exerciseId] }
+                case "plan-edit":
+                    editing = true
+                case "add":
+                    adding = true
+                default:
+                    break
                 }
             }
             #endif
         }
     }
 
+    private func remove(_ exerciseId: String, from day: PlanDay) {
+        today.editPlan { $0.remove(exerciseId, from: day) }
+        sync.sendContext()
+    }
+
+    private func move(_ source: IndexSet, to destination: Int, in day: PlanDay, original: PlanDay) {
+        var ids = day.items.map(\.exerciseId)
+        ids.move(fromOffsets: source, toOffset: destination)
+        today.editPlan { $0.setItemIds(ids, for: original) }
+        sync.sendContext()
+    }
+
     private func resetAll() {
         settings.forEach(context.delete)
         try? context.save()
+        today.editPlan { $0 = PlanEdits() }
         today.refresh()
         sync.sendContext()
     }
@@ -89,34 +176,36 @@ struct PlanScreen: View {
 
 private struct PlanRow: View {
     let item: PlanItem
-    let overrides: ExerciseOverrides?
+    /// Its prescription or name differs from the plan.
+    let edited: Bool
+    /// It's on this day because the user put it there.
+    let added: Bool
+    let showsGroup: Bool
 
     var body: some View {
         HStack(spacing: 14) {
             ItemBadge(item: item, size: 36)
             VStack(alignment: .leading, spacing: 3) {
                 Text(item.name).font(.rounded(.body, .semibold))
-                Text(line(item.applying(overrides)))
+                Text(line)
                     .font(.rounded(.subheadline))
                     .foregroundStyle(Theme.secondary)
             }
             Spacer(minLength: 8)
-            if let overrides, !overrides.isEmpty {
+            if added {
+                Chip(text: "Added", tint: Theme.volt)
+            } else if edited {
                 Chip(text: "Edited", tint: Theme.ice)
             }
-            Image(systemName: "chevron.right")
-                .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(Theme.tertiary)
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 12)
-        .contentShape(Rectangle())
+        .padding(.vertical, 4)
     }
 
-    private func line(_ item: PlanItem) -> String {
+    private var line: String {
         var parts = [Format.prescription(item, TargetPlanner.target(for: item, history: [], deload: false))]
         if item.kind == .weighted, let increment = item.increment { parts.append("+\(Format.kg(increment))") }
         if let rest = item.restSec { parts.append("\(Format.clock(rest)) rest") }
-        return parts.joined(separator: " · ")
+        if showsGroup { parts.insert(item.group, at: 0) }
+        return parts.filter { !$0.isEmpty }.joined(separator: " · ")
     }
 }

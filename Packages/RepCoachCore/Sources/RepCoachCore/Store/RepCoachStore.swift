@@ -4,7 +4,7 @@ import SwiftData
 /// The SwiftData schema shared by the watch and iPhone apps.
 public enum RepCoachStore {
     public static var models: [any PersistentModel.Type] {
-        [WorkoutSession.self, ExerciseLog.self, SetLog.self, ExerciseSettings.self]
+        [WorkoutSession.self, ExerciseLog.self, SetLog.self, ExerciseSettings.self, PlanEditsRecord.self]
     }
 
     /// The on-disk store, or a throwaway one for tests, previews and demo data.

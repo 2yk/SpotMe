@@ -96,7 +96,7 @@ final class WatchSync: NSObject {
               let pending = try? JSONDecoder().decode(SyncContext.self, from: data),
               !isBusy() else { return }
         do {
-            try pending.applyOverrides(to: today.context)
+            try pending.applyPlan(to: today.context)
             settings.settings = pending.settings
             defaults.set(pending.sentAt, forKey: Self.appliedKey)
             defaults.removeObject(forKey: Self.pendingKey)

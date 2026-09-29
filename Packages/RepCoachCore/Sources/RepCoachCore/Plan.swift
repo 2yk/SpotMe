@@ -44,6 +44,33 @@ public struct PlanItem: Codable, Hashable, Identifiable, Sendable {
     public var supersetGroup: String?
 
     public var id: String { exerciseId }
+
+    public init(name: String, exerciseId: String, group: String, note: String? = nil, display: String? = nil,
+                kind: ItemKind, steps: [String]? = nil, sets: Int? = nil, repMin: Int? = nil, repMax: Int? = nil,
+                secMin: Int? = nil, secMax: Int? = nil, perSide: Bool? = nil, loadable: Bool? = nil,
+                increment: Double? = nil, sessionsAtTopToProgress: Int? = nil, restSec: Int? = nil,
+                percent: Double? = nil, sourceExerciseId: String? = nil, supersetGroup: String? = nil) {
+        self.name = name
+        self.exerciseId = exerciseId
+        self.group = group
+        self.note = note
+        self.display = display
+        self.kind = kind
+        self.steps = steps
+        self.sets = sets
+        self.repMin = repMin
+        self.repMax = repMax
+        self.secMin = secMin
+        self.secMax = secMax
+        self.perSide = perSide
+        self.loadable = loadable
+        self.increment = increment
+        self.sessionsAtTopToProgress = sessionsAtTopToProgress
+        self.restSec = restSec
+        self.percent = percent
+        self.sourceExerciseId = sourceExerciseId
+        self.supersetGroup = supersetGroup
+    }
 }
 
 public struct PlanDay: Codable, Hashable, Identifiable, Sendable {

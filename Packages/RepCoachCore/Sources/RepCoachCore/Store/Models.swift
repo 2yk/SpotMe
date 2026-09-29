@@ -73,6 +73,8 @@ public final class SetLog {
 @Model
 public final class ExerciseSettings {
     @Attribute(.unique) public var exerciseId: String
+    /// A new name for the exercise, everywhere it appears.
+    public var name: String?
     public var increment: Double?
     public var repMin: Int?
     public var repMax: Int?
@@ -82,6 +84,16 @@ public final class ExerciseSettings {
 
     public init(exerciseId: String) {
         self.exerciseId = exerciseId
+    }
+}
+
+/// The user's `PlanEdits` (exercises added, removed or moved, and their own exercises), JSON-encoded in one row.
+@Model
+public final class PlanEditsRecord {
+    public var data: Data
+
+    public init(data: Data) {
+        self.data = data
     }
 }
 

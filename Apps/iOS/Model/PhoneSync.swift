@@ -59,14 +59,15 @@ final class PhoneSync: NSObject {
         WCSession.default.activate()
     }
 
-    /// Sends the current settings and overrides. The watch keeps only the latest and applies it between sessions.
+    /// Sends the current settings, overrides and plan edits. The watch keeps only the latest and applies it
+    /// between sessions.
     func sendContext() {
         guard LaunchOptions.sync, WCSession.isSupported() else { return }
         let session = WCSession.default
         guard session.activationState == .activated, session.isPaired, session.isWatchAppInstalled else { return }
         do {
             let payload = SyncContext(settings: settings.settings, overrides: try SyncContext.overrides(in: context),
-                                      received: receivedIds.compactMap(UUID.init))
+                                      plan: PlanEdits.load(from: context), received: receivedIds.compactMap(UUID.init))
             try session.updateApplicationContext(payload.applicationContext)
             lastSent = .now
         } catch {

@@ -38,7 +38,7 @@ struct RootView: View {
         .task {
             switch LaunchOptions.screen ?? LaunchOptions.tab {
             case "history", "exercise": tab = .history
-            case "plan", "editor": tab = .plan
+            case "plan", "editor", "plan-edit", "add": tab = .plan
             case "settings": tab = .settings
             default: break
             }
