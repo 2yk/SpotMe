@@ -113,7 +113,7 @@ struct PlanScreen: View {
                                role: .destructive) {
                             confirmingReset = true
                         }
-                        .disabled(settings.isEmpty && today.planEdits.isEmpty)
+                        .disabled(settings.isEmpty && today.planEdits.days.isEmpty)
                     } label: {
                         Image(systemName: "ellipsis")
                     }
@@ -165,10 +165,12 @@ struct PlanScreen: View {
         sync.sendContext()
     }
 
+    /// Every day back to the plan's list and every exercise to its own name and prescription. The user's own
+    /// exercises stay defined, so their history still shows and a new one never takes over their id.
     private func resetAll() {
         settings.forEach(context.delete)
         try? context.save()
-        today.editPlan { $0 = PlanEdits() }
+        today.editPlan { $0.days = [:] }
         today.refresh()
         sync.sendContext()
     }

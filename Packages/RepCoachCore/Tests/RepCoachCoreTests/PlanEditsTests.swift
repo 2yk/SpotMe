@@ -30,7 +30,7 @@ final class PlanEditsTests: XCTestCase {
         // Hammer Curl up above Incline DB Curl.
         let from = monday.items.firstIndex { $0.exerciseId == "hammer-curl" }!
         let to = monday.items.firstIndex { $0.exerciseId == "incline-db-curl" }!
-        edits.move(from: [from], to: to, in: monday)
+        edits.move(from: [from], to: to, in: monday, plan: plan)
         let order = ids(edits.applied(to: plan), "monday")
         XCTAssertEqual(order.firstIndex(of: "hammer-curl")! + 1, order.firstIndex(of: "incline-db-curl")!)
         XCTAssertEqual(Set(order), Set(monday.items.map(\.exerciseId)))
@@ -38,9 +38,9 @@ final class PlanEditsTests: XCTestCase {
 
     func testMovingBackToThePlansOrderClearsTheEdit() {
         var edits = PlanEdits()
-        edits.move(from: [2], to: 4, in: monday)
+        edits.move(from: [2], to: 4, in: monday, plan: plan)
         XCTAssertTrue(edits.isEdited(monday))
-        edits.move(from: [3], to: 2, in: monday)
+        edits.move(from: [3], to: 2, in: monday, plan: plan)
         XCTAssertFalse(edits.isEdited(monday))
         XCTAssertTrue(edits.isEmpty)
     }
@@ -76,6 +76,17 @@ final class PlanEditsTests: XCTestCase {
         XCTAssertEqual(ids(edits.applied(to: plan), "monday")[2], id)
         XCTAssertTrue(edits.library(plan: plan).contains(row))
         XCTAssertEqual(PlanEdits.newExerciseId(name: "Barbell Row", taken: [id]), "custom-barbell-row-2")
+    }
+
+    /// Offsets are the day as shown: an id that no longer exists doesn't shift them.
+    func testMovingAndAddingSkipIdsThatNoLongerExist() {
+        var edits = PlanEdits(days: ["monday": ["monday-warmup", "gone", "hammer-curl", "face-pulls"]])
+        edits.move(from: [2], to: 0, in: monday, plan: plan)
+        XCTAssertEqual(ids(edits.applied(to: plan), "monday"), ["face-pulls", "monday-warmup", "hammer-curl"])
+        let preacher = thursday.items.first { $0.exerciseId == "preacher-curl" }!
+        edits.add(preacher, to: monday, at: 1, plan: plan)
+        XCTAssertEqual(ids(edits.applied(to: plan), "monday"),
+                       ["face-pulls", "preacher-curl", "monday-warmup", "hammer-curl"])
     }
 
     func testIdsThatNoLongerExistAreLeftOut() {

@@ -70,7 +70,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - When everything is done: "All done" with Finish workout. Back always returns to Today.
 - Pages, as in Apple's Workout app: swipe right for the **controls**, left for **Now Playing** (the system player: play, pause, skip, volume on the Crown, for music on the watch or the iPhone).
 - Controls: **Pause/Resume**, **End** (asks Save to Health / Don't save / Keep going), **Skip** and **List** (back to Today). Under them: "Skip to …", where Skip leads.
-  - Pause stops the Health workout's time and heart rate, the rest and the break; they carry on from where they stopped. Logging a set or starting a hold resumes. Today shows the workout as paused.
+  - Pause stops the Health workout's time and heart rate, the rest and the break; they carry on from where they stopped. Logging a set or starting a hold resumes. Today shows the workout as paused, and so does a paused Health workout picked up after a relaunch.
   - Skip moves on now: the exercise on screen keeps what's logged (it's skipped if nothing is), a checklist item is skipped, and a break ends early.
 
 **Set screen (weighted / reps)**
@@ -107,7 +107,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 - **Today:** the day's card and the same list, read-mostly (useful for checking the day before training). Nothing is highlighted.
 - **History:** per exercise, sessions newest first with every set. A Swift Charts line of top-set weight and estimated 1RM (Epley) over time.
-- **Plan:** view all days as the user has them. Tap an exercise to rename it or change its increment, rep range, sets, rest and starting weight (a new name shows everywhere the exercise does), or remove it from the day. Swipe to remove; Edit to reorder; **Add exercise** (+) for a new one (name, logged as weight and reps, reps, timed or tick-off, section, prescription) or one from another day, which keeps its history. Added exercises go after the day's last exercise, ahead of the cooldown. "Reset Monday to the plan" and "Reset everything to the plan" keep history. plan.json never changes.
+- **Plan:** view all days as the user has them. Tap an exercise to rename it or change its increment, rep range, sets, rest and starting weight (a new name shows everywhere the exercise does), or remove it from the day. Swipe to remove; Edit to reorder; **Add exercise** (+) for a new one (name, logged as weight and reps, reps, timed or tick-off, section, prescription) or one from another day, which keeps its history. Added exercises go after the day's last exercise, ahead of the cooldown. "Reset Monday to the plan" and "Reset everything to the plan" keep history, and the user's own exercises stay defined (Add exercise → From the plan brings one back; a new exercise never reuses an id with history). plan.json never changes.
 - **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off hides Start workout on the watch), the watch's Health access and a shortcut to the Health app.
 - **Body log (optional, milestone 4):** flexed arm and waist, every 2 weeks. Warn if waist is up more than 1 inch while arms haven't changed.
 

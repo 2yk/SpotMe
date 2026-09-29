@@ -110,7 +110,8 @@ struct AddExerciseSheet: View {
     }
 
     private func addNew() {
-        let taken = Set(today.library.map(\.exerciseId))
+        // Never an id that has history, even one no longer defined anywhere.
+        let taken = Set(today.library.map(\.exerciseId)).union((try? today.history.loggedExerciseIds()) ?? [])
         let item = draft.item(id: PlanEdits.newExerciseId(name: draft.trimmedName, taken: taken))
         today.editPlan { $0.add(item, to: day, plan: app.plan) }
         sync.sendContext()

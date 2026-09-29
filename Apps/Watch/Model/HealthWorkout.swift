@@ -127,9 +127,10 @@ final class HealthWorkout: NSObject {
         }
     }
 
-    /// Pauses the workout time and heart rate collection. The session reports back when it has paused.
+    /// Pauses the workout time and heart rate collection. The session reports back when it has paused. Asked
+    /// whatever `state` says, so a quick Pause then Resume reaches HealthKit in order before either lands.
     func pause() {
-        guard state == .running else { return }
+        guard isActive else { return }
         #if DEBUG
         if session == nil { return sessionChanged(to: .paused, at: .now) }
         #endif
@@ -137,7 +138,7 @@ final class HealthWorkout: NSObject {
     }
 
     func resume() {
-        guard state == .paused else { return }
+        guard isActive else { return }
         #if DEBUG
         if session == nil { return sessionChanged(to: .running, at: .now) }
         #endif

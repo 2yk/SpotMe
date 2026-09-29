@@ -51,8 +51,9 @@ public struct PlanEdits: Codable, Hashable, Sendable {
         setItemIds(itemIds(for: day).filter { $0 != exerciseId }, for: day)
     }
 
-    public mutating func move(from source: IndexSet, to destination: Int, in day: PlanDay) {
-        var ids = itemIds(for: day)
+    /// Moves by offsets in the day as shown (`applied(to:)`), which leaves out ids that no longer exist.
+    public mutating func move(from source: IndexSet, to destination: Int, in day: PlanDay, plan: Plan) {
+        var ids = liveItemIds(for: day, plan: plan)
         let moving = source.sorted().map { ids[$0] }
         let before = source.filter { $0 < destination }.count
         for index in source.sorted(by: >) { ids.remove(at: index) }
@@ -63,7 +64,7 @@ public struct PlanEdits: Codable, Hashable, Sendable {
     /// Adds `item` to `day`, keeping its definition if it's one the user created. It goes after the day's last
     /// exercise, ahead of a trailing cooldown, unless `index` says where. Already there: nothing changes.
     public mutating func add(_ item: PlanItem, to day: PlanDay, at index: Int? = nil, plan: Plan) {
-        var ids = itemIds(for: day)
+        var ids = liveItemIds(for: day, plan: plan)
         guard !ids.contains(item.exerciseId) else { return }
         if Self.catalog(plan: plan, custom: [:])[item.exerciseId] == nil {
             custom[item.exerciseId] = item
@@ -84,6 +85,13 @@ public struct PlanEdits: Codable, Hashable, Sendable {
     /// Whether `day`'s list differs from the plan's.
     public func isEdited(_ day: PlanDay) -> Bool {
         days[day.key] != nil
+    }
+
+    /// `day`'s ids that still resolve to an exercise, in order: the day as shown.
+    private func liveItemIds(for day: PlanDay, plan: Plan) -> [String] {
+        let catalog = Self.catalog(plan: plan, custom: custom)
+        let own = Set(day.items.map(\.exerciseId))
+        return itemIds(for: day).filter { own.contains($0) || catalog[$0] != nil }
     }
 
     /// Makes `ids` the day's list; the plan's own order clears the edit.

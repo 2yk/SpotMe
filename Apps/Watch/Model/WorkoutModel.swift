@@ -43,8 +43,10 @@ final class WorkoutModel {
     @ObservationIgnored private var stepDay: String?
     /// The break after an exercise; when it runs out, the next item starts by itself.
     private(set) var breakTime: Countdown?
-    /// Paused from the controls: the Health workout, the rest and the break all wait.
-    private(set) var isPaused = false
+    /// Paused from the controls (the Health workout, the rest and the break all wait), or a Health workout that's
+    /// paused, as one picked up after a relaunch can be.
+    var isPaused: Bool { pausedHere || health.state == .paused }
+    private var pausedHere = false
     /// The break waits while the next item is being picked.
     @ObservationIgnored private var breakHeld = false
     /// Shown once after Finish workout.
@@ -254,7 +256,7 @@ final class WorkoutModel {
     /// Pause, from the controls: the Health workout's time and heart rate, a rest and a break all wait.
     func pause() {
         guard !isPaused else { return }
-        isPaused = true
+        pausedHere = true
         health.pause()
         flow?.pauseRest()
         if var countdown = breakTime {
@@ -267,7 +269,7 @@ final class WorkoutModel {
     /// Carries on after a pause. Logging a set or starting a hold does this too.
     func resume() {
         guard isPaused else { return }
-        isPaused = false
+        pausedHere = false
         health.resume()
         flow?.resumeRest()
         if !breakHeld, var countdown = breakTime {
@@ -383,7 +385,7 @@ final class WorkoutModel {
             let started = await health.start()
             onStartAttempted?()
             autoStartFailed = !started
-            if started, isPaused { health.pause() }
+            if started, pausedHere { health.pause() }
             guard !started, explicitly else { return }
             startProblem = health.access == .denied
                 ? Self.accessDeniedMessage
@@ -427,6 +429,6 @@ final class WorkoutModel {
         cancelBreak()
         flow?.stop()
         step = nil
-        isPaused = false
+        pausedHere = false
     }
 }
