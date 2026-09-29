@@ -24,13 +24,18 @@ struct HoldView: View {
             .frame(maxHeight: .infinity)
 
             if flow.holdStartedAt == nil {
-                if item.takesWeight {
-                    StepperRow(value: $flow.weight, step: flow.increment, range: 0...500, unit: "kg",
-                               tint: Theme.violet, height: 38, focus: $focus, field: .weight, format: Format.weight)
-                        .id(flow.stepIndex)
+                // The weight beside Start, so the ring keeps its room.
+                HStack(spacing: 6) {
+                    if item.takesWeight {
+                        CrownValue(value: $flow.weight, step: flow.increment, range: 0...500, unit: "kg",
+                                   tint: Theme.violet, height: 44, focus: $focus, field: .weight,
+                                   format: Format.weight)
+                            .frame(width: 84)
+                            .id(flow.stepIndex)
+                    }
+                    Button("Start") { flow.startHold() }
+                        .buttonStyle(PrimaryButtonStyle(tint: Theme.violet))
                 }
-                Button("Start") { flow.startHold() }
-                    .buttonStyle(PrimaryButtonStyle(tint: Theme.violet))
             } else {
                 Button("Stop") { withAnimation(.snappy) { flow.stopHold() } }
                     .buttonStyle(PrimaryButtonStyle(tint: Theme.pulse))

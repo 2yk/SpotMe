@@ -19,7 +19,8 @@ struct WorkoutPager: View {
             WorkoutControls(onPauseOrResume: pauseOrResume, onEnd: { confirmingEnd = true },
                             onSkip: skip, onList: onList)
                 .tag(Page.controls)
-            WorkoutScreen(onList: onList, onFinish: { confirmingEnd = true })
+            // Everything's done: Finish just finishes.
+            WorkoutScreen(onList: onList, onFinish: { Task { await workout.finishWorkout() } })
                 .tag(Page.workout)
             // The system's own player: whatever plays on the watch or the iPhone, the Crown sets the volume.
             NowPlayingView()
@@ -64,20 +65,18 @@ struct WorkoutPager: View {
 }
 
 extension View {
-    /// Finish workout? Save to Health or not, or keep going.
+    /// End workout? Finish it (saved to Health when saving is on, without asking), discard it, or keep going.
     func finishDialog(isPresented: Binding<Bool>, workout: WorkoutModel) -> some View {
-        confirmationDialog("Finish workout?", isPresented: isPresented) {
-            if workout.savesToHealth {
-                Button("Save to Health") { Task { await workout.finishWorkout() } }
-                Button("Don't save to Health", role: .destructive) {
-                    Task { await workout.finishWorkout(saveToHealth: false) }
-                }
-            } else {
-                Button("Finish") { Task { await workout.finishWorkout() } }
+        confirmationDialog("End workout?", isPresented: isPresented) {
+            Button("Finish") { Task { await workout.finishWorkout() } }
+            Button("Discard workout", role: .destructive) {
+                withAnimation(.snappy) { workout.discardWorkout() }
             }
             Button("Keep going", role: .cancel) {}
         } message: {
-            Text(workout.savesToHealth ? "Your sets stay in SpotMe either way." : "Marks today's session done.")
+            Text(workout.savesToHealth
+                 ? "Finish saves it to Health. Discard deletes today's sets, here and on your iPhone."
+                 : "Discard deletes today's sets, here and on your iPhone.")
         }
     }
 }

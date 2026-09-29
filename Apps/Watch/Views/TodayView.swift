@@ -87,7 +87,8 @@ struct TodayView: View {
             }
 
             if today.queue.isComplete {
-                AllDoneCard(count: today.queue.totalCount, onFinish: workout.canFinish ? askToFinish : nil)
+                AllDoneCard(count: today.queue.totalCount,
+                            onFinish: workout.canFinish ? { Task { await workout.finishWorkout() } } : nil)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
             } else {

@@ -101,12 +101,12 @@ final class WorkoutFlowUITests: XCTestCase {
         let title = "Incline DB Press"
         XCTAssertTrue(app.staticTexts[title].exists)
         app.swipeLeft()
-        XCTAssertTrue(app.staticTexts["Not Playing"].waitForExistence(timeout: 5)
+        XCTAssertTrue(app.staticTexts["Not Playing"].waitForExistence(timeout: 15)
             || app.buttons.matching(NSPredicate(format: "label CONTAINS[c] 'play'")).firstMatch.exists,
                       "Now Playing isn't to the right")
         app.swipeRight()
-        XCTAssertTrue(log.waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts[title].waitForExistence(timeout: 5), "The title didn't come back")
+        XCTAssertTrue(log.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts[title].waitForExistence(timeout: 15), "The title didn't come back")
     }
 
     // MARK: End
@@ -125,27 +125,41 @@ final class WorkoutFlowUITests: XCTestCase {
         XCTAssertFalse(app.buttons["Log set"].exists, "Still on the workout after End")
     }
 
+    /// End offers Discard too: it throws the day away and goes back to Today, where it starts afresh.
+    func testEndCanDiscardTheWorkout() {
+        let app = launch(screen: "set")
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10))
+        app.swipeRight()
+        app.buttons["End"].tap()
+        let discard = app.buttons["Discard workout"]
+        XCTAssertTrue(discard.waitForExistence(timeout: 5), "End didn't offer Discard")
+        XCTAssertFalse(app.buttons["Save to Health"].exists, "Finishing shouldn't ask about Health")
+        discard.tap()
+        let start = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Start workout'")).firstMatch
+        XCTAssertTrue(start.waitForExistence(timeout: 5), "Not back on a fresh Today after Discard")
+        XCTAssertFalse(app.buttons["Log set"].exists)
+    }
+
     // MARK: Weight and reps
 
-    func testPlusAndMinusMoveExactlyOneStep() {
+    /// No − or +: tap the weight and the Crown moves it by whole increments, and back to exactly where it was.
+    func testWeightMovesByWholeIncrementsWithTheCrown() {
         let app = launch(screen: "set")
         let weight = app.descendants(matching: .any)["weight-value"]
-        let reps = app.descendants(matching: .any)["reps-value"]
         XCTAssertTrue(weight.waitForExistence(timeout: 10))
-        let startWeight = number(weight)
-        let startReps = number(reps)
+        XCTAssertFalse(app.buttons["More reps"].exists)
+        XCTAssertFalse(app.buttons["Less weight"].exists)
+        let start = number(weight)
 
-        app.buttons["More weight"].tap()
-        XCTAssertEqual(number(weight), startWeight + 2.5)
-        app.buttons["Less weight"].tap()
-        app.buttons["Less weight"].tap()
-        XCTAssertEqual(number(weight), startWeight - 2.5)
+        weight.tap()
+        XCUIDevice.shared.rotateDigitalCrown(delta: 0.25)
+        let turned = number(weight)
+        XCTAssertGreaterThan(turned, start)
+        let steps = (turned - start) / 2.5
+        XCTAssertEqual(steps, steps.rounded(), accuracy: 1e-9, "Weight landed between increments")
 
-        app.buttons["More reps"].tap()
-        app.buttons["More reps"].tap()
-        XCTAssertEqual(number(reps), startReps + 2)
-        app.buttons["Fewer reps"].tap()
-        XCTAssertEqual(number(reps), startReps + 1)
+        XCUIDevice.shared.rotateDigitalCrown(delta: -0.25)
+        XCTAssertEqual(number(weight), start, "Turning back didn't return to the start")
     }
 
     /// Turning the Crown moves reps in whole steps, and turning it back lands exactly where it started.

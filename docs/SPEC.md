@@ -67,15 +67,15 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - Start workout (or Continue) opens the next open item in plan order; one already started comes first. The workout then moves through the day by itself.
 - After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target, and how the finished exercise went; when it runs out, the next item starts. +30 s, start now (the ▶ button or the ring itself), or tap the next item's name to pick another to do first (the break waits while the list is open).
 - Checklist items (warmup, neck, cooldown) show their steps with Done and Skip, then move on.
-- When everything is done: "All done" with Finish workout. Back always returns to Today.
+- When everything is done: "All done" with Finish workout, which finishes straight away. Back always returns to Today.
 - Pages, as in Apple's Workout app: swipe right for the **controls**, left for **Now Playing** (the system player: play, pause, skip, volume on the Crown, for music on the watch or the iPhone).
-- Controls: **Pause/Resume**, **End** (asks Save to Health / Don't save / Keep going), **Skip** and **List** (back to Today). Under them: "Skip to …", where Skip leads.
+- Controls: **Pause/Resume**, **End** (Finish / Discard workout / Keep going), **Skip** and **List** (back to Today). Under them: "Skip to …", where Skip leads.
   - Pause stops the Health workout's time and heart rate, the rest and the break; they carry on from where they stopped. Logging a set or starting a hold resumes. Today shows the workout as paused, and so does a paused Health workout picked up after a relaunch.
   - Skip moves on now: the exercise on screen keeps what's logged (it's skipped if nothing is), a checklist item is skipped, and a break ends early.
 
 **Set screen (weighted / reps)**
 - Header: "Set 2 of 4" and the rep range.
-- Two rows: **weight** and **reps**, prefilled with the target, each with − and + (exactly one step per tap: the exercise increment, or 1 rep). Tap a value to focus it; the Digital Crown then moves it one step per click, with a haptic, counting from the value shown (never an in-between or re-rounded value).
+- Two rows: **weight** and **reps**, prefilled with the target. Tap a value to focus it; the Digital Crown then moves it one step per click (the exercise increment, or 1 rep), with a haptic, counting from the value shown (never an in-between or re-rounded value). No − or + buttons.
 - Large **Log set** button. Undo for the last logged set.
 - After logging: engine `nextSet` → rest screen.
 
@@ -96,7 +96,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - "Save workouts to Health" (iPhone Settings) decides what happens to it: on, Finish asks whether to save it; off, it's always thrown away and nothing reaches Health (for a session logged after the fact). With the switch off the watch never asks for Health access; the workout runs only if access was already given.
 - Health access belongs to the watch app: watchOS asks on the watch the first time, and it's changed later in the iPhone's Health app (profile picture → Apps → SpotMe). If saving workouts isn't allowed, Start workout says so and where to fix it; starting by itself stays quiet. The watch reports its access to the phone, whose Settings show it.
 - Keeps the app frontmost during the session, collects heart rate and energy, and saves the workout to Health when ended.
-- End from Today ("Finish workout") or automatically offered when every item is done. Finishing asks whether to save the workout to Health or not; the sets are kept either way.
+- End from the controls or Today ("Finish workout"), or Finish when every item is done. Finishing saves the workout to Health without asking when saving is on. End also offers Discard workout.
 - **Discard workout** deletes everything logged today, on the watch and the phone, and doesn't save the Health workout.
 - Must survive the wrist dropping and the screen sleeping (Always On shows the rest timer).
 

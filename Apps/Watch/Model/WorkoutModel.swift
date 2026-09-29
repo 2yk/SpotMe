@@ -317,15 +317,15 @@ final class WorkoutModel {
         health.isActive || today.session.map { !$0.logs.isEmpty } == true
     }
 
-    /// Ends the Health workout, if one is under way, saving it to Health (only when saving is on in the phone's
-    /// Settings) or throwing it away, and marks today's session finished.
-    func finishWorkout(saveToHealth: Bool = true) async {
+    /// Ends the Health workout, if one is under way, and marks today's session finished. The workout is saved to
+    /// Health without asking when saving is on in the phone's Settings, and thrown away when it's off.
+    func finishWorkout() async {
         stopEverything()
         let duration = health.elapsed ?? today.session.map { Date.now.timeIntervalSince($0.date) }
         let average = health.averageHeartRate
         let energy = health.energy
         let workoutId: UUID?
-        if saveToHealth, today.settings.healthWorkouts {
+        if today.settings.healthWorkouts {
             workoutId = await health.finish()
         } else {
             health.discard()
@@ -375,7 +375,7 @@ final class WorkoutModel {
             && today.session?.endedAt == nil
     }
 
-    /// Finish offers to save the Health workout: one is under way and saving is on in the phone's Settings.
+    /// Finish will save a Health workout: one is under way and saving is on in the phone's Settings.
     var savesToHealth: Bool {
         health.isActive && today.settings.healthWorkouts
     }
