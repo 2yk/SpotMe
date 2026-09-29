@@ -92,19 +92,35 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         session.healthKitWorkoutId = healthKitWorkoutId
 
         for entry in logs {
-            let log = ExerciseLog(exerciseId: entry.exerciseId, order: entry.order)
-            context.insert(log)
-            log.session = session
-            log.completedAt = entry.completedAt
-            log.skipped = entry.skipped
-            for set in entry.sets {
-                let row = SetLog(index: set.index, weight: set.weight, reps: set.reps, seconds: set.seconds,
-                                 timestamp: set.timestamp)
-                context.insert(row)
-                row.log = log
-            }
+            insert(entry, order: entry.order, into: session, context: context)
         }
         try context.save()
         return session
+    }
+
+    /// Folds this session's items into `local`, the watch's own session for the same day, keeping the watch's
+    /// log for any item both have. For a restored copy of a day the watch had already started again.
+    public func merge(into local: WorkoutSession, context: ModelContext) throws {
+        let kept = Set(local.logs.map(\.exerciseId))
+        var order = (local.logs.map(\.order).max() ?? -1) + 1
+        for entry in logs.sorted(by: { $0.order < $1.order }) where !kept.contains(entry.exerciseId) {
+            insert(entry, order: order, into: local, context: context)
+            order += 1
+        }
+        try context.save()
+    }
+
+    private func insert(_ entry: Log, order: Int, into session: WorkoutSession, context: ModelContext) {
+        let log = ExerciseLog(exerciseId: entry.exerciseId, order: order)
+        context.insert(log)
+        log.session = session
+        log.completedAt = entry.completedAt
+        log.skipped = entry.skipped
+        for set in entry.sets {
+            let row = SetLog(index: set.index, weight: set.weight, reps: set.reps, seconds: set.seconds,
+                             timestamp: set.timestamp)
+            context.insert(row)
+            row.log = log
+        }
     }
 }

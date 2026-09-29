@@ -64,12 +64,14 @@ struct NextUpView: View {
                     .accessibilityLabel("Start \(first.name) now")
                 }
             }
-            .sheet(isPresented: $choosing) {
+            // The break waits while the list is open, so it can't move on underneath it.
+            .sheet(isPresented: $choosing, onDismiss: workout.resumeBreak) {
                 NextPicker { item in
                     today.promote(item)
                     choosing = false
                 }
             }
+            .onChange(of: choosing) { if choosing { workout.pauseBreak() } }
             #if DEBUG
             .task { if LaunchOptions.screen == "next-picker" { choosing = true } }
             #endif

@@ -122,8 +122,17 @@ public struct WorkoutRecorder {
         return doomed.count
     }
 
-    /// Every stored session's id, for comparing with the other device.
-    public func sessionIds() throws -> [UUID] {
-        try context.fetch(FetchDescriptor<WorkoutSession>(sortBy: [SortDescriptor(\.date)])).map(\.id)
+    /// Stored sessions' ids and start dates, oldest first (from `since` on, if given), for comparing with the
+    /// other device.
+    public func sessionStamps(since: Date? = nil) throws -> [(id: UUID, date: Date)] {
+        let start = since ?? .distantPast
+        return try context.fetch(FetchDescriptor<WorkoutSession>(predicate: #Predicate { $0.date >= start },
+                                                                 sortBy: [SortDescriptor(\.date)]))
+            .map { (id: $0.id, date: $0.date) }
+    }
+
+    /// Stored sessions' ids, oldest first.
+    public func sessionIds(since: Date? = nil) throws -> [UUID] {
+        try sessionStamps(since: since).map(\.id)
     }
 }

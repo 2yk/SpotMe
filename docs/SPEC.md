@@ -55,10 +55,17 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 **Today**
 - Opens on today's weekday. Crown scrolls. A small toggle reaches other days.
-- Top: **Start workout** (until a Health workout is running; then its heart rate and time), then the "Up next" card with the item name, the prescription and today's target weight (e.g. "4 × 6–10 · 22.5 kg · +reps").
-- Below: remaining items in order. Finished items move to the bottom, dimmed with a checkmark (same behaviour as his web tracker).
-- Tapping any remaining item makes it "up next" (for when a machine is busy). Swipe action: Skip.
+- Top: one big button, **Start workout**, or **Continue** with what's next once the day has started (with the running Health workout's heart rate and time above it). Nothing else is highlighted.
+- Below: the open items in plan order, each with its prescription and target ("4 × 6–10 · 22.5 kg"). Finished items move to the bottom, dimmed with a checkmark (same behaviour as his web tracker).
+- Tapping any open item does it now (for when a machine is busy); the workout then carries on from there. Swipe actions: Skip, and Done for checklist items.
+- At the end: **Finish workout** and **Discard workout**.
 - Progress: "7 / 15" in the navigation bar.
+
+**Workout flow**
+- Start workout (or Continue) opens the next open item in plan order; one already started comes first. The workout then moves through the day by itself.
+- After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target, and how the finished exercise went; when it runs out, the next item starts. +30 s, start now, or tap the next item's name to pick another to do first.
+- Checklist items (warmup, neck, cooldown) show their steps with Done and Skip, then move on.
+- When everything is done: "All done" with Finish workout. Back always returns to Today.
 
 **Set screen (weighted / reps)**
 - Header: "Set 2 of 4" and the rep range.
@@ -74,24 +81,25 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 **Timed sets:** Start → counts up with a haptic at `secMin` and `secMax` → Stop logs seconds.
 
-**Checklist items:** one tap to done. Warmups show their steps as a scrollable list.
+**Checklist items:** Done or Skip in the workout; one swipe to done in the list. Warmups show their steps as a scrollable list.
 
-**Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Same weight next time · aim for more reps"), then back to Today.
+**Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Same weight next time · aim for more reps") on the break screen before the next item.
 
 **Workout session (HealthKit)**
-- Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) only from **Start workout** at the top of Today. Sets logged without it stay in the app and never reach Health (for a session logged after the fact). The button shows only while "Save workouts to Health" is on in the iPhone's Settings.
-- Health access belongs to the watch app: watchOS asks on the watch the first time Start workout is tapped, and it's changed later in the iPhone's Health app (profile picture → Apps → SpotMe). If saving workouts isn't allowed, Start workout says so and where to fix it. The watch reports its access to the phone, whose Settings show it.
+- Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) with Start workout, or when an exercise is opened, while "Save workouts to Health" is on in the iPhone's Settings and today's session isn't finished. With the switch off, nothing reaches Health (for a session logged after the fact).
+- Health access belongs to the watch app: watchOS asks on the watch the first time, and it's changed later in the iPhone's Health app (profile picture → Apps → SpotMe). If saving workouts isn't allowed, Start workout says so and where to fix it; starting by itself stays quiet. The watch reports its access to the phone, whose Settings show it.
 - Keeps the app frontmost during the session, collects heart rate and energy, and saves the workout to Health when ended.
-- End from Today ("Finish workout") or automatically offered when every item is done. Finishing asks whether to save the workout to Health or discard it; the sets are kept either way.
+- End from Today ("Finish workout") or automatically offered when every item is done. Finishing asks whether to save the workout to Health or not; the sets are kept either way.
+- **Discard workout** deletes everything logged today, on the watch and the phone, and doesn't save the Health workout.
 - Must survive the wrist dropping and the screen sleeping (Always On shows the rest timer).
 
 **Complication ("Start workout")**
-- Circular, corner, rectangular and inline. Shows today's session from the plan ("Pull A · Strength & Thickness"; "Rest day" on Saturday), refreshed at midnight.
+- Circular, corner, rectangular and inline. Shows today's session from the plan ("Pull A · Strength & Thickness"; "Rest day" on Saturday), refreshed at midnight. The mark is drawn (watch faces drop large images), its dot in the face's accent colour.
 - Tapping it opens SpotMe on today and starts the workout, as Start workout does; on a rest day it only opens the app.
 
 ## iPhone app
 
-- **Today:** same list, read-mostly (useful for checking the day before training).
+- **Today:** the day's card and the same list, read-mostly (useful for checking the day before training). Nothing is highlighted.
 - **History:** per exercise, sessions newest first with every set. A Swift Charts line of top-set weight and estimated 1RM (Epley) over time.
 - **Plan:** view all days; edit per exercise: increment, rep range, sets, rest, starting weight. "Reset to bundled plan" keeps history.
 - **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off hides Start workout on the watch), the watch's Health access and a shortcut to the Health app.
@@ -103,9 +111,10 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId?), `ExerciseLog` (session, exerciseId, order, completedAt?), `SetLog` (log, index, weight, reps, seconds?, timestamp), `ExerciseSettings` (exerciseId, overrides for increment/rep range/sets/rest/startWeight).
 - **The watch works fully without the phone nearby.** It keeps its own store and the history it needs for targets.
 - WatchConnectivity:
-  - Watch → phone: each finished `WorkoutSession` (with its logs) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID. The watch's Health access goes in the watch's own application context.
+  - Watch → phone: each finished `WorkoutSession` (with its logs) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID.
+  - The watch's own application context (`WatchStatus`): its Health access, the ids of every session it has, and the ids it discarded. The phone deletes discarded sessions and never stores them again, and sends back (via `transferUserInfo`) every session the watch doesn't have, so a reinstalled watch app gets its history and today's progress back. A restored copy never overwrites a session the watch has.
   - Phone → watch: plan overrides and settings via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
-- Nothing is deleted automatically.
+- Nothing is deleted automatically; only Discard workout deletes.
 
 ## Out of scope
 

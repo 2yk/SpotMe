@@ -65,11 +65,14 @@ final class WatchSync: NSObject {
         sendStatus()
     }
 
-    /// Tells the phone the watch's Health access and which sessions it has and discarded. Latest wins.
+    /// Tells the phone the watch's Health access and which sessions it has (in the restore window) and
+    /// discarded. Latest wins. A store that can't be read sends no list, so the phone sends nothing back.
     func sendStatus() {
         guard LaunchOptions.sync, canSend else { return }
+        let since = Date.now.addingTimeInterval(-WatchStatus.window)
         let status = WatchStatus(healthAccess: healthAccess(),
-                                 sessions: (try? today.recorder.sessionIds()) ?? [],
+                                 sessions: try? today.recorder.sessionIds(since: since),
+                                 since: since,
                                  deleted: discardedIds.compactMap(UUID.init(uuidString:)))
         do {
             try WCSession.default.updateApplicationContext(status.applicationContext)
@@ -197,7 +200,14 @@ final class WatchSync: NSObject {
     fileprivate func restored(_ payload: SessionPayload) {
         guard !discardedIds.contains(payload.id.uuidString) else { return }
         do {
-            guard try payload.insertIfMissing(into: today.context) else { return }
+            if let local = try today.recorder.session(for: payload.dayKey, on: payload.date), local.id != payload.id {
+                // The day was started again here before the copy arrived: keep one session for it. The copy's
+                // items join the watch's session, and the phone drops the copy, which that session replaces.
+                try payload.merge(into: local, context: today.context)
+                sessionDiscarded(payload.id)
+            } else {
+                guard try payload.insertIfMissing(into: today.context) else { return }
+            }
         } catch {
             Logger.sync.error("Couldn't restore a session from the phone: \(error.localizedDescription)")
             return

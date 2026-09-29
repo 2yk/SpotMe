@@ -36,9 +36,15 @@ final class WorkoutModel {
 
     let today: TodayModel
     let health: HealthWorkout
-    private(set) var step: Step?
+    private(set) var step: Step? {
+        didSet { stepDay = step == nil ? nil : today.dayKey }
+    }
+    /// The plan day `step` belongs to.
+    @ObservationIgnored private var stepDay: String?
     /// The break after an exercise; when it runs out, the next item starts by itself.
     private(set) var breakTime: ExerciseFlow.Rest?
+    /// While the next item is being picked the break waits, with this much left.
+    @ObservationIgnored private var pausedBreak: TimeInterval?
     /// Shown once after Finish workout.
     var summary: Summary?
     /// Why Start workout couldn't start the Health workout, shown as an alert.
@@ -66,12 +72,12 @@ final class WorkoutModel {
 
     /// Something was started today, so the main button reads Continue.
     var hasStarted: Bool {
-        health.isRunning || step != nil || today.session.map { !$0.logs.isEmpty } == true
+        health.isRunning || currentStep != nil || today.session.map { !$0.logs.isEmpty } == true
     }
 
     /// Where Continue leads: the item on screen, else the next one in order.
     var currentName: String? {
-        switch step {
+        switch currentStep {
         case .exercise(let flow) where !flow.isFinished:
             return flow.items.map(\.name).joined(separator: " + ")
         case .checklist(let item):
@@ -82,11 +88,42 @@ final class WorkoutModel {
         }
     }
 
+    /// `step`, unless it no longer fits the day (see `reconcile`).
+    private var currentStep: Step? {
+        guard let step, isCurrent(step) else { return nil }
+        return step
+    }
+
+    /// Whether `step` still fits Today: the same plan day, and its item still open (an exercise in its break
+    /// counts until the break moves on).
+    private func isCurrent(_ step: Step) -> Bool {
+        guard stepDay == today.dayKey else { return false }
+        let open = Set(today.day.items.filter { !today.status(of: $0).isFinished }.map(\.exerciseId))
+        switch step {
+        case .exercise(let flow):
+            return flow.isFinished || flow.itemIds.contains(where: open.contains)
+        case .checklist(let item):
+            return open.contains(item.exerciseId)
+        case .allDone:
+            return today.queue.isComplete
+        }
+    }
+
     // MARK: Moving through the day
+
+    /// Drops the step when it no longer fits the day: another day was picked, midnight passed, or its item was
+    /// finished or skipped from the list. Its timers stop with it.
+    func reconcile() {
+        guard let step, !isCurrent(step) else { return }
+        cancelBreak()
+        flow?.stop()
+        self.step = nil
+    }
 
     /// Start workout, Continue and the complication: starts the Health workout if it should run, then shows the
     /// item on screen, or the next one.
     func startOrContinue() {
+        reconcile()
         startHealth(explicitly: true)
         if step == nil || step == .allDone { advance() }
     }
@@ -136,6 +173,23 @@ final class WorkoutModel {
         advance()
     }
 
+    /// From Today's list: tick off a checklist item, skip an item, or put a finished one back.
+    func tickOff(_ item: PlanItem) {
+        today.complete(item)
+        Haptics.play(.logged)
+        reconcile()
+    }
+
+    func skip(_ item: PlanItem) {
+        today.skip(item)
+        reconcile()
+    }
+
+    func reopen(_ item: PlanItem) {
+        today.reopen(item)
+        reconcile()
+    }
+
     /// Takes back the last set, including one that just finished an exercise.
     func undoLastSet() {
         cancelBreak()
@@ -146,6 +200,23 @@ final class WorkoutModel {
         guard var rest = breakTime else { return }
         rest.endsAt += TimeInterval(seconds)
         rest.duration += TimeInterval(seconds)
+        breakTime = rest
+        scheduleBreak(rest)
+    }
+
+    /// Holds the break while the next item is being picked, so it can't move on underneath the list.
+    func pauseBreak() {
+        guard let rest = breakTime, pausedBreak == nil else { return }
+        pausedBreak = max(0, rest.endsAt.timeIntervalSinceNow)
+        breakTimers.forEach { $0.cancel() }
+        breakTimers = []
+    }
+
+    /// Carries on with what was left of the break, at least a few seconds.
+    func resumeBreak() {
+        guard let left = pausedBreak, var rest = breakTime else { return }
+        pausedBreak = nil
+        rest.endsAt = .now.addingTimeInterval(max(left, 5))
         breakTime = rest
         scheduleBreak(rest)
     }
@@ -188,8 +259,8 @@ final class WorkoutModel {
         today.refresh()
     }
 
-    /// Throws today's workout away: everything logged today is deleted, here and on the phone, and a running
-    /// Health workout isn't saved.
+    /// Throws today's workout away: everything logged today is deleted, here and on the phone, a running Health
+    /// workout isn't saved, and one saved at Finish is deleted from Health.
     func discardWorkout() {
         cancelBreak()
         flow?.stop()
@@ -197,11 +268,15 @@ final class WorkoutModel {
         health.discard()
         if let session = today.session {
             let id = session.id
+            let savedWorkout = session.healthKitWorkoutId
             do {
                 try today.recorder.delete(session)
                 onSessionDiscarded?(id)
             } catch {
                 Logger.store.error("Couldn't discard the workout: \(error.localizedDescription)")
+            }
+            if let savedWorkout {
+                Task { await health.deleteWorkout(id: savedWorkout) }
             }
         }
         autoStartFailed = false
@@ -273,6 +348,7 @@ final class WorkoutModel {
         breakTimers.forEach { $0.cancel() }
         breakTimers = []
         breakTime = nil
+        pausedBreak = nil
     }
 
     private func after(_ date: Date, _ action: @escaping @MainActor () -> Void) -> Task<Void, Never> {

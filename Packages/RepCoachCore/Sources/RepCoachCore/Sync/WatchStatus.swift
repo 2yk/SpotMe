@@ -13,31 +13,44 @@ public enum HealthAccess: String, Codable, Sendable {
 /// access for the phone's Settings, and which sessions it has and has discarded, so the phone can send back
 /// sessions the watch lost (a reinstalled watch app) and delete the ones it discarded.
 public struct WatchStatus: Codable, Equatable, Sendable {
+    /// How far back the watch lists its sessions, and so how far back the phone restores them: plenty for
+    /// targets and recent history, and it keeps the status small.
+    public static let window: TimeInterval = 400 * 24 * 60 * 60
+
     /// nil when the watch can't use Health at all.
     public var healthAccess: HealthAccess?
-    /// Every session stored on the watch.
-    public var sessions: [UUID]
+    /// The sessions stored on the watch since `since`. nil when unknown (an older watch app, or the watch
+    /// couldn't read its store), in which case the phone sends nothing back.
+    public var sessions: [UUID]?
+    /// The start of the window `sessions` covers.
+    public var since: Date?
     /// Sessions discarded on the watch, most recent last.
     public var deleted: [UUID]
 
-    public init(healthAccess: HealthAccess?, sessions: [UUID] = [], deleted: [UUID] = []) {
+    public init(healthAccess: HealthAccess?, sessions: [UUID]? = nil, since: Date? = nil, deleted: [UUID] = []) {
         self.healthAccess = healthAccess
         self.sessions = sessions
+        self.since = since
         self.deleted = deleted
     }
 
-    /// Statuses sent before the session lists existed read as empty lists.
+    /// Statuses sent before the session lists existed read as "sessions unknown".
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         healthAccess = try container.decodeIfPresent(HealthAccess.self, forKey: .healthAccess)
-        sessions = try container.decodeIfPresent([UUID].self, forKey: .sessions) ?? []
+        sessions = try container.decodeIfPresent([UUID].self, forKey: .sessions)
+        since = try container.decodeIfPresent(Date.self, forKey: .since)
         deleted = try container.decodeIfPresent([UUID].self, forKey: .deleted) ?? []
     }
 
-    /// Of the phone's sessions, the ones to send the watch: missing there and not discarded there.
-    public func missing(fromPhone phone: some Sequence<UUID>) -> [UUID] {
+    /// Of the phone's sessions, the ones to send the watch: in the window, missing there and not discarded
+    /// there. Nothing while the watch's list is unknown.
+    public func missing(fromPhone phone: [(id: UUID, date: Date)]) -> [UUID] {
+        guard let sessions else { return [] }
         let known = Set(sessions).union(deleted)
-        return phone.filter { !known.contains($0) }
+        return phone
+            .filter { !known.contains($0.id) && $0.date >= (since ?? .distantPast) }
+            .map(\.id)
     }
 
     // MARK: WatchConnectivity

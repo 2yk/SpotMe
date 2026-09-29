@@ -94,9 +94,13 @@ final class SyncTests: StoreTestCase {
         XCTAssertNil(WatchStatus(applicationContext: context))
     }
 
+    /// A status from before the session lists existed means "unknown", and nothing is sent back for it.
     func testStatusesFromBeforeSessionListsStillRead() throws {
         let old = ["watchStatus": Data(#"{"healthAccess":"denied"}"#.utf8)]
-        XCTAssertEqual(WatchStatus(applicationContext: old), WatchStatus(healthAccess: .denied))
+        let status = try XCTUnwrap(WatchStatus(applicationContext: old))
+        XCTAssertEqual(status, WatchStatus(healthAccess: .denied))
+        XCTAssertNil(status.sessions)
+        XCTAssertEqual(status.missing(fromPhone: [(id: UUID(), date: sept(21))]), [])
     }
 
     /// A reinstalled watch app starts empty: the phone sends back what the watch lost, and nothing else.
@@ -110,7 +114,7 @@ final class SyncTests: StoreTestCase {
 
         let status = WatchStatus(healthAccess: .allowed, sessions: try recorder.sessionIds())
         let phoneSessions = try phone.fetch(FetchDescriptor<WorkoutSession>())
-        XCTAssertEqual(status.missing(fromPhone: phoneSessions.map(\.id)), [mondayId])
+        XCTAssertEqual(status.missing(fromPhone: try WorkoutRecorder(context: phone).sessionStamps()), [mondayId])
 
         let lost = try XCTUnwrap(phoneSessions.first { $0.id == mondayId })
         XCTAssertTrue(try SessionPayload(lost).insertIfMissing(into: context))
@@ -139,10 +143,43 @@ final class SyncTests: StoreTestCase {
 
         let status = WatchStatus(healthAccess: nil, sessions: try recorder.sessionIds(), deleted: [id])
         let phoneRecorder = WorkoutRecorder(context: phone)
-        XCTAssertEqual(status.missing(fromPhone: try phoneRecorder.sessionIds()), [])
+        XCTAssertEqual(status.missing(fromPhone: try phoneRecorder.sessionStamps()), [])
         XCTAssertEqual(try phoneRecorder.deleteSessions(status.deleted), 1)
         XCTAssertEqual(try phone.fetchCount(FetchDescriptor<SetLog>()), 0)
         XCTAssertEqual(try context.fetchCount(FetchDescriptor<SetLog>()), 0)
+    }
+
+    /// Only sessions inside the watch's window come back; older ones stay on the phone.
+    func testRestoreStaysInsideTheWindow() throws {
+        let old = try logSession("hip-thrust", on: sept(1), dayKey: "tuesday", [(60, 12)]).id
+        let recent = try logSession("hip-thrust", on: sept(22), dayKey: "tuesday", [(60, 12)]).id
+        for session in try context.fetch(FetchDescriptor<WorkoutSession>()) {
+            try SessionPayload(session).upsert(into: phone)
+        }
+        let status = WatchStatus(healthAccess: nil, sessions: [], since: sept(15))
+        XCTAssertEqual(status.missing(fromPhone: try WorkoutRecorder(context: phone).sessionStamps()), [recent])
+        XCTAssertNotEqual(old, recent)
+    }
+
+    /// The watch started today again before today's copy came back from the phone: the copy's items join the
+    /// watch's session, and the watch's own log wins for an item both have.
+    func testARestoredCopyOfTodayMergesIntoTheWatchsSession() throws {
+        let earlier = try loggedMonday()
+        try SessionPayload(earlier).upsert(into: phone)
+        let copy = SessionPayload(try XCTUnwrap(try phone.fetch(FetchDescriptor<WorkoutSession>()).first))
+        try recorder.delete(earlier)
+
+        // Logged again on the reinstalled watch, same Monday: pull-ups only, different numbers.
+        let again = try recorder.startSession(for: "monday", on: sept(21, hour: 11), isDeload: false)
+        let pullUps = try recorder.log(for: "weighted-pull-ups", in: again)
+        try recorder.addSet(to: pullUps, weight: 17.5, reps: 3, at: sept(21, hour: 11))
+
+        try copy.merge(into: again, context: context)
+        XCTAssertEqual(try context.fetchCount(FetchDescriptor<WorkoutSession>()), 1)
+        XCTAssertEqual(again.log(for: "weighted-pull-ups")?.orderedSets.map(\.loggedSet), sets([(17.5, 3)]))
+        XCTAssertEqual(again.statuses["recovery-run"]?.isFinished, true)
+        XCTAssertEqual(again.statuses["incline-db-curl"], .skipped(sept(21, hour: 9)))
+        XCTAssertEqual(again.log(for: "weighted-plank")?.orderedSets.first?.seconds, 41)
     }
 
     // MARK: Phone → watch

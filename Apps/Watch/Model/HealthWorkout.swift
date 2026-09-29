@@ -102,6 +102,23 @@ final class HealthWorkout: NSObject {
         reset()
     }
 
+    /// Removes a workout SpotMe already saved, with the energy saved alongside it: a discarded session leaves
+    /// nothing in Health.
+    func deleteWorkout(id: UUID) async {
+        guard isAvailable else { return }
+        do {
+            let query = HKSampleQueryDescriptor(predicates: [.workout(HKQuery.predicateForObject(with: id))],
+                                                sortDescriptors: [])
+            for workout in try await query.result(for: store) {
+                _ = try? await store.deleteObjects(of: HKQuantityType(.activeEnergyBurned),
+                                                   predicate: HKQuery.predicateForObjects(from: workout))
+                try await store.delete(workout)
+            }
+        } catch {
+            Logger.health.error("Couldn't delete the workout from Health: \(error.localizedDescription)")
+        }
+    }
+
     /// Picks the workout back up after the system relaunched the app mid-session.
     func recover() async {
         do {

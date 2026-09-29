@@ -127,7 +127,7 @@ final class PhoneSync: NSObject {
         do {
             let discarded = Set(discardedIds)
             let queued = Set(session.outstandingUserInfoTransfers.compactMap { SessionPayload(userInfo: $0.userInfo)?.id })
-            let wanted = Set(status.missing(fromPhone: try WorkoutRecorder(context: context).sessionIds()))
+            let wanted = Set(status.missing(fromPhone: try WorkoutRecorder(context: context).sessionStamps()))
                 .subtracting(queued)
                 .filter { !discarded.contains($0.uuidString) }
             guard !wanted.isEmpty else { return }

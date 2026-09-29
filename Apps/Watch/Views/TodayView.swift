@@ -44,6 +44,8 @@ struct TodayView: View {
                 }
             }
             .onOpenURL(perform: open)
+            // Another day picked, or midnight: a workout step from the old day no longer applies.
+            .onChange(of: today.dayKey) { workout.reconcile() }
             .sheet(isPresented: $choosingDay) {
                 DayPickerView()
             }
@@ -67,13 +69,14 @@ struct TodayView: View {
                 Button("Discard", role: .destructive) { withAnimation(.snappy) { workout.discardWorkout() } }
                 Button("Keep it", role: .cancel) {}
             } message: {
-                Text("Everything logged today is deleted, here and on your iPhone. Nothing is saved to Health.")
+                Text("Everything logged today is deleted, here and on your iPhone, and nothing stays in Health.")
             }
-            .alert("Not saving to Health", isPresented: startProblemShown) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                Text(workout.startProblem ?? "")
-            }
+        }
+        // On the stack, not its root: Start workout pushes the workout screen before this can fire.
+        .alert("Not saving to Health", isPresented: startProblemShown) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(workout.startProblem ?? "")
         }
         #if DEBUG
         .task {
@@ -117,12 +120,12 @@ struct TodayView: View {
                 }
                 .swipeActions(edge: .trailing) {
                     if item.kind == .checklist {
-                        Button { tickOff(item) } label: {
+                        Button { withAnimation(.snappy) { workout.tickOff(item) } } label: {
                             Label("Done", systemImage: "checkmark")
                         }
                         .tint(Theme.mint)
                     }
-                    Button { withAnimation { today.skip(item) } } label: {
+                    Button { withAnimation { workout.skip(item) } } label: {
                         Label("Skip", systemImage: "forward.fill")
                     }
                     .tint(Theme.ember)
@@ -134,7 +137,7 @@ struct TodayView: View {
                     ForEach(today.queue.finished) { item in
                         ItemRow(item: item)
                             .swipeActions(edge: .trailing) {
-                                Button { withAnimation { today.reopen(item) } } label: {
+                                Button { withAnimation { workout.reopen(item) } } label: {
                                     Label("Reopen", systemImage: "arrow.uturn.backward")
                                 }
                                 .tint(Theme.ice)
@@ -190,12 +193,6 @@ struct TodayView: View {
 
     private var startProblemShown: Binding<Bool> {
         Binding(get: { workout.startProblem != nil }, set: { if !$0 { workout.startProblem = nil } })
-    }
-
-    /// Checklist items, from the list: one swipe to done.
-    private func tickOff(_ item: PlanItem) {
-        withAnimation(.snappy) { today.complete(item) }
-        Haptics.play(.logged)
     }
 }
 
