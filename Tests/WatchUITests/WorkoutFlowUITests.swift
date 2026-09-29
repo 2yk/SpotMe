@@ -120,9 +120,34 @@ final class WorkoutFlowUITests: XCTestCase {
         let finish = app.buttons["Finish"]
         XCTAssertTrue(finish.waitForExistence(timeout: 5), "End didn't ask first")
         finish.tap()
-        XCTAssertTrue(app.staticTexts["Session finished"].waitForExistence(timeout: 5), "No summary after End")
+        // The rating comes first; skipping it goes on to the numbers.
+        XCTAssertTrue(app.descendants(matching: .any)["effort-bars"].waitForExistence(timeout: 10), "No rating after Finish")
+        app.buttons["Skip"].tap()
+        XCTAssertTrue(app.staticTexts["Session finished"].waitForExistence(timeout: 10), "No summary after End")
         app.buttons["Done"].tap()
         XCTAssertFalse(app.buttons["Log set"].exists, "Still on the workout after End")
+    }
+
+    /// After Finish the bars ask how hard it was: tap one, Done, and the summary shows the rating.
+    func testRatingTheSessionAfterFinish() {
+        let app = launch(screen: "set")
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10))
+        app.swipeRight()
+        app.buttons["End"].tap()
+        app.buttons["Finish"].tap()
+        let bars = app.descendants(matching: .any)["effort-bars"]
+        XCTAssertTrue(bars.waitForExistence(timeout: 10), "No rating after Finish")
+        XCTAssertFalse(app.buttons["Done"].isEnabled, "Done should wait for a rating")
+
+        bars.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
+        XCTAssertTrue((bars.value as? String ?? "").hasPrefix("10 · All Out"), "The last bar isn't All Out")
+        bars.coordinate(withNormalizedOffset: CGVector(dx: 0.55, dy: 0.5)).tap()
+        let picked = bars.value as? String ?? ""
+        XCTAssertTrue(picked.hasPrefix("6 · Moderate"), "The middle bar isn't 6, Moderate: \(picked)")
+
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.staticTexts["6 · Moderate"].waitForExistence(timeout: 10), "The summary doesn't show the rating")
+        app.buttons["Done"].tap()
     }
 
     /// End offers Discard too: it throws the day away and goes back to Today, where it starts afresh.

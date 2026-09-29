@@ -14,6 +14,8 @@ public final class WorkoutSession {
     public var healthKitWorkoutId: UUID?
     /// Set when the workout is finished.
     public var endedAt: Date?
+    /// How hard the session felt, 1 to 10 (`Effort`), rated on the watch after Finish. nil: not rated.
+    public var effort: Int?
 
     @Relationship(deleteRule: .cascade, inverse: \ExerciseLog.session)
     public var logs: [ExerciseLog] = []

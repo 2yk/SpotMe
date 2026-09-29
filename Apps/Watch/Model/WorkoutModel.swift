@@ -13,6 +13,8 @@ final class WorkoutModel {
         let averageHeartRate: Double?
         let energy: Double?
         let sets: Int
+        /// Sets were logged, so the session gets rated (1 to 10) before its numbers show.
+        let asksEffort: Bool
     }
 
     /// What the workout screen shows.
@@ -59,6 +61,8 @@ final class WorkoutModel {
     @ObservationIgnored var onSessionFinished: ((WorkoutSession) -> Void)?
     /// Called with a discarded session's id, so the phone deletes its copy.
     @ObservationIgnored var onSessionDiscarded: ((UUID) -> Void)?
+    /// The session Finish just closed and the Health workout it saved, until it's rated or the summary is gone.
+    @ObservationIgnored private var rating: (sessionId: UUID, workoutId: UUID?)?
     /// A Health workout that failed to start by itself isn't tried again until Start workout is tapped.
     @ObservationIgnored private var autoStartFailed = false
     @ObservationIgnored private let breakAlarm = CountdownAlarm()
@@ -337,9 +341,24 @@ final class WorkoutModel {
             onSessionFinished?(session)
         }
         let sets = today.session?.logs.reduce(0) { $0 + $1.sets.count } ?? 0
+        rating = today.session.map { ($0.id, workoutId) }
         summary = Summary(savedToHealth: workoutId != nil, duration: duration, averageHeartRate: average,
-                          energy: energy, sets: sets)
+                          energy: energy, sets: sets, asksEffort: sets > 0)
         today.refresh()
+    }
+
+    /// How hard the session felt, 1 to 10, from the rating screen after Finish. Kept with the session (sent to
+    /// the phone again, now with the rating) and saved to Health with the workout, when there is one.
+    func rate(effort score: Int) {
+        guard let score = Effort.valid(score), let target = rating,
+              let session = today.session, session.id == target.sessionId else { return }
+        session.effort = score
+        try? today.context.save()
+        onSessionFinished?(session)
+        if let workoutId = target.workoutId {
+            Task { await health.saveEffort(score, workoutId: workoutId) }
+        }
+        rating = nil
     }
 
     /// Throws today's workout away: everything logged today is deleted, here and on the phone, a Health workout

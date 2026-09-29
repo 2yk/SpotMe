@@ -30,8 +30,11 @@ final class HealthWorkout: NSObject {
     @ObservationIgnored private let store = HKHealthStore()
     @ObservationIgnored private var session: HKWorkoutSession?
     @ObservationIgnored private var builder: HKLiveWorkoutBuilder?
+    /// The workout Finish just saved, so its effort can be attached without looking it up.
+    @ObservationIgnored private var lastSaved: HKWorkout?
 
-    private static let shareTypes: Set<HKSampleType> = [HKObjectType.workoutType()]
+    /// The workout, and the effort rating that goes with it (asked for together, so Health prompts once).
+    private static let shareTypes: Set<HKSampleType> = [HKObjectType.workoutType(), HKQuantityType(.workoutEffortScore)]
     private static let readTypes: Set<HKObjectType> = [
         HKQuantityType(.heartRate), HKQuantityType(.activeEnergyBurned), HKObjectType.workoutType(),
     ]
@@ -93,6 +96,7 @@ final class HealthWorkout: NSObject {
         do {
             try await builder.endCollection(at: .now)
             let workout = try await builder.finishWorkout()
+            lastSaved = workout
             reset()
             return workout?.uuid
         } catch {
@@ -110,18 +114,46 @@ final class HealthWorkout: NSObject {
         reset()
     }
 
-    /// Removes a workout SpotMe already saved, with the energy saved alongside it: a discarded session leaves
-    /// nothing in Health.
+    /// Saves how hard the session felt (1 to 10) to Health, the way Apple's own apps do, so it shows in Fitness
+    /// on the workout: a sample for the workout's time span, related to the workout. `workoutId` is what Finish
+    /// returned. Nothing happens if Health doesn't allow it; the rating stays in SpotMe either way.
+    func saveEffort(_ score: Int, workoutId: UUID) async {
+        guard isAvailable, let score = Effort.valid(score),
+              store.authorizationStatus(for: HKQuantityType(.workoutEffortScore)) == .sharingAuthorized
+        else { return }
+        do {
+            guard let workout = try await savedWorkout(id: workoutId) else { return }
+            let sample = HKQuantitySample(type: HKQuantityType(.workoutEffortScore),
+                                          quantity: HKQuantity(unit: .appleEffortScore(), doubleValue: Double(score)),
+                                          start: workout.startDate, end: workout.endDate)
+            try await store.save(sample)
+            try await store.relateWorkoutEffortSample(sample, with: workout, activity: nil)
+        } catch {
+            Logger.health.error("Couldn't save the effort rating: \(error.localizedDescription)")
+        }
+    }
+
+    private func savedWorkout(id: UUID) async throws -> HKWorkout? {
+        if let lastSaved, lastSaved.uuid == id { return lastSaved }
+        let query = HKSampleQueryDescriptor(predicates: [.workout(HKQuery.predicateForObject(with: id))],
+                                            sortDescriptors: [])
+        return try await query.result(for: store).first
+    }
+
+    /// Removes a workout SpotMe already saved, with the energy and effort rating saved alongside it: a discarded
+    /// session leaves nothing in Health.
     func deleteWorkout(id: UUID) async {
         guard isAvailable else { return }
         do {
-            let query = HKSampleQueryDescriptor(predicates: [.workout(HKQuery.predicateForObject(with: id))],
-                                                sortDescriptors: [])
-            for workout in try await query.result(for: store) {
+            for workout in [try await savedWorkout(id: id)].compactMap({ $0 }) {
                 _ = try? await store.deleteObjects(of: HKQuantityType(.activeEnergyBurned),
                                                    predicate: HKQuery.predicateForObjects(from: workout))
+                _ = try? await store.deleteObjects(
+                    of: HKQuantityType(.workoutEffortScore),
+                    predicate: HKQuery.predicateForWorkoutEffortSamplesRelated(workout: workout, activity: nil))
                 try await store.delete(workout)
             }
+            lastSaved = nil
         } catch {
             Logger.health.error("Couldn't delete the workout from Health: \(error.localizedDescription)")
         }

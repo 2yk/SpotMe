@@ -76,6 +76,8 @@ enum LaunchOptions {
     static var demoWeeks: Int { UserDefaults.standard.string(forKey: "weeks").flatMap(Int.init) ?? 8 }
     /// `-fresh YES`: demo history without a session under way today.
     static var demoFresh: Bool { UserDefaults.standard.bool(forKey: "fresh") }
+    /// `-effort 7`: with `-demo`, the effort rating screen starts on that score.
+    static var effort: Int? { demo ? Effort.valid(UserDefaults.standard.integer(forKey: "effort")) : nil }
     /// `-sampleEdits YES`: with `-demo`, some plan edits on Monday.
     static var sampleEdits: Bool { demo && UserDefaults.standard.bool(forKey: "sampleEdits") }
     /// `-day monday`: open on another plan day.

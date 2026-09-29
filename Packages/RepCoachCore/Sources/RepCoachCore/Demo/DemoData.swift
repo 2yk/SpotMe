@@ -46,6 +46,8 @@ public enum DemoData {
                 if !sets.isEmpty { history[item.exerciseId, default: []].insert(sets, at: 0) }
             }
             session.endedAt = date.addingTimeInterval((minutes + 5) * 60)
+            // Mostly hard, some moderate, the odd all-out.
+            session.effort = [7, 8, 6, 9, 7, 8, 10, 7][abs(Int(date.timeIntervalSince1970 / 86_400)) % 8]
         }
 
         if let dayKey, let day = plan.days.first(where: { $0.key == dayKey }) {

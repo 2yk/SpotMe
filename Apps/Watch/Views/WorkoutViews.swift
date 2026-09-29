@@ -24,12 +24,34 @@ struct WorkoutBar: View {
     }
 }
 
-/// Shown once after Finish workout.
+/// Shown once after Finish workout: first how hard it felt, then the numbers.
 struct WorkoutSummaryView: View {
     let summary: WorkoutModel.Summary
+    @Environment(WorkoutModel.self) private var workout
     @Environment(\.dismiss) private var dismiss
+    @State private var asking: Bool
+    @State private var effort: Int?
+
+    init(summary: WorkoutModel.Summary) {
+        self.summary = summary
+        _asking = State(initialValue: summary.asksEffort)
+    }
 
     var body: some View {
+        if asking {
+            EffortRatingView { score in
+                if let score {
+                    effort = score
+                    workout.rate(effort: score)
+                }
+                withAnimation(.snappy) { asking = false }
+            }
+        } else {
+            stats
+        }
+    }
+
+    private var stats: some View {
         ScrollView {
             VStack(spacing: 10) {
                 Image(systemName: "checkmark.seal.fill")
@@ -47,6 +69,11 @@ struct WorkoutSummaryView: View {
                             stat("Avg bpm", summary.averageHeartRate.map { "\(Int($0.rounded()))" } ?? "--",
                                  tint: Theme.pulse)
                             stat("kcal", summary.energy.map { "\(Int($0.rounded()))" } ?? "--", tint: Theme.ember)
+                        }
+                    }
+                    if let effort {
+                        GridRow {
+                            stat("Effort", Effort.text(effort), tint: Theme.effort(effort)).gridCellColumns(2)
                         }
                     }
                 }

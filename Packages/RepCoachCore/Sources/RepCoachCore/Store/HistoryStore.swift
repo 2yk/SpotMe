@@ -8,12 +8,15 @@ public struct HistoryEntry: Hashable, Sendable {
     public var isDeload: Bool
     /// In the order performed. Timed sets carry their seconds in `reps`.
     public var sets: [LoggedSet]
+    /// How hard the whole session felt, 1 to 10, if it was rated.
+    public var effort: Int?
 
-    public init(sessionId: UUID, date: Date, isDeload: Bool, sets: [LoggedSet]) {
+    public init(sessionId: UUID, date: Date, isDeload: Bool, sets: [LoggedSet], effort: Int? = nil) {
         self.sessionId = sessionId
         self.date = date
         self.isDeload = isDeload
         self.sets = sets
+        self.effort = effort
     }
 }
 
@@ -41,7 +44,7 @@ public struct HistoryStore {
             .compactMap { log -> HistoryEntry? in
                 guard let session = log.session, session.id != sessionId, !log.sets.isEmpty else { return nil }
                 return HistoryEntry(sessionId: session.id, date: session.date, isDeload: session.isDeload,
-                                    sets: log.orderedSets.map(\.loggedSet))
+                                    sets: log.orderedSets.map(\.loggedSet), effort: session.effort)
             }
             .sorted { $0.date > $1.date }
     }

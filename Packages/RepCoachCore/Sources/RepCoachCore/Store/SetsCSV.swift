@@ -3,7 +3,7 @@ import Foundation
 /// Every logged set as CSV, for a spreadsheet: one row per set, oldest first.
 public enum SetsCSV {
     public static let header = ["Date", "Time", "Day", "Exercise", "Exercise ID", "Set", "Weight (kg)", "Reps",
-                                "Seconds", "Deload", "Skipped", "Session"]
+                                "Seconds", "Deload", "Skipped", "Effort (1-10)", "Session"]
 
     /// - Parameters:
     ///   - sessions: in any order; rows come out by session date, then the order items were started, then set.
@@ -27,6 +27,7 @@ public enum SetsCSV {
                         set.seconds.map { "\($0)" } ?? "",
                         session.isDeload ? "yes" : "",
                         log.skipped ? "yes" : "",
+                        session.effort.map { "\($0)" } ?? "",
                         session.id.uuidString,
                     ])
                 }

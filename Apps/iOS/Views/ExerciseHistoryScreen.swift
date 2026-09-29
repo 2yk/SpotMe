@@ -128,6 +128,9 @@ private struct SessionCard: View {
                 Text(entry.date, format: .dateTime.weekday(.abbreviated).day().month(.abbreviated))
                     .font(.rounded(.headline, .bold))
                 if entry.isDeload { Chip(text: "Deload", tint: Theme.ember) }
+                if let effort = Effort.valid(entry.effort) {
+                    Chip(text: "Effort \(effort)", tint: Theme.effort(effort))
+                }
                 Spacer()
                 Text("\(entry.sets.count) sets").font(.rounded(.footnote, .medium)).foregroundStyle(Theme.tertiary)
             }

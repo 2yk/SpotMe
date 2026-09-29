@@ -26,6 +26,16 @@ enum Theme {
     static let tertiary = Color.white.opacity(0.36)
 }
 
+extension Theme {
+    /// The colour of an effort score (1 to 10): mint when easy, through volt and amber, to red at all out.
+    static func effort(_ score: Int) -> Color {
+        let stops = [mint, volt, amber, ember, pulse]
+        let position = Double(min(max(score, 1), 10) - 1) / 9 * Double(stops.count - 1)
+        let index = min(Int(position), stops.count - 2)
+        return stops[index].mix(with: stops[index + 1], by: position - Double(index))
+    }
+}
+
 extension Font {
     /// Big numbers: weights, reps, timers.
     static func number(_ size: CGFloat, weight: Font.Weight = .bold) -> Font {

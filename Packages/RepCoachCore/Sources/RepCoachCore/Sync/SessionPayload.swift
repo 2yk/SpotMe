@@ -25,6 +25,8 @@ public struct SessionPayload: Codable, Equatable, Sendable {
     public var isDeload: Bool
     public var endedAt: Date?
     public var healthKitWorkoutId: UUID?
+    /// How hard the session felt, 1 to 10. Rated after Finish, so a session is sent again with it.
+    public var effort: Int?
     public var logs: [Log]
 
     /// A snapshot of `session` and everything logged in it.
@@ -35,6 +37,7 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         isDeload = session.isDeload
         endedAt = session.endedAt
         healthKitWorkoutId = session.healthKitWorkoutId
+        effort = session.effort
         logs = session.logs.sorted { $0.order < $1.order }.map { log in
             Log(exerciseId: log.exerciseId, order: log.order, completedAt: log.completedAt, skipped: log.skipped,
                 sets: log.orderedSets.map {
@@ -90,6 +93,8 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         session.isDeload = isDeload
         session.endedAt = endedAt
         session.healthKitWorkoutId = healthKitWorkoutId
+        // A re-send with the rating adds it; one from before it was rated never takes it away.
+        if let effort = Effort.valid(effort) { session.effort = effort }
 
         for entry in logs {
             insert(entry, order: entry.order, into: session, context: context)
@@ -107,6 +112,7 @@ public struct SessionPayload: Codable, Equatable, Sendable {
             insert(entry, order: order, into: local, context: context)
             order += 1
         }
+        if local.effort == nil { local.effort = Effort.valid(effort) }
         try context.save()
     }
 

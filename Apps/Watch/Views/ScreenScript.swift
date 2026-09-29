@@ -46,9 +46,10 @@ enum ScreenScript {
             guard let item = today.day.items.first(where: { $0.kind == .weighted && today.log(for: $0) == nil })
             else { return }
             show([item])
-        case "summary":
+        case "summary", "effort":
             workout.summary = WorkoutModel.Summary(savedToHealth: true, duration: 62 * 60 + 14,
-                                                   averageHeartRate: 124, energy: 342, sets: 27)
+                                                   averageHeartRate: 124, energy: 342, sets: 27,
+                                                   asksEffort: screen == "effort")
         case "days":
             choosingDay.wrappedValue = true
         case "checklist":
