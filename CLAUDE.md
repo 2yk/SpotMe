@@ -33,6 +33,9 @@ xcodebuild -project RepCoach.xcodeproj -scheme RepCoachWatch \
   -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm)' build
 xcodebuild -project RepCoach.xcodeproj -scheme RepCoach \
   -destination 'platform=iOS Simulator,name=iPhone 16' build
+# Watch UI tests: real taps through the workout against the demo store (a few minutes)
+xcodebuild -project RepCoach.xcodeproj -scheme RepCoachWatch \
+  -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (42mm)' test
 ```
 
 Use whatever simulator names `xcrun simctl list devices available` shows. If XcodeGen can't produce a working single-target watch app embedded in the iOS app, create the project in Xcode instead (File › New › Project › watchOS › App, "Watch App with New Companion iOS App"), add the local package, move the sources in, and delete `project.yml`. Say which route you took.

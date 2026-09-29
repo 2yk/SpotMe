@@ -23,10 +23,15 @@ struct WorkoutPager: View {
                 .tag(Page.workout)
             // The system's own player: whatever plays on the watch or the iPhone, the Crown sets the volume.
             NowPlayingView()
+                .toolbar(.hidden, for: .navigationBar)
                 .tag(Page.nowPlaying)
         }
         .tabViewStyle(.page)
         .finishDialog(isPresented: $confirmingEnd, workout: workout)
+        // Finished or discarded, from whichever page: back to Today, where the summary shows.
+        .onChange(of: workout.step == nil) { _, ended in
+            if ended { onList() }
+        }
         #if DEBUG
         .task {
             switch LaunchOptions.screen {

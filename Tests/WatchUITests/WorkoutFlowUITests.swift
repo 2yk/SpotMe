@@ -91,6 +91,40 @@ final class WorkoutFlowUITests: XCTestCase {
         XCTAssertFalse(pausedLabel(app).exists)
     }
 
+    // MARK: Pages
+
+    /// Now Playing is to the right; coming back, the workout and its title are still there.
+    func testMusicIsOnTheRightAndTheWorkoutComesBack() {
+        let app = launch(screen: "set")
+        let log = app.buttons["Log set"]
+        XCTAssertTrue(log.waitForExistence(timeout: 10))
+        let title = "Incline DB Press"
+        XCTAssertTrue(app.staticTexts[title].exists)
+        app.swipeLeft()
+        XCTAssertTrue(app.staticTexts["Not Playing"].waitForExistence(timeout: 5)
+            || app.buttons.matching(NSPredicate(format: "label CONTAINS[c] 'play'")).firstMatch.exists,
+                      "Now Playing isn't to the right")
+        app.swipeRight()
+        XCTAssertTrue(log.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts[title].waitForExistence(timeout: 5), "The title didn't come back")
+    }
+
+    // MARK: End
+
+    /// End from the controls asks first, then finishes and goes back to Today with the summary.
+    func testEndFinishesTheWorkout() {
+        let app = launch(screen: "set")
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10))
+        app.swipeRight()
+        app.buttons["End"].tap()
+        let finish = app.buttons["Finish"]
+        XCTAssertTrue(finish.waitForExistence(timeout: 5), "End didn't ask first")
+        finish.tap()
+        XCTAssertTrue(app.staticTexts["Session finished"].waitForExistence(timeout: 5), "No summary after End")
+        app.buttons["Done"].tap()
+        XCTAssertFalse(app.buttons["Log set"].exists, "Still on the workout after End")
+    }
+
     // MARK: Weight and reps
 
     func testPlusAndMinusMoveExactlyOneStep() {
