@@ -65,13 +65,13 @@ struct NextUpView: View {
                 }
             }
             // The break waits while the list is open, so it can't move on underneath it.
-            .sheet(isPresented: $choosing, onDismiss: workout.resumeBreak) {
+            .sheet(isPresented: $choosing, onDismiss: workout.releaseBreak) {
                 NextPicker { item in
                     today.promote(item)
                     choosing = false
                 }
             }
-            .onChange(of: choosing) { if choosing { workout.pauseBreak() } }
+            .onChange(of: choosing) { if choosing { workout.holdBreak() } }
             #if DEBUG
             .task { if LaunchOptions.screen == "next-picker" { choosing = true } }
             #endif
@@ -83,22 +83,17 @@ struct NextUpView: View {
     @ViewBuilder
     private func countdown(size: CGFloat) -> some View {
         if let rest = workout.breakTime {
-            ZStack {
-                TimelineView(.periodic(from: .now, by: 0.5)) { context in
-                    ProgressRing(progress: rest.endsAt.timeIntervalSince(context.date) / rest.duration,
-                                 tint: Theme.ice, lineWidth: 7)
-                }
-                VStack(spacing: -2) {
-                    // The system timer text doesn't shrink to fit, so size it from the ring.
-                    Text(timerInterval: Date.now...max(Date.now, rest.endsAt), countsDown: true)
-                        .font(.number(min(32, size * 0.34)))
-                        .monospacedDigit()
-                        .multilineTextAlignment(.center)
-                        .lineLimit(1)
+            // The ring is a big target for starting now, as well as the button at the bottom.
+            Button { workout.advance() } label: {
+                CountdownRing(countdown: rest, lineWidth: 7, digits: min(32, size * 0.34)) {
                     Text("Next").eyebrow(Theme.ice, size: size < 64 ? 8 : 10)
                 }
+                .frame(width: size, height: size)
+                .contentShape(Circle())
             }
-            .frame(width: size, height: size)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Break before the next exercise")
+            .accessibilityHint("Starts it now")
         } else {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: min(44, size * 0.6), weight: .bold))

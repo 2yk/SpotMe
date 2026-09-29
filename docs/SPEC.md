@@ -65,18 +65,22 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 **Workout flow**
 - Start workout (or Continue) opens the next open item in plan order; one already started comes first. The workout then moves through the day by itself.
-- After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target, and how the finished exercise went; when it runs out, the next item starts. +30 s, start now, or tap the next item's name to pick another to do first.
+- After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target, and how the finished exercise went; when it runs out, the next item starts. +30 s, start now (the ▶ button or the ring itself), or tap the next item's name to pick another to do first (the break waits while the list is open).
 - Checklist items (warmup, neck, cooldown) show their steps with Done and Skip, then move on.
 - When everything is done: "All done" with Finish workout. Back always returns to Today.
+- Pages, as in Apple's Workout app: swipe right for the **controls**, left for **Now Playing** (the system player: play, pause, skip, volume on the Crown, for music on the watch or the iPhone).
+- Controls: **Pause/Resume**, **End** (asks Save to Health / Don't save / Keep going), **Skip** and **List** (back to Today). Under them: "Skip to …", where Skip leads.
+  - Pause stops the Health workout's time and heart rate, the rest and the break; they carry on from where they stopped. Logging a set or starting a hold resumes. Today shows the workout as paused.
+  - Skip moves on now: the exercise on screen keeps what's logged (it's skipped if nothing is), a checklist item is skipped, and a break ends early.
 
 **Set screen (weighted / reps)**
 - Header: "Set 2 of 4" and the rep range.
-- Two big values: **weight** and **reps**, prefilled with the target. Tap a value to focus it; the Digital Crown changes it (weight by the exercise increment, reps by 1). Haptic click per step.
+- Two rows: **weight** and **reps**, prefilled with the target, each with − and + (exactly one step per tap: the exercise increment, or 1 rep). Tap a value to focus it; the Digital Crown then moves it one step per click, with a haptic, counting from the value shown (never an in-between or re-rounded value).
 - Large **Log set** button. Undo for the last logged set.
 - After logging: engine `nextSet` → rest screen.
 
 **Rest screen**
-- Countdown from `restSec` (supersets: rest only after the second exercise).
+- Countdown from `restSec` (supersets: rest only after the second exercise). The ring and the time are drawn from one clock, so they always agree: 15 times a second on screen, every second in Always On.
 - Shows the next set's target and the one-line reason.
 - Haptics at 10 s left and at 0. Buttons: +30 s, Skip.
 - The heart rate from the running workout session is shown small at the top.

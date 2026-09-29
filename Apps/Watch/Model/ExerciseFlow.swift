@@ -7,13 +7,8 @@ import RepCoachCore
 final class ExerciseFlow {
     enum Phase: Equatable {
         case set
-        case rest(Rest)
+        case rest(Countdown)
         case finished([Summary])
-    }
-
-    struct Rest: Equatable {
-        var endsAt: Date
-        var duration: TimeInterval
     }
 
     struct Summary: Equatable, Identifiable {
@@ -39,9 +34,10 @@ final class ExerciseFlow {
     /// The engine's verdict on each item's last set, shown while resting.
     private var coaching: [Coach.Line?]
     private var undoStack: [Snapshot] = []
-    @ObservationIgnored private var timers: [Task<Void, Never>] = []
+    @ObservationIgnored private let restAlarm = CountdownAlarm()
+    @ObservationIgnored private var holdMarks: [Task<Void, Never>] = []
     @ObservationIgnored private let today: TodayModel
-    @ObservationIgnored private let onSetLogged: () -> Void
+    @ObservationIgnored private let onActivity: () -> Void
     @ObservationIgnored private let onFinished: () -> Void
 
     private struct Snapshot {
@@ -51,13 +47,13 @@ final class ExerciseFlow {
     }
 
     /// - Parameters:
-    ///   - onSetLogged: called after each set is saved.
+    ///   - onActivity: called when a set is saved or a hold starts.
     ///   - onFinished: called when the last set is logged, to move the workout on.
-    init(items: [PlanItem], today: TodayModel, onSetLogged: @escaping () -> Void = {},
+    init(items: [PlanItem], today: TodayModel, onActivity: @escaping () -> Void = {},
          onFinished: @escaping () -> Void = {}) {
         self.items = items
         self.today = today
-        self.onSetLogged = onSetLogged
+        self.onActivity = onActivity
         self.onFinished = onFinished
         targets = items.map { today.target(for: $0) }
         steps = SetSequence.steps(sets: targets.map(\.sets), rest: items.map { $0.restSec ?? 60 })
@@ -122,7 +118,7 @@ final class ExerciseFlow {
         }
         undoStack.append(Snapshot(stepIndex: stepIndex, workingWeight: workingWeight, coaching: coaching))
         Haptics.play(.logged)
-        onSetLogged()
+        onActivity()
 
         if item.kind == .weighted, let p = Prescription(item: item) {
             let next = ProgressionEngine.nextSet(for: p, weight: loggedWeight, reps: loggedReps,
@@ -147,7 +143,7 @@ final class ExerciseFlow {
 
     func undo() {
         guard let snapshot = undoStack.popLast() else { return }
-        cancelTimers()
+        stop()
         if isFinished {
             for item in items {
                 if let log = today.log(for: item) { try? today.recorder.reopen(log) }
@@ -170,35 +166,52 @@ final class ExerciseFlow {
 
     func addRest(_ seconds: Int) {
         guard case .rest(var rest) = phase else { return }
-        rest.endsAt += TimeInterval(seconds)
-        rest.duration += TimeInterval(seconds)
+        rest.add(TimeInterval(seconds))
         phase = .rest(rest)
-        scheduleRestHaptics(rest)
+        scheduleRest(rest)
     }
 
     func endRest() {
-        cancelTimers()
+        restAlarm.cancel()
         if case .rest = phase { phase = .set }
+    }
+
+    /// The workout was paused: the rest holds where it is.
+    func pauseRest() {
+        guard case .rest(var rest) = phase, !rest.isPaused else { return }
+        rest.pause()
+        phase = .rest(rest)
+        restAlarm.cancel()
+    }
+
+    func resumeRest() {
+        guard case .rest(var rest) = phase, rest.isPaused else { return }
+        rest.resume()
+        phase = .rest(rest)
+        scheduleRest(rest)
     }
 
     /// Cancels pending rest and hold haptics; call before dropping the flow.
     func stop() {
-        cancelTimers()
+        restAlarm.cancel()
+        holdMarks.forEach { $0.cancel() }
+        holdMarks = []
     }
 
     func startHold() {
         let start = Date.now
         holdStartedAt = start
-        cancelTimers()
+        stop()
+        onActivity()
         let marks = Set([currentItem.secMin, currentItem.secMax].compactMap { $0 })
-        timers = marks.map { seconds in
-            after(start.addingTimeInterval(TimeInterval(seconds))) { Haptics.play(.holdMark) }
+        holdMarks = marks.map { seconds in
+            CountdownAlarm.after(start.addingTimeInterval(TimeInterval(seconds))) { Haptics.play(.holdMark) }
         }
     }
 
     func stopHold() {
         guard let start = holdStartedAt else { return }
-        cancelTimers()
+        stop()
         logSet(seconds: Int(Date.now.timeIntervalSince(start).rounded()))
     }
 
@@ -251,26 +264,17 @@ final class ExerciseFlow {
     }
 
     private func startRest(seconds: Int) {
-        let rest = Rest(endsAt: .now.addingTimeInterval(TimeInterval(seconds)), duration: TimeInterval(seconds))
+        let rest = Countdown(seconds: TimeInterval(seconds))
         phase = .rest(rest)
-        scheduleRestHaptics(rest)
+        scheduleRest(rest)
     }
 
-    private func scheduleRestHaptics(_ rest: Rest) {
-        cancelTimers()
-        let haptics = today.settings.restHaptics
-        let warning = rest.endsAt.addingTimeInterval(-10)
-        if warning > .now {
-            timers.append(after(warning) { if haptics { Haptics.play(.restWarning) } })
-        }
-        timers.append(after(rest.endsAt) { [weak self] in
-            if haptics { Haptics.play(.restOver) }
-            self?.endRest()
-        })
+    private func scheduleRest(_ rest: Countdown) {
+        restAlarm.schedule(rest, haptics: today.settings.restHaptics) { [weak self] in self?.endRest() }
     }
 
     private func finish(haptic: Bool = true) {
-        cancelTimers()
+        stop()
         guard let session = try? today.startSession() else { return }
         var summaries: [Summary] = []
         for (index, item) in items.enumerated() {
@@ -310,17 +314,4 @@ final class ExerciseFlow {
         }
     }
 
-    private func after(_ date: Date, _ action: @escaping @MainActor () -> Void) -> Task<Void, Never> {
-        Task { @MainActor in
-            let delay = date.timeIntervalSinceNow
-            if delay > 0 { try? await Task.sleep(for: .seconds(delay)) }
-            guard !Task.isCancelled else { return }
-            action()
-        }
-    }
-
-    private func cancelTimers() {
-        timers.forEach { $0.cancel() }
-        timers = []
-    }
 }

@@ -15,6 +15,8 @@ enum Theme {
     static let mint = Color(red: 0.28, green: 0.92, blue: 0.64)
     /// Timed holds.
     static let violet = Color(red: 0.69, green: 0.57, blue: 1.00)
+    /// A paused workout.
+    static let amber = Color(red: 1.00, green: 0.82, blue: 0.20)
 
     static let canvas = Color.black
     static let card = Color(white: 0.11)
@@ -66,12 +68,13 @@ extension View {
 /// Full-width capsule with dark text: the one primary action on a screen.
 struct PrimaryButtonStyle: ButtonStyle {
     var tint = Theme.volt
+    var height: CGFloat = 44
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.rounded(.headline, .bold))
             .foregroundStyle(.black)
-            .frame(maxWidth: .infinity, minHeight: 44)
+            .frame(maxWidth: .infinity, minHeight: height)
             .background(Capsule().fill(tint))
             .opacity(configuration.isPressed ? 0.75 : 1)
             .scaleEffect(configuration.isPressed ? 0.97 : 1)

@@ -1,7 +1,7 @@
 import SwiftUI
 import RepCoachCore
 
-/// Heart rate and elapsed time while the Health workout runs.
+/// Heart rate and workout time while the Health workout is under way.
 struct WorkoutBar: View {
     @Environment(HealthWorkout.self) private var health
 
@@ -15,12 +15,7 @@ struct WorkoutBar: View {
                 .monospacedDigit()
             Text("bpm").eyebrow(Theme.tertiary, size: 9)
             Spacer(minLength: 4)
-            if let start = health.startedAt {
-                Text(start, style: .timer)
-                    .font(.number(15, weight: .semibold))
-                    .monospacedDigit()
-                    .foregroundStyle(Theme.secondary)
-            }
+            ElapsedTime()
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)

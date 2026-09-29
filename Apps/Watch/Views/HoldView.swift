@@ -4,7 +4,7 @@ import RepCoachCore
 /// Timed sets: Start counts up, with a haptic at the bottom and top of the range; Stop logs the seconds.
 struct HoldView: View {
     @Bindable var flow: ExerciseFlow
-    @FocusState private var weightFocused: Bool
+    @FocusState private var focus: SetView.Field?
 
     var body: some View {
         let item = flow.currentItem
@@ -17,33 +17,20 @@ struct HoldView: View {
                     .font(.rounded(.footnote, .semibold))
                     .foregroundStyle(Theme.secondary)
             }
-            TimelineView(.periodic(from: .now, by: 0.25)) { context in
+            TimelineView(CountUpSchedule(start: flow.holdStartedAt)) { context in
                 HoldRing(elapsed: flow.holdStartedAt.map { context.date.timeIntervalSince($0) } ?? 0,
                          low: target.secMin ?? 0, high: target.secMax ?? 30)
             }
             .frame(maxHeight: .infinity)
 
             if flow.holdStartedAt == nil {
-                HStack(spacing: 6) {
-                    if item.takesWeight {
-                        VStack(spacing: -3) {
-                            Text(Format.weight(flow.weight)).font(.number(20)).monospacedDigit()
-                            Text("kg").eyebrow(weightFocused ? Theme.violet : Theme.tertiary, size: 9)
-                        }
-                        .frame(width: 58, height: 44)
-                        .background(Capsule().fill(weightFocused ? Theme.violet.opacity(0.18) : Theme.card))
-                        .overlay(Capsule().strokeBorder(weightFocused ? Theme.violet : Theme.hairline))
-                        .focusable()
-                        .focused($weightFocused)
-                        .focusEffectDisabled()
-                        .digitalCrownRotation(detent: $flow.weight, from: 0, through: 200,
-                                              by: item.increment ?? 2.5, sensitivity: .low, isContinuous: false,
-                                              isHapticFeedbackEnabled: true)
-                        .onTapGesture { weightFocused = true }
-                    }
-                    Button("Start") { flow.startHold() }
-                        .buttonStyle(PrimaryButtonStyle(tint: Theme.violet))
+                if item.takesWeight {
+                    StepperRow(value: $flow.weight, step: flow.increment, range: 0...500, unit: "kg",
+                               tint: Theme.violet, height: 38, focus: $focus, field: .weight, format: Format.weight)
+                        .id(flow.stepIndex)
                 }
+                Button("Start") { flow.startHold() }
+                    .buttonStyle(PrimaryButtonStyle(tint: Theme.violet))
             } else {
                 Button("Stop") { withAnimation(.snappy) { flow.stopHold() } }
                     .buttonStyle(PrimaryButtonStyle(tint: Theme.pulse))

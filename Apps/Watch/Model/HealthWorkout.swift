@@ -12,11 +12,15 @@ final class HealthWorkout: NSObject {
     static let shared = HealthWorkout()
 
     enum State: Equatable {
-        case idle, starting, running, ending
+        case idle, starting, running, paused, ending
     }
 
     private(set) var state: State = .idle
     private(set) var startedAt: Date?
+    /// While running: where the workout time counts up from (the start, moved later by any pauses).
+    private(set) var timerStart: Date?
+    /// While paused: the workout time so far.
+    private(set) var pausedElapsed: TimeInterval?
     /// Beats per minute, latest sample.
     private(set) var heartRate: Double?
     private(set) var averageHeartRate: Double?
@@ -33,7 +37,10 @@ final class HealthWorkout: NSObject {
     ]
 
     var isAvailable: Bool { HKHealthStore.isHealthDataAvailable() }
-    var isRunning: Bool { state == .running }
+    /// Running or paused: under way, to be finished or discarded.
+    var isActive: Bool { state == .running || state == .paused }
+    /// Workout time so far, without pauses.
+    var elapsed: TimeInterval? { pausedElapsed ?? timerStart.map { Date.now.timeIntervalSince($0) } }
     /// Whether SpotMe may save workouts. Asked the first time Start workout is tapped; after that only the
     /// Health app on the iPhone changes it.
     var access: HealthAccess {
@@ -48,7 +55,7 @@ final class HealthWorkout: NSObject {
     /// including when saving workouts isn't allowed.
     @discardableResult
     func start() async -> Bool {
-        guard isAvailable, state == .idle else { return state == .running }
+        guard isAvailable, state == .idle else { return isActive }
         state = .starting
         do {
             try await store.requestAuthorization(toShare: Self.shareTypes, read: Self.readTypes)
@@ -67,6 +74,7 @@ final class HealthWorkout: NSObject {
             session.startActivity(with: start)
             try await builder.beginCollection(at: start)
             startedAt = start
+            timerStart = start
             state = .running
             return true
         } catch {
@@ -79,7 +87,7 @@ final class HealthWorkout: NSObject {
 
     /// Ends the workout and saves it to Health. Returns the saved workout's id, or nil if nothing was saved.
     func finish() async -> UUID? {
-        guard let session, let builder, state == .running else { return nil }
+        guard let session, let builder, isActive else { return nil }
         state = .ending
         session.end()
         do {
@@ -96,7 +104,7 @@ final class HealthWorkout: NSObject {
 
     /// Ends the workout without saving anything to Health.
     func discard() {
-        guard let session, let builder, state == .running else { return }
+        guard let session, let builder, isActive else { return }
         session.end()
         builder.discardWorkout()
         reset()
@@ -119,13 +127,37 @@ final class HealthWorkout: NSObject {
         }
     }
 
+    /// Pauses the workout time and heart rate collection. The session reports back when it has paused.
+    func pause() {
+        guard state == .running else { return }
+        #if DEBUG
+        if session == nil { return sessionChanged(to: .paused, at: .now) }
+        #endif
+        session?.pause()
+    }
+
+    func resume() {
+        guard state == .paused else { return }
+        #if DEBUG
+        if session == nil { return sessionChanged(to: .running, at: .now) }
+        #endif
+        session?.resume()
+    }
+
     /// Picks the workout back up after the system relaunched the app mid-session.
     func recover() async {
         do {
             guard let session = try await store.recoverActiveWorkoutSession() else { return }
-            attach(session, session.associatedWorkoutBuilder())
+            let builder = session.associatedWorkoutBuilder()
+            attach(session, builder)
             startedAt = session.startDate
-            state = .running
+            if session.state == .paused {
+                pausedElapsed = builder.elapsedTime
+                state = .paused
+            } else {
+                timerStart = .now.addingTimeInterval(-builder.elapsedTime)
+                state = .running
+            }
         } catch {
             Logger.health.error("Couldn't recover the workout: \(error.localizedDescription)")
         }
@@ -143,6 +175,8 @@ final class HealthWorkout: NSObject {
         builder = nil
         state = .idle
         startedAt = nil
+        timerStart = nil
+        pausedElapsed = nil
         heartRate = nil
         averageHeartRate = nil
         energy = nil
@@ -159,11 +193,28 @@ final class HealthWorkout: NSObject {
         reset()
     }
 
+    /// Paused or running again, as of `date`: the workout time stops, or carries on from where it stopped.
+    fileprivate func sessionChanged(to newState: HKWorkoutSessionState, at date: Date) {
+        switch newState {
+        case .paused where state == .running:
+            pausedElapsed = timerStart.map { date.timeIntervalSince($0) } ?? 0
+            timerStart = nil
+            state = .paused
+        case .running where state == .paused:
+            timerStart = date.addingTimeInterval(-(pausedElapsed ?? 0))
+            pausedElapsed = nil
+            state = .running
+        default:
+            break
+        }
+    }
+
     #if DEBUG
     /// Screenshots only: look like a workout that's been running for a while.
     func pretendRunning(heartRate: Double, minutes: Double) {
         state = .running
         startedAt = .now.addingTimeInterval(-minutes * 60)
+        timerStart = startedAt
         self.heartRate = heartRate
         averageHeartRate = heartRate - 9
         energy = minutes * 5.5
@@ -173,7 +224,9 @@ final class HealthWorkout: NSObject {
 
 extension HealthWorkout: HKWorkoutSessionDelegate {
     nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
-                                    from fromState: HKWorkoutSessionState, date: Date) {}
+                                    from fromState: HKWorkoutSessionState, date: Date) {
+        Task { @MainActor in self.sessionChanged(to: toState, at: date) }
+    }
 
     nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
         Task { @MainActor in self.sessionFailed(error) }

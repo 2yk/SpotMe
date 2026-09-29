@@ -1,8 +1,10 @@
 import SwiftUI
 import RepCoachCore
 
-/// Weight and reps for one set. Tap a value to focus it; the Digital Crown changes it.
+/// Weight and reps for one set. − and + change a value by exactly one step; tap a value and the Digital Crown
+/// changes it too, one step per click.
 struct SetView: View {
+    @Environment(WorkoutModel.self) private var workout
     @Bindable var flow: ExerciseFlow
     @FocusState private var focus: Field?
 
@@ -12,41 +14,30 @@ struct SetView: View {
 
     var body: some View {
         let item = flow.currentItem
-        VStack(spacing: 8) {
+        let takesWeight = item.takesWeight
+        VStack(spacing: 4) {
             HStack(alignment: .firstTextBaseline) {
                 Text(setLabel).eyebrow(item.tint)
                 Spacer(minLength: 4)
-                Text(hint)
+                Text(workout.isPaused ? "Paused" : hint)
                     .font(.rounded(.footnote, .semibold))
-                    .foregroundStyle(flow.needsStartingWeight ? item.tint : Theme.secondary)
+                    .foregroundStyle(workout.isPaused ? Theme.amber
+                        : flow.needsStartingWeight ? item.tint : Theme.secondary)
                     .lineLimit(1)
             }
-            HStack(spacing: 6) {
-                if item.takesWeight {
-                    ValueTile(value: Format.weight(flow.weight), unit: "kg", tint: item.tint,
-                              focused: focus == .weight)
-                        .focusable()
-                        .focused($focus, equals: .weight)
-                        .focusEffectDisabled()
-                        // Detents only: the value moves a whole increment per click, never in between.
-                        .digitalCrownRotation(detent: $flow.weight, from: 0, through: 400, by: flow.increment,
-                                              sensitivity: .low, isContinuous: false,
-                                              isHapticFeedbackEnabled: true)
-                        .onTapGesture { focus = .weight }
-                }
-                ValueTile(value: "\(Int(flow.reps.rounded()))", unit: item.perSide == true ? "reps/side" : "reps",
-                          tint: item.tint, focused: focus == .reps)
-                    .focusable()
-                    .focused($focus, equals: .reps)
-                    .focusEffectDisabled()
-                    .digitalCrownRotation(detent: $flow.reps, from: 0, through: 100, by: 1, sensitivity: .low,
-                                          isContinuous: false, isHapticFeedbackEnabled: true)
-                    .onTapGesture { focus = .reps }
+            if takesWeight {
+                StepperRow(value: $flow.weight, step: flow.increment, range: 0...500, unit: "kg",
+                           tint: item.tint, height: 40, focus: $focus, field: .weight, format: Format.weight)
             }
+            StepperRow(value: $flow.reps, step: 1, range: 0...200, unit: item.perSide == true ? "reps/side" : "reps",
+                       tint: item.tint, height: takesWeight ? 40 : 56, focus: $focus, field: .reps,
+                       format: { "\(Int($0.rounded()))" })
             Button("Log set") { withAnimation(.snappy) { flow.logSet() } }
-                .buttonStyle(PrimaryButtonStyle(tint: item.tint))
+                .buttonStyle(PrimaryButtonStyle(tint: item.tint, height: 40))
         }
         .padding(.horizontal, 2)
+        // A new set starts on fresh rows, so the Crown never carries over from the last one.
+        .id(flow.stepIndex)
         .onAppear { focus = flow.needsStartingWeight ? .weight : .reps }
         .onChange(of: flow.stepIndex) {
             focus = flow.needsStartingWeight ? .weight : .reps
@@ -71,34 +62,108 @@ struct SetView: View {
     }
 }
 
-/// A big number with its unit; lit up while the Digital Crown controls it.
-struct ValueTile: View {
-    let value: String
+/// One number with − and + either side. While it's focused (tap it) the Digital Crown moves it one step per
+/// click, counting from wherever it is, so it never jumps to an in-between or rounded value.
+struct StepperRow: View {
+    @Binding var value: Double
+    let step: Double
+    let range: ClosedRange<Double>
     let unit: String
     let tint: Color
-    let focused: Bool
+    var height: CGFloat = 44
+    var focus: FocusState<SetView.Field?>.Binding
+    let field: SetView.Field
+    let format: (Double) -> String
+
+    /// The value the Crown counts from, and how many clicks it has turned since.
+    @State private var anchor: Double?
+    @State private var clicks = 0.0
 
     var body: some View {
-        VStack(spacing: -2) {
-            Text(value)
-                .font(.number(36))
-                .monospacedDigit()
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                .contentTransition(.numericText())
-            Text(unit)
-                .eyebrow(focused ? tint : Theme.tertiary, size: 10)
+        let focused = focus.wrappedValue == field
+        let base = anchor ?? value
+        HStack(spacing: 0) {
+            StepButton(symbol: "minus", tint: tint, size: height - 10) { change(by: -1) }
+                .disabled(value - step < range.lowerBound - 0.001)
+            HStack(alignment: .firstTextBaseline, spacing: 3) {
+                Text(format(value))
+                    .font(.number(height * 0.64))
+                    .monospacedDigit()
+                Text(unit)
+                    .font(.system(size: 11, weight: .heavy, design: .rounded))
+                    .foregroundStyle(focused ? tint : Theme.tertiary)
+            }
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .contentShape(Rectangle())
+            .onTapGesture { focus.wrappedValue = field }
+            StepButton(symbol: "plus", tint: tint, size: height - 10) { change(by: 1) }
+                .disabled(value + step > range.upperBound + 0.001)
         }
-        .frame(maxWidth: .infinity)
-        .frame(height: 72)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(focused ? tint.opacity(0.16) : Theme.card)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(focused ? tint : Theme.hairline, lineWidth: focused ? 2 : 1)
-        )
-        .animation(.snappy(duration: 0.2), value: value)
+        .padding(.horizontal, 5)
+        .frame(height: height)
+        .background(RoundedRectangle(cornerRadius: height / 2, style: .continuous)
+            .fill(focused ? tint.opacity(0.16) : Theme.card))
+        .overlay(RoundedRectangle(cornerRadius: height / 2, style: .continuous)
+            .strokeBorder(focused ? tint : Theme.hairline, lineWidth: focused ? 2 : 1))
+        .focusable()
+        .focused(focus, equals: field)
+        .focusEffectDisabled()
+        // Whole clicks only, from the anchor: one step per click with a haptic, never between steps.
+        .digitalCrownRotation(detent: $clicks, from: ((range.lowerBound - base) / step).rounded(.up),
+                              through: ((range.upperBound - base) / step).rounded(.down), by: 1,
+                              sensitivity: .low, isContinuous: false, isHapticFeedbackEnabled: true)
+        .onChange(of: clicks) {
+            let base = anchor ?? value
+            anchor = base
+            value = Self.tidy(base + clicks * step)
+        }
+        // Changed another way (− or +, a new set): the Crown counts from the new value.
+        .onChange(of: value) {
+            guard let anchor, Self.tidy(anchor + clicks * step) != value else { return }
+            self.anchor = nil
+            clicks = 0
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(unit)
+        .accessibilityValue("\(format(value)) \(unit)")
+        .accessibilityAdjustableAction { direction in
+            change(by: direction == .increment ? 1 : -1)
+        }
+    }
+
+    private func change(by steps: Double) {
+        focus.wrappedValue = field
+        let next = Self.tidy(value + steps * step)
+        guard range.contains(next) else { return }
+        value = next
+        Haptics.play(.step)
+    }
+
+    /// Two decimals, so steps like 1.25 add up exactly.
+    private static func tidy(_ x: Double) -> Double {
+        (x * 100).rounded() / 100
+    }
+}
+
+/// A round − or + inside a value row.
+private struct StepButton: View {
+    let symbol: String
+    let tint: Color
+    let size: CGFloat
+    let action: () -> Void
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: symbol)
+                .font(.system(size: size * 0.42, weight: .heavy))
+                .foregroundStyle(isEnabled ? tint : Theme.tertiary)
+                .frame(width: size, height: size)
+                .background(Circle().fill(Theme.cardRaised))
+        }
+        .buttonStyle(.plain)
+        .accessibilityHidden(true)
     }
 }

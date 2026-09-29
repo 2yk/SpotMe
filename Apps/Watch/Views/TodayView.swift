@@ -36,7 +36,7 @@ struct TodayView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .workout:
-                    WorkoutScreen(onList: { path.removeAll() }, onFinish: askToFinish)
+                    WorkoutPager(onList: { path.removeAll() })
                 #if DEBUG
                 case .complications:
                     ComplicationGallery()
@@ -52,19 +52,7 @@ struct TodayView: View {
             .sheet(item: $workout.summary) { summary in
                 WorkoutSummaryView(summary: summary)
             }
-            .confirmationDialog("Finish workout?", isPresented: $confirmingFinish) {
-                if workout.health.isRunning {
-                    Button("Save to Health") { Task { await workout.finishWorkout() } }
-                    Button("Don't save to Health", role: .destructive) {
-                        Task { await workout.finishWorkout(saveToHealth: false) }
-                    }
-                } else {
-                    Button("Finish") { Task { await workout.finishWorkout() } }
-                }
-                Button("Keep going", role: .cancel) {}
-            } message: {
-                Text(workout.health.isRunning ? "Your sets stay in SpotMe either way." : "Marks today's session done.")
-            }
+            .finishDialog(isPresented: $confirmingFinish, workout: workout)
             .confirmationDialog("Discard workout?", isPresented: $confirmingDiscard) {
                 Button("Discard", role: .destructive) { withAnimation(.snappy) { workout.discardWorkout() } }
                 Button("Keep it", role: .cancel) {}
@@ -92,7 +80,7 @@ struct TodayView: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 0, leading: 6, bottom: 4, trailing: 6))
 
-            if workout.health.isRunning {
+            if workout.health.isActive {
                 WorkoutBar()
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
@@ -103,7 +91,7 @@ struct TodayView: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
             } else {
-                StartButton(started: workout.hasStarted, next: workout.currentName) {
+                StartButton(started: workout.hasStarted, paused: workout.isPaused, next: workout.currentName) {
                     workout.startOrContinue()
                     path = [.workout]
                 }
@@ -199,6 +187,7 @@ struct TodayView: View {
 /// The one big button: Start workout, or Continue with what's next.
 private struct StartButton: View {
     let started: Bool
+    let paused: Bool
     let next: String?
     let action: () -> Void
 
@@ -207,7 +196,7 @@ private struct StartButton: View {
             VStack(spacing: 0) {
                 Label(started ? "Continue" : "Start workout", systemImage: "play.fill")
                 if started, let next {
-                    Text(next)
+                    Text(paused ? "Paused · \(next)" : next)
                         .font(.rounded(.caption2, .semibold))
                         .lineLimit(1)
                         .opacity(0.7)
@@ -215,7 +204,7 @@ private struct StartButton: View {
             }
             .padding(.vertical, 4)
         }
-        .buttonStyle(PrimaryButtonStyle(tint: Theme.volt))
+        .buttonStyle(PrimaryButtonStyle(tint: paused ? Theme.amber : Theme.volt))
     }
 }
 

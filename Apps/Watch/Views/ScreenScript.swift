@@ -9,7 +9,8 @@ enum ScreenScript {
                     choosingDay: Binding<Bool>, confirmingFinish: Binding<Bool>, confirmingDiscard: Binding<Bool>,
                     open: (URL) -> Void) {
         guard let screen = LaunchOptions.screen else { return }
-        if ["workout", "rest", "alldone", "finish-dialog", "next", "next-picker"].contains(screen) {
+        if ["workout", "rest", "alldone", "finish-dialog", "next", "next-picker", "controls", "paused", "media",
+            "paused-rest", "skipped"].contains(screen) {
             workout.health.pretendRunning(heartRate: 128, minutes: 24)
         }
         func show(_ items: [PlanItem]) {
@@ -70,6 +71,19 @@ enum ScreenScript {
             // Logging the max-rep set finishes it; the break then shows the volume sets at 60% of it.
             workout.flow?.reps = 12
             workout.flow?.logSet()
+        case "item":
+            // `-item hanging-leg-raise`: that item's set screen.
+            let id = UserDefaults.standard.string(forKey: "item")
+            if let item = today.day.items.first(where: { $0.exerciseId == id }) { show([item]) }
+        case "controls", "media", "paused", "skipped":
+            // The pager on the first exercise not done yet; paused, or after Skip.
+            show(today.queue.upNext)
+            if screen == "paused" { workout.pause() }
+            if screen == "skipped" { workout.skip() }
+        case "paused-rest":
+            show(today.queue.upNext)
+            workout.flow?.logSet()
+            workout.pause()
         case "set", "rest", "next", "next-picker":
             show(today.queue.upNext)
             guard let flow = workout.flow else { return }

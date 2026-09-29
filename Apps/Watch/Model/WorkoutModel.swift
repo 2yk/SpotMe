@@ -3,7 +3,7 @@ import OSLog
 import RepCoachCore
 
 /// The watch's workout: what's on screen (an exercise, a checklist item or the end of the day), the break that
-/// moves it on to the next item by itself, and the Health workout around the whole session.
+/// moves it on to the next item by itself, pause and skip, and the Health workout around the whole session.
 @MainActor @Observable
 final class WorkoutModel {
     struct Summary: Identifiable {
@@ -42,9 +42,11 @@ final class WorkoutModel {
     /// The plan day `step` belongs to.
     @ObservationIgnored private var stepDay: String?
     /// The break after an exercise; when it runs out, the next item starts by itself.
-    private(set) var breakTime: ExerciseFlow.Rest?
-    /// While the next item is being picked the break waits, with this much left.
-    @ObservationIgnored private var pausedBreak: TimeInterval?
+    private(set) var breakTime: Countdown?
+    /// Paused from the controls: the Health workout, the rest and the break all wait.
+    private(set) var isPaused = false
+    /// The break waits while the next item is being picked.
+    @ObservationIgnored private var breakHeld = false
     /// Shown once after Finish workout.
     var summary: Summary?
     /// Why Start workout couldn't start the Health workout, shown as an alert.
@@ -57,7 +59,7 @@ final class WorkoutModel {
     @ObservationIgnored var onSessionDiscarded: ((UUID) -> Void)?
     /// A Health workout that failed to start by itself isn't tried again until Start workout is tapped.
     @ObservationIgnored private var autoStartFailed = false
-    @ObservationIgnored private var breakTimers: [Task<Void, Never>] = []
+    @ObservationIgnored private let breakAlarm = CountdownAlarm()
 
     init(today: TodayModel, health: HealthWorkout? = nil) {
         self.today = today
@@ -72,7 +74,7 @@ final class WorkoutModel {
 
     /// Something was started today, so the main button reads Continue.
     var hasStarted: Bool {
-        health.isRunning || currentStep != nil || today.session.map { !$0.logs.isEmpty } == true
+        health.isActive || currentStep != nil || today.session.map { !$0.logs.isEmpty } == true
     }
 
     /// Where Continue leads: the item on screen, else the next one in order.
@@ -83,8 +85,31 @@ final class WorkoutModel {
         case .checklist(let item):
             return item.name
         default:
-            let next = today.queue.upNext.map(\.name).joined(separator: " + ")
-            return next.isEmpty ? nil : next
+            return Self.names(today.queue.upNext)
+        }
+    }
+
+    /// Where Skip leads: after the item on screen, or straight to the next one from a break. nil when nothing's
+    /// left to go to.
+    var skipTarget: String? {
+        switch currentStep {
+        case .exercise(let flow) where !flow.isFinished:
+            return Self.names(today.upNext(finishing: flow.items))
+        case .checklist(let item):
+            return Self.names(today.upNext(finishing: [item]))
+        case .exercise:
+            return Self.names(today.queue.upNext)
+        case .allDone, nil:
+            return nil
+        }
+    }
+
+    /// Skip does something: there's an item on screen, or a break before the next one.
+    var canSkip: Bool {
+        switch currentStep {
+        case .exercise(let flow): !flow.isFinished || !today.queue.upNext.isEmpty
+        case .checklist: true
+        case .allDone, nil: false
         }
     }
 
@@ -107,6 +132,10 @@ final class WorkoutModel {
         case .allDone:
             return today.queue.isComplete
         }
+    }
+
+    private static func names(_ items: [PlanItem]) -> String? {
+        items.isEmpty ? nil : items.map(\.name).joined(separator: " + ")
     }
 
     // MARK: Moving through the day
@@ -162,8 +191,32 @@ final class WorkoutModel {
         if let flow, flow.itemIds == items.map(\.exerciseId), !flow.isFinished { return }
         flow?.stop()
         step = .exercise(ExerciseFlow(items: items, today: today,
-                                      onSetLogged: { [weak self] in self?.setLogged() },
+                                      onActivity: { [weak self] in self?.activity() },
                                       onFinished: { [weak self] in self?.exerciseFinished() }))
+    }
+
+    /// Skip, from the controls: on to the next item now. The exercise on screen keeps what's logged (it's
+    /// skipped if nothing is), a checklist item is skipped, and a break ends early.
+    func skip() {
+        resume()
+        switch currentStep {
+        case .exercise(let flow) where !flow.isFinished:
+            flow.stop()
+            for item in flow.items where !today.status(of: item).isFinished {
+                if today.log(for: item)?.sets.isEmpty == false {
+                    today.complete(item)
+                } else {
+                    today.skip(item)
+                }
+            }
+            advance()
+        case .exercise:
+            advance()
+        case .checklist(let item):
+            finishChecklist(item, skipped: true)
+        case .allDone, nil:
+            break
+        }
     }
 
     /// Ticks off, or skips, the checklist item on screen and moves on.
@@ -196,49 +249,77 @@ final class WorkoutModel {
         flow?.undo()
     }
 
+    // MARK: Pause and the break
+
+    /// Pause, from the controls: the Health workout's time and heart rate, a rest and a break all wait.
+    func pause() {
+        guard !isPaused else { return }
+        isPaused = true
+        health.pause()
+        flow?.pauseRest()
+        if var countdown = breakTime {
+            countdown.pause()
+            breakTime = countdown
+            breakAlarm.cancel()
+        }
+    }
+
+    /// Carries on after a pause. Logging a set or starting a hold does this too.
+    func resume() {
+        guard isPaused else { return }
+        isPaused = false
+        health.resume()
+        flow?.resumeRest()
+        if !breakHeld, var countdown = breakTime {
+            countdown.resume()
+            breakTime = countdown
+            scheduleBreak(countdown)
+        }
+    }
+
     func extendBreak(by seconds: Int) {
-        guard var rest = breakTime else { return }
-        rest.endsAt += TimeInterval(seconds)
-        rest.duration += TimeInterval(seconds)
-        breakTime = rest
-        scheduleBreak(rest)
+        guard var countdown = breakTime else { return }
+        countdown.add(TimeInterval(seconds))
+        breakTime = countdown
+        scheduleBreak(countdown)
     }
 
     /// Holds the break while the next item is being picked, so it can't move on underneath the list.
-    func pauseBreak() {
-        guard let rest = breakTime, pausedBreak == nil else { return }
-        pausedBreak = max(0, rest.endsAt.timeIntervalSinceNow)
-        breakTimers.forEach { $0.cancel() }
-        breakTimers = []
+    func holdBreak() {
+        guard var countdown = breakTime, !countdown.isPaused else { return }
+        countdown.pause()
+        breakTime = countdown
+        breakAlarm.cancel()
+        breakHeld = true
     }
 
-    /// Carries on with what was left of the break, at least a few seconds.
-    func resumeBreak() {
-        guard let left = pausedBreak, var rest = breakTime else { return }
-        pausedBreak = nil
-        rest.endsAt = .now.addingTimeInterval(max(left, 5))
-        breakTime = rest
-        scheduleBreak(rest)
+    /// Carries on with what was left of the break, at least a few seconds, unless the workout is paused.
+    func releaseBreak() {
+        guard breakHeld else { return }
+        breakHeld = false
+        guard !isPaused, var countdown = breakTime else { return }
+        countdown.resume(minimum: 5)
+        breakTime = countdown
+        scheduleBreak(countdown)
     }
 
     // MARK: Finishing
 
-    /// Today's session is open: logged into and not finished yet, or a Health workout is running.
+    /// Today's session is open: logged into and not finished yet, or a Health workout is under way.
     var canFinish: Bool {
-        health.isRunning || today.session.map { $0.endedAt == nil && $0.logs.contains { !$0.sets.isEmpty } } == true
+        health.isActive || today.session.map { $0.endedAt == nil && $0.logs.contains { !$0.sets.isEmpty } } == true
     }
 
-    /// There's something today to throw away: anything logged, or a running Health workout.
+    /// There's something today to throw away: anything logged, or a Health workout under way.
     var canDiscard: Bool {
-        health.isRunning || today.session.map { !$0.logs.isEmpty } == true
+        health.isActive || today.session.map { !$0.logs.isEmpty } == true
     }
 
-    /// Ends the Health workout, if one is running, saving it to Health or not, and marks today's session finished.
+    /// Ends the Health workout, if one is under way, saving it to Health or not, and marks today's session
+    /// finished.
     func finishWorkout(saveToHealth: Bool = true) async {
-        cancelBreak()
-        flow?.stop()
-        step = nil
-        let started = health.startedAt ?? today.session?.date
+        stopEverything()
+        let duration = health.elapsed ?? today.session.map { Date.now.timeIntervalSince($0.date) }
         let average = health.averageHeartRate
         let energy = health.energy
         let workoutId: UUID?
@@ -254,17 +335,15 @@ final class WorkoutModel {
             onSessionFinished?(session)
         }
         let sets = today.session?.logs.reduce(0) { $0 + $1.sets.count } ?? 0
-        summary = Summary(savedToHealth: workoutId != nil, duration: started.map { Date.now.timeIntervalSince($0) },
-                          averageHeartRate: average, energy: energy, sets: sets)
+        summary = Summary(savedToHealth: workoutId != nil, duration: duration, averageHeartRate: average,
+                          energy: energy, sets: sets)
         today.refresh()
     }
 
-    /// Throws today's workout away: everything logged today is deleted, here and on the phone, a running Health
-    /// workout isn't saved, and one saved at Finish is deleted from Health.
+    /// Throws today's workout away: everything logged today is deleted, here and on the phone, a Health workout
+    /// under way isn't saved, and one saved at Finish is deleted from Health.
     func discardWorkout() {
-        cancelBreak()
-        flow?.stop()
-        step = nil
+        stopEverything()
         health.discard()
         if let session = today.session {
             let id = session.id
@@ -285,7 +364,7 @@ final class WorkoutModel {
 
     // MARK: Health workout
 
-    /// Health workouts are on in the phone's Settings, none is running, the day has sets to log and today's
+    /// Health workouts are on in the phone's Settings, none is under way, the day has sets to log and today's
     /// session isn't finished.
     var canStartHealth: Bool {
         LaunchOptions.healthKit && today.settings.healthWorkouts && health.isAvailable && health.state == .idle
@@ -304,6 +383,7 @@ final class WorkoutModel {
             let started = await health.start()
             onStartAttempted?()
             autoStartFailed = !started
+            if started, isPaused { health.pause() }
             guard !started, explicitly else { return }
             startProblem = health.access == .denied
                 ? Self.accessDeniedMessage
@@ -313,8 +393,10 @@ final class WorkoutModel {
 
     // MARK: Internals
 
-    /// Called after every logged set. Logging after Finish reopens the session.
-    private func setLogged() {
+    /// A set was logged or a hold started: a paused workout carries on, and logging after Finish reopens the
+    /// session.
+    private func activity() {
+        resume()
         guard let session = today.session, session.endedAt != nil else { return }
         session.endedAt = nil
         try? today.context.save()
@@ -325,38 +407,26 @@ final class WorkoutModel {
     private func exerciseFinished() {
         guard let flow, let next = today.queue.upNext.first else { return }
         let seconds = next.kind == .checklist ? 15 : max(30, flow.items.last?.restSec ?? 90)
-        let rest = ExerciseFlow.Rest(endsAt: .now.addingTimeInterval(TimeInterval(seconds)),
-                                     duration: TimeInterval(seconds))
-        breakTime = rest
-        scheduleBreak(rest)
+        let countdown = Countdown(seconds: TimeInterval(seconds))
+        breakTime = countdown
+        scheduleBreak(countdown)
     }
 
-    private func scheduleBreak(_ rest: ExerciseFlow.Rest) {
-        breakTimers.forEach { $0.cancel() }
-        let haptics = today.settings.restHaptics
-        let warning = rest.endsAt.addingTimeInterval(-10)
-        breakTimers = [after(rest.endsAt) { [weak self] in
-            if haptics { Haptics.play(.restOver) }
-            self?.advance()
-        }]
-        if warning > .now {
-            breakTimers.append(after(warning) { if haptics { Haptics.play(.restWarning) } })
-        }
+    private func scheduleBreak(_ countdown: Countdown) {
+        breakAlarm.schedule(countdown, haptics: today.settings.restHaptics) { [weak self] in self?.advance() }
     }
 
     private func cancelBreak() {
-        breakTimers.forEach { $0.cancel() }
-        breakTimers = []
+        breakAlarm.cancel()
         breakTime = nil
-        pausedBreak = nil
+        breakHeld = false
     }
 
-    private func after(_ date: Date, _ action: @escaping @MainActor () -> Void) -> Task<Void, Never> {
-        Task { @MainActor in
-            let delay = date.timeIntervalSinceNow
-            if delay > 0 { try? await Task.sleep(for: .seconds(delay)) }
-            guard !Task.isCancelled else { return }
-            action()
-        }
+    /// The workout is over, finished or discarded: nothing on screen, nothing counting down, nothing paused.
+    private func stopEverything() {
+        cancelBreak()
+        flow?.stop()
+        step = nil
+        isPaused = false
     }
 }

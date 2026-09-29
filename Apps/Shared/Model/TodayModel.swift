@@ -83,18 +83,21 @@ final class TodayModel {
         refresh()
     }
 
+    /// Reads today's session and works out targets and order again. Only values that changed are assigned, so
+    /// screens redraw only when something they show did.
     func refresh() {
         let recorder = recorder
-        session = try? recorder.session(for: dayKey, on: .now)
-        isDeload = session?.isDeload ?? settings.isDeload(on: .now, plan: plan, calendar: calendar)
+        let session = try? recorder.session(for: dayKey, on: .now)
+        if session !== self.session { self.session = session }
+        update(\.isDeload, session?.isDeload ?? settings.isDeload(on: .now, plan: plan, calendar: calendar))
 
         let overrides = Dictionary(
             ((try? context.fetch(FetchDescriptor<ExerciseSettings>())) ?? []).map { ($0.exerciseId, $0.overrides) },
             uniquingKeysWith: { first, _ in first })
         guard var day = plan.days.first(where: { $0.key == dayKey }) else { return }
         day.items = day.items.map { $0.applying(overrides[$0.exerciseId]) }
-        self.day = day
-        statuses = session?.statuses ?? [:]
+        update(\.day, day)
+        update(\.statuses, session?.statuses ?? [:])
 
         var targets: [String: ItemTarget] = [:]
         for item in day.items {
@@ -107,10 +110,14 @@ final class TodayModel {
                 for: item, history: pastSessions(of: item.exerciseId), deload: isDeload,
                 startWeight: overrides[item.exerciseId]?.startWeight, amrap: amrap)
         }
-        self.targets = targets
+        update(\.targets, targets)
 
         if let promotedId, statuses[promotedId]?.isFinished == true { self.promotedId = nil }
-        queue = TodayQueue(items: day.items, statuses: statuses, promoted: promotedId)
+        update(\.queue, TodayQueue(items: day.items, statuses: statuses, promoted: promotedId))
+    }
+
+    private func update<Value: Equatable>(_ keyPath: ReferenceWritableKeyPath<TodayModel, Value>, _ value: Value) {
+        if self[keyPath: keyPath] != value { self[keyPath: keyPath] = value }
     }
 
     /// Today's session, started on first use with the day's deload state.
@@ -124,7 +131,17 @@ final class TodayModel {
     /// Makes `item` up next, e.g. when the machine for the current one is busy.
     func promote(_ item: PlanItem) {
         promotedId = item.exerciseId
-        queue = TodayQueue(items: day.items, statuses: statuses, promoted: promotedId)
+        update(\.queue, TodayQueue(items: day.items, statuses: statuses, promoted: promotedId))
+    }
+
+    /// What would be up next once `items` are finished: where skipping them leads.
+    func upNext(finishing items: [PlanItem]) -> [PlanItem] {
+        var statuses = statuses
+        for item in items where statuses[item.exerciseId]?.isFinished != true {
+            statuses[item.exerciseId] = .skipped(.now)
+        }
+        let promoted = items.contains { $0.exerciseId == promotedId } ? nil : promotedId
+        return TodayQueue(items: day.items, statuses: statuses, promoted: promoted).upNext
     }
 
     func skip(_ item: PlanItem) {
@@ -136,7 +153,7 @@ final class TodayModel {
         perform { try $0.reopen(log) }
     }
 
-    /// Ticks off a checklist item.
+    /// Ticks off a checklist item, or finishes an exercise with the sets logged so far.
     func complete(_ item: PlanItem) {
         perform { try $0.complete(try $0.log(for: item.exerciseId, in: try self.startSession())) }
     }

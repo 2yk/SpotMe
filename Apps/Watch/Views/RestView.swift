@@ -5,34 +5,22 @@ import RepCoachCore
 struct RestView: View {
     @Environment(HealthWorkout.self) private var health
     let flow: ExerciseFlow
-    let rest: ExerciseFlow.Rest
+    let rest: Countdown
 
     var body: some View {
         GeometryReader { geometry in
             let ring = max(64, min(geometry.size.width * 0.62, geometry.size.height - 54))
             VStack(spacing: 4) {
-                ZStack {
-                    TimelineView(.periodic(from: .now, by: 0.5)) { context in
-                        ProgressRing(progress: rest.endsAt.timeIntervalSince(context.date) / rest.duration,
-                                     tint: Theme.ice, lineWidth: 8)
-                    }
-                    VStack(spacing: -2) {
-                        // The system timer text doesn't shrink to fit, so size it from the ring.
-                        Text(timerInterval: Date.now...max(Date.now, rest.endsAt), countsDown: true)
-                            .font(.number(min(36, ring * 0.3)))
-                            .monospacedDigit()
-                            .multilineTextAlignment(.center)
-                            .lineLimit(1)
-                        if let bpm = health.heartRate {
-                            HStack(spacing: 3) {
-                                Image(systemName: "heart.fill").font(.system(size: 10, weight: .bold))
-                                Text("\(Int(bpm.rounded()))").font(.number(13)).monospacedDigit()
-                            }
-                            .foregroundStyle(Theme.pulse)
-                            .accessibilityLabel("Heart rate \(Int(bpm.rounded()))")
-                        } else {
-                            Text("Rest").eyebrow(Theme.ice, size: 10)
+                CountdownRing(countdown: rest, digits: min(36, ring * 0.3)) {
+                    if let bpm = health.heartRate {
+                        HStack(spacing: 3) {
+                            Image(systemName: "heart.fill").font(.system(size: 10, weight: .bold))
+                            Text("\(Int(bpm.rounded()))").font(.number(13)).monospacedDigit()
                         }
+                        .foregroundStyle(Theme.pulse)
+                        .accessibilityLabel("Heart rate \(Int(bpm.rounded()))")
+                    } else {
+                        Text("Rest").eyebrow(Theme.ice, size: 10)
                     }
                 }
                 .frame(width: ring, height: ring)
