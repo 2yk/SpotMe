@@ -1,11 +1,15 @@
 import SwiftUI
+import SwiftData
 import RepCoachCore
 
 struct SettingsScreen: View {
     @Environment(SettingsStore.self) private var store
     @Environment(AppModel.self) private var app
+    @Environment(TodayModel.self) private var today
     @Environment(PhoneSync.self) private var sync
+    @Environment(\.modelContext) private var context
     @Environment(\.openURL) private var openURL
+    @State private var export = SetsExport(csv: "", date: .now, sessions: 0)
 
     var body: some View {
         @Bindable var store = store
@@ -79,6 +83,19 @@ struct SettingsScreen: View {
                 .listRowBackground(Theme.card)
 
                 Section {
+                    ExportSetsLink(export: export) {
+                        Label("Export all sets", systemImage: "square.and.arrow.up")
+                    }
+                } header: {
+                    Text("Your data")
+                } footer: {
+                    Text(export.sessions == 0
+                         ? "Nothing logged on this iPhone yet."
+                         : "A CSV file with every set from \(export.sessions) session\(export.sessions == 1 ? "" : "s"), for Numbers, Excel or Google Sheets.")
+                }
+                .listRowBackground(Theme.card)
+
+                Section {
                     LabeledContent("Plan", value: "v\(app.plan.planVersion) · \(app.plan.days.map(\.items.count).reduce(0, +)) items")
                     LabeledContent("App", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")
                 } header: {
@@ -97,6 +114,8 @@ struct SettingsScreen: View {
             .scrollContentBackground(.hidden)
             .background(Theme.canvas)
             .navigationTitle("Settings")
+            .onAppear { export = SetsExport.current(context: context, today: today) }
+            .onChange(of: sync.sessionsChanged) { export = SetsExport.current(context: context, today: today) }
         }
     }
 

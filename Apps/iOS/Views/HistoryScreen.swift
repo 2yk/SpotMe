@@ -10,6 +10,7 @@ struct HistoryScreen: View {
     @Environment(PhoneSync.self) private var sync
     @State private var model = HistoryModel()
     @State private var path: [String] = []
+    @State private var export = SetsExport(csv: "", date: .now, sessions: 0)
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -37,6 +38,14 @@ struct HistoryScreen: View {
             .scrollIndicators(.hidden)
             .background(Theme.canvas)
             .navigationTitle("History")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ExportSetsLink(export: export) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                    .accessibilityLabel("Export all sets as CSV")
+                }
+            }
             .navigationDestination(for: String.self) { id in
                 if let exercise = model.exercises.first(where: { $0.id == id }) {
                     ExerciseHistoryScreen(exercise: exercise)
@@ -59,6 +68,7 @@ struct HistoryScreen: View {
 
     private func load() {
         model.load(plan: today.editedPlan, library: today.library, context: context)
+        export = SetsExport.current(context: context, today: today)
     }
 
     private var days: [String] {
