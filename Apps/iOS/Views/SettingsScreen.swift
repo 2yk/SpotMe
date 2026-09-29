@@ -34,17 +34,15 @@ struct SettingsScreen: View {
                     Toggle(isOn: $store.settings.healthWorkouts) {
                         Label("Save workouts to Health", systemImage: "heart.fill")
                     }
-                    if settings.healthWorkouts {
-                        LabeledContent {
-                            Text(healthAccess.text).foregroundStyle(healthAccess.color)
-                        } label: {
-                            Label("Watch access", systemImage: "lock.shield")
-                        }
-                        Button {
-                            if let url = URL(string: "x-apple-health://") { openURL(url) }
-                        } label: {
-                            Label("Open the Health app", systemImage: "arrow.up.forward.app")
-                        }
+                    LabeledContent {
+                        Text(healthAccess.text).foregroundStyle(healthAccess.color)
+                    } label: {
+                        Label("Watch access", systemImage: "lock.shield")
+                    }
+                    Button {
+                        if let url = URL(string: "x-apple-health://") { openURL(url) }
+                    } label: {
+                        Label("Open the Health app", systemImage: "arrow.up.forward.app")
                     }
                 } header: {
                     Text("Apple Health")
@@ -125,7 +123,11 @@ struct SettingsScreen: View {
 
     private var healthFooter: String {
         guard settings.healthWorkouts else {
-            return "The watch hides Start workout. Sets you log stay in SpotMe and nothing goes to Health."
+            let awake = sync.watchHealthAccess == .allowed
+                ? "While you train, the watch still runs a workout so rests end on time with your wrist down, and "
+                    + "throws it away when you finish."
+                : "With Health access, the watch would also keep rests on time with your wrist down."
+            return "Nothing goes to Health; your sets stay in SpotMe. " + awake
         }
         let manage = "To change it: Health app → your profile picture → Apps → SpotMe."
         switch sync.watchHealthAccess {

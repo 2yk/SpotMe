@@ -317,15 +317,15 @@ final class WorkoutModel {
         health.isActive || today.session.map { !$0.logs.isEmpty } == true
     }
 
-    /// Ends the Health workout, if one is under way, saving it to Health or not, and marks today's session
-    /// finished.
+    /// Ends the Health workout, if one is under way, saving it to Health (only when saving is on in the phone's
+    /// Settings) or throwing it away, and marks today's session finished.
     func finishWorkout(saveToHealth: Bool = true) async {
         stopEverything()
         let duration = health.elapsed ?? today.session.map { Date.now.timeIntervalSince($0.date) }
         let average = health.averageHeartRate
         let energy = health.energy
         let workoutId: UUID?
-        if saveToHealth {
+        if saveToHealth, today.settings.healthWorkouts {
             workoutId = await health.finish()
         } else {
             health.discard()
@@ -366,12 +366,18 @@ final class WorkoutModel {
 
     // MARK: Health workout
 
-    /// Health workouts are on in the phone's Settings, none is under way, the day has sets to log and today's
-    /// session isn't finished.
+    /// None is under way, the day has sets to log and today's session isn't finished. A Health workout runs even
+    /// with saving to Health off: it keeps the app awake with the wrist down, so rests end on time with their
+    /// haptics, and Finish throws it away.
     var canStartHealth: Bool {
-        LaunchOptions.healthKit && today.settings.healthWorkouts && health.isAvailable && health.state == .idle
+        LaunchOptions.healthKit && health.isAvailable && health.state == .idle
             && today.day.items.contains { $0.kind != .checklist }
             && today.session?.endedAt == nil
+    }
+
+    /// Finish offers to save the Health workout: one is under way and saving is on in the phone's Settings.
+    var savesToHealth: Bool {
+        health.isActive && today.settings.healthWorkouts
     }
 
     static let accessDeniedMessage = "SpotMe isn't allowed to save workouts. On your iPhone, open the Health app, "
@@ -381,12 +387,15 @@ final class WorkoutModel {
     /// itself (opening an exercise) stays quiet and isn't tried again.
     private func startHealth(explicitly: Bool) {
         guard canStartHealth, explicitly || !autoStartFailed else { return }
+        // With saving off it's only there to keep the app awake: it never asks for access or explains a failure.
+        let saving = today.settings.healthWorkouts
+        guard saving || health.access == .allowed else { return }
         Task {
             let started = await health.start()
             onStartAttempted?()
             autoStartFailed = !started
             if started, pausedHere { health.pause() }
-            guard !started, explicitly else { return }
+            guard !started, explicitly, saving else { return }
             startProblem = health.access == .denied
                 ? Self.accessDeniedMessage
                 : "The Health workout didn't start. Your sets are still being logged."

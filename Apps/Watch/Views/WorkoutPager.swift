@@ -67,7 +67,7 @@ extension View {
     /// Finish workout? Save to Health or not, or keep going.
     func finishDialog(isPresented: Binding<Bool>, workout: WorkoutModel) -> some View {
         confirmationDialog("Finish workout?", isPresented: isPresented) {
-            if workout.health.isActive {
+            if workout.savesToHealth {
                 Button("Save to Health") { Task { await workout.finishWorkout() } }
                 Button("Don't save to Health", role: .destructive) {
                     Task { await workout.finishWorkout(saveToHealth: false) }
@@ -77,7 +77,7 @@ extension View {
             }
             Button("Keep going", role: .cancel) {}
         } message: {
-            Text(workout.health.isActive ? "Your sets stay in SpotMe either way." : "Marks today's session done.")
+            Text(workout.savesToHealth ? "Your sets stay in SpotMe either way." : "Marks today's session done.")
         }
     }
 }

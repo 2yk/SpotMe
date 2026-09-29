@@ -92,7 +92,8 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 **Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Next time 20 kg · aim for more reps") on the break screen before the next item.
 
 **Workout session (HealthKit)**
-- Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) with Start workout, or when an exercise is opened, while "Save workouts to Health" is on in the iPhone's Settings and today's session isn't finished. With the switch off, nothing reaches Health (for a session logged after the fact).
+- Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) with Start workout, or when an exercise is opened, while today's session isn't finished. It keeps the app running with the wrist down, so rests and breaks end on time with their haptics.
+- "Save workouts to Health" (iPhone Settings) decides what happens to it: on, Finish asks whether to save it; off, it's always thrown away and nothing reaches Health (for a session logged after the fact). With the switch off the watch never asks for Health access; the workout runs only if access was already given.
 - Health access belongs to the watch app: watchOS asks on the watch the first time, and it's changed later in the iPhone's Health app (profile picture → Apps → SpotMe). If saving workouts isn't allowed, Start workout says so and where to fix it; starting by itself stays quiet. The watch reports its access to the phone, whose Settings show it.
 - Keeps the app frontmost during the session, collects heart rate and energy, and saves the workout to Health when ended.
 - End from Today ("Finish workout") or automatically offered when every item is done. Finishing asks whether to save the workout to Health or not; the sets are kept either way.
@@ -108,7 +109,7 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 - **Today:** the day's card and the same list, read-mostly (useful for checking the day before training). Nothing is highlighted.
 - **History:** per exercise, sessions newest first with every set. A Swift Charts line of top-set weight and estimated 1RM (Epley) over time.
 - **Plan:** view all days as the user has them. Tap an exercise to rename it or change its increment, rep range, sets, rest and starting weight (a new name shows everywhere the exercise does), or remove it from the day. Swipe to remove; Edit to reorder; **Add exercise** (+) for a new one (name, logged as weight and reps, reps, timed or tick-off, section, prescription) or one from another day, which keeps its history. Added exercises go after the day's last exercise, ahead of the cooldown. "Reset Monday to the plan" and "Reset everything to the plan" keep history, and the user's own exercises stay defined (Add exercise → From the plan brings one back; a new exercise never reuses an id with history). plan.json never changes.
-- **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off hides Start workout on the watch), the watch's Health access and a shortcut to the Health app.
+- **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off: nothing reaches Health), the watch's Health access and a shortcut to the Health app.
 - **Body log (optional, milestone 4):** flexed arm and waist, every 2 weeks. Warn if waist is up more than 1 inch while arms haven't changed.
 
 ## Data and sync
