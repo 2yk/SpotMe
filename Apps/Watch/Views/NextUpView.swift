@@ -89,13 +89,15 @@ struct NextUpView: View {
     private func nameButton(_ next: [PlanItem], alignment: HorizontalAlignment, lines: Int) -> some View {
         Button { choosing = true } label: {
             // The chevron follows the last word, wherever the name breaks.
-            (Text(next.map(\.name).joined(separator: " + ")) + Text(" ")
+            // A no-break space ties the chevron to the last word: if they don't fit, the word comes down with it.
+            (Text(next.map(\.name).joined(separator: " + ")) + Text("\u{00A0}")
                 + Text(Image(systemName: "chevron.down")).font(.system(size: pt(11), weight: .bold))
                     .foregroundColor(Theme.text3))
                 .role(alignment == .leading ? TextRole.title.size(14) : .title)
                 .multilineTextAlignment(alignment == .leading ? .leading : .center)
                 .lineLimit(lines)
                 .minimumScaleFactor(0.8)
+                .layoutPriority(1)
                 .padding(.horizontal, alignment == .leading ? 0 : pt(8))
                 .frame(minHeight: pt(30))
         }
