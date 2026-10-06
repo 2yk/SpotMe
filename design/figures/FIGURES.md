@@ -267,3 +267,20 @@ rope-pushdown (cable, rope), leg-extension (pad across both ankles with a lever)
 hips with plates), machine-chest-press (machine grips with overhead levers). Weak angles: a cable column or
 machine frame seen from in front of the person covers part of the body (true of the real view); seated
 figures from behind show mostly the back pad.
+
+## Status (6 Oct 2026): the plan's 50 figures
+
+Approved by Yeshu for the watch on 6 Oct: every exercise in his plan gets a figure, and every one turns. All
+50 are in `poses3d/`, each written by its script in `authoring3d/` (change an angle there, run it, never edit
+the JSON). `bundle.py` packs them with the watch cues (`cues.json`, 72 characters at most) into
+`bundle/figures.json` for the app; `vectors.py` writes golden values for the Swift port;
+`review_sheet.py OUT.png id ...` draws the sheet the planner reviews from. The canvas board 13.3 shows all 50.
+The flat format (`poses/`, `figure.py`) stays as the proof of concept and is not shipped.
+
+Known soft spots, to improve when the other 200 are made:
+- One dumbbell in one hand has no load of its own (suitcase carry builds it from a short bar with plates).
+- A dumbbell keeps one axis for the whole rep, so a hammer curl's dumbbell does not tilt with the forearm.
+- A figure lying down and turned dims the far half of the body (bench press legs); it reads as depth but
+  loses contrast.
+- Russian twist: the near arm partly covers the plate on the far side.
+- Stills under 45 pt: the app draws the end pose only, lines 1.4 times wider (not in `figure3d.py`).

@@ -879,6 +879,14 @@
    "w": 1040,
    "x": 0,
    "y": 6160
+  },
+  "F133-PlanFigures.dc.html": {
+   "h": 1452,
+   "page": "approved",
+   "title": "13.3 · Your plan's figures",
+   "w": 1280,
+   "x": 0,
+   "y": 10682
   }
  },
  "createdOnFiles": {
@@ -915,7 +923,7 @@
    "maxH": 520,
    "page": "approved",
    "size": 24,
-   "text": "Form figures: approved for the watch on 6 Oct.\n\nm · Every exercise in your plan gets a figure, and every one turns. They are being drawn now and go to the builder as they pass review. The other 200 in the database wait for the iPhone and onboarding work.",
+   "text": "Form figures: approved for the watch on 6 Oct.\n\nm · Every exercise in your plan has a figure, and every one turns: board 13.3 at the bottom of this page shows all 50, moving. They are with the builder. The other 200 in the database wait for the iPhone and onboarding work.",
    "w": 520,
    "x": 2848,
    "y": 7300
@@ -1194,7 +1202,8 @@
   "W110-TodayWaiting.dc.html",
   "W314-BreakBack.dc.html",
   "W214-HowTurn.dc.html",
-  "F132-Turn.dc.html"
+  "F132-Turn.dc.html",
+  "F133-PlanFigures.dc.html"
  ],
  "pages": [
   {
