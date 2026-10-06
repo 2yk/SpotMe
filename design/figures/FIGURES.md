@@ -147,3 +147,30 @@ Before all 247 are made, the renderer should gain:
   little off its body point (hip thrust);
 - a bolder still for sizes under about 80 px: at 72 px the split squat, hip thrust and hanging leg raise get
   thin. Stills that small should drop the ghost pose and thicken the lines.
+
+## Turning a figure (proof of concept, 6 Oct 2026)
+
+Asked by Yeshu: "can we rotate them to see all side angles?" A figure can be turned when its poses store
+depth. `poses3d/<id>.json` is the same file with three numbers per point, drawn by `figure3d.py`.
+
+- Axes: x to the right and y down as before, in the figure's usual view; z comes toward the viewer in that
+  view. For a side view z = 0 is the plane through the middle of the body.
+- All seventeen points are given (shoulders and hips too), whatever the view. Shoulders sit 15 either side of
+  the neck along the body's left-right axis, hips 9 either side of the pelvis. Bone lengths are checked in 3D,
+  with no foreshortening allowance: a bone is its true length.
+- Props and loads get depth too: a bench has width, a bar runs across the body through both hands, each hand
+  has its own dumbbell, a cable anchor is a point in space.
+- `yaw` turns the scene about the vertical axis through the middle of the figure: 0 is the usual view. The
+  drawing is an orthographic projection; parts are drawn far to near, and a limb is dimmed by how far behind
+  the body's middle it is, instead of by a fixed near and far side.
+- The picture's crop is the same for every angle of one figure, so it does not jump while turning.
+- On the watch the Digital Crown turns the figure on the How screen; on the iPhone a finger does.
+
+What the turning proof showed: three figures (incline DB press, Bulgarian split squat, pull-ups) rebuilt with
+depth stay recognisable from eight angles and match their 2D versions from the usual side. A figure at one
+angle is about 12 KB of SVG; one that turns while it moves is 35 to 68 KB, 5 to 11 KB compressed (the app
+draws from the pose numbers, so this only matters for these boards). Weak angles are the ones any real view
+has: straight from behind a bench, or a split stance seen head-on. Authoring a pose with depth takes two to
+three times as long as a flat one, more for machines and cables, whose frames and pulleys need depth that
+looks right from every side. Suggested order if all 247 are made: free-weight and bodyweight exercises with
+depth first, machines flat until a few have proven the prop set.
