@@ -36,6 +36,7 @@ struct RepCoachWatchApp: App {
     var body: some Scene {
         WindowGroup {
             TodayView()
+                .dimmedRoot()
                 .environment(app.today)
                 .environment(app.settings)
                 .environment(workout)

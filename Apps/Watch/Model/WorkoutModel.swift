@@ -8,6 +8,8 @@ import RepCoachCore
 final class WorkoutModel {
     struct Summary: Identifiable {
         let id = UUID()
+        /// The day's name: "Push A".
+        var title = ""
         let savedToHealth: Bool
         let duration: TimeInterval?
         let averageHeartRate: Double?
@@ -74,6 +76,19 @@ final class WorkoutModel {
         if case .exercise(let flow) = step { flow } else { nil }
     }
 
+    /// A rest, a break or a hold is running: the screen has the edge timer.
+    var showsEdgeTimer: Bool {
+        guard case .exercise(let flow) = currentStep else { return false }
+        switch flow.phase {
+        case .rest: return true
+        case .finished: return breakTime != nil
+        case .set: return flow.holdStartedAt != nil
+        }
+    }
+
+    /// The last logged set can be taken back (not after a ramp-up).
+    var canUndo: Bool { flow?.canUndo ?? false }
+
     /// Something was started today, so the main button reads Continue.
     var hasStarted: Bool {
         health.isActive || currentStep != nil || today.session.map { !$0.logs.isEmpty } == true
@@ -103,6 +118,15 @@ final class WorkoutModel {
             return Self.names(today.queue.upNext)
         case .allDone, nil:
             return nil
+        }
+    }
+
+    /// Skip puts the item on screen off for later; from a break it just starts the next one now.
+    var skipLeavesOpen: Bool {
+        switch currentStep {
+        case .exercise(let flow): !flow.isFinished
+        case .checklist: true
+        case .allDone, nil: false
         }
     }
 
@@ -337,8 +361,8 @@ final class WorkoutModel {
             onSessionFinished?(session)
         }
         let sets = today.session?.logs.reduce(0) { $0 + $1.sets.count } ?? 0
-        summary = Summary(savedToHealth: workoutId != nil, duration: duration, averageHeartRate: average,
-                          energy: energy, sets: sets)
+        summary = Summary(title: today.day.headline, savedToHealth: workoutId != nil, duration: duration,
+                          averageHeartRate: average, energy: energy, sets: sets)
         today.refresh()
     }
 
@@ -422,6 +446,16 @@ final class WorkoutModel {
         breakTime = countdown
         scheduleBreak(countdown)
     }
+
+    #if DEBUG
+    /// Screenshots: the break as it looks with `left` of its `length` seconds to go.
+    func debugBreak(left: TimeInterval, of length: TimeInterval) {
+        guard breakTime != nil else { return }
+        let countdown = Countdown(seconds: length, from: Date.now.addingTimeInterval(left - length))
+        breakTime = countdown
+        scheduleBreak(countdown)
+    }
+    #endif
 
     private func scheduleBreak(_ countdown: Countdown) {
         breakAlarm.schedule(countdown, haptics: today.settings.restHaptics) { [weak self] in self?.advance() }

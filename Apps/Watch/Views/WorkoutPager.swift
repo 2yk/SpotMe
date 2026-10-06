@@ -27,8 +27,13 @@ struct WorkoutPager: View {
                 .toolbar(.hidden, for: .navigationBar)
                 .tag(Page.nowPlaying)
         }
-        .tabViewStyle(.page)
-        .finishDialog(isPresented: $confirmingEnd, workout: workout)
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .overlay(alignment: .bottom) {
+            PageDots(index: [Page.controls, .workout, .nowPlaying].firstIndex(of: page) ?? 1,
+                     raised: workout.showsEdgeTimer)
+        }
+        .ignoresSafeArea(edges: .bottom)
+        .sheet(isPresented: $confirmingEnd) { EndWorkoutSheet() }
         // Finished or discarded, from whichever page: back to Today, where the summary shows.
         .onChange(of: workout.step == nil) { _, ended in
             if ended { onList() }
@@ -64,19 +69,24 @@ struct WorkoutPager: View {
     }
 }
 
-extension View {
-    /// End workout? Finish it (saved to Health when saving is on, without asking), discard it, or keep going.
-    func finishDialog(isPresented: Binding<Bool>, workout: WorkoutModel) -> some View {
-        confirmationDialog("End workout?", isPresented: isPresented) {
-            Button("Finish") { Task { await workout.finishWorkout() } }
-            Button("Discard workout", role: .destructive) {
-                withAnimation(.snappy) { workout.discardWorkout() }
+/// The three pages as dots: controls, workout, Now Playing. Higher on screens with the edge timer, which runs
+/// along the bottom edge.
+private struct PageDots: View {
+    let index: Int
+    let raised: Bool
+    @Environment(\.dimmed) private var dimmed
+
+    var body: some View {
+        HStack(spacing: pt(4)) {
+            ForEach(0..<3) { dot in
+                Circle()
+                    .fill(.white.opacity(dot == index ? 1 : 0.3))
+                    .frame(width: pt(5), height: pt(5))
             }
-            Button("Keep going", role: .cancel) {}
-        } message: {
-            Text(workout.savesToHealth
-                 ? "Finish saves it to Health. Discard deletes today's sets, here and on your iPhone."
-                 : "Discard deletes today's sets, here and on your iPhone.")
         }
+        .padding(.bottom, pt(raised ? 10 : 5))
+        .opacity(dimmed ? 0.35 : 1)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 }

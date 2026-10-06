@@ -31,6 +31,13 @@ public enum Coach {
         }
     }
 
+    /// Between sets of a reps or timed exercise, which never change weight: where the last set landed.
+    public static func rangeLine(_ value: Int, low: Int, high: Int) -> Line {
+        if value >= high { return Line("Top of range", .up) }
+        if value >= low { return Line("In range", .neutral) }
+        return Line("Below range", .down)
+    }
+
     /// Short tag for today's target: "+reps", "+2.5 kg", "lighter", "deload", "set weight".
     public static func tag(_ target: SessionTarget, increment: Double) -> String {
         switch target.reason {

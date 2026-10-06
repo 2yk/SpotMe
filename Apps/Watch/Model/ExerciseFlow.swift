@@ -31,6 +31,10 @@ final class ExerciseFlow {
 
     /// Working weight per item; `ProgressionEngine.nextSet` moves it after every logged set.
     private var workingWeight: [Double]
+    /// The weight of each item's last logged set, to tell whether the next set is heavier or lighter.
+    private var lastLoggedWeight: [Double?]
+    /// Each item's counted sessions before today, newest first: "Last 9" and the first prefill.
+    private let past: [[[LoggedSet]]]
     /// The engine's verdict on each item's last set, shown while resting.
     private var coaching: [Coach.Line?]
     private var undoStack: [Snapshot] = []
@@ -43,6 +47,7 @@ final class ExerciseFlow {
     private struct Snapshot {
         var stepIndex: Int
         var workingWeight: [Double]
+        var lastLoggedWeight: [Double?]
         var coaching: [Coach.Line?]
     }
 
@@ -58,6 +63,8 @@ final class ExerciseFlow {
         targets = items.map { today.target(for: $0) }
         steps = SetSequence.steps(sets: targets.map(\.sets), rest: items.map { $0.restSec ?? 60 })
         workingWeight = targets.map { $0.weight ?? 0 }
+        lastLoggedWeight = items.map { _ in nil }
+        past = items.map { today.pastSessions(of: $0.exerciseId) }
         coaching = items.map { _ in nil }
         resume()
     }
@@ -83,22 +90,57 @@ final class ExerciseFlow {
         currentItem.kind == .weighted && workingWeight[current?.item ?? 0] == 0
     }
 
-    /// What's coming after the rest: "Set 3 of 4 · 17.5 kg".
-    var nextSetLine: String {
-        guard let step = current else { return "" }
+    /// What's coming after the rest, as the rest screen shows it.
+    struct NextSet: Equatable {
+        enum Change: Equatable { case up, down }
+        /// "NEXT · SET 3 OF 4", or the exercise's name in a superset.
+        var eyebrow: String
+        /// "22.5 kg", or the reps for an exercise without a weight.
+        var value: String
+        /// The weight went up or down since the set just logged.
+        var change: Change?
+        /// The part of the engine's line before " · ": "5 reps, below 6".
+        var reason: String?
+    }
+
+    var nextSet: NextSet {
+        guard let step = current else { return NextSet(eyebrow: "", value: "", change: nil, reason: nil) }
         let item = items[step.item]
-        var parts = [isSuperset ? item.name : "Set \(step.set) of \(targets[step.item].sets)"]
-        if item.takesWeight, workingWeight[step.item] > 0 {
-            parts.append(Format.kg(workingWeight[step.item]))
-        } else if let perSet = Format.perSet(item, targets[step.item]) {
-            parts.append(perSet)
+        let eyebrow = isSuperset ? "Next · \(item.name)" : "Next · set \(step.set) of \(targets[step.item].sets)"
+        let weight = workingWeight[step.item]
+        let value: String
+        var change: NextSet.Change?
+        if item.takesWeight, weight > 0 {
+            value = Format.kg(weight)
+            if let last = lastLoggedWeight[step.item], last != weight { change = weight > last ? .up : .down }
+        } else {
+            value = Format.perSet(item, targets[step.item]).map { item.kind == .timed || item.perSide == true ? $0 : "\($0) reps" }
+                ?? ""
         }
-        return parts.joined(separator: " · ")
+        return NextSet(eyebrow: eyebrow, value: value, change: change,
+                       reason: coaching[step.item].map { $0.text.components(separatedBy: " · ")[0] })
     }
 
     /// The engine's verdict on the last set of the item coming up next.
     var coachingLine: Coach.Line? {
         current.flatMap { coaching[$0.item] }
+    }
+
+    /// The same set in the last counted session, for "Last 9": reps, or seconds for a hold. nil with no history.
+    var lastTimeValue: Int? {
+        guard let step = current, let last = past[step.item].first, step.set <= last.count else { return nil }
+        return last[step.set - 1].reps
+    }
+
+    /// The exercise has been done before (sessions other than today's, deloads aside).
+    var hasHistory: Bool {
+        current.map { !past[$0.item].isEmpty } ?? false
+    }
+
+    /// The reps of the last set of `item` in the last session, for the rest after a ramp-up.
+    func lastTimeReps(of item: Int, set: Int) -> Int? {
+        guard let last = past[item].first, set >= 1, set <= last.count else { return nil }
+        return last[set - 1].reps
     }
 
     // MARK: Actions
@@ -116,10 +158,12 @@ final class ExerciseFlow {
             Logger.store.error("Couldn't log a set: \(error.localizedDescription)")
             return
         }
-        undoStack.append(Snapshot(stepIndex: stepIndex, workingWeight: workingWeight, coaching: coaching))
+        undoStack.append(Snapshot(stepIndex: stepIndex, workingWeight: workingWeight,
+                                  lastLoggedWeight: lastLoggedWeight, coaching: coaching))
         Haptics.play(.logged)
         onActivity()
 
+        lastLoggedWeight[step.item] = loggedWeight
         if item.kind == .weighted, let p = Prescription(item: item) {
             let next = ProgressionEngine.nextSet(for: p, weight: loggedWeight, reps: loggedReps,
                                                  setIndex: step.set, totalSets: targets[step.item].sets)
@@ -127,6 +171,7 @@ final class ExerciseFlow {
             coaching[step.item] = Coach.nextSet(next, reps: loggedReps, repMin: p.repMin, repMax: p.repMax)
         } else {
             workingWeight[step.item] = loggedWeight
+            coaching[step.item] = rangeLine(item, target: targets[step.item], value: seconds ?? loggedReps)
         }
 
         holdStartedAt = nil
@@ -153,6 +198,7 @@ final class ExerciseFlow {
         let removed = today.log(for: item).flatMap { try? today.recorder.removeLastSet(from: $0) }
         stepIndex = snapshot.stepIndex
         workingWeight = snapshot.workingWeight
+        lastLoggedWeight = snapshot.lastLoggedWeight
         coaching = snapshot.coaching
         holdStartedAt = nil
         phase = .set
@@ -224,6 +270,10 @@ final class ExerciseFlow {
         for (index, sets) in logged.enumerated() {
             guard let last = sets.last else { continue }
             workingWeight[index] = last.weight
+            lastLoggedWeight[index] = last.weight
+            if items[index].kind != .weighted {
+                coaching[index] = rangeLine(items[index], target: targets[index], value: last.reps)
+            }
             if items[index].kind == .weighted, let p = Prescription(item: items[index]) {
                 let next = ProgressionEngine.nextSet(for: p, weight: last.weight, reps: last.reps,
                                                      setIndex: sets.count, totalSets: targets[index].sets)
@@ -246,8 +296,7 @@ final class ExerciseFlow {
         let target = targets[step.item]
         weight = workingWeight[step.item]
         let previous = today.log(for: item)?.orderedSets.last?.reps
-        let lastTime = today.pastSessions(of: item.exerciseId).first
-        let sameSetLastTime = lastTime.flatMap { step.set <= $0.count ? $0[step.set - 1].reps : nil }
+        let sameSetLastTime = lastTimeValue
         switch item.kind {
         case .percentOfMax:
             reps = Double(target.repMax ?? previous ?? 5)
@@ -262,6 +311,36 @@ final class ExerciseFlow {
             }
         }
     }
+
+    /// Reps and timed exercises don't change weight; their rest just says where the last set landed.
+    private func rangeLine(_ item: PlanItem, target: ItemTarget, value: Int) -> Coach.Line? {
+        switch item.kind {
+        case .reps:
+            guard let low = target.repMin, let high = target.repMax else { return nil }
+            return Coach.rangeLine(value, low: low, high: high)
+        case .timed:
+            guard let low = target.secMin, let high = target.secMax else { return nil }
+            return Coach.rangeLine(value, low: low, high: high)
+        default:
+            return nil
+        }
+    }
+
+    #if DEBUG
+    /// Screenshots: the hold as it looks `elapsed` seconds in.
+    func debugHold(elapsed: TimeInterval) {
+        guard holdStartedAt != nil else { return }
+        holdStartedAt = Date.now.addingTimeInterval(-elapsed)
+    }
+
+    /// Screenshots: the rest as it looks with `left` of its `length` seconds to go.
+    func debugRest(left: TimeInterval, of length: TimeInterval) {
+        guard case .rest = phase else { return }
+        let rest = Countdown(seconds: length, from: Date.now.addingTimeInterval(left - length))
+        phase = .rest(rest)
+        scheduleRest(rest)
+    }
+    #endif
 
     private func startRest(seconds: Int) {
         let rest = Countdown(seconds: TimeInterval(seconds))

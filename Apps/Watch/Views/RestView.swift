@@ -1,57 +1,83 @@
 import SwiftUI
 import RepCoachCore
 
-/// Countdown between sets, with the next set's target and the engine's one-line reason.
+/// Countdown between sets: the timer runs round the edge, the middle has the time and what to load next with the
+/// engine's one-line reason.
 struct RestView: View {
     @Environment(HealthWorkout.self) private var health
-    let flow: ExerciseFlow
+    @Environment(WorkoutModel.self) private var workout
+    @Environment(\.dimmed) private var dimmed
+    @Bindable var flow: ExerciseFlow
     let rest: Countdown
 
     var body: some View {
-        GeometryReader { geometry in
-            let ring = max(64, min(geometry.size.width * 0.62, geometry.size.height - 54))
-            VStack(spacing: 4) {
-                CountdownRing(countdown: rest, digits: min(36, ring * 0.3)) {
-                    if let bpm = health.heartRate {
-                        HStack(spacing: 3) {
-                            Image(systemName: "heart.fill").font(.system(size: 10, weight: .bold))
-                            Text("\(Int(bpm.rounded()))").font(.number(13)).monospacedDigit()
-                        }
-                        .foregroundStyle(Theme.pulse)
-                        .accessibilityLabel("Heart rate \(Int(bpm.rounded()))")
-                    } else {
-                        Text("Rest").eyebrow(Theme.ice, size: 10)
-                    }
-                }
-                .frame(width: ring, height: ring)
-
-                Text(flow.nextSetLine)
-                    .font(.rounded(.footnote, .bold))
+        let next = flow.nextSet
+        ZStack(alignment: .top) {
+            EdgeCountdown(countdown: rest)
+            VStack(spacing: 0) {
+                CountdownDigits(countdown: rest)
+                heartLine
+                    .padding(.top, pt(2))
+                Text(next.eyebrow)
+                    .role(.eyebrow, dimmed ? Theme.dimmedText : Theme.text3, single: true)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-                if let line = flow.coachingLine {
-                    Text(line.text)
-                        .font(.rounded(.caption2, .semibold))
-                        .foregroundStyle(line.tone.color)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+                    .padding(.top, pt(7))
+                HStack(spacing: pt(4)) {
+                    if let change = next.change {
+                        Image(systemName: change == .up ? "arrow.up" : "arrow.down")
+                            .font(.system(size: pt(17), weight: .bold))
+                    }
+                    Text(next.value).lineLimit(1).minimumScaleFactor(0.6)
+                }
+                .role(.nextValue, valueColor(next), single: true)
+                if let reason = next.reason {
+                    Text(reason)
+                        .role(.detail, dimmed ? Theme.dimmedText : Theme.text2, single: true)
+                        .lineLimit(1)
                         .minimumScaleFactor(0.8)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.horizontal, Metrics.side)
+            .padding(.top, Metrics.top)
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                Button { flow.addRest(30) } label: {
-                    Image(systemName: "goforward.30")
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .overlay(alignment: .bottom) {
+            RestControls(addTime: { flow.addRest(30) }, undo: flow.canUndo ? { workout.undoLastSet() } : nil,
+                         endSymbol: "forward.end.fill", endLabel: "Skip rest",
+                         end: { withAnimation(.snappy) { flow.endRest() } })
+        }
+        .ignoresSafeArea()
+    }
+
+    /// Heart rate from the running workout; "Paused" in amber while the rest waits. Keeps its height without
+    /// either, so the lines under it don't jump.
+    @ViewBuilder
+    private var heartLine: some View {
+        Group {
+            if rest.isPaused {
+                Text("Paused").role(.eyebrow, Theme.amber)
+            } else if let bpm = health.heartRate, !dimmed {
+                HStack(spacing: pt(3)) {
+                    Image(systemName: "heart.fill").font(.system(size: pt(11), weight: .bold))
+                    Text("\(Int(bpm.rounded()))")
                 }
-                .accessibilityLabel("Add 30 seconds")
-                Spacer()
-                Button { withAnimation(.snappy) { flow.endRest() } } label: {
-                    Image(systemName: "forward.end.fill")
-                }
-                .accessibilityLabel("Skip rest")
+                .role(.detail.weight(.bold).size(13), Theme.red)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Heart rate \(Int(bpm.rounded()))")
+            } else {
+                Color.clear
             }
+        }
+        .frame(height: pt(15))
+    }
+
+    private func valueColor(_ next: ExerciseFlow.NextSet) -> Color {
+        if dimmed { return Theme.text2 }
+        switch next.change {
+        case .up: return Theme.volt
+        case .down: return Theme.ember
+        case nil: return .white
         }
     }
 }

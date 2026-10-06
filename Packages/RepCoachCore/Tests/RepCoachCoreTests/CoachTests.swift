@@ -134,4 +134,11 @@ final class CoachLineTests: XCTestCase {
                        Coach.Line("Aim for 30s on every set", .neutral))
         XCTAssertEqual(Coach.amrapSummary(reps: 12, volumeReps: 7), Coach.Line("12 reps · volume sets of 7", .up))
     }
+
+    func testRangeLineBetweenSetsOfRepsAndTimedExercises() {
+        XCTAssertEqual(Coach.rangeLine(10, low: 8, high: 12), Coach.Line("In range", .neutral))
+        XCTAssertEqual(Coach.rangeLine(12, low: 8, high: 12), Coach.Line("Top of range", .up))
+        XCTAssertEqual(Coach.rangeLine(7, low: 8, high: 12), Coach.Line("Below range", .down))
+        XCTAssertEqual(Coach.rangeLine(40, low: 30, high: 45), Coach.Line("In range", .neutral))
+    }
 }
