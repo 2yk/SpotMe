@@ -31,6 +31,7 @@ struct WorkoutPager: View {
         .overlay(alignment: .bottom) {
             PageDots(index: [Page.controls, .workout, .nowPlaying].firstIndex(of: page) ?? 1,
                      raised: workout.showsEdgeTimer)
+                .opacity(page == .workout && workout.stepScrolls ? 0 : 1)
         }
         .ignoresSafeArea(edges: .bottom)
         .sheet(isPresented: $confirmingEnd) { EndWorkoutSheet() }

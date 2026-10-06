@@ -100,6 +100,11 @@ final class WorkoutModel {
         }
     }
 
+    /// The tick-off screen with steps scrolls to its Done button; the page dots stay out of its way.
+    var stepScrolls: Bool {
+        if case .checklist(let item) = currentStep { item.steps != nil } else { false }
+    }
+
     /// The last logged set can be taken back (not after a ramp-up).
     var canUndo: Bool { flow?.canUndo ?? false }
 

@@ -22,15 +22,7 @@ struct HoldView: View {
         let item = flow.currentItem
         let target = flow.currentTarget
         return VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(item.name)
-                    .role(.title)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: true)
-                SetHintRow(flow: flow)
-                    .padding(.top, pt(1))
-            }
-            .padding(.horizontal, pt(4))
+            ExerciseHeader(flow: flow)
 
             if item.takesWeight {
                 CrownValue(value: $flow.weight, step: flow.increment, range: 0...500, unit: "kg", wide: true,

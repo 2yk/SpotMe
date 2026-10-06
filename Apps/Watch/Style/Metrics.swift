@@ -13,6 +13,8 @@ enum Metrics {
     /// Where the content starts: just under the system bar's back button and clock. The system reserves more
     /// than that (62 pt on the 46 mm), so screens ignore the safe area and start here.
     static var top: CGFloat { pt(50) }
+    /// The top of the round buttons on the rest and break screens (38 pt high, 17 pt from the bottom).
+    static var restControlsTop: CGFloat { pt(248 - 17 - 38) }
     /// Where a sheet's content starts: under the system's close button, which is the same size as the back button.
     static var sheetTop: CGFloat { pt(56) }
     /// Today has no back button, so its content starts right under the clock.

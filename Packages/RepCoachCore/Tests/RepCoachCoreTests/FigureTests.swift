@@ -22,7 +22,7 @@ final class FigureTests: XCTestCase {
         }
     }
 
-    /// [tag, points or circle, stroke width, colour, fill, opacity, dash]
+    /// [tag, points or circle, stroke width, colour, fill, stroke opacity, dash, fill opacity]
     struct DrawItem: Decodable {
         let tag: String
         let points: [[Double]]
@@ -30,7 +30,9 @@ final class FigureTests: XCTestCase {
         let width: Double
         let color: String
         let fill: String
+        let opacity: Double
         let dash: String
+        let fillOpacity: Double
 
         init(from decoder: Decoder) throws {
             var c = try decoder.unkeyedContainer()
@@ -45,8 +47,9 @@ final class FigureTests: XCTestCase {
             width = try c.decode(Double.self)
             color = try c.decode(String.self)
             fill = try c.decode(String.self)
-            _ = try c.decode(Double.self)  // opacity: the golden file never records a dimmed one
+            opacity = try c.decode(Double.self)
             dash = try c.decode(String.self)
+            fillOpacity = try c.decode(Double.self)
         }
     }
 
@@ -149,20 +152,24 @@ final class FigureTests: XCTestCase {
                 for (index, (item, want)) in zip(items, expected).enumerated() {
                     let name = "\(id) item \(index)"
                     switch item {
-                    case .line(let points, let width, let color, _, let dashed):
+                    case .line(let points, let width, let color, let opacity, let dashed):
                         XCTAssertEqual(want.tag, "polyline", name)
+                        XCTAssertEqual(opacity, want.opacity, accuracy: 0.06, "\(name) opacity")
                         XCTAssertEqual(width, want.width, accuracy: 0.01, name)
                         XCTAssertEqual(hex(color), want.color, name)
                         XCTAssertEqual(dashed ? "5 4" : "", want.dash, name)
                         assert(points, want.points, name)
-                    case .polygon(let points, let width, let color, let fill, _, _):
+                    case .polygon(let points, let width, let color, let fill, let fillOpacity, let opacity):
                         XCTAssertEqual(want.tag, "polygon", name)
+                        XCTAssertEqual(opacity, want.opacity, accuracy: 0.06, "\(name) opacity")
+                        XCTAssertEqual(fillOpacity, want.fillOpacity, accuracy: 0.06, "\(name) fill opacity")
                         XCTAssertEqual(width, want.width, accuracy: 0.01, name)
                         XCTAssertEqual(hex(color), want.color, name)
                         XCTAssertEqual(fill.map(hex) ?? "none", want.fill, name)
                         assert(points, want.points, name)
-                    case .circle(let center, let radius, let color, _):
+                    case .circle(let center, let radius, let color, let opacity):
                         XCTAssertEqual(want.tag, "circle", name)
+                        XCTAssertEqual(opacity, want.opacity, accuracy: 0.06, "\(name) opacity")
                         XCTAssertEqual(center.x, want.circle[0], accuracy: 0.06, name)
                         XCTAssertEqual(center.y, want.circle[1], accuracy: 0.06, name)
                         XCTAssertEqual(radius, want.circle[2], accuracy: 0.06, name)

@@ -33,6 +33,7 @@ struct HowView: View {
             }
             .multilineTextAlignment(.center)
             .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, pt(8))
             .padding(.top, pt(1))
             dots(yaw: yaw)

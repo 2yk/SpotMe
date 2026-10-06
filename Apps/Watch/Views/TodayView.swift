@@ -92,7 +92,7 @@ struct TodayView: View {
                 }
             }
             .listRowBackground(Color.clear)
-            .listRowInsets(rowInsets(top: Metrics.rootTop, bottom: pt(4)))
+            .listRowInsets(rowInsets(top: Metrics.rootTop, bottom: pt(-1.5)))
 
             ForEach(openItems) { item in
                 Button {
@@ -170,13 +170,15 @@ struct TodayView: View {
             }
         }
         .listStyle(.plain)
+        // Rows are as tall as their content: the list's own minimum would leave holes round short ones.
+        .environment(\.defaultMinListRowHeight, 1)
         // The design lays Today out from the whole screen; the list runs under the bar and off the bottom edge.
         .ignoresSafeArea()
         .topFade()
     }
 
     /// The list adds some room between rows of its own, so the insets are small: rows come out 4 pt apart.
-    private func rowInsets(top: CGFloat = 0, bottom: CGFloat = 0) -> EdgeInsets {
+    private func rowInsets(top: CGFloat = pt(-1.5), bottom: CGFloat = pt(-1.5)) -> EdgeInsets {
         EdgeInsets(top: top, leading: Metrics.side, bottom: bottom, trailing: Metrics.side)
     }
 

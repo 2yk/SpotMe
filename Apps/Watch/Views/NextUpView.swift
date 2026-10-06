@@ -50,13 +50,16 @@ struct NextUpView: View {
                         .role(.small, summary.line.tone.color)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
-                        .fixedSize(horizontal: false, vertical: true)
                         .padding(.horizontal, pt(16))
                         .padding(.top, pt(3))
+                        // Whatever space is left above the round buttons (4 pt clear): the lines that fit, cut
+                        // with an ellipsis.
+                        .frame(maxHeight: .infinity, alignment: .top)
                     }
                 }
                 .padding(.horizontal, Metrics.side)
-                .padding(.top, Metrics.top)
+                .padding(.top, figure == nil ? Metrics.top : Metrics.top - pt(6))
+                .frame(height: Metrics.restControlsTop - pt(4), alignment: .top)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .overlay(alignment: .bottom) {

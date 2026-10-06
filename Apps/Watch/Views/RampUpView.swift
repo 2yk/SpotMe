@@ -21,11 +21,12 @@ struct RampUpView: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                     Spacer(minLength: 0)
+                    // The button's 30 pt of tap height overflows the row, so the row is as tall as on the set screen.
                     Button { withAnimation(.snappy) { flow.skipRampUps() } } label: {
                         Text("Skip").role(.detail.weight(.semibold), .white)
-                            .frame(minHeight: pt(30))
                             .padding(.leading, pt(8))
-                            .contentShape(Rectangle())
+                            .frame(height: pt(15))
+                            .contentShape(Rectangle().inset(by: pt(-9)))
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("Skip the ramp-up")

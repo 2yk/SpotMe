@@ -11,7 +11,7 @@ enum ScreenScript {
         guard let screen = LaunchOptions.screen else { return }
         if ["workout", "rest", "alldone", "finish-dialog", "next", "next-picker", "controls", "paused", "media",
             "paused-rest", "skipped", "running", "running-paused", "running-end", "paused-set", "break-checklist",
-            "break-pick", "running-waiting", "break-back", "effort", "superset", "superset-next", "superset-rest"].contains(screen) || UserDefaults.standard.bool(forKey: "running") {
+            "break-pick", "running-waiting", "break-back", "effort", "superset", "superset-next", "superset-rest", "how"].contains(screen) || UserDefaults.standard.bool(forKey: "running") {
             workout.health.pretendRunning(heartRate: 128, minutes: 24)
         }
         func show(_ items: [PlanItem]) {
@@ -157,14 +157,14 @@ enum ScreenScript {
             show(today.queue.upNext)
             workout.flow?.logSet()
             workout.pause()
-        case "set", "rest", "next", "next-picker":
+        case "set", "rest", "next", "next-picker", "how":
             show(today.queue.upNext)
             guard let flow = workout.flow else { return }
             if screen == "rest" {
                 // One rep under the range, so the rest screen shows the engine dropping the weight.
                 flow.reps = Double((flow.currentTarget.repMin ?? 6) - 1)
                 flow.logSet()
-            } else if screen != "set" {
+            } else if screen != "set" && screen != "how" {
                 while flow.current != nil {
                     flow.reps = Double(flow.currentTarget.repMax ?? 10)
                     flow.logSet()
