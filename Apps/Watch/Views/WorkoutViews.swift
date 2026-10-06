@@ -16,33 +16,37 @@ struct WorkoutSummaryView: View {
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, pt(4))
-            Grid(horizontalSpacing: pt(4), verticalSpacing: pt(4)) {
-                GridRow {
+            VStack(spacing: pt(4)) {
+                HStack(spacing: pt(4)) {
                     stat("Time", summary.duration.map(duration) ?? "--")
                     stat("Sets", "\(summary.sets)")
                 }
-                GridRow {
+                HStack(spacing: pt(4)) {
                     stat("Avg bpm", summary.averageHeartRate.map { "\(Int($0.rounded()))" } ?? "--",
                          tint: Theme.red)
-                    stat("kcal", summary.energy.map { "\(Int($0.rounded()))" } ?? "--")
+                    if let effort = summary.effort {
+                        let band = EffortBand(effort)
+                        stat("Effort · \(band.word)", "\(effort)", tint: band.color)
+                    } else {
+                        stat("kcal", summary.energy.map { "\(Int($0.rounded()))" } ?? "--")
+                    }
                 }
             }
             Spacer(minLength: 0)
             Button("Done") { dismiss() }
                 .buttonStyle(PrimaryButtonStyle())
         }
-        .padding(.horizontal, Metrics.side)
-        .padding(.top, Metrics.top - pt(2))
-        .padding(.bottom, Metrics.bottom)
-        .ignoresSafeArea()
+        .screenColumn(top: Metrics.sheetTop)
         .barTitle(summary.title, close: true)
     }
 
     private func stat(_ label: String, _ value: String, tint: Color = .white) -> some View {
         VStack(spacing: 0) {
-            Text(value).role(TextRole(size: 20, line: 22, weight: .bold), tint, single: true)
+            Text(value)
+                .role(TextRole(size: 20, line: 22, weight: .bold), tint, single: true)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.75)
+                .frame(maxWidth: .infinity)
             Text(label).role(.eyebrow, Theme.text3, single: true)
         }
         .frame(maxWidth: .infinity)

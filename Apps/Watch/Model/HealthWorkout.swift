@@ -31,7 +31,8 @@ final class HealthWorkout: NSObject {
     @ObservationIgnored private var session: HKWorkoutSession?
     @ObservationIgnored private var builder: HKLiveWorkoutBuilder?
 
-    private static let shareTypes: Set<HKSampleType> = [HKObjectType.workoutType()]
+    private static let effortType = HKQuantityType(.workoutEffortScore)
+    private static let shareTypes: Set<HKSampleType> = [HKObjectType.workoutType(), effortType]
     private static let readTypes: Set<HKObjectType> = [
         HKQuantityType(.heartRate), HKQuantityType(.activeEnergyBurned), HKObjectType.workoutType(),
     ]
@@ -85,6 +86,31 @@ final class HealthWorkout: NSObject {
         }
     }
 
+    /// The workout `finish()` saved last, so the effort asked for after Finish can be attached to it.
+    @ObservationIgnored private var savedWorkout: HKWorkout?
+
+    /// Saves how hard the workout was (1 to 10) as its effort rating, so Fitness shows it and Training Load
+    /// counts it. Refused or unavailable: nothing happens; SpotMe keeps the value itself.
+    func saveEffort(_ effort: Int, workoutId: UUID) async {
+        guard isAvailable, store.authorizationStatus(for: Self.effortType) == .sharingAuthorized else { return }
+        do {
+            var workout = savedWorkout?.uuid == workoutId ? savedWorkout : nil
+            if workout == nil {
+                let query = HKSampleQueryDescriptor(predicates: [.workout(HKQuery.predicateForObject(with: workoutId))],
+                                                    sortDescriptors: [], limit: 1)
+                workout = try await query.result(for: store).first
+            }
+            guard let workout else { return }
+            let sample = HKQuantitySample(type: Self.effortType,
+                                          quantity: HKQuantity(unit: .appleEffortScore(), doubleValue: Double(effort)),
+                                          start: workout.startDate, end: workout.endDate)
+            try await store.save(sample)
+            try await store.relateWorkoutEffortSample(sample, with: workout, activity: nil)
+        } catch {
+            Logger.health.error("Couldn't save the effort: \(error.localizedDescription)")
+        }
+    }
+
     /// Ends the workout and saves it to Health. Returns the saved workout's id, or nil if nothing was saved.
     func finish() async -> UUID? {
         guard let session, let builder, isActive else { return nil }
@@ -93,6 +119,7 @@ final class HealthWorkout: NSObject {
         do {
             try await builder.endCollection(at: .now)
             let workout = try await builder.finishWorkout()
+            savedWorkout = workout
             reset()
             return workout?.uuid
         } catch {

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Screenshots of the watch boards from the demo store, named like the boards (design/built/watch-1/).
-#   WATCH_DD=<derived data> Scripts/watch-boards.sh <46|42> [part...]     parts: a (Today, set, rest, break), b (hold, tick-offs, controls, end, summary)
+#   WATCH_DD=<derived data> Scripts/watch-boards.sh <46|42> [part...]     parts: a (Today, set, rest, break), b (hold, tick-offs, controls, end, summary), c (waiting, ramp-ups, effort)
 # Each line is: board, then the launch arguments that drive the demo app to that board's state.
 set -e
 size=${1:-46}; shift || true
@@ -56,6 +56,14 @@ b)
   shot W56-Summary -day wednesday -screen summary
   shot W57-HealthAlert -day wednesday -screen start-denied
   shot W61-Complications -day wednesday -screen complications
+  ;;
+c)
+  shot W110-TodayWaiting -day wednesday -fresh YES -screen running-waiting
+  shot W213-RampUp -day wednesday -fresh YES -screen item -item incline-db-press
+  shot W313-RestRampUp -day wednesday -fresh YES -screen item -item incline-db-press -ramps 2 -left 42 -of 60
+  shot W314-BreakBack -day wednesday -fresh YES -screen break-back -left 27 -of 45
+  shot W58-Effort -day wednesday -screen effort
+  shot W59-SummaryEffort -day wednesday -screen summary-effort
   ;;
 esac
 done

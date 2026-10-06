@@ -8,8 +8,7 @@ struct DayPickerView: View {
 
     var body: some View {
         let todayKey = today.plan.day(for: .now)?.key
-        NavigationStack {
-            ScrollView {
+        ScrollView {
                 VStack(spacing: pt(4)) {
                     ForEach(today.plan.days) { day in
                         Button {
@@ -37,15 +36,15 @@ struct DayPickerView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .surface()
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(RowButtonStyle())
                     }
                 }
                 .padding(.horizontal, Metrics.side)
-                .padding(.top, Metrics.top)
+                .padding(.top, Metrics.sheetTop)
                 .padding(.bottom, Metrics.bottom)
             }
             .ignoresSafeArea()
+            .topFade()
             .barTitle("Days", close: true)
-        }
     }
 }

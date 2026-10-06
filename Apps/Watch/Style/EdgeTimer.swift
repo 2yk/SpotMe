@@ -26,7 +26,7 @@ struct EdgeTimer: View {
     var body: some View {
         ZStack {
             EdgeTrack(tint: tint, opacity: state == .alwaysOn ? 0.10 : 0.18)
-            EdgeArc(from: 1 - min(max(left, 0), 1), to: 1, tint: tint.opacity(state == .normal ? 1 : 0.45))
+            EdgeArc(from: 1 - min(max(left, 0), 1), to: 1, tint: tint, opacity: state == .normal ? 1 : 0.45)
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
@@ -62,6 +62,8 @@ struct EdgeArc: View {
     var from: Double
     var to: Double
     let tint: Color
+    /// Applied to the arc as one piece, so where its two parts meet there is no darker or brighter dot.
+    var opacity = 1.0
 
     var body: some View {
         let shape = ContainerRelativeShape().inset(by: pt(4.5))
@@ -80,6 +82,8 @@ struct EdgeArc: View {
                     shape.trim(from: 0, to: end - 1).stroke(tint, style: style)
                 }
             }
+            .compositingGroup()
+            .opacity(opacity)
         }
     }
 }

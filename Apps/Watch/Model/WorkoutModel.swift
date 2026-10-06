@@ -15,6 +15,15 @@ final class WorkoutModel {
         let averageHeartRate: Double?
         let energy: Double?
         let sets: Int
+        /// How hard it was, 1 to 10, once answered.
+        var effort: Int?
+    }
+
+    /// The Effort sheet shown after Finish, before the summary.
+    struct EffortPrompt: Identifiable {
+        let id = UUID()
+        /// Where the Crown starts: the last workout's value, or 5.
+        let initial: Int
     }
 
     /// What the workout screen shows.
@@ -51,8 +60,13 @@ final class WorkoutModel {
     private var pausedHere = false
     /// The break waits while the next item is being picked.
     @ObservationIgnored private var breakHeld = false
-    /// Shown once after Finish workout.
+    /// Shown once after Finish workout, after the Effort sheet.
     var summary: Summary?
+    /// Asked after every Finish; closing it saves the workout without an effort.
+    var effortPrompt: EffortPrompt?
+    @ObservationIgnored private var pendingSummary: Summary?
+    @ObservationIgnored private var finishedSession: WorkoutSession?
+    @ObservationIgnored private var finishedWorkoutId: UUID?
     /// Why Start workout couldn't start the Health workout, shown as an alert.
     var startProblem: String?
     /// Called after each Health start, when access may have just been allowed or refused, to tell the phone.
@@ -111,9 +125,9 @@ final class WorkoutModel {
     var skipTarget: String? {
         switch currentStep {
         case .exercise(let flow) where !flow.isFinished:
-            return Self.names(today.upNext(finishing: flow.items))
+            return Self.names(today.skipDestination(puttingOff: flow.items))
         case .checklist(let item):
-            return Self.names(today.upNext(finishing: [item]))
+            return Self.names(today.skipDestination(puttingOff: [item]))
         case .exercise:
             return Self.names(today.queue.upNext)
         case .allDone, nil:
@@ -133,8 +147,8 @@ final class WorkoutModel {
     /// Skip does something: there's an item on screen, or a break before the next one.
     var canSkip: Bool {
         switch currentStep {
-        case .exercise(let flow): !flow.isFinished || !today.queue.upNext.isEmpty
-        case .checklist: true
+        case .exercise(let flow): flow.isFinished ? !today.queue.upNext.isEmpty : !today.skipDestination(puttingOff: flow.items).isEmpty
+        case .checklist(let item): !today.skipDestination(puttingOff: [item]).isEmpty
         case .allDone, nil: false
         }
     }
@@ -209,6 +223,7 @@ final class WorkoutModel {
     func show(_ items: [PlanItem]) {
         cancelBreak()
         guard let first = items.first else { return }
+        today.stopWaiting(items)
         if first.kind == .checklist {
             flow?.stop()
             step = .checklist(first)
@@ -221,28 +236,30 @@ final class WorkoutModel {
                                       onFinished: { [weak self] in self?.exerciseFinished() }))
     }
 
-    /// Skip, from the controls: on to the next item now. The exercise on screen keeps what's logged (it's
-    /// skipped if nothing is), a checklist item is skipped, and a break ends early.
+    /// Skip, from the controls: puts the exercise on screen (or a tick-off item) off for later and moves on to
+    /// the next open one. It stays open with its sets, and comes back after the last other exercise. During a
+    /// rest the rest is dropped; coming back opens the next set. From a break it starts the next item now.
     func skip() {
         resume()
         switch currentStep {
         case .exercise(let flow) where !flow.isFinished:
-            flow.stop()
-            for item in flow.items where !today.status(of: item).isFinished {
-                if today.log(for: item)?.sets.isEmpty == false {
-                    today.complete(item)
-                } else {
-                    today.skip(item)
-                }
-            }
-            advance()
+            putOff(flow.items) { flow.stop() }
         case .exercise:
             advance()
         case .checklist(let item):
-            finishChecklist(item, skipped: true)
+            putOff([item]) {}
         case .allDone, nil:
             break
         }
+    }
+
+    private func putOff(_ items: [PlanItem], stopping: () -> Void) {
+        let destination = today.skipDestination(puttingOff: items)
+        guard !destination.isEmpty else { return }
+        stopping()
+        cancelBreak()
+        today.putOff(items)
+        show(destination)
     }
 
     /// Ticks off, or skips, the checklist item on screen and moves on.
@@ -333,7 +350,7 @@ final class WorkoutModel {
 
     /// Today's session is open: logged into and not finished yet, or a Health workout is under way.
     var canFinish: Bool {
-        health.isActive || today.session.map { $0.endedAt == nil && $0.logs.contains { !$0.sets.isEmpty } } == true
+        health.isActive || today.session.map { $0.endedAt == nil && $0.logs.contains { !$0.orderedCountedSets.isEmpty } } == true
     }
 
     /// There's something today to throw away: anything logged, or a Health workout under way.
@@ -360,10 +377,35 @@ final class WorkoutModel {
             try? today.recorder.finish(session)
             onSessionFinished?(session)
         }
-        let sets = today.session?.logs.reduce(0) { $0 + $1.sets.count } ?? 0
-        summary = Summary(title: today.day.headline, savedToHealth: workoutId != nil, duration: duration,
-                          averageHeartRate: average, energy: energy, sets: sets)
+        finishedSession = today.session
+        finishedWorkoutId = workoutId
+        let sets = today.session?.countedSetCount ?? 0
+        pendingSummary = Summary(title: today.day.headline, savedToHealth: workoutId != nil, duration: duration,
+                                 averageHeartRate: average, energy: energy, sets: sets)
         today.refresh()
+        effortPrompt = EffortPrompt(initial: today.lastEffort() ?? 5)
+    }
+
+    /// Save on the Effort sheet: kept with the session (and sent to the phone again), and given to Health as the
+    /// workout's effort rating when the workout was saved there.
+    func saveEffort(_ effort: Int) {
+        pendingSummary?.effort = effort
+        if let session = finishedSession {
+            try? today.recorder.setEffort(effort, on: session)
+            onSessionFinished?(session)
+        }
+        if let id = finishedWorkoutId {
+            Task { await health.saveEffort(effort, workoutId: id) }
+        }
+    }
+
+    /// The Effort sheet is gone, saved or closed: on to the summary.
+    func effortClosed() {
+        effortPrompt = nil
+        summary = pendingSummary
+        pendingSummary = nil
+        finishedSession = nil
+        finishedWorkoutId = nil
     }
 
     /// Throws today's workout away: everything logged today is deleted, here and on the phone, a Health workout
@@ -385,7 +427,7 @@ final class WorkoutModel {
             }
         }
         autoStartFailed = false
-        today.refresh()
+        today.clearWaiting()
     }
 
     // MARK: Health workout

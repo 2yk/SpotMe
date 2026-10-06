@@ -62,48 +62,61 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 ## Watch app
 
+The look: one accent. Volt is what to tap and the value the Crown moves; ice means waiting (rest, break, ramp-up, an exercise put off), mint done, ember lighter than planned, red heart rate and Stop/End/Discard, amber paused. SF Rounded with tabular digits, designed for the 46 mm watch (208 × 248 pt); the 42 mm scales every size by 0.9 with one factor (`Metrics.scale`). The system's bar stays (back button, clock); the bar holds a short coloured title and nothing else, and the exercise's name is in the content. Tokens and sizes: `design/handoff/watch-1/BUILD.md`, section 3.
+
 **Today**
-- Opens on today's weekday. Crown scrolls. A small toggle reaches other days.
-- Top: one big button, **Start workout**, or **Continue** with what's next once the day has started (with the running Health workout's heart rate and time above it). Nothing else is highlighted.
-- Below: the open items in plan order, each with its prescription and target ("4 × 6–10 · 22.5 kg"). Finished items move to the bottom, dimmed with a checkmark (same behaviour as his web tracker).
-- Tapping any open item does it now (for when a machine is busy); the workout then carries on from there. Swipe actions: Skip, and Done for checklist items.
+- Opens on today's weekday. Crown scrolls. The day's name opens the list of days.
+- Top: the day, its name and what it trains, then one big button, **Start workout**, or **Continue** with what's really next once the day has started (with the running Health workout's heart rate and time above it). A rest day (Saturday) has no button. Nothing else is highlighted.
+- Below: the open items in plan order, each with its prescription on the left and today's target weight on the right ("4 × 6–10", "22.5 kg"). An up arrow in volt before the weight when today's target is above the last working weight, a down arrow in ember when it is lower or a deload; both come from the engine's own reason for the target. Finished items move to the bottom, dimmed with a check.
+- Tapping any open item does it now (for when a machine is busy); the workout then carries on from there. Swipe actions: **Skip today** (drops the item for the day; its row then says "Skipped · tap to do it", and a tap reopens it and starts it), and Done for checklist items.
+- An item put off with Skip on the controls keeps its place and says "1 of 3 sets · waiting" (or "3 × 8–10 · waiting") in ice; tapping it does it now.
 - At the end: **Finish workout** and **Discard workout**.
-- Progress: "7 / 15" in the navigation bar.
+- Progress: "7/15" in the bar.
 
 **Workout flow**
 - Start workout (or Continue) opens the next open item in plan order; one already started comes first. The workout then moves through the day by itself.
-- After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target, and how the finished exercise went; when it runs out, the next item starts. +30 s, start now (the ▶ button or the ring itself), or tap the next item's name to pick another to do first (the break waits while the list is open).
-- Checklist items (warmup, neck, cooldown) show their steps with Done and Skip, then move on.
-- When everything is done: "All done" with Finish workout, which finishes straight away. Back always returns to Today.
-- Pages, as in Apple's Workout app: swipe right for the **controls**, left for **Now Playing** (the system player: play, pause, skip, volume on the Crown, for music on the watch or the iPhone).
-- Controls: **Pause/Resume**, **End** (Finish / Discard workout / Keep going), **Skip** and **List** (back to Today). Under them: "Skip to …", where Skip leads.
+- After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target, and how the finished exercise went; when it runs out, the next item starts. +30 s, start now (the ▶ button or the countdown itself), or tap the next item's name to pick another to do first (the break waits while the list is open). The timer runs round the edge of the screen. Undo, for the last logged set, is here and on the rest screen, between the round buttons.
+- Checklist items (warmup, neck, cooldown) show their steps with Done and Skip (Skip drops it for the day), then move on.
+- When everything is done and nothing waits: "All done" with Finish workout, which goes on to the effort question. Back always returns to Today.
+- Pages, as in Apple's Workout app: swipe right for the **controls**, left for **Now Playing** (the system player: play, pause, skip, volume on the Crown, for music on the watch or the iPhone). Three dots show the page.
+- Controls: **Pause/Resume**, **End**, **Skip** and **List** (back to Today), four buttons of fixed size (so nothing resizes when the page first appears). Under them: "Skip to …" and, when the exercise on screen stays open, "This one stays open".
   - Pause stops the Health workout's time and heart rate, the rest and the break; they carry on from where they stopped. Logging a set or starting a hold resumes. Today shows the workout as paused, and so does a paused Health workout picked up after a relaunch.
-  - Skip moves on now: the exercise on screen keeps what's logged (it's skipped if nothing is), a checklist item is skipped, and a break ends early.
+  - **Skip means later.** It puts the exercise on screen off (or a tick-off item): it stays open with its logged sets, and the workout moves to the next open item. Waiting exercises come back by themselves after the last other open item that is not a tick-off item, so before the cooldown, in the order they were put off; the break before one says "Skipped earlier" and "Set 2 of 3 · 17.5 kg". During a rest between sets Skip puts the exercise off too (the rest is dropped; coming back opens the next set). From a break it starts the next item now. When the exercise on screen is the only open item, Skip is disabled. Waiting is kept for the day: it survives leaving the workout and a relaunch, and Discard workout clears it.
+- **End** opens one screen: Finish, Discard workout (which asks once more) and Keep going.
 
 **Set screen (weighted / reps)**
-- Header: "Set 2 of 4" and the rep range.
-- Two rows: **weight** and **reps**, prefilled with the target. Tap a value to focus it; the Digital Crown then moves it one step per click (the exercise increment, or 1 rep), with a haptic, counting from the value shown (never an in-between or re-rounded value). No − or + buttons.
-- Large **Log set** button. Undo for the last logged set.
+- Bar: "Set 2 of 4" (volt; "Max reps"; "Paused" in amber). In the content: the exercise's name (two lines at most), the rep range on the left ("6–10 reps", "10/side"), and on the right what to beat: "Last 9", the reps of the same set in the last counted session, or "First time" in volt with no history. Deload week and volume sets show nothing on the right.
+- Two tiles side by side, **weight** and **reps**, prefilled with the target (one tile for reps only). Tap a tile to focus it (volt outline, volt unit); the Digital Crown then moves it one step per click (the exercise increment, or 1 rep), with a haptic, counting from the value shown (never an in-between or re-rounded value). No − or + buttons.
+- Large **Log set** button.
 - After logging: engine `nextSet` → rest screen.
+- In a superset a line under the hint says "Superset · then <the other exercise>".
+
+**Ramp-up screen** (before the first working set; see Progression rules)
+- Opening an exercise that has ramp-ups, with no working set logged today and its ramp-ups neither done nor skipped today, shows **Ramp-up** first: the name, "1 of 2 · not counted", one tile that is not editable ("10 kg × 8", with "WORKING WEIGHT 22.5 KG" under it; bodyweight reads "BW × 5" and "WORKING WEIGHT +15 KG"), and Done. Skip drops all ramp-ups left for the exercise today and opens set 1 with no rest.
+- Done saves the set marked ramp-up (weight and reps as shown) and starts a 60 s rest (the usual rest screen, +30 and skip, no Undo). Between ramp-ups the rest says "NEXT · RAMP-UP 2 OF 2", the weight and "4 reps · not counted"; after the last it says "NEXT · SET 1 OF 4", the working weight and "Last time 10 reps". A superset pair does its ramp-ups back to back, then one rest.
 
 **Rest screen**
-- Countdown from `restSec` (supersets: rest only after the second exercise). The ring and the time are drawn from one clock, so they always agree: 15 times a second on screen, every second in Always On.
-- Shows the next set's target and the one-line reason.
-- Haptics at 10 s left and at 0. Buttons: +30 s, Skip.
-- The heart rate from the running workout session is shown small at the top.
+- Countdown from `restSec` (supersets: rest only after the second exercise). The timer line round the edge of the screen and the time in the middle are drawn from one clock, so they always agree: 15 times a second on screen, every second in Always On (dimmed).
+- Shows the next set's target (an arrow when the weight changed: ember down, volt up) and the one-line reason, the part of the engine's line before " · " ("5 reps, below 6"). Reps and timed exercises, which never change weight, say "In range", "Top of range" or "Below range".
+- Haptics at 10 s left and at 0. Round buttons: +30 s in one corner, skip in the other; Undo between them.
+- The heart rate from the running workout session is shown under the time.
 
-**Timed sets:** Start → counts up with a haptic at `secMin` and `secMax` → Stop logs seconds.
+**Timed sets:** the ready screen has the weight (when the exercise takes one) and Start; Start counts up round the edge of the screen in volt with the target zone marked (the bottom of the range up to the top), with a haptic at `secMin` and `secMax`; the line turns mint at the top. Stop logs seconds.
 
-**Checklist items:** Done or Skip in the workout; one swipe to done in the list. Warmups show their steps as a scrollable list.
+**Checklist items:** Done or Skip in the workout; one swipe to done in the list. Warmups show their steps as a scrollable list; Done and Skip are at its end.
 
 **Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Next time 20 kg · aim for more reps") on the break screen before the next item.
+
+**Effort and summary**
+- After any Finish (End, Today, All done) the **Effort** sheet asks "How hard was it?" on Apple's 1 to 10 scale, moved with the Crown (a haptic click per step), starting at the last rated workout's value or 5: 1–3 Easy (mint), 4–6 Moderate (volt), 7–8 Hard (ember), 9–10 All Out (red). **Save** keeps it with the session (sent to the phone again) and, when the workout was saved to Health, writes it as the workout's effort rating (`workoutEffortScore`, related to the workout), so Fitness shows it and Training Load uses it; the watch asks for that permission once more. Closing the sheet saves the workout without an effort. With "Save workouts to Health" off the question is still asked and the answer stays in SpotMe. Discard never asks.
+- Then the summary: time, sets (ramp-ups not counted), average heart rate, and the effort ("7", "EFFORT · HARD") or, without one, kcal.
 
 **Workout session (HealthKit)**
 - Starts an `HKWorkoutSession` (`.traditionalStrengthTraining`, indoor) with Start workout, or when an exercise is opened, while today's session isn't finished. It keeps the app running with the wrist down, so rests and breaks end on time with their haptics.
 - "Save workouts to Health" (iPhone Settings) decides what happens to it: on, Finish asks whether to save it; off, it's always thrown away and nothing reaches Health (for a session logged after the fact). With the switch off the watch never asks for Health access; the workout runs only if access was already given.
 - Health access belongs to the watch app: watchOS asks on the watch the first time, and it's changed later in the iPhone's Health app (profile picture → Apps → SpotMe). If saving workouts isn't allowed, Start workout says so and where to fix it; starting by itself stays quiet. The watch reports its access to the phone, whose Settings show it.
 - Keeps the app frontmost during the session, collects heart rate and energy, and saves the workout to Health when ended.
-- End from the controls or Today ("Finish workout"), or Finish when every item is done. Finishing saves the workout to Health without asking when saving is on. End also offers Discard workout.
+- End from the controls or Today ("Finish workout"), or Finish when every item is done. Finishing saves the workout to Health without asking when saving is on, then asks for the effort. End also offers Discard workout.
 - **Discard workout** deletes everything logged today, on the watch and the phone, and doesn't save the Health workout.
 - Must survive the wrist dropping and the screen sleeping (Always On shows the rest timer).
 

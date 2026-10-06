@@ -11,7 +11,7 @@ enum ScreenScript {
         guard let screen = LaunchOptions.screen else { return }
         if ["workout", "rest", "alldone", "finish-dialog", "next", "next-picker", "controls", "paused", "media",
             "paused-rest", "skipped", "running", "running-paused", "running-end", "paused-set", "break-checklist",
-            "break-pick"].contains(screen) || UserDefaults.standard.bool(forKey: "running") {
+            "break-pick", "running-waiting", "break-back", "effort", "superset", "superset-next", "superset-rest"].contains(screen) || UserDefaults.standard.bool(forKey: "running") {
             workout.health.pretendRunning(heartRate: 128, minutes: 24)
         }
         func show(_ items: [PlanItem]) {
@@ -35,14 +35,41 @@ enum ScreenScript {
                 flow.reps = Double(flow.currentTarget.repMax ?? 10)
                 flow.logSet()
             }
+        case "running-waiting":
+            // Shoulder press has one set logged and is put off: Today shows it waiting, Continue names the next.
+            complete(today, first: 3)
+            if let item = today.day.items.first(where: { $0.exerciseId == "seated-db-shoulder-press" }) {
+                show([item])
+                workout.flow?.logSet()
+                workout.skip()
+            }
+            path.wrappedValue = []
+        case "break-back":
+            // The shoulder press is put off after one set; the last exercise is done, and the break leads back.
+            guard let last = today.day.items.last(where: { $0.kind != .checklist }),
+                  let item = today.day.items.first(where: { $0.exerciseId == "seated-db-shoulder-press" })
+            else { return }
+            complete(today, except: [item.exerciseId, last.exerciseId])
+            show([item])
+            workout.flow?.logSet()
+            workout.skip()
+            while let flow = workout.flow, flow.current != nil {
+                flow.reps = Double(flow.currentTarget.repMax ?? 10)
+                flow.logSet()
+            }
         case "list":
             break
         case "alldone":
             completeEverything(today)
         case "alldone-screen":
-            completeEverything(today)
-            workout.advance()
-            path.wrappedValue = [.workout]
+            // The last exercise is done by hand, so its break (here: the end of the day) shows how it went.
+            guard let last = today.day.items.last(where: { $0.kind != .checklist }) else { return }
+            complete(today, except: [last.exerciseId])
+            show([last])
+            while let flow = workout.flow, flow.current != nil {
+                flow.reps = Double(flow.currentTarget.repMax ?? 10)
+                flow.logSet()
+            }
         case "finish-dialog":
             confirmingFinish.wrappedValue = true
         case "discard":
@@ -65,6 +92,12 @@ enum ScreenScript {
             guard let item = today.day.items.first(where: { $0.kind == .weighted && today.log(for: $0) == nil })
             else { return }
             show([item])
+        case "effort":
+            workout.effortPrompt = WorkoutModel.EffortPrompt(initial: 7)
+        case "summary-effort":
+            workout.summary = WorkoutModel.Summary(title: today.day.headline, savedToHealth: true,
+                                                   duration: 62 * 60 + 14, averageHeartRate: 124, energy: 342,
+                                                   sets: 27, effort: 7)
         case "summary":
             workout.summary = WorkoutModel.Summary(title: today.day.headline, savedToHealth: true,
                                                    duration: 62 * 60 + 14,
@@ -102,6 +135,12 @@ enum ScreenScript {
             // `-item hanging-leg-raise`: that item's set screen; `-log 1 -reps 17`: after that many sets.
             let id = UserDefaults.standard.string(forKey: "item")
             if let item = today.day.items.first(where: { $0.exerciseId == id }) { show([item]) }
+            // `-ramps 2`: after that many ramp-up sets.
+            let ramps = UserDefaults.standard.string(forKey: "ramps").flatMap(Int.init) ?? 0
+            for index in 0..<ramps {
+                workout.flow?.doneRampUp()
+                if index < ramps - 1 { workout.flow?.endRest() }
+            }
             let logged = UserDefaults.standard.string(forKey: "log").flatMap(Int.init) ?? 0
             for _ in 0..<logged {
                 if let reps = UserDefaults.standard.string(forKey: "reps").flatMap(Double.init) {

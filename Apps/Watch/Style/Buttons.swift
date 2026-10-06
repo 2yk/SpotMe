@@ -54,6 +54,14 @@ struct TextButtonStyle: ButtonStyle {
     }
 }
 
+/// A tappable row or card: the label as it is, a little dimmer while pressed, with no padding of its own.
+struct RowButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .opacity(configuration.isPressed ? 0.7 : 1)
+    }
+}
+
 /// The 38 pt round button in the corners of the rest and break screens.
 struct RoundButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {

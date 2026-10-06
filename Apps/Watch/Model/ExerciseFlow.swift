@@ -11,6 +11,21 @@ final class ExerciseFlow {
         case finished([Summary])
     }
 
+    /// One lighter set before the first working set: tapped off, never counted.
+    struct RampStep: Equatable {
+        /// Index into `items`.
+        var item: Int
+        var weight: Double
+        var reps: Int
+        /// 1-based within its exercise, and how many that exercise has.
+        var number: Int
+        var of: Int
+        /// The last of a round: a 60 s rest follows (a superset pair goes back to back first).
+        var endsRound: Bool
+        /// Bodyweight plus the working weight (weighted pull-ups): the first ramp-up is bodyweight alone.
+        var bodyweight: Bool
+    }
+
     struct Summary: Equatable, Identifiable {
         var id: String
         var name: String
@@ -37,6 +52,9 @@ final class ExerciseFlow {
     private let past: [[[LoggedSet]]]
     /// The engine's verdict on each item's last set, shown while resting.
     private var coaching: [Coach.Line?]
+    /// The ramp-up sets still to do before the first working set, in the order they come.
+    private(set) var rampSteps: [RampStep] = []
+    private(set) var rampIndex = 0
     private var undoStack: [Snapshot] = []
     @ObservationIgnored private let restAlarm = CountdownAlarm()
     @ObservationIgnored private var holdMarks: [Task<Void, Never>] = []
@@ -66,7 +84,10 @@ final class ExerciseFlow {
         lastLoggedWeight = items.map { _ in nil }
         past = items.map { today.pastSessions(of: $0.exerciseId) }
         coaching = items.map { _ in nil }
+        offsets = items.map { _ in 0 }
+        totals = items.map { _ in 0 }
         resume()
+        planRampUps()
     }
 
     // MARK: State
@@ -104,6 +125,14 @@ final class ExerciseFlow {
     }
 
     var nextSet: NextSet {
+        // Resting between ramp-ups: the next one, or set 1 after the last.
+        if let ramp = currentRampStepAfterRest {
+            let item = items[ramp.item]
+            let value = ramp.bodyweight ? "Bodyweight" : Format.kg(ramp.weight)
+            _ = item
+            return NextSet(eyebrow: "Next · ramp-up \(ramp.number) of \(ramp.of)", value: value, change: nil,
+                           reason: "\(ramp.reps) reps · not counted")
+        }
         guard let step = current else { return NextSet(eyebrow: "", value: "", change: nil, reason: nil) }
         let item = items[step.item]
         let eyebrow = isSuperset ? "Next · \(item.name)" : "Next · set \(step.set) of \(targets[step.item].sets)"
@@ -117,8 +146,19 @@ final class ExerciseFlow {
             value = Format.perSet(item, targets[step.item]).map { item.kind == .timed || item.perSide == true ? $0 : "\($0) reps" }
                 ?? ""
         }
-        return NextSet(eyebrow: eyebrow, value: value, change: change,
-                       reason: coaching[step.item].map { $0.text.components(separatedBy: " · ")[0] })
+        var reason = coaching[step.item].map { $0.text.components(separatedBy: " · ")[0] }
+        // After the last ramp-up: how the same set went last time.
+        if rampSteps.count > 0, rampIndex >= rampSteps.count, lastLoggedWeight[step.item] == nil,
+           let last = lastTimeReps(of: step.item, set: step.set) {
+            reason = "Last time \(last) reps"
+        }
+        return NextSet(eyebrow: eyebrow, value: value, change: change, reason: reason)
+    }
+
+    /// While resting after a ramp-up and another one is still to come.
+    private var currentRampStepAfterRest: RampStep? {
+        guard case .rest = phase, rampIndex < rampSteps.count else { return nil }
+        return rampSteps[rampIndex]
     }
 
     /// The engine's verdict on the last set of the item coming up next.
@@ -142,6 +182,88 @@ final class ExerciseFlow {
         guard let last = past[item].first, set >= 1, set <= last.count else { return nil }
         return last[set - 1].reps
     }
+
+    // MARK: Ramp-ups
+
+    /// The ramp-up on screen: the first working set isn't open yet.
+    var currentRamp: RampStep? {
+        guard case .set = phase, rampIndex < rampSteps.count else { return nil }
+        return rampSteps[rampIndex]
+    }
+
+    /// The working weight a ramp-up leads to, as the ramp-up screen shows it: "22.5 kg", or "+15 kg" for
+    /// weighted pull-ups.
+    func workingWeightLabel(forItem index: Int) -> String {
+        let weight = targets[index].weight ?? 0
+        return items[index].bodyweightBase == true ? "+\(Format.kg(weight))" : Format.kg(weight)
+    }
+
+    /// Done on the ramp-up screen: saved as a set marked ramp-up, never counted. Between a superset pair the
+    /// next one follows at once; otherwise a 60 s rest.
+    func doneRampUp() {
+        guard let step = currentRamp else { return }
+        let item = items[step.item]
+        do {
+            let log = try today.recorder.log(for: item.exerciseId, in: try today.startSession())
+            try today.recorder.addSet(to: log, weight: step.weight, reps: step.reps, isRampUp: true)
+        } catch {
+            Logger.store.error("Couldn't log a ramp-up: \(error.localizedDescription)")
+            return
+        }
+        Haptics.play(.logged)
+        onActivity()
+        rampIndex += 1
+        prefill()
+        if step.endsRound {
+            startRest(seconds: ProgressionEngine.restAfterRampUpSec)
+        }
+        today.refresh()
+    }
+
+    /// Skip on the ramp-up screen: no more ramp-ups for this exercise today; set 1 opens at once.
+    func skipRampUps() {
+        today.skipRampUps(items)
+        rampSteps = []
+        rampIndex = 0
+    }
+
+    /// Works out the ramp-ups: for weighted exercises with a working weight, no working set logged today and
+    /// the ramp-ups not skipped, from the first one not yet done.
+    private func planRampUps() {
+        guard today.settings.rampUps != .off else { return }
+        var perItem: [[(weight: Double, reps: Int)]] = items.map { _ in [] }
+        for (index, item) in items.enumerated() where item.kind == .weighted {
+            let log = today.log(for: item)
+            guard log?.orderedCountedSets.isEmpty ?? true, !today.rampUpsSkipped(item),
+                  let dayIndex = today.day.items.firstIndex(where: { $0.exerciseId == item.exerciseId })
+            else { continue }
+            let done = log?.orderedSets.filter(\.isRampUp).count ?? 0
+            let all = ProgressionEngine.rampUps(
+                working: targets[index].weight, increment: item.increment ?? 2.5,
+                repMax: targets[index].repMax ?? 10,
+                role: ProgressionEngine.rampUpRole(dayItems: today.day.items, index: dayIndex),
+                setting: today.settings.rampUps, bodyweightBase: item.bodyweightBase == true)
+            perItem[index] = Array(all.dropFirst(done))
+            // Numbers count from the first ramp-up of the exercise, done or not.
+            offsets[index] = done
+            totals[index] = all.count
+        }
+        var steps: [RampStep] = []
+        for round in 0..<(perItem.map(\.count).max() ?? 0) {
+            let present = perItem.indices.filter { round < perItem[$0].count }
+            for (position, index) in present.enumerated() {
+                let set = perItem[index][round]
+                steps.append(RampStep(item: index, weight: set.weight, reps: set.reps,
+                                      number: offsets[index] + round + 1, of: totals[index],
+                                      endsRound: position == present.count - 1,
+                                      bodyweight: items[index].bodyweightBase == true && set.weight == 0))
+            }
+        }
+        rampSteps = steps
+        rampIndex = 0
+    }
+    @ObservationIgnored private var offsets: [Int] = []
+    @ObservationIgnored private var totals: [Int] = []
 
     // MARK: Actions
 
@@ -265,7 +387,7 @@ final class ExerciseFlow {
 
     /// Picks up where today's log left off, e.g. after going back to Today mid-exercise.
     private func resume() {
-        let logged = items.map { today.log(for: $0)?.orderedSets.map(\.loggedSet) ?? [] }
+        let logged = items.map { today.log(for: $0)?.countedLoggedSets ?? [] }
         stepIndex = steps.firstIndex { $0.set > logged[$0.item].count } ?? steps.count
         for (index, sets) in logged.enumerated() {
             guard let last = sets.last else { continue }
@@ -295,7 +417,7 @@ final class ExerciseFlow {
         let item = items[step.item]
         let target = targets[step.item]
         weight = workingWeight[step.item]
-        let previous = today.log(for: item)?.orderedSets.last?.reps
+        let previous = today.log(for: item)?.orderedCountedSets.last?.reps
         let sameSetLastTime = lastTimeValue
         switch item.kind {
         case .percentOfMax:
@@ -359,7 +481,7 @@ final class ExerciseFlow {
         for (index, item) in items.enumerated() {
             guard let log = try? today.recorder.log(for: item.exerciseId, in: session) else { continue }
             if log.completedAt == nil { try? today.recorder.complete(log) }
-            let sets = log.orderedSets.map(\.loggedSet)
+            let sets = log.countedLoggedSets
             summaries.append(Summary(id: item.exerciseId, name: item.name,
                                      line: summary(item, target: targets[index], sets: sets, deload: session.isDeload)))
         }

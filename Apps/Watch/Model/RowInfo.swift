@@ -26,16 +26,21 @@ extension TodayModel {
         let weight = item.takesWeight ? target.weight.flatMap { $0 > 0 ? Format.kg($0) : nil } : nil
         switch status {
         case .skipped:
-            return RowInfo(detail: "Skipped", detailColor: Theme.text3, weight: nil, arrow: nil,
+            return RowInfo(detail: "Skipped · tap to do it", detailColor: Theme.text3, weight: nil, arrow: nil,
                            isFinished: true, isSkipped: true)
         case .done:
-            let sets = log(for: item)?.orderedSets ?? []
+            let sets = log(for: item)?.orderedCountedSets ?? []
             let top = sets.map(\.weight).max() ?? 0
+            let count = "\(sets.count) set\(sets.count == 1 ? "" : "s")"
             let detail = sets.isEmpty ? "Done"
-                : item.takesWeight && top > 0 ? "\(sets.count) sets · \(Format.kg(top))" : "\(sets.count) sets"
+                : item.takesWeight && top > 0 ? "\(count) · \(Format.kg(top))" : count
             return RowInfo(detail: detail, detailColor: Theme.text3, weight: nil, arrow: nil,
                            isFinished: true, isSkipped: false)
         case .inProgress(let done):
+            if isWaiting(item) {
+                return RowInfo(detail: "\(done) of \(target.sets) sets · waiting", detailColor: Theme.ice,
+                               weight: weight, arrow: arrow(target), isFinished: false, isSkipped: false)
+            }
             return RowInfo(detail: "Set \(done + 1) of \(target.sets) · in progress", detailColor: Theme.volt,
                            weight: weight, arrow: arrow(target), isFinished: false, isSkipped: false)
         case .pending:
@@ -45,8 +50,30 @@ extension TodayModel {
                 info.detail = note
                 info.detailLines = 4
             }
+            if isWaiting(item) {
+                info.detail += " · waiting"
+                info.detailColor = Theme.ice
+            }
             return info
         }
+    }
+
+    /// Where a waiting exercise picks up: "Set 2 of 3 · 17.5 kg", the weight the engine's next set asks for.
+    func resumeLine(for item: PlanItem) -> String {
+        let target = target(for: item)
+        let sets = log(for: item)?.orderedCountedSets.map(\.loggedSet) ?? []
+        var parts = ["Set \(sets.count + 1) of \(target.sets)"]
+        if item.takesWeight {
+            var weight = target.weight
+            if item.kind == .weighted, let last = sets.last, let p = Prescription(item: item) {
+                weight = ProgressionEngine.nextSet(for: p, weight: last.weight, reps: last.reps, setIndex: sets.count,
+                                                   totalSets: target.sets).weight
+            } else if let last = sets.last {
+                weight = last.weight
+            }
+            if let weight, weight > 0 { parts.append(Format.kg(weight)) }
+        }
+        return parts.joined(separator: " · ")
     }
 
     private func arrow(_ target: ItemTarget) -> RowInfo.Arrow? {
@@ -76,5 +103,12 @@ struct RowWeight: View {
             .lineLimit(1)
             .fixedSize()
         }
+    }
+}
+
+extension ItemStatus {
+    /// Dropped for the day, as against done.
+    var isSkipped: Bool {
+        if case .skipped = self { true } else { false }
     }
 }

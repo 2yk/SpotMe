@@ -46,26 +46,27 @@ struct ChecklistView: View {
                     Spacer(minLength: pt(8))
                     Button("Done") { workout.finishChecklist(item) }
                         .buttonStyle(PrimaryButtonStyle())
-                        .id("done")
                     Button("Skip") { workout.finishChecklist(item, skipped: true) }
                         .buttonStyle(TextButtonStyle())
                         .padding(.top, pt(2))
+                        .padding(.bottom, Metrics.bottom - pt(2))
+                        .id("skip")
                 }
                 .padding(.horizontal, Metrics.side)
                 .padding(.top, Metrics.top)
-                .padding(.bottom, Metrics.bottom - pt(2))
                 .frame(minHeight: geometry.size.height)
             }
             #if DEBUG
             .task {
                 guard LaunchOptions.screen == "checklist-end" else { return }
                 try? await Task.sleep(for: .seconds(0.8))
-                proxy.scrollTo("done", anchor: .bottom)
+                proxy.scrollTo("skip", anchor: .bottom)
             }
             #endif
             }
         }
         .ignoresSafeArea()
-        .barTitle(item.group)
+        .topFade()
+        .barTitle(item.group.components(separatedBy: " · ")[0])
     }
 }

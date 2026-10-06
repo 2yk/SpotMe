@@ -48,6 +48,9 @@ struct TodayView: View {
             .sheet(isPresented: $choosingDay) {
                 DayPickerView()
             }
+            .sheet(item: $workout.effortPrompt, onDismiss: { workout.effortClosed() }) { prompt in
+                EffortView(initial: prompt.initial)
+            }
             .sheet(item: $workout.summary) { summary in
                 WorkoutSummaryView(summary: summary)
             }
@@ -66,8 +69,13 @@ struct TodayView: View {
 
     private var list: some View {
         List {
-            if !today.queue.isComplete {
-                Group {
+            // The day, the live strip and the one big button are one block, 6 pt between them.
+            VStack(spacing: pt(6)) {
+                if today.queue.isComplete {
+                    AllDoneCard(count: today.queue.totalCount, day: today.day.headline,
+                                minutes: today.session.map { Int(Date.now.timeIntervalSince($0.date) / 60) },
+                                onFinish: workout.canFinish ? { Task { await workout.finishWorkout() } } : nil)
+                } else {
                     if workout.health.isActive {
                         RunningHeader(day: today.day, isDeload: today.isDeload, paused: workout.isPaused) {
                             choosingDay = true
@@ -75,26 +83,16 @@ struct TodayView: View {
                     } else {
                         DayHeader(day: today.day, isDeload: today.isDeload) { choosingDay = true }
                     }
-                }
-                .listRowBackground(Color.clear)
-                .listRowInsets(rowInsets(top: Metrics.top, bottom: pt(4)))
-            }
-
-            Group {
-                if today.queue.isComplete {
-                    AllDoneCard(count: today.queue.totalCount, day: today.day.headline,
-                                minutes: today.session.map { Int(Date.now.timeIntervalSince($0.date) / 60) },
-                                onFinish: workout.canFinish ? { Task { await workout.finishWorkout() } } : nil)
-                } else if today.day.items.contains(where: { $0.kind != .checklist }) || !today.queue.upNext.isEmpty,
-                          !isRestDay {
-                    StartButton(started: workout.hasStarted, paused: workout.isPaused, next: workout.currentName) {
-                        workout.startOrContinue()
-                        path = [.workout]
+                    if !isRestDay {
+                        StartButton(started: workout.hasStarted, paused: workout.isPaused, next: workout.currentName) {
+                            workout.startOrContinue()
+                            path = [.workout]
+                        }
                     }
                 }
             }
             .listRowBackground(Color.clear)
-            .listRowInsets(rowInsets(top: today.queue.isComplete ? Metrics.top : pt(4), bottom: pt(4)))
+            .listRowInsets(rowInsets(top: Metrics.rootTop, bottom: pt(4)))
 
             ForEach(openItems) { item in
                 Button {
@@ -103,7 +101,7 @@ struct TodayView: View {
                 } label: {
                     ItemRow(item: item)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(RowButtonStyle())
                 .listRowBackground(Color.clear)
                 .listRowInsets(rowInsets())
                 .swipeActions(edge: .trailing) {
@@ -114,7 +112,7 @@ struct TodayView: View {
                         .tint(Theme.mint)
                     }
                     Button { withAnimation { workout.skip(item) } } label: {
-                        Label("Skip", systemImage: "forward.fill")
+                        Label("Skip today", systemImage: "forward.fill")
                     }
                     .tint(Theme.ember)
                 }
@@ -128,7 +126,16 @@ struct TodayView: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(rowInsets())
                 ForEach(today.queue.finished) { item in
-                    ItemRow(item: item)
+                    // A row skipped for the day says "tap to do it": a tap opens it again and starts it.
+                    Button {
+                        guard today.status(of: item).isSkipped else { return }
+                        workout.reopen(item)
+                        workout.open(item)
+                        path = [.workout]
+                    } label: {
+                        ItemRow(item: item)
+                    }
+                    .buttonStyle(RowButtonStyle())
                         .listRowBackground(Color.clear)
                         .listRowInsets(rowInsets())
                         .swipeActions(edge: .trailing) {
@@ -158,16 +165,18 @@ struct TodayView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .listRowBackground(Color.clear)
-                .listRowInsets(rowInsets(top: pt(10), bottom: Metrics.bottom))
+                .listRowInsets(rowInsets(top: pt(8), bottom: Metrics.bottom))
                 .id(Self.endOfList)
             }
         }
         .listStyle(.plain)
         // The design lays Today out from the whole screen; the list runs under the bar and off the bottom edge.
         .ignoresSafeArea()
+        .topFade()
     }
 
-    private func rowInsets(top: CGFloat = pt(2), bottom: CGFloat = pt(2)) -> EdgeInsets {
+    /// The list adds some room between rows of its own, so the insets are small: rows come out 4 pt apart.
+    private func rowInsets(top: CGFloat = 0, bottom: CGFloat = 0) -> EdgeInsets {
         EdgeInsets(top: top, leading: Metrics.side, bottom: bottom, trailing: Metrics.side)
     }
 
@@ -276,7 +285,7 @@ private struct RunningHeader: View {
     let action: () -> Void
 
     var body: some View {
-        VStack(spacing: pt(6)) {
+        VStack(spacing: pt(4)) {
             Button(action: action) {
                 HStack(spacing: pt(3)) {
                     Text("\(day.title) · \(day.headline)").role(.eyebrow, Theme.volt).lineLimit(1)
@@ -293,6 +302,8 @@ private struct RunningHeader: View {
                 }
                 .padding(.horizontal, pt(6))
                 .frame(maxWidth: .infinity, minHeight: pt(30), alignment: .leading)
+                .padding(.vertical, pt(-9))
+                .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             HStack(alignment: .firstTextBaseline, spacing: pt(3)) {

@@ -16,16 +16,12 @@ struct EndWorkoutSheet: View {
         Group {
             if discarding { discard } else { end }
         }
-        .padding(.horizontal, Metrics.side)
-        .padding(.top, discarding ? Metrics.top - pt(6) : Metrics.top - pt(2))
-        .padding(.bottom, Metrics.bottom)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .ignoresSafeArea()
+        .screenColumn(top: Metrics.sheetTop)
         .barTitle(discarding ? "Discard?" : "", .white, close: true)
     }
 
     private var end: some View {
-        VStack(spacing: pt(4)) {
+        VStack(spacing: pt(3)) {
             Text("End workout?")
                 .role(.title)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -34,11 +30,11 @@ struct EndWorkoutSheet: View {
                 dismiss()
                 Task { await workout.finishWorkout() }
             }
-            .buttonStyle(PrimaryButtonStyle(height: 38))
+            .buttonStyle(PrimaryButtonStyle(height: 36))
             Button("Discard workout") { withAnimation(.snappy) { discarding = true } }
-                .buttonStyle(NeutralButtonStyle(height: 34, label: Theme.red, font: .row.weight(.bold).size(14)))
+                .buttonStyle(NeutralButtonStyle(height: 32, label: Theme.red, font: .row.weight(.bold).size(14)))
             Button("Keep going") { dismiss() }
-                .buttonStyle(NeutralButtonStyle(height: 34, font: .row.weight(.bold).size(14)))
+                .buttonStyle(NeutralButtonStyle(height: 32, font: .row.weight(.bold).size(14)))
             Text(workout.savesToHealth
                  ? "Finish saves it to Health. Discard deletes today's sets, here and on your iPhone."
                  : "Discard deletes today's sets, here and on your iPhone.")
@@ -88,10 +84,11 @@ struct HealthAlertSheet: View {
                     .padding(.top, pt(7))
             }
             .padding(.horizontal, Metrics.side + pt(4))
-            .padding(.top, Metrics.top - pt(4))
+            .padding(.top, Metrics.sheetTop)
             .padding(.bottom, Metrics.bottom)
         }
         .ignoresSafeArea()
+        .topFade()
         .barTitle("", close: true)
     }
 }

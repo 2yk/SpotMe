@@ -15,10 +15,15 @@ struct NextUpView: View {
         let next = today.queue.upNext
         if let first = next.first {
             let info = today.rowInfo(for: first)
+            // Back to an exercise put off earlier: it says so, and picks up at its next set.
+            let skippedEarlier = today.isWaiting(first)
             ZStack(alignment: .top) {
                 if let rest = workout.breakTime { EdgeCountdown(countdown: rest) }
                 VStack(spacing: 0) {
-                    countdown
+                    countdown(role: skippedEarlier ? TextRole.breakTimer.size(40) : .breakTimer)
+                    if skippedEarlier {
+                        Text("Skipped earlier").role(.eyebrow, Theme.ice, single: true).padding(.top, pt(1))
+                    }
                     Button { choosing = true } label: {
                         // The chevron follows the last word, wherever the name breaks.
                         (Text(next.map(\.name).joined(separator: " + ")) + Text(" ")
@@ -35,7 +40,11 @@ struct NextUpView: View {
                     .padding(.top, pt(2))
                     .accessibilityLabel(next.map(\.name).joined(separator: " + "))
                     .accessibilityHint("Pick another exercise to do next")
-                    target(info)
+                    if skippedEarlier {
+                        resumeTarget(first)
+                    } else {
+                        target(info)
+                    }
                     if let summary = summaries.first {
                         // How the exercise just finished went, e.g. "✓ All sets 10 · next time 22.5 kg".
                         HStack(alignment: .firstTextBaseline, spacing: pt(4)) {
@@ -79,10 +88,10 @@ struct NextUpView: View {
 
     /// The time left; the big target for starting now, as well as the button at the bottom.
     @ViewBuilder
-    private var countdown: some View {
+    private func countdown(role: TextRole) -> some View {
         if let rest = workout.breakTime {
             Button { workout.advance() } label: {
-                CountdownDigits(countdown: rest, role: .breakTimer)
+                CountdownDigits(countdown: rest, role: role)
                     .frame(maxWidth: .infinity)
                     .contentShape(Rectangle())
             }
@@ -95,6 +104,21 @@ struct NextUpView: View {
                 .foregroundStyle(Theme.mint)
                 .frame(height: pt(48))
         }
+    }
+
+    /// "Set 2 of 3 · 17.5 kg": where a waiting exercise picks up.
+    private func resumeTarget(_ item: PlanItem) -> some View {
+        let parts = today.resumeLine(for: item).components(separatedBy: " · ")
+        return HStack(spacing: pt(4)) {
+            Text(parts[0]).foregroundStyle(Theme.text2)
+            if parts.count > 1 {
+                Text("·").foregroundStyle(Theme.text2)
+                Text(parts[1]).role(TextRole(size: 13, line: 15, weight: .bold))
+            }
+        }
+        .role(.detail.size(13).weight(.medium))
+        .lineLimit(1)
+        .padding(.top, pt(1))
     }
 
     /// "3 × 8–10 · ↑ 45 kg": the prescription, then today's weight with an arrow when it changed.
@@ -124,14 +148,15 @@ private struct NextPicker: View {
             VStack(spacing: pt(4)) {
                 ForEach(today.day.items.filter { !today.status(of: $0).isFinished && !upNext.contains($0.exerciseId) }) { item in
                     Button { onPick(item) } label: { ItemRow(item: item) }
-                        .buttonStyle(.plain)
+                        .buttonStyle(RowButtonStyle())
                 }
             }
             .padding(.horizontal, Metrics.side)
-            .padding(.top, Metrics.top)
+            .padding(.top, Metrics.sheetTop)
             .padding(.bottom, Metrics.bottom)
         }
         .ignoresSafeArea()
+        .topFade()
         .barTitle("Do next", close: true)
     }
 }

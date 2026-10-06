@@ -33,11 +33,12 @@ struct WorkoutControls: View {
             }
             if let next = workout.skipTarget {
                 VStack(spacing: 0) {
-                    Text("Skip to \(next)").role(.small, Theme.text2).lineLimit(1).minimumScaleFactor(0.8)
+                    Text("Skip to \(next)").role(.small, Theme.text2).lineLimit(1).truncationMode(.tail)
                     if workout.skipLeavesOpen {
                         Text("This one stays open").role(.small, Theme.text3).lineLimit(1)
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
             Spacer(minLength: 0)
         }

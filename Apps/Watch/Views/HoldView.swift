@@ -73,7 +73,7 @@ struct HoldView: View {
                 ZStack {
                     EdgeTrack(tint: Theme.volt)
                     if low > 0, low < high {
-                        EdgeArc(from: low / high, to: 1, tint: Theme.volt.opacity(0.38))
+                        EdgeArc(from: low / high, to: 1, tint: Theme.volt, opacity: 0.38)
                     }
                     EdgeArc(from: 0, to: min(elapsed / high, 1), tint: color)
                 }
@@ -95,10 +95,11 @@ struct HoldView: View {
                     Spacer(minLength: 0)
                     Button("Stop") { withAnimation(.snappy) { flow.stopHold() } }
                         .buttonStyle(PrimaryButtonStyle.destructive)
+                        .padding(.horizontal, pt(6))
                 }
                 .padding(.horizontal, Metrics.side)
-                .padding(.top, Metrics.top + pt(4))
-                .padding(.bottom, Metrics.bottom)
+                .padding(.top, Metrics.top + pt(14))
+                .padding(.bottom, pt(19))
                 .ignoresSafeArea()
             }
         }

@@ -24,16 +24,29 @@ private struct BarTitle: ViewModifier {
         if close {
             // A sheet shows one item in the bar's leading corner, and it is the system's own close button, so
             // the title is laid over the bar beside it.
+            NavigationStack {
+                content
+                    .navigationTitle("")
+                    .overlay(alignment: .topLeading) {
+                        titleText
+                            .padding(.leading, pt(51))
+                            .padding(.top, pt(27))
+                            .ignoresSafeArea()
+                            .allowsHitTesting(false)
+                    }
+                    .containerBackground(.black, for: .navigation)
+            }
+        } else if root {
+            // The first screen has no back button; the title goes on the clock's line, at the left.
             content
                 .navigationTitle("")
                 .overlay(alignment: .topLeading) {
                     titleText
-                        .padding(.leading, pt(51))
-                        .padding(.top, pt(27))
+                        .padding(.leading, pt(22))
+                        .padding(.top, pt(16))
                         .ignoresSafeArea()
                         .allowsHitTesting(false)
                 }
-                .containerBackground(.black, for: .navigation)
         } else {
             content
                 .navigationTitle("")
@@ -41,7 +54,7 @@ private struct BarTitle: ViewModifier {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         HStack(spacing: pt(6)) {
-                            if !root { button }
+                            button
                             titleText
                         }
                     }

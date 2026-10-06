@@ -18,7 +18,9 @@ struct ExerciseView: View {
     private var content: some View {
         switch flow.phase {
         case .set:
-            if flow.currentItem.kind == .timed {
+            if let ramp = flow.currentRamp {
+                RampUpView(flow: flow, step: ramp)
+            } else if flow.currentItem.kind == .timed {
                 HoldView(flow: flow)
             } else {
                 SetView(flow: flow)
@@ -35,6 +37,7 @@ struct ExerciseView: View {
         if workout.isPaused { return ("Paused", Theme.amber) }
         switch flow.phase {
         case .set:
+            if flow.currentRamp != nil { return ("Ramp-up", Theme.ice) }
             if flow.currentItem.kind == .amrap { return ("Max reps", Theme.volt) }
             return ("Set \(flow.current?.set ?? 1) of \(flow.currentTarget.sets)", Theme.volt)
         case .rest:
