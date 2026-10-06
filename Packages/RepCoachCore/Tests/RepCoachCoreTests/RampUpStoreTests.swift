@@ -101,6 +101,12 @@ final class RampUpStoreTests: StoreTestCase {
         XCTAssertEqual(try history.entries(for: "incline-db-press").first?.sets, sets([(17.5, 10), (17.5, 10)]))
     }
 
+    func testSetsPerWeekSkipRampUps() throws {
+        try loggedWithRampUps(on: sept(16), working: [(20, 12), (20, 11)])
+        try logSession("incline-db-press", on: sept(9), [(20, 12)])
+        XCTAssertEqual(try history.countedSetTimestamps().count, 3)
+    }
+
     func testSessionSetCountsSkipRampUps() throws {
         let (session, _) = try loggedWithRampUps(on: sept(16), working: [(20, 12), (20, 11)])
         let row = try recorder.log(for: "machine-chest-press-or-flat-bench", in: session)

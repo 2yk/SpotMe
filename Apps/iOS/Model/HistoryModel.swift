@@ -76,7 +76,7 @@ final class HistoryModel {
         self.exercises = exercises
         sessionCount = (try? context.fetchCount(FetchDescriptor<WorkoutSession>())) ?? 0
 
-        let timestamps = ((try? context.fetch(FetchDescriptor<SetLog>())) ?? []).map(\.timestamp)
+        let timestamps = (try? store.countedSetTimestamps()) ?? []
         let thisWeek = calendar.dateInterval(of: .weekOfYear, for: .now)?.start ?? .now
         weeks = (0..<8).reversed().compactMap { weeksBack in
             guard let start = calendar.date(byAdding: .weekOfYear, value: -weeksBack, to: thisWeek),

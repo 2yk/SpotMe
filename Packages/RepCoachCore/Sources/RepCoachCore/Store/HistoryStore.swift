@@ -47,6 +47,11 @@ public struct HistoryStore {
             .sorted { $0.date > $1.date }
     }
 
+    /// When every counted set was logged, for sets-per-week counts. Ramp-up sets are left out.
+    public func countedSetTimestamps() throws -> [Date] {
+        try context.fetch(FetchDescriptor<SetLog>(predicate: #Predicate { !$0.isRampUp })).map(\.timestamp)
+    }
+
     /// Every exerciseId with at least one counted set.
     public func loggedExerciseIds() throws -> Set<String> {
         Set(try context.fetch(FetchDescriptor<ExerciseLog>()).filter { !$0.countedSets.isEmpty }.map(\.exerciseId))
