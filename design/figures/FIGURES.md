@@ -174,3 +174,96 @@ has: straight from behind a bench, or a split stance seen head-on. Authoring a p
 three times as long as a flat one, more for machines and cables, whose frames and pulleys need depth that
 looks right from every side. Suggested order if all 247 are made: free-weight and bodyweight exercises with
 depth first, machines flat until a few have proven the prop set.
+
+## The 3D format, complete
+
+Settled 6 Oct 2026 for the Swift port (SwiftUI Canvas: per frame interpolate the pose, project with yaw,
+depth-sort the parts, draw). `figure3d.py` is the reference implementation and its docstring says the same
+as this section. Authoring helpers for builders: `authoring3d/rig.py` (documented at its top); every figure
+has its script in `authoring3d/<id>.py`, which writes `poses3d/<id>.json`.
+
+### The file
+
+`poses3d/<id>.json`: `id`, `view` (`side` or `front`), `floor` (y of the floor line, usually 182), `tempo`
+(seconds per rep), `hold` (true for holds), `yaw` (optional, default 0), `props`, `load`, `start`, `end`. `yaw` is the *opening
+view*: the angle in degrees (any number, taken mod 360) the figure is first shown at, for exercises whose
+movement is hidden from the side (Pallof press, reverse pec deck, Russian twist). It changes nothing about the
+axes or the crop: the app shows the figure at that yaw and the Crown turn starts from it. Axes: x right, y down, z toward
+the viewer in the usual view (yaw 0). Everything sits in a 200 × 200 box from the usual view.
+
+**Points.** Both poses give all seventeen as `[x, y, z]`: `head neck pelvis shoulderL shoulderR hipL hipR
+elbowL handL elbowR handR kneeL ankleL toeL kneeR ankleR toeR`. Side view: L is the near side (+z). Front
+view: L is the viewer's left. Bones have their true length in 3D (±12%): neck–pelvis 50, neck–head 17,
+shoulder–elbow 27, elbow–hand 25, hip–knee 38, knee–ankle 36, ankle–toe 13; neck–shoulder 15 and pelvis–hip 9
+(±1.5). A point that moves moves more than 1; a point that does not is identical in both poses.
+
+**Props** (grey `#8E8E93`, never move):
+
+| Prop | Fields | Drawn as |
+|---|---|---|
+| line | `line`: [[x,y,z], …], `w` (6) | A 3D polyline, round caps and joins |
+| slab | `slab`: [[x,y], …], `z`: [z0, z1], `w` (7) | Each segment of the x-y polyline swept from z0 to z1: a filled quad with a w-wide round outline. Edge-on at yaw 0 it is the 2D line |
+
+**Load** (volt `#CCFF3D`, moves with the body). `load` is one load object or a list of them; each is
+drawn by the rules below, independently (a cable fly is two `cable` loads with handle `grip`, at handL and at
+handR; a band plus a belt plate is a `band` and a `held`). Central pieces of all of them form the one `load`
+part. A *point spec* (`at`) is a body point name, `"hands"` (the
+mean of handL and handR) or a list of names (their mean). `offset` [x, y, z] (default 0) is added in world
+axes. *Across* is the body's right-to-left unit axis there: shoulderR→shoulderL if any named point is in the
+upper body (head, neck, shoulders, elbows, hands), else hipR→hipL. Defaults in brackets.
+
+| `type` | Fields | Drawn as |
+|---|---|---|
+| `none` | | Nothing |
+| `dumbbells` | `axis` ([1,0,0]) | Per hand a bar 18 long along axis, w 7, with caps 13 long across it, w 4.5 |
+| `bar` | `at` ("hands"), `offset`, `length` (80), `plate` (14; 0 = none) | A bar w 4 centred at mid-hands along handR→handL, or at the point + offset along *across*; a plate disc of radius `plate`, w 4.5, on the bar axis 6 in from each end. Barbell 80/14, EZ bar 56/8, pulldown or cable bar about 55/0; on the back `"at": "neck"`, on the hips `"at": "pelvis"` with an offset up |
+| `cable`, `band` | `anchor` [x,y,z] (required), `handle` ("grip", "bar", "rope"), `at` (grip only: one limb point, "handL") | A line w 2.5 from the anchor (band: dashed 5 on 4 off). grip: to the point, plus a grip 12 long, w 5, perpendicular to the cable and to *across*. bar: to mid-hands, plus a bar w 5 from handR to handL extended 5 each way. rope: to a knot 7 from mid-hands toward the anchor, plus tails knot→handL and knot→handR, w 4 |
+| `machine` | `grips` (["handL","handR"], limb points), `pivots` (none, or one [x,y,z] per grip), `axis` ([0,1,0]), `length` (14) | Per grip a grey lever w 4 from its pivot (drawn first) and a volt grip w 6, `length` long along `axis` |
+| `pad` | `at` (required: one limb point, or a list), `offset`, `pivot` (none), `length` (22), `w` (10) | A roller w thick, `length` long along *across*, centred at the point + offset; a grey lever w 4 from the pivot to the centre (drawn first) |
+| `platform` | `at` (["ankleL","ankleR"]), `offset`, `angle` (90; 0 right, 90 down), `length` (40), `width` (34) | A volt quad, fill at opacity 0.28, with a w 5 volt outline at full opacity: `length` along `angle` in the x-y plane, `width` along world z. Follows the point, never turns (leg press sled) |
+| `held` | `kind` ("plate", "kettlebell", "ball", "wheel"), `at` ("hands"), `offset`, `axis` (*across*) | plate: disc r 11, w 4. wheel: disc r 9, w 5. ball: circle r 9. kettlebell: a handle 8 long along axis, w 3, and a circle r 7 10 below it |
+
+### Primitives
+
+Everything is drawn from four: a **segment** or polyline (3D points, width, colour, round caps, optional
+dash), a **slab quad** (filled polygon with an outline), a **circle** that always faces the viewer (head
+r 11, balls), and a **disc** (centre, axis, radius) drawn as the closed outline of 16 projected rim points:
+e1 = axis × [0,1,0] normalised (axis × [1,0,0] if that is zero), e2 = axis × e1, rim i = centre + r cos(2πi/16) e1
++ r sin(2πi/16) e2. A disc turns from a ring into an ellipse into a line.
+
+### Drawing one frame
+
+1. Pose: `p = start + (end − start) · e(k)`, e(k) = (1 − cos πk) / 2; one rep runs k 0 → 1 → 0 in `tempo` s.
+2. Centre c: the middle of the x range and of the z range over all body points of both poses.
+3. Project every 3D point for `yaw` (orthographic, turning about the vertical line through c):
+   dx = x − cx, dz = z − cz; screen x = cx + dx cos yaw − dz sin yaw; screen y = y; depth (toward the viewer)
+   = dx sin yaw + dz cos yaw. Yaw 90 shows the side that faced +x.
+4. Parts, in this list order: each prop, armL, legL, armR, legR, torso, head, and `load` if present.
+   Depth: a limb is the mean of its chain (arm: shoulder, elbow, hand; leg: hip, knee, ankle, toe); torso the
+   mean of neck and pelvis; head the head; a prop or the load the mean of its projected points (disc: centre).
+5. Sort far to near by (depth rounded to 0.1, kind: prop < limb < load < torso < head); equal keys keep list order.
+6. Draw. Limb: polyline w 9, colour blended #FFFFFF → #6E6E73 by dim = clamp((torso depth − mean depth of its
+   upper bone's two points − 3) / 12, 0, 1). A limb drawn after the torso first gets a black edge: the same
+   polyline in #000000, w 9 + 5, its first point moved 11 along the first bone (at most 45% of it). Torso
+   w 12 white: shoulderL–neck–shoulderR, neck–pelvis, hipL–pelvis–hipR. Head: circle r 11 white. Floor:
+   line #3A3A3C, w 2, across the crop at y = floor, drawn first.
+
+**Load depth.** A load piece on one side of the body (a dumbbell, a single grip or ankle strap, a machine
+grip with its lever, a pad on one limb) rides with that limb: it is drawn right after the limb's line, at
+opacity 1 − 0.45 · dim. A bar or pad across both sides is split at its centre into halves that ride with the
+L and R arm (hands or an upper-body point) or leg; a pad's lever rides with the half on its pivot's side.
+Anything else (a cable to a bar or rope, a held weight, a platform) is one part, `load`, sorted by its own depth.
+
+**Crop.** One square per figure, the same at every angle: the bounds (half stroke widths and circle radii
+included) of both poses at yaw 0, 5, … 355, widened to include floor ± 1; side = max(130, width + 20,
+height + 20), centred on those bounds.
+
+**Still** (Always On, Reduce Motion): the start pose at opacity 0.3 under the end pose, same yaw.
+**Turning** (review boards): a full turn, starting at the opening view, in 12 s with round(12 / tempo) reps, at least one.
+
+### Reference figures with the full vocabulary (6 Oct 2026)
+
+rope-pushdown (cable, rope), leg-extension (pad across both ankles with a lever), hip-thrust (bar on the
+hips with plates), machine-chest-press (machine grips with overhead levers). Weak angles: a cable column or
+machine frame seen from in front of the person covers part of the body (true of the real view); seated
+figures from behind show mostly the back pad.
