@@ -1,9 +1,11 @@
 import Foundation
 
-/// Every logged set as CSV, for a spreadsheet: one row per set, oldest first.
+/// Every logged set as CSV, for a spreadsheet: one row per set, oldest first. Ramp-up sets are listed, marked in
+/// the Ramp-up column; "Set" is the order performed in the exercise, ramp-ups included. Effort (1 to 10, when
+/// it was given) is on every row of its session.
 public enum SetsCSV {
     public static let header = ["Date", "Time", "Day", "Exercise", "Exercise ID", "Set", "Weight (kg)", "Reps",
-                                "Seconds", "Deload", "Skipped", "Session"]
+                                "Seconds", "Deload", "Skipped", "Session", "Ramp-up", "Effort"]
 
     /// - Parameters:
     ///   - sessions: in any order; rows come out by session date, then the order items were started, then set.
@@ -28,6 +30,8 @@ public enum SetsCSV {
                         session.isDeload ? "yes" : "",
                         log.skipped ? "yes" : "",
                         session.id.uuidString,
+                        set.isRampUp ? "yes" : "",
+                        session.effort.map { "\($0)" } ?? "",
                     ])
                 }
             }

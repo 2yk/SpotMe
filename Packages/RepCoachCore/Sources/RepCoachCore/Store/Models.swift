@@ -14,6 +14,8 @@ public final class WorkoutSession {
     public var healthKitWorkoutId: UUID?
     /// Set when the workout is finished.
     public var endedAt: Date?
+    /// How hard the workout was, 1 to 10, asked for after Finish. nil: not given.
+    public var effort: Int?
 
     @Relationship(deleteRule: .cascade, inverse: \ExerciseLog.session)
     public var logs: [ExerciseLog] = []
@@ -59,13 +61,18 @@ public final class SetLog {
     /// Timed sets only.
     public var seconds: Int?
     public var timestamp: Date
+    /// A lighter set before the first working set. Never counted: not in the set count, history, progression
+    /// or charts; only the CSV lists it.
+    public var isRampUp: Bool = false
 
-    public init(index: Int, weight: Double, reps: Int, seconds: Int? = nil, timestamp: Date = .now) {
+    public init(index: Int, weight: Double, reps: Int, seconds: Int? = nil, timestamp: Date = .now,
+                isRampUp: Bool = false) {
         self.index = index
         self.weight = weight
         self.reps = reps
         self.seconds = seconds
         self.timestamp = timestamp
+        self.isRampUp = isRampUp
     }
 }
 
@@ -143,17 +150,40 @@ extension WorkoutSession {
     public var statuses: [String: ItemStatus] {
         Dictionary(logs.map { ($0.exerciseId, $0.status) }, uniquingKeysWith: { first, _ in first })
     }
+
+    /// Sets logged in the session, ramp-ups left out.
+    public var countedSetCount: Int {
+        logs.reduce(0) { $0 + $1.countedSets.count }
+    }
 }
 
 extension ExerciseLog {
-    /// Sets in the order performed.
+    /// Every set in the order performed, ramp-ups included (the CSV lists them all). Anything that counts sets
+    /// uses `orderedCountedSets`.
     public var orderedSets: [SetLog] {
         sets.sorted { $0.index < $1.index }
     }
 
+    /// The sets that count: everything but ramp-ups.
+    public var countedSets: [SetLog] {
+        sets.filter { !$0.isRampUp }
+    }
+
+    /// The sets that count, in the order performed.
+    public var orderedCountedSets: [SetLog] {
+        orderedSets.filter { !$0.isRampUp }
+    }
+
+    /// The counted sets as the engine sees them, in the order performed.
+    public var countedLoggedSets: [LoggedSet] {
+        orderedCountedSets.map(\.loggedSet)
+    }
+
+    /// Ramp-ups alone don't start an item: it stays pending until a working set is logged.
     public var status: ItemStatus {
         if let at = completedAt { return skipped ? .skipped(at) : .done(at) }
-        return sets.isEmpty ? .pending : .inProgress(setsDone: sets.count)
+        let done = countedSets.count
+        return done == 0 ? .pending : .inProgress(setsDone: done)
     }
 }
 

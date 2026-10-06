@@ -139,7 +139,7 @@ final class TodayModel {
         for item in day.items {
             var amrap: Int?
             if item.kind == .percentOfMax, let source = item.sourceExerciseId {
-                let today = session?.log(for: source)?.orderedSets.map(\.loggedSet)
+                let today = session?.log(for: source)?.countedLoggedSets
                 amrap = TargetPlanner.amrapReps(today: today, history: pastSessions(of: source))
             }
             targets[item.exerciseId] = TargetPlanner.target(
@@ -212,7 +212,7 @@ extension TodayModel {
         case .skipped:
             return "Skipped"
         case .done:
-            let sets = log(for: item)?.orderedSets ?? []
+            let sets = log(for: item)?.orderedCountedSets ?? []
             guard !sets.isEmpty else { return "Done" }
             let top = sets.map(\.weight).max() ?? 0
             return item.takesWeight && top > 0 ? "\(sets.count) sets · \(Format.kg(top))" : "\(sets.count) sets"

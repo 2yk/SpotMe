@@ -42,6 +42,8 @@ public struct PlanItem: Codable, Hashable, Identifiable, Sendable {
     public var sourceExerciseId: String?
     /// Items sharing a superset group alternate set by set.
     public var supersetGroup: String?
+    /// The logged weight is added to bodyweight (weighted pull-ups); 0 means bodyweight only.
+    public var bodyweightBase: Bool?
 
     public var id: String { exerciseId }
 
@@ -49,7 +51,8 @@ public struct PlanItem: Codable, Hashable, Identifiable, Sendable {
                 kind: ItemKind, steps: [String]? = nil, sets: Int? = nil, repMin: Int? = nil, repMax: Int? = nil,
                 secMin: Int? = nil, secMax: Int? = nil, perSide: Bool? = nil, loadable: Bool? = nil,
                 increment: Double? = nil, sessionsAtTopToProgress: Int? = nil, restSec: Int? = nil,
-                percent: Double? = nil, sourceExerciseId: String? = nil, supersetGroup: String? = nil) {
+                percent: Double? = nil, sourceExerciseId: String? = nil, supersetGroup: String? = nil,
+                bodyweightBase: Bool? = nil) {
         self.name = name
         self.exerciseId = exerciseId
         self.group = group
@@ -70,6 +73,7 @@ public struct PlanItem: Codable, Hashable, Identifiable, Sendable {
         self.percent = percent
         self.sourceExerciseId = sourceExerciseId
         self.supersetGroup = supersetGroup
+        self.bodyweightBase = bodyweightBase
     }
 }
 

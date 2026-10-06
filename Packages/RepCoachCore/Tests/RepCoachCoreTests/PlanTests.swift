@@ -72,4 +72,13 @@ final class PlanTests: XCTestCase {
         XCTAssertTrue(plan.isDeloadWeek(programStart: start, today: week6, calendar: cal))
         XCTAssertFalse(plan.isDeloadWeek(programStart: start, today: week5, calendar: cal))
     }
+
+    /// Only the weighted pull-ups add their logged weight to bodyweight, which ramp-up sets need to know.
+    func testOnlyWeightedPullUpsAddToBodyweight() throws {
+        let flagged = try Plan.bundled().days.flatMap(\.items).filter { $0.bodyweightBase == true }
+        XCTAssertEqual(flagged.map(\.exerciseId), ["weighted-pull-ups"])
+
+        let without = #"{"name":"Row","exerciseId":"row","group":"","kind":"weighted"}"#
+        XCTAssertNil(try JSONDecoder().decode(PlanItem.self, from: Data(without.utf8)).bodyweightBase)
+    }
 }
