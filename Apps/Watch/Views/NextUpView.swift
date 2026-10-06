@@ -17,33 +17,29 @@ struct NextUpView: View {
             let info = today.rowInfo(for: first)
             // Back to an exercise put off earlier: it says so, and picks up at its next set.
             let skippedEarlier = today.isWaiting(first)
+            let figure = next.count == 1 ? ExerciseFigure.of(first) : nil
             ZStack(alignment: .top) {
                 if let rest = workout.breakTime { EdgeCountdown(countdown: rest) }
                 VStack(spacing: 0) {
-                    countdown(role: skippedEarlier ? TextRole.breakTimer.size(40) : .breakTimer)
+                    countdown(role: skippedEarlier || figure != nil ? TextRole.breakTimer.size(36) : .breakTimer)
                     if skippedEarlier {
                         Text("Skipped earlier").role(.eyebrow, Theme.ice, single: true).padding(.top, pt(1))
                     }
-                    Button { choosing = true } label: {
-                        // The chevron follows the last word, wherever the name breaks.
-                        (Text(next.map(\.name).joined(separator: " + ")) + Text(" ")
-                            + Text(Image(systemName: "chevron.down")).font(.system(size: pt(11), weight: .bold))
-                                .foregroundColor(Theme.text3))
-                            .role(.title)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                            .padding(.horizontal, pt(8))
-                            .frame(minHeight: pt(30))
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.top, pt(2))
-                    .accessibilityLabel(next.map(\.name).joined(separator: " + "))
-                    .accessibilityHint("Pick another exercise to do next")
-                    if skippedEarlier {
-                        resumeTarget(first)
+                    if let figure {
+                        // The figure moves beside the name and the target.
+                        HStack(spacing: pt(7)) {
+                            FigureView(exercise: figure, yaw: figure.figure.openingYaw, size: pt(62))
+                            VStack(alignment: .leading, spacing: pt(1)) {
+                                nameButton(next, alignment: .leading, lines: 3)
+                                if skippedEarlier { resumeTarget(first) } else { target(info) }
+                            }
+                            Spacer(minLength: 0)
+                        }
+                        .padding(.horizontal, pt(7))
+                        .padding(.top, pt(2))
                     } else {
-                        target(info)
+                        nameButton(next, alignment: .center, lines: 2)
+                        if skippedEarlier { resumeTarget(first) } else { target(info) }
                     }
                     if let summary = summaries.first {
                         // How the exercise just finished went, e.g. "✓ All sets 10 · next time 22.5 kg".
@@ -84,6 +80,26 @@ struct NextUpView: View {
         } else {
             AllDoneView(summaries: summaries, onFinish: onFinish)
         }
+    }
+
+    /// The next item's name, with the chevron after its last word; a tap opens the list to pick another.
+    private func nameButton(_ next: [PlanItem], alignment: HorizontalAlignment, lines: Int) -> some View {
+        Button { choosing = true } label: {
+            // The chevron follows the last word, wherever the name breaks.
+            (Text(next.map(\.name).joined(separator: " + ")) + Text(" ")
+                + Text(Image(systemName: "chevron.down")).font(.system(size: pt(11), weight: .bold))
+                    .foregroundColor(Theme.text3))
+                .role(alignment == .leading ? TextRole.title.size(14) : .title)
+                .multilineTextAlignment(alignment == .leading ? .leading : .center)
+                .lineLimit(lines)
+                .minimumScaleFactor(0.8)
+                .padding(.horizontal, alignment == .leading ? 0 : pt(8))
+                .frame(minHeight: pt(30))
+        }
+        .buttonStyle(.plain)
+        .padding(.top, pt(2))
+        .accessibilityLabel(next.map(\.name).joined(separator: " + "))
+        .accessibilityHint("Pick another exercise to do next")
     }
 
     /// The time left; the big target for starting now, as well as the button at the bottom.
@@ -193,7 +209,7 @@ struct AllDoneView: View {
                     .buttonStyle(PrimaryButtonStyle())
             }
         }
-        .screenColumn()
         .onAppear { appeared = true }
+        .screenColumn()
     }
 }

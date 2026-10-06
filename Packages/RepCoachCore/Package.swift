@@ -14,7 +14,8 @@ let package = Package(
         ),
         .testTarget(
             name: "RepCoachCoreTests",
-            dependencies: ["RepCoachCore"]
+            dependencies: ["RepCoachCore"],
+            resources: [.process("Fixtures")]
         )
     ]
 )

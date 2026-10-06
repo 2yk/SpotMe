@@ -23,11 +23,17 @@ extension View {
     /// The design's content column: the sides, the top and the bottom set from the whole screen, whatever the
     /// system's safe area is.
     func screenColumn(top: CGFloat = Metrics.top) -> some View {
-        padding(.horizontal, Metrics.side)
-            .padding(.top, top)
-            .padding(.bottom, Metrics.bottom)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .ignoresSafeArea()
+        // A GeometryReader that ignores the safe area is the whole screen, in sheets too, where the bottom
+        // inset otherwise stays: the column is exactly that size, less its margins.
+        GeometryReader { geometry in
+            self
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding(.horizontal, Metrics.side)
+                .padding(.top, top)
+                .padding(.bottom, Metrics.bottom)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+        .ignoresSafeArea()
     }
 
     /// For lists and scrolling screens whose content starts under the bar's buttons: the system's own fade at

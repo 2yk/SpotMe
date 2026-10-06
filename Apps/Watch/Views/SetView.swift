@@ -7,6 +7,7 @@ struct SetView: View {
     @Environment(TodayModel.self) private var today
     @Bindable var flow: ExerciseFlow
     @FocusState private var focus: Field?
+    @State private var showingHow = false
 
     enum Field: Hashable {
         case weight, reps
@@ -15,29 +16,44 @@ struct SetView: View {
     var body: some View {
         let item = flow.currentItem
         let takesWeight = item.takesWeight
+        let figure = ExerciseFigure.of(item)
         VStack(alignment: .leading, spacing: 0) {
-            // The name and its hints line up inside the tiles' corners.
-            VStack(alignment: .leading, spacing: 0) {
-                Text(item.name)
-                    .role(.title)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: true)
-                if today.isDeload {
-                    Text("Deload")
-                        .role(.eyebrow, .black)
-                        .padding(.horizontal, pt(5))
-                        .padding(.vertical, pt(1))
-                        .background(Capsule().fill(Theme.ember))
-                        .padding(.top, pt(2))
-                }
-                SetHintRow(flow: flow)
-                    .padding(.top, pt(1))
-                if let partner = partnerName {
-                    Text("Superset · then \(partner)")
-                        .role(.small, Theme.ice)
-                        .multilineTextAlignment(.leading)
+            // The name and its hints line up inside the tiles' corners. With a figure the block is a row: the
+            // text on the left, a small still of the figure on the right that opens How.
+            HStack(alignment: .center, spacing: pt(10)) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(item.name)
+                        .role(.title)
+                        .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
+                    if today.isDeload {
+                        Text("Deload")
+                            .role(.eyebrow, .black)
+                            .padding(.horizontal, pt(5))
+                            .padding(.vertical, pt(1))
+                            .background(Capsule().fill(Theme.ember))
+                            .padding(.top, pt(2))
+                    }
+                    SetHintRow(flow: flow, stacked: figure != nil)
                         .padding(.top, pt(1))
+                    if let partner = partnerName {
+                        Text("Superset · then \(partner)")
+                            .role(.small, Theme.ice)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, pt(1))
+                    }
+                }
+                if let figure {
+                    Spacer(minLength: 0)
+                    Button { showingHow = true } label: {
+                        FigureView(exercise: figure, yaw: figure.figure.openingYaw, size: pt(38), moving: false)
+                            .frame(width: pt(42), height: pt(42))
+                            .background(RoundedRectangle(cornerRadius: pt(11), style: .continuous).fill(Theme.card))
+                    }
+                    .buttonStyle(RowButtonStyle())
+                    .accessibilityLabel("How to do it")
+                    .sheet(isPresented: $showingHow) { HowView(item: item, exercise: figure) }
                 }
             }
             .padding(.horizontal, pt(4))
@@ -163,15 +179,25 @@ struct SetHintRow: View {
     @Environment(WorkoutModel.self) private var workout
     @Environment(TodayModel.self) private var today
     let flow: ExerciseFlow
+    /// Both parts left-aligned, one under the other: the row beside a figure's button has less room.
+    var stacked = false
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: pt(6)) {
-            Text(workout.isPaused ? "Set \(flow.current?.set ?? 1) of \(flow.currentTarget.sets) · \(hint)" : hint)
-                .role(.detail, Theme.text2)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-            Spacer(minLength: 0)
-            if !workout.isPaused { trailing }
+        let left = Text(workout.isPaused ? "Set \(flow.current?.set ?? 1) of \(flow.currentTarget.sets) · \(hint)" : hint)
+            .role(.detail, Theme.text2)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+        if stacked {
+            VStack(alignment: .leading, spacing: 0) {
+                left
+                if !workout.isPaused { trailing }
+            }
+        } else {
+            HStack(alignment: .firstTextBaseline, spacing: pt(6)) {
+                left
+                Spacer(minLength: 0)
+                if !workout.isPaused { trailing }
+            }
         }
     }
 
