@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SpotMe Watch · Note</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500..900&amp;display=swap">
+<style>
+body{margin:0;background:#000000}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;margin:0;text-align:inherit;cursor:pointer}
+a{color:#CCFF3D}a:hover{color:#DFFF87}
+</style>
+</helmet>
+<div style="position: relative; width: 416px; height: 496px; box-sizing: border-box; background: #000000; border-radius: 96px; overflow: hidden; color: #FFFFFF; font-family: ui-rounded, 'SF Pro Rounded', 'Nunito', system-ui, sans-serif; font-variant-numeric: tabular-nums">
+<button aria-label="Back" style="position: absolute; left: 26px; top: 16px; width: 60px; height: 60px; border-radius: 50%; background: #2C2C2E; display: flex; align-items: center; justify-content: center; color: #FFFFFF"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<span style="position: absolute; left: 98px; top: 28px; font-size: 30px; line-height: 36px; font-weight: 700; color: #CCFF3D">Neck</span>
+<span style="position: absolute; right: 44px; top: 24px; font-size: 30px; line-height: 36px; font-weight: 600; color: #FFFFFF">10:09</span>
+<div style="position: absolute; left: 16px; right: 16px; top: 84px; bottom: 30px; display: flex; flex-direction: column">
+<span style="padding: 0 8px; font-size: 34px; line-height: 38px; font-weight: 700; color: #FFFFFF">Manual Neck Resistance</span>
+<span style="margin-top: 6px; padding: 0 8px; font-size: 20px; line-height: 24px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #8E8E93">2 MIN</span>
+<span style="margin-top: 8px; padding: 0 8px; font-size: 26px; line-height: 32px; font-weight: 500; color: #B8B8BD">30s each direction: forward, back, left, right. Gentle hand pressure.</span>
+<div style="flex: 1 1 0; min-height: 0"></div>
+<button style="height: 88px; flex-shrink: 0; border-radius: 44px; background: #CCFF3D; color: #000000; font-size: 34px; line-height: 40px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px">Done</button>
+<button style="height: 60px; flex-shrink: 0; font-size: 26px; line-height: 30px; font-weight: 600; color: #B8B8BD; display: flex; align-items: center; justify-content: center">Skip</button>
+</div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3)"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #FFFFFF"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3)"></span></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":416,"height":496}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

@@ -20,8 +20,12 @@ for the sessions that build the app; read it for how the app works, but don't ed
 
 - Keep a log in `LOG.md` here: date, who asked, what, boards, status (new, in progress, under review, approved,
   built).
-- Design on a canvas artifact (make one, "SpotMe Designs", the first time; keep its files under `canvas/` here,
-  publish with the Artifact tool, commit so it's never lost). Number boards (1.1, 1.2, …).
+- Design on the canvas "SpotMe Designs": https://claude.ai/artifact/5zqv25yapNuDwotbEqNvwQ. Its files live in
+  `canvas/project/` here (publish with the Artifact tool, root `canvas/`; commit so it's never lost). Number
+  boards (1.1, 1.2, …). `canvas/build/render.py` renders and checks boards.
+- Canvas pages (Yeshu, 6 Oct): Under review is always the first page, then In progress, Backlog, Approved,
+  Live · Watch and Live · iPhone (what is built and shipped). Every board needs an explicit `page`.
+- Watch comes before iPhone when both are asked for (Yeshu, 6 Oct).
 - Fable reviews and writes the rules in `reviews/<n>-<name>.md`; Opus agents (Agent tool, `model: opus`) build the
   boards from it; you check every rendered board until it passes. Only then does it go to Yeshu.
 - Ask Yeshu with the board numbers to look at, and alert him in the Ada app (it stays in Needs you until ticked):
