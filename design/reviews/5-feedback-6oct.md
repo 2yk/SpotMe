@@ -127,3 +127,18 @@ All nine boards built, checked and looked at by the planner; on the canvas under
 Backlog page. To pass on to the Mac builder with the first approved batch: the controls page must not size its
 buttons from measured height (fixed sizes, as board 5.1), which removes the small-then-normal icons on first
 appearance.
+
+## Approved, 6 Oct 2026
+
+Yeshu approved all watch designs "based on your recommendations" and named the builder: SpotMe - Frontend
+(Mac Studio). The build spec is `../handoff/watch-1/BUILD.md`; it is the reference from here on. Points it
+settles beyond the text above:
+
+- Ramp-up reps never go above the top of the rep range. An exercise whose weight is added to bodyweight
+  (weighted pull-ups) ramps up at bodyweight × 5, plus half the added weight × 3 when it is the first main
+  lift. The rule and its vectors are in `../handoff/watch-1/rampup_reference.py`.
+- Skip puts an exercise off; it comes back before the cooldown. Skip during a rest puts it off too.
+- How is one screen: the Crown hint shows until he has turned a figure once, then the cue.
+- Every exercise in the plan gets a figure, and every one turns (one renderer in the app, not two).
+- To tell Yeshu: the plan's warmups already end with a light set of the first lift ("1 × 10 at ~50%"),
+  which is the first ramp-up twice over. The ramp-up screen has Skip; the warmup step can go later.

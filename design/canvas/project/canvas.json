@@ -4,15 +4,23 @@
  "boards": {
   "F131-Figures.dc.html": {
    "h": 780,
-   "page": "review",
+   "page": "approved",
    "title": "13.1 · The twelve figures",
    "w": 1280,
    "x": 0,
-   "y": 19518
+   "y": 7300
+  },
+  "F132-Turn.dc.html": {
+   "h": 940,
+   "page": "approved",
+   "title": "13.2 · Turning a figure",
+   "w": 1280,
+   "x": 0,
+   "y": 9412
   },
   "Main.dc.html": {
    "h": 780,
-   "page": "review",
+   "page": "approved",
    "title": "0 · Watch style",
    "w": 1280,
    "x": 0,
@@ -25,7 +33,7 @@
    "title": "11.1 · Welcome",
    "w": 440,
    "x": 0,
-   "y": 15715
+   "y": 8415
   },
   "O1110-AboutYou.dc.html": {
    "h": 956,
@@ -34,7 +42,7 @@
    "title": "11.10 · Running and age",
    "w": 440,
    "x": 4680,
-   "y": 15715
+   "y": 8415
   },
   "O1111-Answers.dc.html": {
    "h": 956,
@@ -43,7 +51,7 @@
    "title": "11.11 · Your answers",
    "w": 440,
    "x": 5200,
-   "y": 15715
+   "y": 8415
   },
   "O1112-Building.dc.html": {
    "h": 956,
@@ -52,7 +60,7 @@
    "title": "11.12 · Building",
    "w": 440,
    "x": 5720,
-   "y": 15715
+   "y": 8415
   },
   "O112-Goal.dc.html": {
    "h": 956,
@@ -61,7 +69,7 @@
    "title": "11.2 · Goal",
    "w": 440,
    "x": 520,
-   "y": 15715
+   "y": 8415
   },
   "O113-Focus.dc.html": {
    "h": 956,
@@ -70,7 +78,7 @@
    "title": "11.3 · Focus",
    "w": 440,
    "x": 1040,
-   "y": 15715
+   "y": 8415
   },
   "O114-Experience.dc.html": {
    "h": 956,
@@ -79,7 +87,7 @@
    "title": "11.4 · Experience",
    "w": 440,
    "x": 1560,
-   "y": 15715
+   "y": 8415
   },
   "O115-Days.dc.html": {
    "h": 956,
@@ -88,7 +96,7 @@
    "title": "11.5 · Days",
    "w": 440,
    "x": 2080,
-   "y": 15715
+   "y": 8415
   },
   "O116-Minutes.dc.html": {
    "h": 956,
@@ -97,7 +105,7 @@
    "title": "11.6 · Session length",
    "w": 440,
    "x": 2600,
-   "y": 15715
+   "y": 8415
   },
   "O117-Place.dc.html": {
    "h": 956,
@@ -106,7 +114,7 @@
    "title": "11.7 · Where",
    "w": 440,
    "x": 3120,
-   "y": 15715
+   "y": 8415
   },
   "O118-Equipment.dc.html": {
    "h": 1658,
@@ -115,7 +123,7 @@
    "title": "11.8 · Equipment list",
    "w": 440,
    "x": 3640,
-   "y": 15715
+   "y": 8415
   },
   "O119-Injuries.dc.html": {
    "h": 956,
@@ -124,7 +132,7 @@
    "title": "11.9 · Injuries",
    "w": 440,
    "x": 4160,
-   "y": 15715
+   "y": 8415
   },
   "O121-Plan.dc.html": {
    "h": 1225,
@@ -133,7 +141,7 @@
    "title": "12.1 · Your plan",
    "w": 440,
    "x": 0,
-   "y": 17833
+   "y": 10533
   },
   "O122-Day.dc.html": {
    "h": 1021,
@@ -142,7 +150,7 @@
    "title": "12.2 · One day",
    "w": 440,
    "x": 520,
-   "y": 17833
+   "y": 10533
   },
   "O123-Why.dc.html": {
    "h": 1148,
@@ -151,7 +159,7 @@
    "title": "12.3 · Why this plan",
    "w": 440,
    "x": 1040,
-   "y": 17833
+   "y": 10533
   },
   "O124-Swap.dc.html": {
    "h": 956,
@@ -160,7 +168,7 @@
    "title": "12.4 · Swap an exercise",
    "w": 440,
    "x": 1560,
-   "y": 17833
+   "y": 10533
   },
   "O125-Ready.dc.html": {
    "h": 956,
@@ -169,7 +177,7 @@
    "title": "12.5 · Ready",
    "w": 440,
    "x": 2080,
-   "y": 17833
+   "y": 10533
   },
   "O126-Rebuild.dc.html": {
    "h": 956,
@@ -178,7 +186,7 @@
    "title": "12.6 · Rebuild later",
    "w": 440,
    "x": 2600,
-   "y": 17833
+   "y": 10533
   },
   "P101-Settings.dc.html": {
    "h": 1424,
@@ -187,7 +195,7 @@
    "title": "10.1 · Settings",
    "w": 440,
    "x": 0,
-   "y": 13831
+   "y": 6531
   },
   "P71-Today.dc.html": {
    "h": 1800,
@@ -196,7 +204,7 @@
    "title": "7.1 · Today · before the workout",
    "w": 440,
    "x": 0,
-   "y": 7300
+   "y": 0
   },
   "P72-TodayRunning.dc.html": {
    "h": 956,
@@ -205,7 +213,7 @@
    "title": "7.2 · Today · part way",
    "w": 440,
    "x": 520,
-   "y": 7300
+   "y": 0
   },
   "P73-TodayDone.dc.html": {
    "h": 956,
@@ -214,7 +222,7 @@
    "title": "7.3 · Today · all done",
    "w": 440,
    "x": 1040,
-   "y": 7300
+   "y": 0
   },
   "P74-TodayDeload.dc.html": {
    "h": 956,
@@ -223,7 +231,7 @@
    "title": "7.4 · Today · deload week, body log due",
    "w": 440,
    "x": 1560,
-   "y": 7300
+   "y": 0
   },
   "P75-Exercise.dc.html": {
    "h": 956,
@@ -232,7 +240,7 @@
    "title": "7.5 · Exercise sheet",
    "w": 440,
    "x": 2080,
-   "y": 7300
+   "y": 0
   },
   "P76-TickOff.dc.html": {
    "h": 956,
@@ -241,7 +249,7 @@
    "title": "7.6 · Tick-off sheet",
    "w": 440,
    "x": 2600,
-   "y": 7300
+   "y": 0
   },
   "P77-ExerciseFigure.dc.html": {
    "h": 956,
@@ -249,8 +257,8 @@
    "radius": 40,
    "title": "7.7 · Exercise sheet with a figure",
    "w": 440,
-   "x": 2848,
-   "y": 19518
+   "x": 3120,
+   "y": 0
   },
   "P81-History.dc.html": {
    "h": 1424,
@@ -259,7 +267,7 @@
    "title": "8.1 · History",
    "w": 440,
    "x": 0,
-   "y": 9560
+   "y": 2260
   },
   "P82-ExerciseHistory.dc.html": {
    "h": 1088,
@@ -268,7 +276,7 @@
    "title": "8.2 · History · one exercise",
    "w": 440,
    "x": 520,
-   "y": 9560
+   "y": 2260
   },
   "P83-HistoryEmpty.dc.html": {
    "h": 956,
@@ -277,7 +285,7 @@
    "title": "8.3 · History · nothing yet",
    "w": 440,
    "x": 1040,
-   "y": 9560
+   "y": 2260
   },
   "P84-Body.dc.html": {
    "h": 956,
@@ -286,7 +294,7 @@
    "title": "8.4 · Body",
    "w": 440,
    "x": 1560,
-   "y": 9560
+   "y": 2260
   },
   "P85-BodyWarning.dc.html": {
    "h": 956,
@@ -295,7 +303,7 @@
    "title": "8.5 · Body · waist warning",
    "w": 440,
    "x": 2080,
-   "y": 9560
+   "y": 2260
   },
   "P86-Measurement.dc.html": {
    "h": 956,
@@ -304,7 +312,7 @@
    "title": "8.6 · New measurement",
    "w": 440,
    "x": 2600,
-   "y": 9560
+   "y": 2260
   },
   "P91-Plan.dc.html": {
    "h": 1927,
@@ -313,7 +321,7 @@
    "title": "9.1 · Plan · a day",
    "w": 440,
    "x": 0,
-   "y": 11444
+   "y": 4144
   },
   "P92-PlanEdit.dc.html": {
    "h": 956,
@@ -322,7 +330,7 @@
    "title": "9.2 · Plan · reorder",
    "w": 440,
    "x": 520,
-   "y": 11444
+   "y": 4144
   },
   "P93-Editor.dc.html": {
    "h": 1120,
@@ -331,7 +339,7 @@
    "title": "9.3 · Exercise editor",
    "w": 440,
    "x": 1040,
-   "y": 11444
+   "y": 4144
   },
   "P94-AddNew.dc.html": {
    "h": 956,
@@ -340,7 +348,7 @@
    "title": "9.4 · Add exercise · new",
    "w": 440,
    "x": 1560,
-   "y": 11444
+   "y": 4144
   },
   "P95-AddFromPlan.dc.html": {
    "h": 956,
@@ -349,20 +357,29 @@
    "title": "9.5 · Add exercise · from the plan",
    "w": 440,
    "x": 2080,
-   "y": 11444
+   "y": 4144
   },
   "W11-TodayStart.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.1 · Today · before the workout",
    "w": 416,
    "x": 0,
    "y": 1160
   },
+  "W110-TodayWaiting.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "1.10 · Today · one waiting",
+   "w": 416,
+   "x": 2480,
+   "y": 8716
+  },
   "W12-TodayList.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.2 · Today · the list",
    "w": 416,
@@ -371,7 +388,7 @@
   },
   "W13-TodayRunning.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.3 · Today · workout running",
    "w": 416,
@@ -380,7 +397,7 @@
   },
   "W14-TodayPaused.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.4 · Today · paused",
    "w": 416,
@@ -389,7 +406,7 @@
   },
   "W15-TodayEnd.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.5 · Today · end of the list",
    "w": 416,
@@ -398,7 +415,7 @@
   },
   "W16-TodayAllDone.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.6 · Today · all done",
    "w": 416,
@@ -407,7 +424,7 @@
   },
   "W17-Days.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.7 · Days",
    "w": 416,
@@ -416,7 +433,7 @@
   },
   "W18-RestDay.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "1.8 · Today · rest day",
    "w": 416,
@@ -429,12 +446,12 @@
    "radius": 96,
    "title": "1.9 · Before a plan exists",
    "w": 416,
-   "x": 3968,
-   "y": 1160
+   "x": 3120,
+   "y": 10533
   },
   "W210-SetDeload.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.10 · Set · deload week",
    "w": 416,
@@ -443,25 +460,43 @@
   },
   "W211-SetFigure.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.11 · Set · with a figure",
    "w": 416,
    "x": 1360,
-   "y": 19518
+   "y": 7300
   },
   "W212-How.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.12 · How",
    "w": 416,
    "x": 1856,
-   "y": 19518
+   "y": 7300
+  },
+  "W213-RampUp.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "2.13 · Ramp-up set",
+   "w": 416,
+   "x": 0,
+   "y": 8716
+  },
+  "W214-HowTurn.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "2.14 · How · turn it",
+   "w": 416,
+   "x": 3472,
+   "y": 8716
   },
   "W21A-SetTiles.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.1A · Set · side by side",
    "w": 416,
@@ -479,7 +514,7 @@
   },
   "W22-SetWeight.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.2 · Set · Crown on weight",
    "w": 416,
@@ -488,7 +523,7 @@
   },
   "W23-SetFirst.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.3 · Set · first time",
    "w": 416,
@@ -497,7 +532,7 @@
   },
   "W24-SetReps.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.4 · Set · reps only",
    "w": 416,
@@ -506,7 +541,7 @@
   },
   "W25-SetSide.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.5 · Set · per side, optional weight",
    "w": 416,
@@ -515,7 +550,7 @@
   },
   "W26-SetMax.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.6 · Set · max reps",
    "w": 416,
@@ -524,7 +559,7 @@
   },
   "W27-SetVolume.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.7 · Set · volume sets",
    "w": 416,
@@ -533,7 +568,7 @@
   },
   "W28-SetSuperset.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.8 · Set · superset",
    "w": 416,
@@ -542,7 +577,7 @@
   },
   "W29-SetPaused.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "2.9 · Set · paused",
    "w": 416,
@@ -551,7 +586,7 @@
   },
   "W310-BreakPick.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.10 · Break · do another next",
    "w": 416,
@@ -560,7 +595,7 @@
   },
   "W311-BreakMax.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.11 · Break · after the max-rep set",
    "w": 416,
@@ -569,16 +604,34 @@
   },
   "W312-BreakFigure.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.12 · Break · with a figure",
    "w": 416,
    "x": 2352,
-   "y": 19518
+   "y": 7300
+  },
+  "W313-RestRampUp.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "3.13 · Rest · after the last ramp-up",
+   "w": 416,
+   "x": 496,
+   "y": 8716
+  },
+  "W314-BreakBack.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "3.14 · Break · back to a waiting one",
+   "w": 416,
+   "x": 2976,
+   "y": 8716
   },
   "W31A-RestEdge.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.1A · Rest · timer round the edge",
    "w": 416,
@@ -596,7 +649,7 @@
   },
   "W32-RestDrop.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.2 · Rest · next set lighter",
    "w": 416,
@@ -605,7 +658,7 @@
   },
   "W33-RestUp.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.3 · Rest · next set heavier",
    "w": 416,
@@ -614,7 +667,7 @@
   },
   "W34-RestReps.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.4 · Rest · reps exercise",
    "w": 416,
@@ -623,7 +676,7 @@
   },
   "W35-RestPaused.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.5 · Rest · paused",
    "w": 416,
@@ -632,7 +685,7 @@
   },
   "W36-RestSuperset.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.6 · Rest · after a superset pair",
    "w": 416,
@@ -641,7 +694,7 @@
   },
   "W37-RestAlwaysOn.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.7 · Rest · wrist down",
    "w": 416,
@@ -650,7 +703,7 @@
   },
   "W38-Break.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.8 · Break · next exercise",
    "w": 416,
@@ -659,7 +712,7 @@
   },
   "W39-BreakChecklist.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "3.9 · Break · before a tick-off item",
    "w": 416,
@@ -668,7 +721,7 @@
   },
   "W41-HoldReady.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "4.1 · Hold · ready",
    "w": 416,
@@ -677,7 +730,7 @@
   },
   "W42-HoldRunning.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "4.2 · Hold · under the range",
    "w": 416,
@@ -686,7 +739,7 @@
   },
   "W43-HoldInRange.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "4.3 · Hold · in range",
    "w": 416,
@@ -695,7 +748,7 @@
   },
   "W44-HoldTop.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "4.4 · Hold · top reached",
    "w": 416,
@@ -704,7 +757,7 @@
   },
   "W45-ChecklistSteps.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "4.5 · Tick-off · steps",
    "w": 416,
@@ -713,7 +766,7 @@
   },
   "W46-ChecklistEnd.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "4.6 · Tick-off · end of the steps",
    "w": 416,
@@ -722,7 +775,7 @@
   },
   "W47-ChecklistNote.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "4.7 · Tick-off · note only",
    "w": 416,
@@ -731,16 +784,25 @@
   },
   "W51-Controls.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "5.1 · Controls",
    "w": 416,
    "x": 0,
    "y": 5160
   },
+  "W510-ControlsSkip.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "5.10 · Controls · Skip means later",
+   "w": 416,
+   "x": 1984,
+   "y": 8716
+  },
   "W52-ControlsPaused.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "5.2 · Controls · paused",
    "w": 416,
@@ -749,7 +811,7 @@
   },
   "W53-End.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "5.3 · End workout?",
    "w": 416,
@@ -758,7 +820,7 @@
   },
   "W54-Discard.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "5.4 · Discard workout?",
    "w": 416,
@@ -767,7 +829,7 @@
   },
   "W55-AllDone.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "5.5 · All done",
    "w": 416,
@@ -776,7 +838,7 @@
   },
   "W56-Summary.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "5.6 · Summary",
    "w": 416,
@@ -785,101 +847,38 @@
   },
   "W57-HealthAlert.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "radius": 96,
    "title": "5.7 · Not saving to Health",
    "w": 416,
    "x": 2976,
    "y": 5160
   },
+  "W58-Effort.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "5.8 · Effort",
+   "w": 416,
+   "x": 992,
+   "y": 8716
+  },
+  "W59-SummaryEffort.dc.html": {
+   "h": 496,
+   "page": "approved",
+   "radius": 96,
+   "title": "5.9 · Summary with effort",
+   "w": 416,
+   "x": 1488,
+   "y": 8716
+  },
   "W61-Complications.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "approved",
    "title": "6.1 · Complication",
    "w": 1040,
    "x": 0,
    "y": 6160
-  },
-  "W110-TodayWaiting.dc.html": {
-   "x": 2480,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "1.10 · Today · one waiting",
-   "page": "review",
-   "radius": 96
-  },
-  "W214-HowTurn.dc.html": {
-   "x": 3472,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "2.14 · How · turn it",
-   "page": "review",
-   "radius": 96
-  },
-  "W59-SummaryEffort.dc.html": {
-   "x": 1488,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "5.9 · Summary with effort",
-   "page": "review",
-   "radius": 96
-  },
-  "W314-BreakBack.dc.html": {
-   "x": 2976,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "3.14 · Break · back to a waiting one",
-   "page": "review",
-   "radius": 96
-  },
-  "F132-Turn.dc.html": {
-   "x": 0,
-   "y": 21630,
-   "w": 1280,
-   "h": 940,
-   "title": "13.2 · Turning a figure",
-   "page": "review",
-   "radius": 0
-  },
-  "W213-RampUp.dc.html": {
-   "x": 0,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "2.13 · Ramp-up set",
-   "page": "review",
-   "radius": 96
-  },
-  "W313-RestRampUp.dc.html": {
-   "x": 496,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "3.13 · Rest · after the last ramp-up",
-   "page": "review",
-   "radius": 96
-  },
-  "W510-ControlsSkip.dc.html": {
-   "x": 1984,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "5.10 · Controls · Skip means later",
-   "page": "review",
-   "radius": 96
-  },
-  "W58-Effort.dc.html": {
-   "x": 992,
-   "y": 20934,
-   "w": 416,
-   "h": 496,
-   "title": "5.8 · Effort",
-   "page": "review",
-   "radius": 96
   }
  },
  "createdOnFiles": {
@@ -892,15 +891,44 @@
   "view": "canvas"
  },
  "notes": {
+  "backlog-title": {
+   "kind": "title1",
+   "maxW": 1600,
+   "page": "backlog",
+   "text": "Options not chosen",
+   "w": 240,
+   "x": 0,
+   "y": -330
+  },
+  "backlog-why": {
+   "fill": "gray",
+   "maxH": 160,
+   "page": "backlog",
+   "size": 24,
+   "text": "6 Oct: Yeshu chose 2.1A (side by side) and 3.1A (timer round the edge). These two B options are kept here for reference.",
+   "w": 900,
+   "x": 0,
+   "y": 560
+  },
   "decide-figures": {
    "fill": "orange",
    "maxH": 520,
-   "page": "review",
+   "page": "approved",
    "size": 24,
-   "text": "Form figures: yes or no?\n\nm · These twelve are a proof of concept, drawn from two poses each and animated by the app. If you like the look, all 247 exercises get one, and they also go into swap lists and the plan screens.\n\nThey move on board 13.1.",
+   "text": "Form figures: approved for the watch on 6 Oct.\n\nm · Every exercise in your plan gets a figure, and every one turns. They are being drawn now and go to the builder as they pass review. The other 200 in the database wait for the iPhone and onboarding work.",
    "w": 520,
-   "x": 3368,
-   "y": 19518
+   "x": 2848,
+   "y": 7300
+  },
+  "decide-notes": {
+   "fill": "orange",
+   "maxH": 760,
+   "page": "approved",
+   "size": 24,
+   "text": "Approved by Yeshu on 6 Oct and sent to the builder:\n\nn · Ramp-up sets: two lighter sets before the first main lift (50% × 8, 75% × 4), one before other main lifts. Not counted, tapped off. Working sets and \"Last\" stay as they are.\no · Effort: the watch asks 1 to 10 after Finish and saves it with the workout, so Fitness shows it. Needs one more Health permission.\np · Skip in the controls jumps to the next exercise and leaves this one open; the workout comes back to it. Dropping one for the day is the swipe in Today.\nq · Figures store depth, so they can be turned with the Crown on the watch. Every exercise in the plan gets one.",
+   "w": 620,
+   "x": 3968,
+   "y": 8716
   },
   "decide-onboarding": {
    "fill": "orange",
@@ -910,7 +938,7 @@
    "text": "Onboarding and the plan: yes or no to each?\n\ni · The plan is built by fixed rules on the phone: no account, no server, no AI call. Rules and six test plans are in design/plan-builder.\nj · Nine questions. Weight, height and sex are not asked.\nk · Your own v11 plan stays. Onboarding is for a new install and for \"Rebuild my plan\" in Settings.\nl · Swapping in exercises from the database replaces the spec line \"never suggest exercises that are not in the plan\".\n\nBoards 12.1 to 12.4 show the plan the rules build for your answers.",
    "w": 560,
    "x": 6240,
-   "y": 15715
+   "y": 8415
   },
   "decide-phone": {
    "fill": "orange",
@@ -919,15 +947,15 @@
    "size": 24,
    "text": "iPhone: what changes besides the look. Yes or no to each?\n\ng · Today's card counts what goes up and what goes lighter today.\nh · Rows lose the kind icons and the chevrons. Target weight and its tag sit on the right.",
    "w": 520,
-   "x": 3120,
-   "y": 7300
+   "x": 3640,
+   "y": 0
   },
   "decide-watch": {
    "fill": "orange",
    "maxH": 780,
-   "page": "review",
+   "page": "approved",
    "size": 24,
-   "text": "Chosen 6 Oct: 2.1A and 3.1A.\n\nWatch: what changes besides the look. Yes or no to each?\n\na · The set screen shows last time's reps for this set (\"Last 9\").\nb · Undo moves from the set screen to the rest and break screens.\nc · Today rows lose the round kind icons. The target weight sits on the right, with an arrow when it goes up or down today.\nd · A rest day has no Start workout button.\ne · End workout is one screen with three buttons, no scrolling.\nf · \"Back to list\" under All done is gone (Back is already there).",
+   "text": "Approved by Yeshu on 6 Oct and sent to the builder. Set screen 2.1A, rest screen 3.1A.\n\nWhat changes besides the look:\n\na · The set screen shows last time's reps for this set (\"Last 9\").\nb · Undo moves from the set screen to the rest and break screens.\nc · Today rows lose the round kind icons. The target weight sits on the right, with an arrow when it goes up or down today.\nd · A rest day has no Start workout button.\ne · End workout is one screen with three buttons, no scrolling.\nf · \"Back to list\" under All done is gone (Back is already there).",
    "w": 620,
    "x": 1360,
    "y": 0
@@ -935,7 +963,7 @@
   "row1": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
+   "page": "approved",
    "text": "1 · Today",
    "w": 240,
    "x": 0,
@@ -948,7 +976,7 @@
    "text": "10.1 · iPhone · Settings",
    "w": 240,
    "x": 0,
-   "y": 13501
+   "y": 6201
   },
   "row11": {
    "kind": "title1",
@@ -957,30 +985,39 @@
    "text": "11.1–11.12 · Onboarding: the questions",
    "w": 240,
    "x": 0,
-   "y": 15385
+   "y": 8085
   },
   "row12": {
    "kind": "title1",
    "maxW": 2400,
    "page": "review",
-   "text": "12.1–12.6 · The plan it builds",
+   "text": "12.1–12.6 · The plan it builds (and 1.9, the watch before a plan exists)",
    "w": 240,
    "x": 0,
-   "y": 17503
+   "y": 10203
   },
   "row13": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
-   "text": "13.1 · Form figures: which exercise is which",
+   "page": "approved",
+   "text": "13.1 · Form figures · approved for the watch",
    "w": 240,
    "x": 0,
-   "y": 19188
+   "y": 6970
+  },
+  "row14": {
+   "kind": "title1",
+   "maxW": 3600,
+   "page": "approved",
+   "text": "Approved 6 Oct · ramp-up · effort · skip · turning figures",
+   "w": 240,
+   "x": 0,
+   "y": 8386
   },
   "row2": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
+   "page": "approved",
    "text": "2 · Logging a set",
    "w": 240,
    "x": 0,
@@ -989,7 +1026,7 @@
   "row3": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
+   "page": "approved",
    "text": "3 · Rest, and the break between exercises",
    "w": 240,
    "x": 0,
@@ -998,7 +1035,7 @@
   "row4": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
+   "page": "approved",
    "text": "4 · Holds and tick-off items",
    "w": 240,
    "x": 0,
@@ -1007,7 +1044,7 @@
   "row5": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
+   "page": "approved",
    "text": "5 · Controls and the end",
    "w": 240,
    "x": 0,
@@ -1016,7 +1053,7 @@
   "row6": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
+   "page": "approved",
    "text": "6 · Complication",
    "w": 240,
    "x": 0,
@@ -1026,10 +1063,10 @@
    "kind": "title1",
    "maxW": 2400,
    "page": "review",
-   "text": "Then: 7.1–7.6 · iPhone · Today",
+   "text": "Review next · iPhone: 7.1–7.7 · Today",
    "w": 240,
    "x": 0,
-   "y": 6970
+   "y": -330
   },
   "row8": {
    "kind": "title1",
@@ -1038,7 +1075,7 @@
    "text": "8.1–8.6 · iPhone · History",
    "w": 240,
    "x": 0,
-   "y": 9230
+   "y": 1930
   },
   "row9": {
    "kind": "title1",
@@ -1047,52 +1084,16 @@
    "text": "9.1–9.5 · iPhone · Plan",
    "w": 240,
    "x": 0,
-   "y": 11114
+   "y": 3814
   },
   "top": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "review",
-   "text": "Review now: 0 and 1.1–6.1 · Watch",
+   "page": "approved",
+   "text": "Approved 6 Oct · Watch: 0 and 1.1–6.1 · being built",
    "w": 240,
    "x": 0,
    "y": -330
-  },
-  "row14": {
-   "x": 0,
-   "y": 20604,
-   "text": "From your notes of 6 Oct: ramp-up · effort · skip · turning figures",
-   "kind": "title1",
-   "maxW": 3600,
-   "page": "review"
-  },
-  "backlog-why": {
-   "x": 0,
-   "y": 560,
-   "w": 900,
-   "maxH": 160,
-   "size": 24,
-   "fill": "gray",
-   "page": "backlog",
-   "text": "6 Oct: Yeshu chose 2.1A (side by side) and 3.1A (timer round the edge). These two B options are kept here for reference."
-  },
-  "decide-notes": {
-   "x": 3968,
-   "y": 20934,
-   "w": 620,
-   "maxH": 760,
-   "size": 24,
-   "fill": "orange",
-   "page": "review",
-   "text": "Your notes of 6 Oct: yes or no to each?\n\nn · Ramp-up sets: two lighter sets before the first main lift (50% × 8, 75% × 4), one before other main lifts. Not counted, tapped off. Working sets and \"Last\" stay as they are.\no · Effort: the watch asks 1 to 10 after Finish and saves it with the workout, so Fitness shows it. Needs one more Health permission.\np · Skip in the controls jumps to the next exercise and leaves this one open; the workout comes back to it. Dropping one for the day is the swipe in Today.\nq · Figures store depth, so they can be turned: Crown on the watch, finger on the iPhone. Authoring each figure takes longer."
-  },
-  "backlog-title": {
-   "x": 0,
-   "y": -330,
-   "text": "Options not chosen",
-   "kind": "title1",
-   "maxW": 1600,
-   "page": "backlog"
   }
  },
  "order": [

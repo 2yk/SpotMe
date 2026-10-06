@@ -3,6 +3,7 @@
 
   python3 render.py sheet OUT.png Board1.dc.html Board2.dc.html ...   one picture of several boards, labelled
   python3 render.py check Board1.dc.html ...                           layout checks (no args: every board)
+  python3 render.py png OUTDIR Board1.dc.html ...                      one PNG per board at its own size (for handoffs)
 Boards are looked up in ../project; sizes come from ../project/canvas.json.
 Chromium here has no SF fonts, so boards show in the fallback (Nunito). Yeshu's devices show SF Rounded.
 """
@@ -40,6 +41,16 @@ def sheet(out, names, cols=5):
     open(page, 'w').write(f'<!doctype html><html><body style="margin:0;background:#3a3a3e;width:{W}px;height:{H}px;position:relative">{"".join(cells)}</body></html>')
     chrome(f'--window-size={W},{H}', f'--screenshot={os.path.abspath(out)}', 'file://' + page)
     print(f'{out}: {len(names)} boards, {W}x{H}')
+
+def png(outdir, names):
+    sz = sizes()
+    os.makedirs(outdir, exist_ok=True)
+    for n in names:
+        w, h, title, rad = sz.get(n, (416, 496, n, 0))
+        out = os.path.abspath(os.path.join(outdir, n.replace('.dc.html', '.png')))
+        chrome(f'--window-size={w},{h}', '--default-background-color=000000ff', f'--screenshot={out}',
+               'file://' + os.path.abspath(os.path.join(PROJ, n)))
+        print(out, flush=True)
 
 JS = r'''
 <script>
@@ -126,5 +137,6 @@ def check(names):
 
 if __name__ == '__main__':
     if len(sys.argv) >= 4 and sys.argv[1] == 'sheet': sheet(sys.argv[2], sys.argv[3:])
+    elif len(sys.argv) >= 4 and sys.argv[1] == 'png': png(sys.argv[2], sys.argv[3:])
     elif len(sys.argv) >= 2 and sys.argv[1] == 'check': sys.exit(1 if check(sys.argv[2:]) else 0)
     else: print(__doc__)

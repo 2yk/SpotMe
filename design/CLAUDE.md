@@ -31,7 +31,10 @@ for the sessions that build the app; read it for how the app works, but don't ed
 - Ask Yeshu with the board numbers to look at, and alert him in the Ada app (it stays in Needs you until ticked):
   `~/hermes/ops/ada-todo "Review SpotMe designs: 1.1–1.4 (…)" --note "Canvas SpotMe Designs"`
 - Nothing goes to a builder before his explicit yes. When he says a range is approved, name the boards back and
-  get a yes first. Then send the spec to the Mac session that builds SpotMe (ask Yeshu which one).
+  get a yes first. Then send the spec to the Mac session that builds SpotMe: "SpotMe - Frontend (Mac Studio)"
+  (Yeshu, 6 Oct). A handoff is a folder `handoff/<name>/` with `BUILD.md` and a PNG of every approved board
+  (`render.py png`). The builder sends simulator screenshots back; compare each with its board before saying OK.
+  Built and passed boards move to Live · Watch or Live · iPhone.
 - Ada's own Designer ("Ada - Designer", `~/hermes/design`) has the same flow and a canvas toolkit you can borrow
   from (`~/hermes/design/canvas/build`); don't edit its files.
 
