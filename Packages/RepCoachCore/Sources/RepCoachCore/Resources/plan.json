@@ -45,6 +45,7 @@
           "repMax": 5,
           "increment": 2.5,
           "sessionsAtTopToProgress": 2,
+          "bodyweightBase": true,
           "restSec": 180
         },
         {

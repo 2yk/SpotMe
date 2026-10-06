@@ -77,6 +77,66 @@ final class SyncTests: StoreTestCase {
                        [sets([(15, 5), (15, 5), (15, 4), (15, 5)])])
     }
 
+    /// A Wednesday with ramp-ups before the incline press, and an effort given after Finish.
+    func testRampUpMarksAndEffortSurviveTheTrip() throws {
+        let session = try recorder.startSession(for: "wednesday", on: sept(16), isDeload: false)
+        let press = try recorder.log(for: "incline-db-press", in: session)
+        try recorder.addSet(to: press, weight: 10, reps: 8, at: sept(16), isRampUp: true)
+        try recorder.addSet(to: press, weight: 15, reps: 4, at: sept(16), isRampUp: true)
+        try recorder.addSet(to: press, weight: 20, reps: 10, at: sept(16))
+        try recorder.complete(press, at: sept(16, hour: 7))
+        try recorder.finish(session, at: sept(16, hour: 8))
+        try recorder.setEffort(8, on: session)
+
+        let received = try XCTUnwrap(SessionPayload(userInfo: SessionPayload(session).userInfo))
+        XCTAssertEqual(received.effort, 8)
+        let stored = try received.upsert(into: phone)
+
+        XCTAssertEqual(stored.effort, 8)
+        let log = try XCTUnwrap(stored.log(for: "incline-db-press"))
+        XCTAssertEqual(log.orderedSets.map(\.isRampUp), [true, true, false])
+        XCTAssertEqual(log.orderedSets.map(\.index), [1, 2, 3])
+        XCTAssertEqual(log.status, .done(sept(16, hour: 7)))
+        XCTAssertEqual(stored.countedSetCount, 1)
+        XCTAssertEqual(try HistoryStore(context: phone).history(for: "incline-db-press"), [sets([(20, 10)])])
+        XCTAssertEqual(SessionPayload(stored), received)
+    }
+
+    /// The effort comes after Finish: sending the session again updates the phone's copy in place.
+    func testAnEffortGivenAfterTheFirstSendReachesThePhone() throws {
+        let session = try loggedMonday()
+        try SessionPayload(session).upsert(into: phone)
+        XCTAssertNil(try phone.fetch(FetchDescriptor<WorkoutSession>()).first?.effort)
+
+        try recorder.setEffort(6, on: session)
+        try SessionPayload(session).upsert(into: phone)
+        XCTAssertEqual(try phone.fetchCount(FetchDescriptor<WorkoutSession>()), 1)
+        XCTAssertEqual(try phone.fetch(FetchDescriptor<WorkoutSession>()).first?.effort, 6)
+
+        try recorder.setEffort(nil, on: session)
+        try SessionPayload(session).upsert(into: phone)
+        XCTAssertNil(try phone.fetch(FetchDescriptor<WorkoutSession>()).first?.effort)
+    }
+
+    /// Sessions sent before ramp-ups and effort existed still decode: every set is a working set.
+    func testPayloadsFromBeforeRampUpsAndEffortStillDecode() throws {
+        let id = UUID()
+        let old = """
+            {"id":"\(id.uuidString)","date":780710400,"dayKey":"monday","isDeload":false,"endedAt":780714000,
+             "logs":[{"exerciseId":"weighted-pull-ups","order":0,"skipped":false,"completedAt":780713000,
+                      "sets":[{"index":1,"weight":15,"reps":5,"timestamp":780710500},
+                              {"index":2,"weight":15,"reps":4,"seconds":null,"timestamp":780710600}]}]}
+            """
+        let payload = try XCTUnwrap(SessionPayload(userInfo: ["session": Data(old.utf8)]))
+        XCTAssertNil(payload.effort)
+        XCTAssertEqual(payload.logs.first?.sets.map(\.isRampUp), [false, false])
+
+        let stored = try payload.upsert(into: phone)
+        XCTAssertNil(stored.effort)
+        XCTAssertEqual(stored.log(for: "weighted-pull-ups")?.countedSets.count, 2)
+        XCTAssertEqual(try HistoryStore(context: phone).history(for: "weighted-pull-ups"), [sets([(15, 5), (15, 4)])])
+    }
+
     func testMalformedUserInfoIsIgnored() {
         XCTAssertNil(SessionPayload(userInfo: [:]))
         XCTAssertNil(SessionPayload(userInfo: ["session": Data("nope".utf8)]))
@@ -203,6 +263,17 @@ final class SyncTests: StoreTestCase {
 
         try received.applyOverrides(to: context)
         XCTAssertEqual(try SyncContext.overrides(in: context), received.overrides)
+    }
+
+    /// The ramp-up setting reaches the watch with the other settings; a context from before it reads as the default.
+    func testTheRampUpSettingTravelsToTheWatch() throws {
+        for setting in RampUpSetting.allCases {
+            let sent = SyncContext(settings: TrainingSettings(rampUps: setting), overrides: [:], sentAt: sept(27))
+            let received = try XCTUnwrap(SyncContext(applicationContext: sent.applicationContext))
+            XCTAssertEqual(received.settings.rampUps, setting)
+        }
+        let old = ["context": Data(#"{"settings":{"restHaptics":true},"overrides":{},"sentAt":780710400}"#.utf8)]
+        XCTAssertEqual(SyncContext(applicationContext: old)?.settings.rampUps, .mainLifts)
     }
 
     func testReadingOverridesSkipsEmptyRows() throws {

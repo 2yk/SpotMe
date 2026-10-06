@@ -43,11 +43,13 @@ public struct WorkoutRecorder {
         return log
     }
 
+    /// Ramp-up sets take the next index like any other, so the order performed stays one sequence.
     @discardableResult
     public func addSet(to log: ExerciseLog, weight: Double, reps: Int, seconds: Int? = nil,
-                       at date: Date = .now) throws -> SetLog {
+                       at date: Date = .now, isRampUp: Bool = false) throws -> SetLog {
         let index = (log.sets.map(\.index).max() ?? 0) + 1
-        let set = SetLog(index: index, weight: weight, reps: reps, seconds: seconds, timestamp: date)
+        let set = SetLog(index: index, weight: weight, reps: reps, seconds: seconds, timestamp: date,
+                         isRampUp: isRampUp)
         context.insert(set)
         set.log = log
         try context.save()
@@ -88,6 +90,12 @@ public struct WorkoutRecorder {
 
     public func finish(_ session: WorkoutSession, at date: Date = .now) throws {
         session.endedAt = date
+        try context.save()
+    }
+
+    /// Stores how hard the workout was, 1 to 10 (anything else is clamped); nil clears it.
+    public func setEffort(_ effort: Int?, on session: WorkoutSession) throws {
+        session.effort = effort.map { min(max($0, 1), 10) }
         try context.save()
     }
 

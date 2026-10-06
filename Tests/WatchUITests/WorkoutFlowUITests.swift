@@ -17,6 +17,7 @@ final class WorkoutFlowUITests: XCTestCase {
             XCTAssertTrue(button.waitForExistence(timeout: 10), "No break in round \(round)")
             let next = String(button.label.dropFirst("Start ".count).dropLast(" now".count))
             button.tap()
+            skipRampUpIfShown(app)
             XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 5), "▶ didn't start \(next)")
             XCTAssertTrue(app.staticTexts[next].exists, "Expected \(next) on screen")
             finishExercise(app)
@@ -30,6 +31,7 @@ final class WorkoutFlowUITests: XCTestCase {
         XCTAssertTrue(ring.waitForExistence(timeout: 10))
         let next = nextName(app)
         ring.tap()
+        skipRampUpIfShown(app)
         XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts[next].exists)
     }
@@ -63,8 +65,54 @@ final class WorkoutFlowUITests: XCTestCase {
         XCTAssertTrue(hint.waitForExistence(timeout: 5))
         let next = String(hint.label.dropFirst("Skip to ".count))
         skip.tap()
+        skipRampUpIfShown(app)
         XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 5), "Skip didn't reach \(next)")
         XCTAssertTrue(app.staticTexts[next].waitForExistence(timeout: 5), "Expected \(next) on screen")
+    }
+
+    /// Skip puts the exercise off: it stays open, and Today says it is waiting.
+    func testSkipPutsTheExerciseOffAndTodayShowsItWaiting() {
+        let app = launch(screen: "set")
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10))
+        app.swipeRight()
+        let skip = app.buttons["Skip"]
+        XCTAssertTrue(skip.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["This one stays open"].exists, "Skip should say the exercise stays open")
+        skip.tap()
+        skipRampUpIfShown(app)
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 5))
+        app.swipeRight()
+        app.buttons["List"].tap()
+        let waiting = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'waiting'")).firstMatch
+        XCTAssertTrue(waiting.waitForExistence(timeout: 5), "The skipped exercise isn't marked waiting")
+    }
+
+    // MARK: Ramp-ups
+
+    /// A main lift opens on its ramp-up: tap Done, rest 60 s with no Undo, then the next ramp-up, then set 1.
+    func testRampUpsComeBeforeTheFirstWorkingSet() {
+        let app = launch(screen: "item", extra: ["-fresh", "YES", "-item", "incline-db-press"])
+        let first = app.staticTexts["1 of 2 · not counted"]
+        XCTAssertTrue(first.waitForExistence(timeout: 10), "No ramp-up first")
+        XCTAssertFalse(app.buttons["Log set"].exists)
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["Skip rest"].waitForExistence(timeout: 5), "No rest after the ramp-up")
+        XCTAssertFalse(app.buttons["Undo last set"].exists, "A ramp-up can't be undone")
+        app.buttons["Skip rest"].tap()
+        XCTAssertTrue(app.staticTexts["2 of 2 · not counted"].waitForExistence(timeout: 5))
+        app.buttons["Done"].tap()
+        app.buttons["Skip rest"].tap()
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 5), "Set 1 didn't open after the ramp-ups")
+    }
+
+    /// Skip on the ramp-up screen drops the rest of them and opens set 1 with no rest.
+    func testSkippingTheRampUpOpensSetOne() {
+        let app = launch(screen: "item", extra: ["-fresh", "YES", "-item", "incline-db-press"])
+        let skip = app.buttons["Skip the ramp-up"]
+        XCTAssertTrue(skip.waitForExistence(timeout: 10))
+        skip.tap()
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["Skip rest"].exists)
     }
 
     // MARK: Pause
@@ -120,6 +168,9 @@ final class WorkoutFlowUITests: XCTestCase {
         let finish = app.buttons["Finish"]
         XCTAssertTrue(finish.waitForExistence(timeout: 5), "End didn't ask first")
         finish.tap()
+        // How hard was it? comes first; Save keeps the answer, then the summary shows it.
+        XCTAssertTrue(app.staticTexts["How hard was it?"].waitForExistence(timeout: 10), "No effort question")
+        app.buttons["Save"].tap()
         XCTAssertTrue(app.staticTexts["Session finished"].waitForExistence(timeout: 5), "No summary after End")
         app.buttons["Done"].tap()
         XCTAssertFalse(app.buttons["Log set"].exists, "Still on the workout after End")
@@ -135,6 +186,10 @@ final class WorkoutFlowUITests: XCTestCase {
         XCTAssertTrue(discard.waitForExistence(timeout: 5), "End didn't offer Discard")
         XCTAssertFalse(app.buttons["Save to Health"].exists, "Finishing shouldn't ask about Health")
         discard.tap()
+        // Discard asks once more.
+        let confirm = app.buttons["Discard"]
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5), "Discard didn't ask again")
+        confirm.tap()
         let start = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Start workout'")).firstMatch
         XCTAssertTrue(start.waitForExistence(timeout: 5), "Not back on a fresh Today after Discard")
         XCTAssertFalse(app.buttons["Log set"].exists)
@@ -180,11 +235,17 @@ final class WorkoutFlowUITests: XCTestCase {
 
     // MARK: Helpers
 
-    private func launch(day: String = "wednesday", screen: String) -> XCUIApplication {
+    private func launch(day: String = "wednesday", screen: String, extra: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-demo", "YES", "-day", day, "-screen", screen]
+        app.launchArguments = ["-demo", "YES", "-day", day, "-screen", screen] + extra
         app.launch()
         return app
+    }
+
+    /// A main lift opens on its ramp-up first; the tests of the working sets skip it.
+    private func skipRampUpIfShown(_ app: XCUIApplication) {
+        let skip = app.buttons["Skip the ramp-up"]
+        if skip.waitForExistence(timeout: 2) { skip.tap() }
     }
 
     /// The break's ▶, whose label names what it starts: "Start Machine Chest Press now".
@@ -205,7 +266,9 @@ final class WorkoutFlowUITests: XCTestCase {
     private func finishExercise(_ app: XCUIApplication) {
         for _ in 0..<20 {
             if startNow(app).waitForExistence(timeout: 1) { return }
-            if app.buttons["Skip rest"].exists {
+            if app.buttons["Skip the ramp-up"].exists {
+                app.buttons["Skip the ramp-up"].tap()
+            } else if app.buttons["Skip rest"].exists {
                 app.buttons["Skip rest"].tap()
             } else if app.buttons["Log set"].exists {
                 app.buttons["Log set"].tap()

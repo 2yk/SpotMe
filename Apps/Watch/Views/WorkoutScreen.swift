@@ -14,7 +14,7 @@ struct WorkoutScreen: View {
         ZStack {
             switch workout.step {
             case .exercise(let flow):
-                ExerciseView(flow: flow, onList: onList, onFinish: onFinish)
+                ExerciseView(flow: flow, onFinish: onFinish)
                     .id(ObjectIdentifier(flow))
                     .transition(.moveIn)
             case .checklist(let item):
@@ -22,7 +22,7 @@ struct WorkoutScreen: View {
                     .id(item.exerciseId)
                     .transition(.moveIn)
             case .allDone:
-                AllDoneView(summaries: [], onFinish: onFinish, onList: onList)
+                AllDoneView(summaries: [], onFinish: onFinish)
                     .transition(.moveIn)
             case nil:
                 Color.clear.onAppear(perform: onList)

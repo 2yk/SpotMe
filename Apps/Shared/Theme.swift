@@ -24,6 +24,21 @@ enum Theme {
     static let hairline = Color.white.opacity(0.08)
     static let secondary = Color.white.opacity(0.62)
     static let tertiary = Color.white.opacity(0.36)
+
+    // The watch redesign's tokens (design/handoff/watch-1/BUILD.md, section 3). The phone keeps the older
+    // ones above until its own redesign.
+    /// Stop, End, Discard and heart rate.
+    static let red = pulse
+    /// Round and neutral buttons.
+    static let raised = Color(red: 0.173, green: 0.173, blue: 0.180)
+    /// Supporting text.
+    static let text2 = Color(red: 0.722, green: 0.722, blue: 0.741)
+    /// Units and hints.
+    static let text3 = Color(red: 0.557, green: 0.557, blue: 0.576)
+    /// Tile outline.
+    static let line = Color.white.opacity(0.10)
+    /// Eyebrows and reasons with the wrist down.
+    static let dimmedText = Color(red: 0.431, green: 0.431, blue: 0.451)
 }
 
 extension Font {
@@ -62,38 +77,6 @@ extension View {
                                                            startPoint: .topLeading, endPoint: .bottomTrailing),
                                             lineWidth: 1))
         }
-    }
-}
-
-/// Full-width capsule with dark text: the one primary action on a screen.
-struct PrimaryButtonStyle: ButtonStyle {
-    var tint = Theme.volt
-    var height: CGFloat = 44
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.rounded(.headline, .bold))
-            .foregroundStyle(.black)
-            .frame(maxWidth: .infinity, minHeight: height)
-            .background(Capsule().fill(tint))
-            .opacity(configuration.isPressed ? 0.75 : 1)
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
-            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
-    }
-}
-
-/// Outlined capsule: a secondary action, like Start workout.
-struct SecondaryButtonStyle: ButtonStyle {
-    var tint = Theme.volt
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.rounded(.headline, .bold))
-            .foregroundStyle(tint)
-            .frame(maxWidth: .infinity, minHeight: 44)
-            .background(Capsule().fill(tint.opacity(configuration.isPressed ? 0.25 : 0.12)))
-            .overlay(Capsule().strokeBorder(tint.opacity(0.6), lineWidth: 1.5))
-            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 

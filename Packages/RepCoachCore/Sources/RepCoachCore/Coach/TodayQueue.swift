@@ -12,13 +12,21 @@ public struct TodayQueue: Equatable, Sendable {
     /// - Parameters:
     ///   - statuses: by exerciseId; items without one are pending.
     ///   - promoted: an item the user tapped to do next, e.g. because a machine is busy.
-    public init(items: [PlanItem], statuses: [String: ItemStatus], promoted: String? = nil) {
+    ///   - waiting: exerciseIds put off for later with Skip, in the order they were put off. They stay open and
+    ///     keep their place in the list, but come up again only once nothing but tick-off items is left.
+    public init(items: [PlanItem], statuses: [String: ItemStatus], promoted: String? = nil,
+                waiting: [String] = []) {
         func status(_ item: PlanItem) -> ItemStatus { statuses[item.exerciseId] ?? .pending }
         let open = items.filter { !status($0).isFinished }
+        let putOff = waiting.compactMap { id in open.first { $0.exerciseId == id } }
+        let putOffIds = Set(putOff.map(\.exerciseId))
+        let ready = open.filter { !putOffIds.contains($0.exerciseId) }
+        // What is left to do before they come back: anything that is not a tick-off item.
+        let othersLeft = ready.contains { $0.kind != .checklist }
 
         let lead = open.first { $0.exerciseId == promoted }
-            ?? open.first { if case .inProgress = status($0) { true } else { false } }
-            ?? open.first
+            ?? ready.first { if case .inProgress = status($0) { true } else { false } }
+            ?? (othersLeft ? ready.first : putOff.first ?? ready.first)
         if let group = lead?.supersetGroup {
             upNext = open.filter { $0.supersetGroup == group }
         } else {

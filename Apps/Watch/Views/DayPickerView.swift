@@ -8,30 +8,43 @@ struct DayPickerView: View {
 
     var body: some View {
         let todayKey = today.plan.day(for: .now)?.key
-        NavigationStack {
-            List(today.plan.days) { day in
-                Button {
-                    today.select(day.key)
-                    dismiss()
-                } label: {
-                    HStack(spacing: 6) {
-                        VStack(alignment: .leading, spacing: 1) {
-                            Text(day.title)
-                                .font(.rounded(.body, .semibold))
-                                .foregroundStyle(day.key == today.dayKey ? Theme.volt : .white)
-                            Text(day.focus)
-                                .font(.rounded(.footnote))
-                                .foregroundStyle(Theme.secondary)
-                                .lineLimit(2)
+        ScrollView {
+                VStack(spacing: pt(4)) {
+                    ForEach(today.plan.days) { day in
+                        Button {
+                            today.select(day.key)
+                            dismiss()
+                        } label: {
+                            VStack(alignment: .leading, spacing: pt(1)) {
+                                HStack(spacing: pt(6)) {
+                                    Text(day.title).role(.row, day.key == today.dayKey ? Theme.volt : .white)
+                                    Spacer(minLength: 0)
+                                    if day.key == todayKey {
+                                        Text("Today")
+                                            .role(.eyebrow, .black)
+                                            .padding(.horizontal, pt(5))
+                                            .padding(.vertical, pt(1))
+                                            .background(Capsule().fill(Theme.volt))
+                                    }
+                                }
+                                Text(day.focus)
+                                    .role(.small.weight(.medium), Theme.text2)
+                                    .multilineTextAlignment(.leading)
+                                    .lineLimit(2)
+                            }
+                            .padding(EdgeInsets(top: pt(7), leading: pt(10), bottom: pt(8), trailing: pt(10)))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .surface()
                         }
-                        Spacer(minLength: 0)
-                        if day.key == todayKey {
-                            Text("Today").eyebrow(Theme.volt, size: 9)
-                        }
+                        .buttonStyle(RowButtonStyle())
                     }
                 }
+                .padding(.horizontal, Metrics.side)
+                .padding(.top, Metrics.sheetTop)
+                .padding(.bottom, Metrics.bottom)
             }
-            .navigationTitle("Days")
-        }
+            .ignoresSafeArea()
+            .topFade()
+            .barTitle("Days", close: true)
     }
 }

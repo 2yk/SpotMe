@@ -4,24 +4,13 @@ import RepCoachCore
 /// Hosts one exercise: the set screen, the rest timer, and the break before the next one, in place.
 struct ExerciseView: View {
     @Environment(WorkoutModel.self) private var workout
+    @Environment(\.dimmed) private var dimmed
     @Bindable var flow: ExerciseFlow
-    let onList: () -> Void
     let onFinish: () -> Void
 
     var body: some View {
         content
-            .navigationTitle(showsTitle ? flow.currentItem.name : "")
-            .toolbar {
-                if flow.canUndo {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button { withAnimation(.snappy) { workout.undoLastSet() } } label: {
-                            Image(systemName: "arrow.uturn.backward")
-                        }
-                        .accessibilityLabel("Undo last set")
-                    }
-                }
-            }
-            .containerBackground(tint.gradient.opacity(0.3), for: .navigation)
+            .barTitle(title.text, title.color)
             .animation(.snappy, value: flow.phase)
     }
 
@@ -29,7 +18,9 @@ struct ExerciseView: View {
     private var content: some View {
         switch flow.phase {
         case .set:
-            if flow.currentItem.kind == .timed {
+            if let ramp = flow.currentRamp {
+                RampUpView(flow: flow, step: ramp)
+            } else if flow.currentItem.kind == .timed {
                 HoldView(flow: flow)
             } else {
                 SetView(flow: flow)
@@ -37,20 +28,22 @@ struct ExerciseView: View {
         case .rest(let rest):
             RestView(flow: flow, rest: rest)
         case .finished(let summaries):
-            NextUpView(summaries: summaries, onList: onList, onFinish: onFinish)
+            NextUpView(summaries: summaries, onFinish: onFinish)
         }
     }
 
-    /// Only the set screen has room for the exercise's name.
-    private var showsTitle: Bool {
-        if case .set = flow.phase { true } else { false }
-    }
-
-    private var tint: Color {
+    /// The bar holds only a short title; the exercise's name is in the content.
+    private var title: (text: String, color: Color) {
+        if workout.isPaused { return ("Paused", Theme.amber) }
         switch flow.phase {
-        case .set: flow.currentItem.tint
-        case .rest: Theme.ice
-        case .finished: workout.breakTime == nil ? Theme.mint : Theme.ice
+        case .set:
+            if flow.currentRamp != nil { return ("Ramp-up", Theme.ice) }
+            if flow.currentItem.kind == .amrap { return ("Max reps", Theme.volt) }
+            return ("Set \(flow.current?.set ?? 1) of \(flow.currentTarget.sets)", Theme.volt)
+        case .rest:
+            return ("Rest", dimmed ? Theme.ice.opacity(0.55) : Theme.ice)
+        case .finished:
+            return workout.breakTime == nil ? ("", Theme.mint) : ("Next", dimmed ? Theme.ice.opacity(0.55) : Theme.ice)
         }
     }
 }

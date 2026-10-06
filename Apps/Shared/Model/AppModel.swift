@@ -17,10 +17,31 @@ final class AppModel {
         } catch {
             fatalError("plan.json is missing from the app bundle: \(error)")
         }
-        settings = SettingsStore()
+        let defaults = Self.makeDefaults()
+        settings = SettingsStore(defaults: defaults)
+        #if DEBUG
+        if LaunchOptions.demo, UserDefaults.standard.bool(forKey: "deload") {
+            settings.settings.manualDeloadSetOn = .now
+        }
+        #endif
         container = Self.makeContainer(plan: plan)
         today = TodayModel(plan: plan, context: container.mainContext, settings: settings,
                            dayKey: LaunchOptions.dayKey)
+        today.defaults = defaults
+        today.refresh()
+    }
+
+    /// Where settings and the day's small state live. The demo uses a throwaway suite, so a screenshot's deload
+    /// week or skipped exercise never reaches the real ones.
+    private static func makeDefaults() -> UserDefaults {
+        #if DEBUG
+        if LaunchOptions.demo {
+            let suite = "com.yeshu.RepCoach.demo"
+            UserDefaults().removePersistentDomain(forName: suite)
+            return UserDefaults(suiteName: suite) ?? .standard
+        }
+        #endif
+        return .standard
     }
 
     private static func makeContainer(plan: Plan) -> ModelContainer {

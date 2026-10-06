@@ -1,80 +1,106 @@
 import SwiftUI
 import RepCoachCore
 
-/// Timed sets: Start counts up, with a haptic at the bottom and top of the range; Stop logs the seconds.
+/// Timed sets: Start counts up round the edge, with the target zone marked and a haptic at the bottom and top
+/// of the range; Stop logs the seconds.
 struct HoldView: View {
+    @Environment(WorkoutModel.self) private var workout
     @Bindable var flow: ExerciseFlow
     @FocusState private var focus: SetView.Field?
 
     var body: some View {
+        if let start = flow.holdStartedAt {
+            running(since: start)
+        } else {
+            ready
+        }
+    }
+
+    // MARK: Ready
+
+    private var ready: some View {
         let item = flow.currentItem
         let target = flow.currentTarget
-        VStack(spacing: 6) {
-            HStack(alignment: .firstTextBaseline) {
-                Text("Set \(flow.current?.set ?? 1) of \(target.sets)").eyebrow(Theme.violet)
-                Spacer(minLength: 4)
-                Text(Format.perSet(item, target) ?? "")
-                    .font(.rounded(.footnote, .semibold))
-                    .foregroundStyle(Theme.secondary)
-            }
-            TimelineView(CountUpSchedule(start: flow.holdStartedAt)) { context in
-                HoldRing(elapsed: flow.holdStartedAt.map { context.date.timeIntervalSince($0) } ?? 0,
-                         low: target.secMin ?? 0, high: target.secMax ?? 30)
-            }
-            .frame(maxHeight: .infinity)
+        return VStack(alignment: .leading, spacing: 0) {
+            ExerciseHeader(flow: flow)
 
-            if flow.holdStartedAt == nil {
-                // The weight beside Start, so the ring keeps its room.
-                HStack(spacing: 6) {
-                    if item.takesWeight {
-                        CrownValue(value: $flow.weight, step: flow.increment, range: 0...500, unit: "kg",
-                                   tint: Theme.violet, height: 44, focus: $focus, field: .weight,
-                                   format: Format.weight)
-                            .frame(width: 84)
-                            .id(flow.stepIndex)
-                    }
-                    Button("Start") { flow.startHold() }
-                        .buttonStyle(PrimaryButtonStyle(tint: Theme.violet))
-                }
+            if item.takesWeight {
+                CrownValue(value: $flow.weight, step: flow.increment, range: 0...500, unit: "kg", wide: true,
+                           focus: $focus, field: .weight, format: Format.weight)
+                    .frame(maxHeight: .infinity)
+                    .padding(.top, pt(6))
+                    .id(flow.stepIndex)
             } else {
-                Button("Stop") { withAnimation(.snappy) { flow.stopHold() } }
-                    .buttonStyle(PrimaryButtonStyle(tint: Theme.pulse))
+                // Nothing for the Crown to move: the target to hold for.
+                VStack(spacing: pt(1)) {
+                    Text(Format.range(target.secMin ?? 0, target.secMax ?? target.secMin ?? 0))
+                        .role(.valueWide, .white, single: true)
+                    Text("seconds").role(.eyebrow, Theme.text3, single: true)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .surface()
+                .padding(.top, pt(6))
+            }
+
+            Button("Start") { withAnimation(.snappy) { flow.startHold() } }
+                .buttonStyle(PrimaryButtonStyle())
+                .padding(.top, pt(6))
+        }
+        .screenColumn()
+        .onAppear { if item.takesWeight { focus = .weight } }
+    }
+
+    // MARK: Running
+
+    private func running(since start: Date) -> some View {
+        let item = flow.currentItem
+        let target = flow.currentTarget
+        let low = Double(target.secMin ?? 0)
+        let high = Double(max(target.secMax ?? 30, 1))
+        return TimelineView(CountUpSchedule(start: start)) { context in
+            let elapsed = max(0, context.date.timeIntervalSince(start))
+            let reachedTop = elapsed >= high
+            let color = reachedTop ? Theme.mint : Theme.volt
+            ZStack {
+                ZStack {
+                    EdgeTrack(tint: Theme.volt)
+                    if low > 0, low < high {
+                        EdgeArc(from: low / high, to: 1, tint: Theme.volt, opacity: 0.38)
+                    }
+                    EdgeArc(from: 0, to: min(elapsed / high, 1), tint: color)
+                }
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+
+                VStack(spacing: 0) {
+                    Text(item.name).role(.row, .white).lineLimit(1).minimumScaleFactor(0.8)
+                    Text(Format.clock(Int(elapsed)))
+                        .role(.timer, .white, single: true)
+                        .accessibilityIdentifier("countdown")
+                    Text(reachedTop ? "Top · stop when ready" : elapsed >= low ? "In range" : "Hold")
+                        .role(.eyebrow, color, single: true)
+                        .padding(.top, pt(2))
+                    Text(detail(item, target))
+                        .role(.detail, Theme.text2)
+                        .padding(.top, pt(2))
+                    Spacer(minLength: 0)
+                    Button("Stop") { withAnimation(.snappy) { flow.stopHold() } }
+                        .buttonStyle(PrimaryButtonStyle.destructive)
+                        .padding(.horizontal, pt(6))
+                }
+                .padding(.horizontal, Metrics.side)
+                .padding(.top, Metrics.top + pt(14))
+                .padding(.bottom, pt(19))
+                .ignoresSafeArea()
             }
         }
     }
-}
 
-private struct HoldRing: View {
-    let elapsed: TimeInterval
-    let low: Int
-    let high: Int
-
-    var body: some View {
-        let full = Double(max(high, 1))
-        let reachedLow = elapsed >= Double(low)
-        let reachedHigh = elapsed >= Double(high)
-        ZStack {
-            ProgressRing(progress: elapsed / full, tint: reachedHigh ? Theme.mint : Theme.violet, lineWidth: 9)
-            if low > 0, low < high {
-                Capsule()
-                    .fill(.white.opacity(0.8))
-                    .frame(width: 3, height: 13)
-                    .offset(y: -1)
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    .rotationEffect(.degrees(360 * Double(low) / full))
-            }
-            VStack(spacing: -2) {
-                Text(Format.clock(Int(elapsed)))
-                    .font(.number(34))
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .contentTransition(.numericText())
-                Text(reachedHigh ? "Top" : reachedLow ? "In range" : "Hold")
-                    .eyebrow(reachedHigh ? Theme.mint : Theme.violet, size: 10)
-            }
-            .padding(.horizontal, 12)
-        }
-        .aspectRatio(1, contentMode: .fit)
+    /// "30–45s · 10 kg"
+    private func detail(_ item: PlanItem, _ target: ItemTarget) -> String {
+        var parts = [Format.perSet(item, target) ?? ""]
+        if item.takesWeight, flow.weight > 0 { parts.append(Format.kg(flow.weight)) }
+        return parts.filter { !$0.isEmpty }.joined(separator: " · ")
     }
 }

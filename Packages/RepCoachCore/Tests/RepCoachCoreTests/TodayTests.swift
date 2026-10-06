@@ -121,6 +121,47 @@ final class TodayQueueTests: XCTestCase {
         XCTAssertEqual(ids(TodayQueue(items: monday, statuses: statuses, promoted: "face-pulls").upNext), ["face-pulls"])
     }
 
+    /// Skip puts an exercise off: it stays open where it is in the list, and the next one is up.
+    func testAnExercisePutOffStaysOpenButIsNotUpNext() {
+        let statuses: [String: ItemStatus] = [
+            "recovery-run": .done(t0), "monday-warmup": .done(t0), "weighted-pull-ups": .inProgress(setsDone: 2),
+        ]
+        let queue = TodayQueue(items: monday, statuses: statuses, waiting: ["weighted-pull-ups"])
+        XCTAssertEqual(ids(queue.upNext), ["chest-supported-db-row"])
+        XCTAssertTrue(ids(queue.remaining).contains("weighted-pull-ups"))
+        XCTAssertEqual(queue.totalCount, 10)
+        XCTAssertFalse(queue.isComplete)
+    }
+
+    /// They come back after the last exercise, before the tick-off items (neck work, cooldown), in the order
+    /// they were put off.
+    func testExercisesPutOffComeBackBeforeTheCooldownInTheOrderPutOff() {
+        let done = Set(["recovery-run", "monday-warmup", "chest-supported-db-row", "close-grip-lat-pulldown",
+                        "face-pulls", "incline-db-curl", "hammer-curl"])
+        var statuses = Dictionary(uniqueKeysWithValues: done.map { ($0, ItemStatus.done(t0)) })
+        statuses["weighted-pull-ups"] = .inProgress(setsDone: 1)
+        let queue = TodayQueue(items: monday, statuses: statuses, waiting: ["incline-db-curl", "weighted-pull-ups"])
+        // incline-db-curl is done, so only the pull-ups wait.
+        XCTAssertEqual(ids(queue.upNext), ["weighted-pull-ups"])
+
+        var open = statuses
+        open["face-pulls"] = nil
+        open["close-grip-lat-pulldown"] = nil
+        let two = TodayQueue(items: monday, statuses: open, waiting: ["weighted-pull-ups", "face-pulls"])
+        XCTAssertEqual(ids(two.upNext), ["close-grip-lat-pulldown"])
+        var rest = open
+        rest["close-grip-lat-pulldown"] = .done(t0)
+        XCTAssertEqual(ids(TodayQueue(items: monday, statuses: rest, waiting: ["weighted-pull-ups", "face-pulls"]).upNext),
+                       ["weighted-pull-ups"])
+        XCTAssertEqual(ids(TodayQueue(items: monday, statuses: rest, waiting: ["face-pulls", "weighted-pull-ups"]).upNext),
+                       ["face-pulls"])
+    }
+
+    func testTappingAWaitingExerciseDoesItNow() {
+        let queue = TodayQueue(items: monday, statuses: [:], promoted: "face-pulls", waiting: ["face-pulls"])
+        XCTAssertEqual(ids(queue.upNext), ["face-pulls"])
+    }
+
     func testPromotingAFinishedItemDoesNothing() {
         let queue = TodayQueue(items: monday, statuses: ["recovery-run": .skipped(t0)], promoted: "recovery-run")
         XCTAssertEqual(ids(queue.upNext), ["monday-warmup"])

@@ -17,6 +17,29 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         public var reps: Int
         public var seconds: Int?
         public var timestamp: Date
+        /// A lighter set before the first working set; it travels so the phone keeps it out of the counts.
+        public var isRampUp: Bool
+
+        public init(index: Int, weight: Double, reps: Int, seconds: Int? = nil, timestamp: Date,
+                    isRampUp: Bool = false) {
+            self.index = index
+            self.weight = weight
+            self.reps = reps
+            self.seconds = seconds
+            self.timestamp = timestamp
+            self.isRampUp = isRampUp
+        }
+
+        /// Sets sent before ramp-ups existed are working sets.
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            index = try container.decode(Int.self, forKey: .index)
+            weight = try container.decode(Double.self, forKey: .weight)
+            reps = try container.decode(Int.self, forKey: .reps)
+            seconds = try container.decodeIfPresent(Int.self, forKey: .seconds)
+            timestamp = try container.decode(Date.self, forKey: .timestamp)
+            isRampUp = try container.decodeIfPresent(Bool.self, forKey: .isRampUp) ?? false
+        }
     }
 
     public var id: UUID
@@ -25,6 +48,8 @@ public struct SessionPayload: Codable, Equatable, Sendable {
     public var isDeload: Bool
     public var endedAt: Date?
     public var healthKitWorkoutId: UUID?
+    /// How hard the workout was, 1 to 10; nil when not given (and in payloads sent before it existed).
+    public var effort: Int?
     public var logs: [Log]
 
     /// A snapshot of `session` and everything logged in it.
@@ -35,10 +60,12 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         isDeload = session.isDeload
         endedAt = session.endedAt
         healthKitWorkoutId = session.healthKitWorkoutId
+        effort = session.effort
         logs = session.logs.sorted { $0.order < $1.order }.map { log in
             Log(exerciseId: log.exerciseId, order: log.order, completedAt: log.completedAt, skipped: log.skipped,
                 sets: log.orderedSets.map {
-                    SetEntry(index: $0.index, weight: $0.weight, reps: $0.reps, seconds: $0.seconds, timestamp: $0.timestamp)
+                    SetEntry(index: $0.index, weight: $0.weight, reps: $0.reps, seconds: $0.seconds,
+                             timestamp: $0.timestamp, isRampUp: $0.isRampUp)
                 })
         }
     }
@@ -90,6 +117,7 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         session.isDeload = isDeload
         session.endedAt = endedAt
         session.healthKitWorkoutId = healthKitWorkoutId
+        session.effort = effort
 
         for entry in logs {
             insert(entry, order: entry.order, into: session, context: context)
@@ -118,7 +146,7 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         log.skipped = entry.skipped
         for set in entry.sets {
             let row = SetLog(index: set.index, weight: set.weight, reps: set.reps, seconds: set.seconds,
-                             timestamp: set.timestamp)
+                             timestamp: set.timestamp, isRampUp: set.isRampUp)
             context.insert(row)
             row.log = log
         }

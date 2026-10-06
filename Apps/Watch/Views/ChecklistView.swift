@@ -7,52 +7,66 @@ struct ChecklistView: View {
     let item: PlanItem
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 8) {
-                    Image(systemName: item.symbol)
-                        .font(.system(size: 15, weight: .bold))
-                        .foregroundStyle(Theme.ice)
-                        .frame(width: 34, height: 34)
-                        .background(Circle().fill(Theme.ice.opacity(0.17)))
-                    if let display = item.display, display != "—" {
-                        Text(display).font(.number(24))
-                    }
-                }
-                Text(item.name).font(.rounded(.title3, .bold))
-                if let note = item.note {
-                    Text(note)
-                        .font(.rounded(.footnote))
-                        .foregroundStyle(Theme.secondary)
-                }
-                if let steps = item.steps {
-                    VStack(spacing: 5) {
-                        ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
-                            HStack(alignment: .top, spacing: 8) {
-                                Text("\(index + 1)")
-                                    .font(.number(11, weight: .heavy))
-                                    .foregroundStyle(.black)
-                                    .frame(width: 18, height: 18)
-                                    .background(Circle().fill(Theme.ice))
-                                Text(step).font(.rounded(.footnote, .medium))
-                                Spacer(minLength: 0)
+        GeometryReader { geometry in
+            ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(item.name)
+                            .role(.title)
+                            .lineLimit(3)
+                            .fixedSize(horizontal: false, vertical: true)
+                        if let steps = item.steps {
+                            VStack(alignment: .leading, spacing: pt(7)) {
+                                ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
+                                    HStack(alignment: .firstTextBaseline, spacing: pt(6)) {
+                                        Text("\(index + 1)")
+                                            .role(.small.weight(.heavy).size(11), Theme.volt)
+                                            .frame(width: pt(12), alignment: .leading)
+                                        Text(step)
+                                            .role(TextRole(size: 13, line: 16, weight: .medium))
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+                                }
                             }
-                            .padding(8)
-                            .card(radius: 12)
+                            .padding(.top, pt(6))
+                        } else {
+                            if let display = item.display, !["", "—"].contains(display) {
+                                Text(display).role(.eyebrow, Theme.text3).padding(.top, pt(3))
+                            }
+                            if let note = item.note {
+                                Text(note)
+                                    .role(TextRole(size: 13, line: 16, weight: .medium), Theme.text2)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .padding(.top, pt(4))
+                            }
                         }
                     }
+                    .padding(.horizontal, pt(4))
+                    Spacer(minLength: pt(8))
+                    Button("Done") { workout.finishChecklist(item) }
+                        .buttonStyle(PrimaryButtonStyle())
+                    Button("Skip") { workout.finishChecklist(item, skipped: true) }
+                        .buttonStyle(TextButtonStyle())
+                        .padding(.top, pt(2))
+                        .padding(.bottom, Metrics.bottom - pt(2))
+                        .id("skip")
                 }
-                Button("Done") { workout.finishChecklist(item) }
-                    .buttonStyle(PrimaryButtonStyle(tint: Theme.mint))
-                    .padding(.top, 2)
-                Button("Skip") { workout.finishChecklist(item, skipped: true) }
-                    .buttonStyle(.plain)
-                    .font(.rounded(.footnote, .semibold))
-                    .foregroundStyle(Theme.secondary)
-                    .frame(maxWidth: .infinity)
+                .padding(.horizontal, Metrics.side)
+                .padding(.top, Metrics.top)
+                .frame(minHeight: geometry.size.height)
+            }
+            #if DEBUG
+            .task {
+                guard LaunchOptions.screen == "checklist-end" else { return }
+                try? await Task.sleep(for: .seconds(0.8))
+                proxy.scrollTo("skip", anchor: .bottom)
+            }
+            #endif
             }
         }
-        .navigationTitle(item.group)
-        .containerBackground(Theme.ice.gradient.opacity(0.28), for: .navigation)
+        .ignoresSafeArea()
+        .topFade()
+        .barTitle(item.group.components(separatedBy: " · ")[0])
     }
 }

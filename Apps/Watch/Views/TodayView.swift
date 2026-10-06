@@ -31,8 +31,7 @@ struct TodayView: View {
                     .task { await ScreenScript.scroll(proxy, today: today) }
                     #endif
             }
-            .navigationTitle("\(today.queue.doneCount)/\(today.queue.totalCount)")
-            .containerBackground(Theme.volt.gradient.opacity(0.3), for: .navigation)
+            .barTitle("\(today.queue.doneCount)/\(today.queue.totalCount)", workout.isPaused ? Theme.amber : Theme.volt, root: true)
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .workout:
@@ -49,23 +48,17 @@ struct TodayView: View {
             .sheet(isPresented: $choosingDay) {
                 DayPickerView()
             }
+            .sheet(item: $workout.effortPrompt, onDismiss: { workout.effortClosed() }) { prompt in
+                EffortView(initial: prompt.initial)
+            }
             .sheet(item: $workout.summary) { summary in
                 WorkoutSummaryView(summary: summary)
             }
-            .finishDialog(isPresented: $confirmingFinish, workout: workout)
-            .confirmationDialog("Discard workout?", isPresented: $confirmingDiscard) {
-                Button("Discard", role: .destructive) { withAnimation(.snappy) { workout.discardWorkout() } }
-                Button("Keep it", role: .cancel) {}
-            } message: {
-                Text("Everything logged today is deleted, here and on your iPhone, and nothing stays in Health.")
-            }
+            .sheet(isPresented: $confirmingFinish) { EndWorkoutSheet() }
+            .sheet(isPresented: $confirmingDiscard) { EndWorkoutSheet(startsDiscarding: true) }
         }
         // On the stack, not its root: Start workout pushes the workout screen before this can fire.
-        .alert("Not saving to Health", isPresented: startProblemShown) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(workout.startProblem ?? "")
-        }
+        .sheet(isPresented: startProblemShown) { HealthAlertSheet(message: workout.startProblem ?? "") }
         #if DEBUG
         .task {
             ScreenScript.run(today: today, workout: workout, path: $path, choosingDay: $choosingDay,
@@ -76,29 +69,30 @@ struct TodayView: View {
 
     private var list: some View {
         List {
-            DayHeader(day: today.day, isDeload: today.isDeload) { choosingDay = true }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: 0, leading: 6, bottom: 4, trailing: 6))
-
-            if workout.health.isActive {
-                WorkoutBar()
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
-            }
-
-            if today.queue.isComplete {
-                AllDoneCard(count: today.queue.totalCount,
-                            onFinish: workout.canFinish ? { Task { await workout.finishWorkout() } } : nil)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-            } else {
-                StartButton(started: workout.hasStarted, paused: workout.isPaused, next: workout.currentName) {
-                    workout.startOrContinue()
-                    path = [.workout]
+            // The day, the live strip and the one big button are one block, 6 pt between them.
+            VStack(spacing: pt(6)) {
+                if today.queue.isComplete {
+                    AllDoneCard(count: today.queue.totalCount, day: today.day.headline,
+                                minutes: today.session.map { Int(Date.now.timeIntervalSince($0.date) / 60) },
+                                onFinish: workout.canFinish ? { Task { await workout.finishWorkout() } } : nil)
+                } else {
+                    if workout.health.isActive {
+                        RunningHeader(day: today.day, isDeload: today.isDeload, paused: workout.isPaused) {
+                            choosingDay = true
+                        }
+                    } else {
+                        DayHeader(day: today.day, isDeload: today.isDeload) { choosingDay = true }
+                    }
+                    if !isRestDay {
+                        StartButton(started: workout.hasStarted, paused: workout.isPaused, next: workout.currentName) {
+                            workout.startOrContinue()
+                            path = [.workout]
+                        }
+                    }
                 }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 6, trailing: 0))
             }
+            .listRowBackground(Color.clear)
+            .listRowInsets(rowInsets(top: Metrics.rootTop, bottom: pt(-1.5)))
 
             ForEach(openItems) { item in
                 Button {
@@ -107,6 +101,9 @@ struct TodayView: View {
                 } label: {
                     ItemRow(item: item)
                 }
+                .buttonStyle(RowButtonStyle())
+                .listRowBackground(Color.clear)
+                .listRowInsets(rowInsets())
                 .swipeActions(edge: .trailing) {
                     if item.kind == .checklist {
                         Button { withAnimation(.snappy) { workout.tickOff(item) } } label: {
@@ -115,49 +112,79 @@ struct TodayView: View {
                         .tint(Theme.mint)
                     }
                     Button { withAnimation { workout.skip(item) } } label: {
-                        Label("Skip", systemImage: "forward.fill")
+                        Label("Skip today", systemImage: "forward.fill")
                     }
                     .tint(Theme.ember)
                 }
             }
 
             if !today.queue.finished.isEmpty {
-                Section {
-                    ForEach(today.queue.finished) { item in
+                Text("Done")
+                    .role(.eyebrow, Theme.text3)
+                    .padding(EdgeInsets(top: pt(10), leading: pt(4), bottom: pt(0), trailing: 0))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(rowInsets())
+                ForEach(today.queue.finished) { item in
+                    // A row skipped for the day says "tap to do it": a tap opens it again and starts it.
+                    Button {
+                        guard today.status(of: item).isSkipped else { return }
+                        workout.reopen(item)
+                        workout.open(item)
+                        path = [.workout]
+                    } label: {
                         ItemRow(item: item)
-                            .swipeActions(edge: .trailing) {
-                                Button { withAnimation { workout.reopen(item) } } label: {
-                                    Label("Reopen", systemImage: "arrow.uturn.backward")
-                                }
-                                .tint(Theme.ice)
-                            }
                     }
-                } header: {
-                    Text("Done").eyebrow(Theme.tertiary)
+                    .buttonStyle(RowButtonStyle())
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(rowInsets())
+                        .swipeActions(edge: .trailing) {
+                            Button { withAnimation { workout.reopen(item) } } label: {
+                                Label("Reopen", systemImage: "arrow.uturn.backward")
+                            }
+                            .tint(Theme.ice)
+                        }
                 }
             }
 
             if workout.canFinish || workout.canDiscard {
-                VStack(spacing: 10) {
+                VStack(spacing: pt(2)) {
                     if workout.canFinish, !today.queue.isComplete {
                         Button("Finish workout", action: askToFinish)
-                            .buttonStyle(SecondaryButtonStyle(tint: Theme.pulse))
+                            .buttonStyle(NeutralButtonStyle(height: 40, font: .row))
                     }
                     if workout.canDiscard {
                         Button { confirmingDiscard = true } label: {
-                            Label("Discard workout", systemImage: "trash")
-                                .font(.rounded(.footnote, .semibold))
-                                .foregroundStyle(Theme.ember)
+                            HStack(spacing: pt(5)) {
+                                Image(systemName: "trash").font(.system(size: pt(12), weight: .semibold))
+                                Text("Discard workout")
+                            }
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(TextButtonStyle(color: Theme.red))
                     }
                 }
                 .frame(maxWidth: .infinity)
                 .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                .listRowInsets(rowInsets(top: pt(8), bottom: Metrics.bottom))
                 .id(Self.endOfList)
             }
         }
+        .listStyle(.plain)
+        // Rows are as tall as their content: the list's own minimum would leave holes round short ones.
+        .environment(\.defaultMinListRowHeight, 1)
+        // The design lays Today out from the whole screen; the list runs under the bar and off the bottom edge.
+        .ignoresSafeArea()
+        .topFade()
+    }
+
+    /// The list adds some room between rows of its own, so the insets are small: rows come out 4 pt apart.
+    private func rowInsets(top: CGFloat = pt(-1.5), bottom: CGFloat = pt(-1.5)) -> EdgeInsets {
+        EdgeInsets(top: top, leading: Metrics.side, bottom: bottom, trailing: Metrics.side)
+    }
+
+    /// Nothing to train today: the day's items are all tick-offs and notes (Saturday).
+    private var isRestDay: Bool {
+        !today.day.items.contains { $0.kind != .checklist }
     }
 
     /// Everything still to do, in plan order.
@@ -194,21 +221,29 @@ private struct StartButton: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 0) {
-                Label(started ? "Continue" : "Start workout", systemImage: "play.fill")
-                if started, let next {
-                    Text(paused ? "Paused · \(next)" : next)
-                        .font(.rounded(.caption2, .semibold))
-                        .lineLimit(1)
-                        .opacity(0.7)
+            if started {
+                VStack(spacing: 0) {
+                    Text("Continue")
+                    if let next {
+                        Text(paused ? "Paused · \(next)" : next)
+                            .role(.small.weight(.bold), .black.opacity(0.66))
+                            .lineLimit(paused ? 2 : 1)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: pt(160))
+                    }
+                }
+            } else {
+                HStack(spacing: pt(6)) {
+                    Image(systemName: "play.fill").font(.system(size: pt(13)))
+                    Text("Start workout")
                 }
             }
-            .padding(.vertical, 4)
         }
-        .buttonStyle(PrimaryButtonStyle(tint: paused ? Theme.amber : Theme.volt))
+        .buttonStyle(PrimaryButtonStyle(tint: paused ? Theme.amber : Theme.volt, height: started ? 54 : 48))
     }
 }
 
+/// Before the workout: the day, its name and what it trains.
 private struct DayHeader: View {
     let day: PlanDay
     let isDeload: Bool
@@ -216,54 +251,100 @@ private struct DayHeader: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 6) {
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack(spacing: 5) {
-                        Text(day.title).eyebrow(Theme.volt)
-                        if isDeload {
-                            Text("Deload")
-                                .eyebrow(.black, size: 9)
-                                .padding(.horizontal, 5)
-                                .padding(.vertical, 1)
-                                .background(Capsule().fill(Theme.ember))
-                        }
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(spacing: pt(3)) {
+                    Text(day.title).role(.eyebrow, Theme.volt)
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: pt(9), weight: .bold))
+                        .foregroundStyle(Theme.text3)
+                    if isDeload {
+                        Text("Deload")
+                            .role(.eyebrow, .black)
+                            .padding(.horizontal, pt(5))
+                            .padding(.vertical, pt(1))
+                            .background(Capsule().fill(Theme.ember))
                     }
-                    Text(day.focus)
-                        .font(.rounded(.footnote, .medium))
-                        .foregroundStyle(Theme.secondary)
-                        .lineLimit(2)
                 }
-                Spacer(minLength: 0)
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(Theme.tertiary)
+                Text(day.headline).role(.titleXL).lineLimit(2).minimumScaleFactor(0.8)
+                Text(day.subtitle)
+                    .role(.detail, Theme.text2)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
+            .padding(.horizontal, pt(6))
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .buttonStyle(.plain)
     }
 }
 
+/// While the Health workout runs: the day as one line, then heart rate and time.
+private struct RunningHeader: View {
+    @Environment(HealthWorkout.self) private var health
+    let day: PlanDay
+    let isDeload: Bool
+    let paused: Bool
+    let action: () -> Void
+
+    var body: some View {
+        VStack(spacing: pt(4)) {
+            Button(action: action) {
+                HStack(spacing: pt(3)) {
+                    Text("\(day.title) · \(day.headline)").role(.eyebrow, Theme.volt).lineLimit(1)
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: pt(9), weight: .bold))
+                        .foregroundStyle(Theme.text3)
+                    if isDeload {
+                        Text("Deload")
+                            .role(.eyebrow, .black)
+                            .padding(.horizontal, pt(5))
+                            .padding(.vertical, pt(1))
+                            .background(Capsule().fill(Theme.ember))
+                    }
+                }
+                .padding(.horizontal, pt(6))
+                .frame(maxWidth: .infinity, minHeight: pt(30), alignment: .leading)
+                .padding(.vertical, pt(-9))
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            HStack(alignment: .firstTextBaseline, spacing: pt(3)) {
+                Image(systemName: "heart.fill")
+                    .font(.system(size: pt(13), weight: .bold))
+                    .foregroundStyle(Theme.red)
+                Text(health.heartRate.map { "\(Int($0.rounded()))" } ?? "--").role(.titleXL)
+                Text(paused ? "Paused" : "bpm").role(.eyebrow, paused ? Theme.amber : Theme.text3)
+                Spacer(minLength: pt(4))
+                ElapsedTime(size: 20)
+            }
+            .padding(.horizontal, pt(6))
+        }
+    }
+}
+
+/// Everything is done: Finish workout while the session is still open.
 private struct AllDoneCard: View {
     let count: Int
+    let day: String
+    let minutes: Int?
     /// Offered once everything is done, while the session is still open.
     let onFinish: (() -> Void)?
 
     var body: some View {
-        VStack(spacing: 4) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 30, weight: .bold))
+        VStack(spacing: pt(3)) {
+            Image(systemName: "checkmark")
+                .font(.system(size: pt(24), weight: .heavy))
                 .foregroundStyle(Theme.mint)
-            Text("All \(count) done").font(.rounded(.headline, .bold))
-            Text("Great session.").font(.rounded(.footnote)).foregroundStyle(Theme.secondary)
+                .frame(width: pt(44), height: pt(44))
+                .background(Circle().fill(Theme.mint.opacity(0.16)))
+            Text("All \(count) done").role(.titleXL)
+            Text(minutes.map { "\(day) · \($0) min" } ?? day).role(.detail, Theme.text2)
             if let onFinish {
                 Button("Finish workout", action: onFinish)
-                    .buttonStyle(PrimaryButtonStyle(tint: Theme.mint))
-                    .padding(.top, 6)
+                    .buttonStyle(PrimaryButtonStyle())
+                    .padding(.top, pt(5))
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
-        .padding(.horizontal, 10)
-        .glowCard(Theme.mint)
     }
 }

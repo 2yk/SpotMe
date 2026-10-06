@@ -27,10 +27,18 @@ struct SettingsScreen: View {
                     Toggle(isOn: manualDeload) {
                         Label("This week is a deload", systemImage: "leaf")
                     }
+                    Picker(selection: $store.settings.rampUps) {
+                        ForEach(RampUpSetting.allCases, id: \.self) { Text($0.title).tag($0) }
+                    } label: {
+                        Label("Ramp-up sets", systemImage: "stairs")
+                    }
                 } header: {
                     Text("Program")
                 } footer: {
-                    Text(programFooter)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(programFooter)
+                        Text("Lighter sets before your first working set. They aren't counted.")
+                    }
                 }
                 .listRowBackground(Theme.card)
 
@@ -193,5 +201,15 @@ struct SettingsScreen: View {
             return "Set a start date and every \(app.plan.deloadEveryNthWeek)th week becomes a lighter deload week."
         }
         return "Week \(week) of the program. Next deload in \(weeks) week\(weeks == 1 ? "" : "s")."
+    }
+}
+
+private extension RampUpSetting {
+    var title: String {
+        switch self {
+        case .off: "Off"
+        case .mainLifts: "Main lifts"
+        case .everyWeightedLift: "Every weighted lift"
+        }
     }
 }

@@ -93,4 +93,23 @@ final class DemoDataTests: StoreTestCase {
         let plank = try XCTUnwrap(try history.history(for: "weighted-plank").first?.first)
         XCTAssertGreaterThan(plank.reps, 0, "timed sets store seconds")
     }
+
+    func testRampUpsDefaultToMainLiftsAndSettingsSavedBeforeThemKeepThat() throws {
+        XCTAssertEqual(TrainingSettings().rampUps, .mainLifts)
+        let saved = #"{"programStart":780710400,"restHaptics":false,"healthWorkouts":false}"#
+        let settings = try JSONDecoder().decode(TrainingSettings.self, from: Data(saved.utf8))
+        XCTAssertEqual(settings.rampUps, .mainLifts)
+        XCTAssertFalse(settings.healthWorkouts)
+    }
+
+    func testRampUpSettingRoundTripsAndAnUnknownValueFallsBack() throws {
+        for setting in RampUpSetting.allCases {
+            let settings = TrainingSettings(restHaptics: false, rampUps: setting)
+            XCTAssertEqual(try JSONDecoder().decode(TrainingSettings.self, from: JSONEncoder().encode(settings)), settings)
+        }
+        let future = #"{"restHaptics":false,"rampUps":"everySet"}"#
+        let settings = try JSONDecoder().decode(TrainingSettings.self, from: Data(future.utf8))
+        XCTAssertEqual(settings.rampUps, .mainLifts)
+        XCTAssertFalse(settings.restHaptics)
+    }
 }
