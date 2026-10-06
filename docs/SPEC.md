@@ -47,6 +47,13 @@ Not an App Store product. No accounts, no analytics, no third-party dependencies
 - Otherwise → same weight.
 - Show the reason in one short line: "6 reps, below 8 · drop to 17.5 kg", "14 reps, above 12 · up to 22.5 kg", "Top of range · stay at 20 kg" or "In range · stay at 20 kg".
 
+**Ramp-up sets (`ProgressionEngine.rampUps`, reference in `docs/engine_reference.py`):** one or two lighter, short sets before the first working set, so the session doesn't start cold at last time's limit. The working sets, their weight and "beat last time" are unchanged.
+- A **main lift** is a weighted exercise with 2:00 or more of rest. The first main lift in the day's plan order gets two ramp-ups (50% × 8, then 75% × 4); every other main lift gets one (70% × 5). Smaller lifts get none, or one at 70% × 5 with the setting "Every weighted lift".
+- Weight = today's working weight (set 1's target, the deload weight in a deload week) × the factor, rounded down to the increment. A set that rounds to zero, to no more than the one before it, or to the working weight is left out. Reps never go above the top of the rep range. No working weight yet (first time): none.
+- An exercise whose logged weight is added to bodyweight (`bodyweightBase` on the plan item; the weighted pull-ups): bodyweight × 5 (weight 0), and for the day's first main lift a second at half the added weight × 3.
+- Rest after a ramp-up set is 60 s (`ProgressionEngine.restAfterRampUpSec`).
+- **Ramp-up sets are never counted:** not in "Set 2 of 4" or an item's status (an exercise with only ramp-ups logged is still pending), not in set counts, last-time numbers, progression history or charts. They are saved (marked) and exported.
+
 **Pull-up endurance (Thursday):** volume-set reps = round(0.6 × today's max-rep set). If today's AMRAP isn't logged yet, use the last one.
 
 **`reps` and `timed` kinds:** no automatic weight changes. When every set reaches the top of the range, show "Top of range. Add weight or make it harder next time."
@@ -107,21 +114,22 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 ## iPhone app
 
 - **Today:** the day's card and the same list, read-mostly (useful for checking the day before training). Nothing is highlighted.
-- **History:** per exercise, sessions newest first with every set. A Swift Charts line of top-set weight and estimated 1RM (Epley) over time.
+- **History:** per exercise, sessions newest first with every set (ramp-up sets left out of set lists, counts, top-set weight and the chart). A Swift Charts line of top-set weight and estimated 1RM (Epley) over time.
 - **Plan:** view all days as the user has them. Tap an exercise to rename it or change its increment, rep range, sets, rest and starting weight (a new name shows everywhere the exercise does), or remove it from the day. Swipe to remove; Edit to reorder; **Add exercise** (+) for a new one (name, logged as weight and reps, reps, timed or tick-off, section, prescription) or one from another day, which keeps its history. Added exercises go after the day's last exercise, ahead of the cooldown. "Reset Monday to the plan" and "Reset everything to the plan" keep history, and the user's own exercises stay defined (Add exercise → From the plan brings one back; a new exercise never reuses an id with history). plan.json never changes.
 - **Export:** every set as a CSV file (date, time, day, exercise, set, weight, reps, seconds, deload, skipped, session, ramp-up, effort), from the share button in History or Settings → Your data, for Numbers, Excel or Google Sheets. Ramp-up sets are listed and marked "yes" in the Ramp-up column (the Set number is the order performed, ramp-ups included); Effort (1–10, blank when not given) is on every row of its session.
-- **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, rest timer haptics on/off, "Save workouts to Health" on/off (off: nothing reaches Health), the watch's Health access and a shortcut to the Health app.
+- **Settings:** program start date (drives deload weeks), "This week is a deload" toggle, **Ramp-up sets** (Off, Main lifts (default), Every weighted lift; footer "Lighter sets before your first working set. They aren't counted."; sent to the watch with the other settings), rest timer haptics on/off, "Save workouts to Health" on/off (off: nothing reaches Health), the watch's Health access and a shortcut to the Health app.
 - **Body log:** flexed arm and waist in inches, every 2 weeks, from the Body card in History (charts of both, and every measurement; swipe to delete). Adding one starts from the last values: type them or step by ¼″. The latest is compared with the newest measurement at least 12 days older (else the one before it). **Warn if the waist is up more than 1 inch while the arms grew less than ¼″.** Once the log is in use, Today shows "Body log due" when two weeks have passed.
 
 ## Data and sync
 
 - SwiftData on both devices.
-- Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId?), `ExerciseLog` (session, exerciseId, order, completedAt?), `SetLog` (log, index, weight, reps, seconds?, timestamp), `ExerciseSettings` (exerciseId, overrides for name/increment/rep range/sets/rest/startWeight), `BodyMeasurement` (id, date, arm, waist, in inches; iPhone only), `PlanEditsRecord` (the user's `PlanEdits`: each changed day's exercise order, and the exercises they created, with ids starting "custom-").
+- Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId?, endedAt?, effort? 1–10), `ExerciseLog` (session, exerciseId, order, completedAt?, skipped), `SetLog` (log, index, weight, reps, seconds?, timestamp, isRampUp), `ExerciseSettings` (exerciseId, overrides for name/increment/rep range/sets/rest/startWeight), `BodyMeasurement` (id, date, arm, waist, in inches; iPhone only), `PlanEditsRecord` (the user's `PlanEdits`: each changed day's exercise order, and the exercises they created, with ids starting "custom-").
+- `SetLog.index` is the order performed in the exercise, ramp-up sets included. `ExerciseLog.orderedSets` is every set (the CSV); anything that counts sets (`status`, `orderedCountedSets`, `HistoryStore`, `WorkoutSession.countedSetCount`) leaves ramp-up sets out. Both new fields are lightweight additions to the store: older stores open with no ramp-ups and no effort.
 - **The watch works fully without the phone nearby.** It keeps its own store and the history it needs for targets.
 - WatchConnectivity:
-  - Watch → phone: each finished `WorkoutSession` (with its logs) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID.
+  - Watch → phone: each finished `WorkoutSession` (with its logs, each set's ramp-up mark and the session's effort) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID; sending a session again replaces the phone's copy, which is how an effort given after Finish arrives. Payloads from before ramp-ups and effort decode as working sets and no effort.
   - The watch's own application context (`WatchStatus`): its Health access, the ids of every session it has, and the ids it discarded. The phone deletes discarded sessions and never stores them again, and sends back (via `transferUserInfo`) every session the watch doesn't have, so a reinstalled watch app gets its history and today's progress back. A restored copy never overwrites a session the watch has.
-  - Phone → watch: settings, exercise overrides and plan edits via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
+  - Phone → watch: settings (including the ramp-up setting), exercise overrides and plan edits via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
 - Nothing is deleted automatically; only Discard workout deletes.
 
 ## Out of scope
