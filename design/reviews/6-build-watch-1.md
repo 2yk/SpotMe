@@ -60,3 +60,7 @@ Only Yeshu's real watch can confirm: effort shows on the workout in Fitness; the
 start small and grow.
 
 The 55 watch boards moved to the canvas page Live · Watch.
+
+Follow-up (33175aa): the chevron now stays with the last word on every break; checked on 3.14, 3.8 and 3.12.
+Known small difference kept: on 3.12 a long name beside the figure is cut at two lines, where the board
+allows three.
