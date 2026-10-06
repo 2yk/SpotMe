@@ -158,4 +158,76 @@ final class ProgressionEngineTests: XCTestCase {
         XCTAssertEqual(ProgressionEngine.roundDown(19, to: 2.5), 17.5)
         XCTAssertEqual(ProgressionEngine.roundDown(17.5, to: 2.5), 17.5)
     }
+
+    // MARK: Ramp-up sets
+
+    /// The "ramp-up:" lines printed by docs/engine_reference.py.
+    func testRampUpVectors() {
+        func ramp(_ working: Double?, _ inc: Double, _ repMax: Int, _ role: RampUpRole,
+                  _ setting: RampUpSetting = .mainLifts, bodyweight: Bool = false) -> [LoggedSet] {
+            ProgressionEngine.rampUps(working: working, increment: inc, repMax: repMax, role: role, setting: setting,
+                                      bodyweightBase: bodyweight)
+                .map { LoggedSet(weight: $0.weight, reps: $0.reps) }
+        }
+        XCTAssertEqual(ramp(22.5, 2.5, 10, .first), s([(10, 8), (15, 4)]), "Incline DB Press 22.5, first")
+        XCTAssertEqual(ramp(20, 2.5, 12, .first), s([(10, 8), (15, 4)]), "20 kg x 12 case, first")
+        XCTAssertEqual(ramp(45, 5, 10, .main), s([(30, 5)]), "Machine Chest Press 45, main")
+        XCTAssertEqual(ramp(17.5, 2.5, 10, .main), s([(10, 5)]), "Seated DB Shoulder Press 17.5, main")
+        XCTAssertEqual(ramp(120, 10, 12, .first), s([(60, 8), (90, 4)]), "Leg Press 120, first")
+        XCTAssertEqual(ramp(40, 10, 12, .first), s([(20, 8), (30, 4)]), "Leg Press 40, first")
+        XCTAssertEqual(ramp(20, 10, 12, .first), s([(10, 8)]), "Leg Press 20, first (second equals first: left out)")
+        XCTAssertEqual(ramp(10, 10, 12, .first), [], "Leg Press 10, first (rounds to zero: none)")
+        XCTAssertEqual(ramp(60, 5, 12, .main), s([(40, 5)]), "Hip Thrust 60 inc 5, main")
+        XCTAssertEqual(ramp(5, 2.5, 10, .first), s([(2.5, 8)]), "DB 5 kg, first")
+        XCTAssertEqual(ramp(2.5, 2.5, 10, .main), [], "DB 2.5 kg, main (rounds to zero)")
+        XCTAssertEqual(ramp(7.5, 2.5, 15, .small), [], "Cable Lateral Raise 7.5, small, setting main")
+        XCTAssertEqual(ramp(7.5, 2.5, 15, .small, .everyWeightedLift), s([(5, 5)]),
+                       "Cable Lateral Raise 7.5, small, setting all")
+        XCTAssertEqual(ramp(6, 1, 20, .small, .everyWeightedLift), s([(4, 5)]), "DB Lateral Raise 6 inc 1, small, all")
+        XCTAssertEqual(ramp(22.5, 2.5, 10, .first, .off), [], "Incline DB Press 22.5, first, setting off")
+        XCTAssertEqual(ramp(nil, 2.5, 10, .first), [], "First time (no working weight)")
+        XCTAssertEqual(ramp(20, 2.5, 10, .first), s([(10, 8), (15, 4)]), "Deload week, worked out from 20")
+        XCTAssertEqual(ramp(15, 2.5, 5, .first, bodyweight: true), s([(0, 5), (7.5, 3)]), "Weighted Pull-ups +15, first")
+        XCTAssertEqual(ramp(2.5, 2.5, 5, .first, bodyweight: true), s([(0, 5)]), "+2.5, first (half rounds to zero)")
+        XCTAssertEqual(ramp(15, 2.5, 5, .main, bodyweight: true), s([(0, 5)]), "Weighted Pull-ups +15, main")
+        XCTAssertEqual(ramp(0, 2.5, 5, .first, bodyweight: true), [], "Weighted Pull-ups bodyweight only, first")
+        XCTAssertEqual(ramp(100, 2.5, 5, .first), s([(50, 5), (75, 4)]), "reps capped at the top of the range")
+    }
+
+    func testRampUpsOffForNoRoleAndTheSettingDefault() {
+        XCTAssertEqual(ProgressionEngine.rampUps(working: 20, increment: 2.5, repMax: 10, role: nil).count, 0)
+        XCTAssertEqual(ProgressionEngine.rampUps(working: 20, increment: 2.5, repMax: 10, role: .first).count, 2,
+                       "defaults to main lifts")
+        XCTAssertEqual(ProgressionEngine.restAfterRampUpSec, 60)
+    }
+
+    /// The "Wednesday roles" line printed by docs/engine_reference.py.
+    func testRampUpRolesFollowThePlansOrder() throws {
+        func item(_ kind: ItemKind, rest: Int? = nil) -> PlanItem {
+            PlanItem(name: "x", exerciseId: UUID().uuidString, group: "", kind: kind, restSec: rest)
+        }
+        let wednesday = [item(.checklist), item(.weighted, rest: 150), item(.weighted, rest: 150),
+                         item(.weighted, rest: 150), item(.weighted, rest: 75), item(.reps, rest: 45)]
+        XCTAssertEqual((0..<wednesday.count).map { ProgressionEngine.rampUpRole(dayItems: wednesday, index: $0) },
+                       [nil, .first, .main, .main, .small, nil])
+        XCTAssertEqual(ProgressionEngine.rampUpRole(dayItems: [item(.weighted)], index: 0), .small, "no rest set")
+
+        // The real week: pull-ups lead Monday, the incline press leads Wednesday.
+        let plan = try Plan.bundled()
+        func role(_ day: String, _ id: String) -> RampUpRole? {
+            let items = plan.days.first { $0.key == day }!.items
+            return ProgressionEngine.rampUpRole(dayItems: items, index: items.firstIndex { $0.exerciseId == id }!)
+        }
+        XCTAssertEqual(role("monday", "weighted-pull-ups"), .first)
+        XCTAssertEqual(role("monday", "chest-supported-db-row"), .main)
+        XCTAssertEqual(role("wednesday", "incline-db-press"), .first)
+        XCTAssertEqual(role("wednesday", "machine-chest-press-or-flat-bench"), .main)
+    }
+
+    func testRampUpSettingStoresStableStrings() throws {
+        XCTAssertEqual(RampUpSetting.allCases.map(\.rawValue), ["off", "mainLifts", "everyWeightedLift"])
+        XCTAssertEqual(RampUpRole.first.rawValue, "first")
+        XCTAssertEqual(try JSONDecoder().decode(RampUpSetting.self, from: Data(#""everyWeightedLift""#.utf8)),
+                       .everyWeightedLift)
+    }
 }

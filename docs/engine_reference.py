@@ -102,6 +102,58 @@ def reached_top(sets, top, planned):
     done = sets[:planned]
     return len(done) >= planned and all(s >= top for s in done)
 
+# Ramp-up sets (new, approved 6 Oct 2026): one or two lighter, short sets before the first working set.
+# They are never counted: not in history, progression, charts or set counts. Nothing above changes.
+
+# (factor of the working weight, reps) per role
+RAMP_UP_TABLE = {
+    "first": [(0.50, 8), (0.75, 4)],   # the first main lift of the day
+    "main":  [(0.70, 5)],              # every other main lift
+    "small": [(0.70, 5)],              # smaller lifts, only with the setting "Every weighted lift"
+}
+
+REST_AFTER_RAMP_UP_SEC = 60
+
+def role(day_items, index):
+    """day_items: the day's items in today's order, each a dict(kind, restSec). Main lift = weighted with
+    rest of 120 s or more. The first main lift in the day's order is 'first'. Fixed by the plan's order,
+    not by the order the exercises are done in."""
+    it = day_items[index]
+    if it["kind"] != "weighted":
+        return None
+    if it.get("restSec", 0) < 120:
+        return "small"
+    earlier = [i for i in day_items[:index] if i["kind"] == "weighted" and i.get("restSec", 0) >= 120]
+    return "main" if earlier else "first"
+
+def ramp_ups(working, inc, rep_max, role, setting="main", bodyweight_base=False):
+    """working: today's working weight for set 1 (the first target; the deload weight in a deload week).
+    None when there is no history yet. Returns [(weight_kg, reps)], lightest first.
+    setting: 'off', 'main' (default) or 'all'.
+    bodyweight_base: the logged weight is added to bodyweight (weighted pull-ups). Weight 0 = bodyweight only."""
+    if role is None or setting == "off" or working is None:
+        return []
+    if role == "small" and setting != "all":
+        return []
+    out = []
+    if bodyweight_base:
+        if working <= 0:
+            return []
+        out.append((0.0, min(5, rep_max)))
+        if role == "first":
+            w = round_down(working * 0.5, inc)
+            if 0 < w < working:
+                out.append((w, min(3, rep_max)))
+        return out
+    for factor, reps in RAMP_UP_TABLE[role]:
+        w = round_down(working * factor, inc)
+        if w <= 0 or w >= working:
+            continue
+        if out and w <= out[-1][0]:
+            continue
+        out.append((w, min(reps, rep_max)))
+    return out
+
 P = dict(sets=3, repMin=8, repMax=12, inc=2.5)
 PU = dict(sets=5, repMin=3, repMax=5, inc=2.5, need=2)
 LP = dict(sets=4, repMin=8, repMax=12, inc=10.0)
@@ -152,3 +204,36 @@ cases = [
 ]
 for name, res in cases:
     print(f"{name:45s} -> {res}")
+
+# name, working, inc, rep_max, role, setting, bodyweight_base
+ramp_up_cases = [
+    ("Incline DB Press 22.5, first", 22.5, 2.5, 10, "first", "main", False),
+    ("20 kg x 12 case, first", 20.0, 2.5, 12, "first", "main", False),
+    ("Machine Chest Press 45, main", 45.0, 5.0, 10, "main", "main", False),
+    ("Seated DB Shoulder Press 17.5, main", 17.5, 2.5, 10, "main", "main", False),
+    ("Leg Press 120, first", 120.0, 10.0, 12, "first", "main", False),
+    ("Leg Press 40, first", 40.0, 10.0, 12, "first", "main", False),
+    ("Leg Press 20, first (second equals first: left out)", 20.0, 10.0, 12, "first", "main", False),
+    ("Leg Press 10, first (rounds to zero: none)", 10.0, 10.0, 12, "first", "main", False),
+    ("Hip Thrust 60 inc 5, main", 60.0, 5.0, 12, "main", "main", False),
+    ("DB 5 kg, first", 5.0, 2.5, 10, "first", "main", False),
+    ("DB 2.5 kg, main (rounds to zero)", 2.5, 2.5, 10, "main", "main", False),
+    ("Cable Lateral Raise 7.5, small, setting main", 7.5, 2.5, 15, "small", "main", False),
+    ("Cable Lateral Raise 7.5, small, setting all", 7.5, 2.5, 15, "small", "all", False),
+    ("DB Lateral Raise 6 inc 1, small, setting all", 6.0, 1.0, 20, "small", "all", False),
+    ("Incline DB Press 22.5, first, setting off", 22.5, 2.5, 10, "first", "off", False),
+    ("First time (no working weight)", None, 2.5, 10, "first", "main", False),
+    ("Deload week: Incline DB Press at 20 (0.85 x 22.5 rounded), first", 20.0, 2.5, 10, "first", "main", False),
+    ("Weighted Pull-ups +15, first", 15.0, 2.5, 5, "first", "main", True),
+    ("Weighted Pull-ups +2.5, first (half rounds to zero)", 2.5, 2.5, 5, "first", "main", True),
+    ("Weighted Pull-ups +15, main", 15.0, 2.5, 5, "main", "main", True),
+    ("Weighted Pull-ups bodyweight only, first", 0.0, 2.5, 5, "first", "main", True),
+    ("Heavy low-rep lift 100 inc 2.5 range 3-5, first (reps capped at the top of the range)",
+     100.0, 2.5, 5, "first", "main", False),
+]
+print()
+for name, working, inc, rep_max, r, setting, bw in ramp_up_cases:
+    print(f"ramp-up: {name} -> {ramp_ups(working, inc, rep_max, r, setting, bw)}")
+wed = [dict(kind="checklist"), dict(kind="weighted", restSec=150), dict(kind="weighted", restSec=150),
+       dict(kind="weighted", restSec=150), dict(kind="weighted", restSec=75), dict(kind="reps", restSec=45)]
+print("ramp-up: Wednesday roles ->", [role(wed, i) for i in range(len(wed))])

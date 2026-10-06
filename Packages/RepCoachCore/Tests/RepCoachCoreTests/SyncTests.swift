@@ -205,6 +205,17 @@ final class SyncTests: StoreTestCase {
         XCTAssertEqual(try SyncContext.overrides(in: context), received.overrides)
     }
 
+    /// The ramp-up setting reaches the watch with the other settings; a context from before it reads as the default.
+    func testTheRampUpSettingTravelsToTheWatch() throws {
+        for setting in RampUpSetting.allCases {
+            let sent = SyncContext(settings: TrainingSettings(rampUps: setting), overrides: [:], sentAt: sept(27))
+            let received = try XCTUnwrap(SyncContext(applicationContext: sent.applicationContext))
+            XCTAssertEqual(received.settings.rampUps, setting)
+        }
+        let old = ["context": Data(#"{"settings":{"restHaptics":true},"overrides":{},"sentAt":780710400}"#.utf8)]
+        XCTAssertEqual(SyncContext(applicationContext: old)?.settings.rampUps, .mainLifts)
+    }
+
     func testReadingOverridesSkipsEmptyRows() throws {
         context.insert(ExerciseSettings(exerciseId: "face-pulls"))
         let row = ExerciseSettings(exerciseId: "leg-press")
