@@ -33,21 +33,22 @@ public struct HistoryStore {
             .map(\.sets)
     }
 
-    /// Every session with at least one set of `exerciseId`, deloads included, newest first.
+    /// Every session with at least one counted set of `exerciseId`, deloads included, newest first. Ramp-up sets
+    /// are left out, and a session with only ramp-ups isn't there.
     public func entries(for exerciseId: String, excluding sessionId: UUID? = nil) throws -> [HistoryEntry] {
         let id = exerciseId
         let logs = try context.fetch(FetchDescriptor<ExerciseLog>(predicate: #Predicate { $0.exerciseId == id }))
         return logs
             .compactMap { log -> HistoryEntry? in
-                guard let session = log.session, session.id != sessionId, !log.sets.isEmpty else { return nil }
-                return HistoryEntry(sessionId: session.id, date: session.date, isDeload: session.isDeload,
-                                    sets: log.orderedSets.map(\.loggedSet))
+                let sets = log.countedLoggedSets
+                guard let session = log.session, session.id != sessionId, !sets.isEmpty else { return nil }
+                return HistoryEntry(sessionId: session.id, date: session.date, isDeload: session.isDeload, sets: sets)
             }
             .sorted { $0.date > $1.date }
     }
 
-    /// Every exerciseId with at least one logged set.
+    /// Every exerciseId with at least one counted set.
     public func loggedExerciseIds() throws -> Set<String> {
-        Set(try context.fetch(FetchDescriptor<ExerciseLog>()).filter { !$0.sets.isEmpty }.map(\.exerciseId))
+        Set(try context.fetch(FetchDescriptor<ExerciseLog>()).filter { !$0.countedSets.isEmpty }.map(\.exerciseId))
     }
 }
