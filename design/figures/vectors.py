@@ -9,7 +9,7 @@ For each listed figure, at several angles and points in the rep:
   order    part keys in draw order (far to near); "edge" lists the limbs that carry the black edge
   depths   depth per part
 and, at yaw 40 only, "draw": the complete draw list in order, each item [tag, points or circle, stroke
-width, colour, opacity, dash]. k is the eased position in the rep (0 = start pose, 1 = end pose).
+width, stroke colour (fill colour for a circle), fill, stroke opacity, dash, fill opacity]. k is the eased position in the rep (0 = start pose, 1 = end pose).
 Numbers are rounded to 2 decimals (draw list coordinates to 1, as the SVG prints them).
 """
 import json, os
@@ -28,7 +28,8 @@ def item(tag, a):
     else:
         geo = [[float(n) for n in p.split(",")] for p in a["points"].split()]
     return [tag, geo, float(a.get("stroke-width", 0)), a.get("stroke") or a.get("fill"), a.get("fill", "none"),
-            float(a.get("opacity", 1)), a.get("stroke-dasharray", "")]
+            float(a.get("stroke-opacity", a.get("opacity", 1))), a.get("stroke-dasharray", ""),
+            float(a.get("fill-opacity", 1))]
 
 def case(fig, yaw, k):
     c = F.centre(fig)
