@@ -273,11 +273,20 @@ On the watch:
 Yeshu googles exercises mid-workout. Each exercise gets a small moving line figure, drawn by the app from
 two poses, and the Crown turns it to any side.
 
-**This part arrives in two drops.** Build everything else first. Drop 2 is a message from me when it is
-pushed: the final figure format with every kind of load, the complete "3D format" section in `FIGURES.md`,
-and `design/figures/bundle/figures.json` with a figure for every exercise in the plan, keyed by `exerciseId`.
-Until then `figure3d.py` and the three poses in `design/figures/poses3d/` show the idea; the load vocabulary
-will grow, so do not port the renderer before drop 2.
+**Drop 2 is in (6 Oct).** Everything the figures need is on main:
+
+| What | Where |
+|---|---|
+| The bundle the app ships: 50 figures for all 52 plan exercises, with a short cue each (60 KB) | `design/figures/bundle/figures.json` |
+| The format, complete, written for the port | `design/figures/FIGURES.md`, "The 3D format, complete" |
+| The reference renderer | `design/figures/figure3d.py` (its docstring is the same reference) |
+| Golden values for unit tests: projected points, part order, crop, full draw lists for 12 figures | `design/figures/bundle/vectors.json` (made by `vectors.py`, which documents the shape) |
+| Pictures of every figure: start and end at the opening view, the end pose from four more angles, small stills | `design/handoff/watch-1/figures/sheet-01.png` to `sheet-10.png` |
+
+Copy `figures.json` into the app's resources as it is; it is rebuilt by `design/figures/bundle.py` when figures
+change, so do not edit it by hand. `exercises` maps a plan `exerciseId` to its figure and cue; several
+exercises can share a figure. A figure may carry `yaw`, its opening view: stills use it and the Crown starts
+from it. `load` is one object or a list.
 
 What to build then:
 
@@ -285,13 +294,13 @@ What to build then:
   colour, filled circles, filled polygons), drawn in a SwiftUI `Canvas`. It is a straight port of
   `figure3d.py`: interpolate the two poses with ease in and out, turn by yaw about the vertical axis,
   orthographic projection, sort far to near, dim limbs behind the body, one square crop per figure for all
-  angles. Unit-test the projection and the order against values I will give in drop 2.
+  angles. Unit-test the projection, the part order and the draw list against `vectors.json`.
 - **Set screen (2.11):** when the exercise has a figure, the name block becomes a row: name and hints on the
   left, a 42 pt rounded button on the right with the still figure. A tap opens How. No figure: 2.1A as is.
 - **How (2.12 and 2.14 are one screen):** a sheet. The moving figure at 125 pt, the name, then one line:
   until he has ever turned the Crown here, "Turn the Crown to look around" in ice; after that the cue (two
   lines, from the bundle). The Crown turns the figure, a full circle, smoothly, with light haptic detents.
-  Seven dots under the text show where in the circle he is. It opens at the figure's usual view.
+  Seven dots under the text show where in the circle he is. It opens at the figure's opening view (`yaw`).
 - **Break (3.12):** when the next exercise has a figure it moves at 62 pt left of the name.
 - Always On and Reduce Motion: the still (end pose). Stills under 45 pt: end pose only, lines 1.4 × wider.
 - Exercises he added himself have no figure; nothing shows.
