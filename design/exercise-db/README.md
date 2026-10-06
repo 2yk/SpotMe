@@ -1,6 +1,6 @@
 # SpotMe exercise database
 
-236 strength exercises for swaps and additions in the app. Each one has the equipment it needs, the body
+247 strength exercises for swaps, additions and the plan builder. Each one has the equipment it needs, the body
 part and muscles, how hard it is on eight injury areas, and the exercises that can replace it.
 
 Status: built and checked 6 Oct 2026, waiting for Yeshu's review. Not in the app yet.
@@ -16,17 +16,19 @@ Status: built and checked 6 Oct 2026, waiting for Yeshu's review. Not in the app
 
 | Body part | Exercises | | Body part | Exercises |
 |---|---|---|---|---|
-| Core | 42 | | Glutes | 11 |
-| Back | 39 | | Hamstrings | 11 |
-| Shoulders | 29 | | Hips | 8 |
-| Chest | 26 | | Calves | 6 |
-| Quads | 19 | | Neck | 6 |
-| Triceps | 17 | | Forearms | 5 |
-| Biceps | 14 | | Full body | 3 |
+| Core | 42 | | Glutes | 12 |
+| Back | 41 | | Hamstrings | 13 |
+| Shoulders | 30 | | Hips | 8 |
+| Chest | 26 | | Calves | 7 |
+| Quads | 21 | | Neck | 6 |
+| Triceps | 18 | | Forearms | 5 |
+| Biceps | 15 | | Full body | 3 |
 
 - All 52 exercise ids in `plan.json` are covered by 50 entries (`planIds` maps them; the two pull-up sets
   share `pull-ups`, the two overhead cable extensions share `overhead-cable-extension`).
-- Every exercise has 3 to 8 alternatives, 4.7 on average, and every link goes both ways.
+- Every exercise has 3 to 8 alternatives, and every link goes both ways.
+- `tier` (1 staple, 2 solid, 3 specialist) tells the plan builder which exercise to reach for first.
+- Eleven bodyweight and band exercises cover training at home without weights.
 
 ## How the app can use it
 
@@ -45,6 +47,6 @@ Status: built and checked 6 Oct 2026, waiting for Yeshu's review. Not in the app
 - The plan got no free pass. With a lower-back problem the database says avoid for three exercises in the
   current plan (Cable Crunch, Russian Twist, Ab Wheel Rollout) and take care for twelve more. Each has a
   gentler swap listed.
-- 71 validator warnings remain. All say "no alternative is easier on this area", for exercises where none
+- 73 validator warnings remain. All say "no alternative is easier on this area", for exercises where none
   exists (every curl loads the elbow, every calf raise the ankle).
 - Left out for lack of common equipment: 4-way neck machine, wrist roller, belt squat, GHD.

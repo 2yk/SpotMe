@@ -31,6 +31,7 @@ stretching, warmups or mobility drills. Kilograms only.
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Chest on a 30–45° bench. Pause a second at the top and squeeze the blades.",
   "injury": {"neck": 1, "shoulder": 1, "elbow": 1, "wrist": 1, "lowerBack": 0, "hip": 0, "knee": 0, "ankle": 0},
   "injuryNotes": {},
@@ -59,6 +60,7 @@ stretching, warmups or mobility drills. Kilograms only.
 | `loadType` | How the logged weight is counted (vocabulary below). `bodyweight` when no weight is ever logged. |
 | `incrementKg` | Smallest sensible jump. Needed when `logAs` is `weighted` or `loadable` is true, otherwise leave out. Dumbbells 2.5 (1 for raises and other small-muscle isolation), barbell 2.5, cables 2.5, selectorised machines 5, leg press 10, hip thrust 5, added weight on a belt 2.5. |
 | `level` | `beginner`, `intermediate` or `advanced` (skill and strength needed to do it well). |
+| `tier` | How good a default it is for its movement pattern when a plan is built: `1` a staple (proven, easy to set up, easy to add weight to, found in most gyms), `2` a solid choice, `3` a specialist, awkward or advanced pick that a plan should only use when nothing better fits. Within one `pattern` and `bodyPart` there are at least one and at most a third tier-1 exercises, and each kind of equipment setup (gym machine, cable, barbell, dumbbells only, bodyweight only) has a tier 1 or 2 where the pattern can be trained that way. |
 | `cue` | One or two short sentences on setup and form, max 110 characters, the plan's voice ("Elbows to ribs."). Angles with the degree sign ("30° bench"). |
 | `injury` | All eight areas, each 0–3 (scale below). |
 | `injuryNotes` | A short reason (max 70 characters) for every area rated 2 or 3. Optional for 1. None for 0. |

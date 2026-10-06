@@ -108,7 +108,7 @@ def check(names):
         w, h, _, _ = sz.get(n, (416, 496, n, 0))
         p = os.path.join(TMP, n.replace('.dc.html', '.chk.html'))
         # the copy sits next to nothing, so point relative assets back at the project folder
-        phone = n.startswith('P')
+        phone = n[0] in 'POF'
         lim = f'<script>const MINFS = {10 if phone else 20}, MINTAP = {30 if phone else 60};</script>'
         open(p, 'w').write(src.replace('</body>', lim + JS + '</body>', 1))
         dom = chrome(f'--window-size={w},{h}', '--dump-dom', 'file://' + p).stdout

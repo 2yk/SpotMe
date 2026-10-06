@@ -29,6 +29,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Back fully supported on the bench, no arching. Lower to ear level, press up and slightly in.",
   "injury": {
    "neck": 1,
@@ -105,6 +106,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Back supported. Controlled: two seconds down, stop just above the shoulders.",
   "injury": {
    "neck": 1,
@@ -184,6 +186,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Squeeze glutes, ribs down. Bar from collarbone straight up, head through at the top. No leaning back.",
   "injury": {
    "neck": 1,
@@ -254,6 +257,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Bench upright inside the rack, back on the pad. Bar to the collarbone, press over the head.",
   "injury": {
    "neck": 1,
@@ -310,6 +314,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Feet hip-width, glutes and abs tight. Press straight up without leaning back.",
   "injury": {
    "neck": 1,
@@ -374,6 +379,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Bench upright, back on the pad, bar just in front of the face. Lower to the chin, press up.",
   "injury": {
    "neck": 1,
@@ -438,6 +444,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Back on the pad. Start palms facing you at the chin, turn them out as you press up.",
   "injury": {
    "neck": 1,
@@ -507,6 +514,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Staggered stance, bar end at the shoulder. Press up and forward, ribs down, no twist.",
   "injury": {
    "neck": 1,
@@ -580,6 +588,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Hips high, body in an upside-down V. Lower the head between the hands, press back up.",
   "injury": {
    "neck": 1,
@@ -637,6 +646,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 1,
   "cue": "Light, strict, 20-rep burn. Lead with the elbows to shoulder height, no swing.",
   "injury": {
    "neck": 1,
@@ -679,6 +689,10 @@
    {
     "id": "incline-y-raise",
     "why": "Chest on a bench, lower traps too"
+   },
+   {
+    "id": "band-lateral-raise",
+    "why": "Band at home, same raise"
    }
   ]
  },
@@ -709,6 +723,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Cable behind the body, pulley at hip height. Lead with the elbow out to shoulder height.",
   "injury": {
    "neck": 1,
@@ -747,6 +762,10 @@
    {
     "id": "barbell-upright-row",
     "why": "Barbell pull, harder on shoulders"
+   },
+   {
+    "id": "band-lateral-raise",
+    "why": "Band at home, tension builds up top"
    }
   ]
  },
@@ -774,6 +793,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Chest on the pad, shoulders in line with the pivots. Push the pads out with the elbows.",
   "injury": {
    "neck": 1,
@@ -812,6 +832,10 @@
    {
     "id": "barbell-upright-row",
     "why": "Barbell pull, harder on shoulders"
+   },
+   {
+    "id": "band-lateral-raise",
+    "why": "Band at home, no machine"
    }
   ]
  },
@@ -840,6 +864,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 2,
   "cue": "Sit tall on the end of a bench. Raise to shoulder height with no swing.",
   "injury": {
    "neck": 1,
@@ -866,6 +891,10 @@
    {
     "id": "cable-lateral-raise",
     "why": "Cable keeps tension at the bottom"
+   },
+   {
+    "id": "band-lateral-raise",
+    "why": "Standing on a band at home"
    }
   ]
  },
@@ -894,6 +923,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Hold an upright and lean away. Raise one dumbbell from across the hip to shoulder height.",
   "injury": {
    "neck": 1,
@@ -920,6 +950,10 @@
    {
     "id": "machine-lateral-raise",
     "why": "Machine, arm pads, nothing to balance"
+   },
+   {
+    "id": "band-lateral-raise",
+    "why": "Band at home, both arms"
    }
   ]
  },
@@ -951,6 +985,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 3,
   "cue": "Chest on a 30-45° bench, thumbs up. Raise the arms in a Y to ear height, very light.",
   "injury": {
    "neck": 1,
@@ -1008,6 +1043,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 1,
   "cue": "Stand tall, slight bend in the elbows. Raise to shoulder height, no leaning back.",
   "injury": {
    "neck": 1,
@@ -1066,6 +1102,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Face away from a low pulley, rope between the legs. Raise to shoulder height, no swing.",
   "injury": {
    "neck": 1,
@@ -1120,6 +1157,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Hold the plate at 3 and 9 o'clock. Raise to eye level, ribs down, no leaning back.",
   "injury": {
    "neck": 1,
@@ -1176,6 +1214,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Chest on the pad, arms at shoulder height. Sweep back to the sides, squeeze the rear delts.",
   "injury": {
    "neck": 1,
@@ -1240,6 +1279,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Rope to the eyebrows, elbows high, pull the ends apart. Posture and shoulder health.",
   "injury": {
    "neck": 1,
@@ -1311,6 +1351,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 2,
   "cue": "Hinge to near flat, back neutral. Raise the dumbbells out wide, pinkies leading.",
   "injury": {
    "neck": 1,
@@ -1369,6 +1410,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 2,
   "cue": "Chest on a 30-45° bench. Raise the dumbbells out wide to shoulder height, pause.",
   "injury": {
    "neck": 1,
@@ -1430,6 +1472,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Pulleys at shoulder height, cables crossed. Sweep the arms back wide, arms nearly straight.",
   "injury": {
    "neck": 1,
@@ -1490,6 +1533,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Arms straight at shoulder height. Pull the band to the chest, squeeze the blades.",
   "injury": {
    "neck": 0,
@@ -1522,6 +1566,10 @@
    {
     "id": "cable-internal-rotation",
     "why": "Rotator-cuff cable work"
+   },
+   {
+    "id": "band-row",
+    "why": "Same band, rowing for the back"
    }
   ]
  },
@@ -1551,6 +1599,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Hands shoulder-width. Lead with the elbows and stop when they reach shoulder height.",
   "injury": {
    "neck": 2,
@@ -1612,6 +1661,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 3,
   "cue": "Low pulley, rope, hands apart. Pull the elbows out to chest height, no higher.",
   "injury": {
    "neck": 2,
@@ -1670,6 +1720,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Pulley at elbow height, towel between elbow and ribs. Rotate the hand out, keep the elbow pinned.",
   "injury": {
    "neck": 0,
@@ -1723,6 +1774,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 2,
   "cue": "Lie on your side, elbow on the hip at 90°. Rotate the dumbbell up slowly, elbow stays put.",
   "injury": {
    "neck": 0,
@@ -1776,6 +1828,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 3,
   "cue": "Pulley at elbow height, towel at the ribs. Rotate the hand in across the belly, elbow pinned.",
   "injury": {
    "neck": 0,
@@ -1832,6 +1885,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "45° bench, arms hang behind the body. Biggest stretch, most growth. Slow 3-second lower.",
   "injury": {
    "neck": 0,
@@ -1897,6 +1951,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Thumbs up, elbows at the sides. Brachialis pushes the biceps up for visible arm size.",
   "injury": {
    "neck": 0,
@@ -1927,6 +1982,10 @@
    {
     "id": "concentration-curl",
     "why": "Seated, one arm, no swinging"
+   },
+   {
+    "id": "band-curl",
+    "why": "Band at home, palms up"
    }
   ]
  },
@@ -1956,6 +2015,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Armpits on the pad. Full stretch at the bottom, no bounce. 3-second lower.",
   "injury": {
    "neck": 0,
@@ -2033,6 +2093,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Elbows pinned, stand tall. Last set: drop the weight 30% and rep out.",
   "injury": {
    "neck": 0,
@@ -2109,6 +2170,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Face away from a low cable, arm behind the body. Stretched biceps curl, then go to the next exercise.",
   "injury": {
    "neck": 0,
@@ -2169,6 +2231,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Elbows at the sides, body still. Curl to the chest and lower slowly. No leaning back.",
   "injury": {
    "neck": 0,
@@ -2205,6 +2268,10 @@
    {
     "id": "machine-biceps-curl",
     "why": "Machine, seated, no back load"
+   },
+   {
+    "id": "band-curl",
+    "why": "Band at home, easier on the wrists"
    }
   ]
  },
@@ -2233,6 +2300,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Grip the inner angles, elbows at the sides. Curl up, lower slowly, no leaning back.",
   "injury": {
    "neck": 0,
@@ -2268,6 +2336,10 @@
    {
     "id": "machine-biceps-curl",
     "why": "Machine, seated, no back load"
+   },
+   {
+    "id": "band-curl",
+    "why": "Band at home, no bar"
    }
   ]
  },
@@ -2296,6 +2368,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Elbows at the sides, turn the palm up as you curl. Lower for 2-3 seconds.",
   "injury": {
    "neck": 0,
@@ -2369,6 +2442,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Sit, elbow against the inner thigh. Curl to the shoulder, squeeze, lower slowly.",
   "injury": {
    "neck": 0,
@@ -2407,6 +2481,10 @@
    {
     "id": "incline-db-curl",
     "why": "Bigger stretch, back supported"
+   },
+   {
+    "id": "band-curl",
+    "why": "Band at home, both arms"
    }
   ]
  },
@@ -2434,6 +2512,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 3,
   "cue": "Chest on a 45° bench, arms hanging straight down. Curl up hard, squeeze, lower slowly.",
   "injury": {
    "neck": 0,
@@ -2493,6 +2572,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Low pulley, rope, thumbs up. Elbows pinned, curl the rope ends to the shoulders.",
   "injury": {
    "neck": 0,
@@ -2519,6 +2599,10 @@
    {
     "id": "reverse-curl",
     "why": "Palms down, more forearm"
+   },
+   {
+    "id": "band-curl",
+    "why": "Band at home, no cable"
    }
   ]
  },
@@ -2546,6 +2630,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Elbows lined up with the pivot, arms on the pad. Curl up, lower for 3 seconds.",
   "injury": {
    "neck": 0,
@@ -2611,6 +2696,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Armpit on the pad, one arm. Full stretch, no bounce, slow lower.",
   "injury": {
    "neck": 0,
@@ -2665,6 +2751,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Stand between high pulleys, arms out at shoulder height. Curl the handles to the ears.",
   "injury": {
    "neck": 0,
@@ -2720,6 +2807,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Overhand grip on the EZ bar, elbows at the sides. Curl up, wrists straight, lower slowly.",
   "injury": {
    "neck": 0,
@@ -2775,6 +2863,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 1,
   "cue": "Forearms on the bench, wrists over the edge, palms up. Roll the weight down to the fingers, curl up.",
   "injury": {
    "neck": 0,
@@ -2829,6 +2918,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 2,
   "cue": "Forearms on the bench, palms down. Lift the back of the hand up, lower slowly. Go light.",
   "injury": {
    "neck": 0,
@@ -2886,6 +2976,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Bar behind the thighs, palms facing back. Let it roll to the fingers, curl the wrists up.",
   "injury": {
    "neck": 0,
@@ -2941,6 +3032,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Pinch two smooth plates together, fingers one side, thumb the other. Stand tall, hold.",
   "injury": {
    "neck": 1,
@@ -2965,6 +3057,132 @@
    {
     "id": "reverse-wrist-curl",
     "why": "Extensors, seated"
+   }
+  ]
+ },
+ {
+  "id": "band-lateral-raise",
+  "name": "Band Lateral Raise",
+  "aliases": [
+   "Banded Lateral Raise",
+   "Resistance Band Side Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "upper-traps",
+   "front-delts"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Stand on the band, slight lean forward. Raise to shoulder height, lower slowly. Harder: thicker band.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm lifts to shoulder height, hardest at the top"
+  },
+  "alternatives": [
+   {
+    "id": "db-lateral-raise",
+    "why": "Dumbbells, same raise, loadable"
+   },
+   {
+    "id": "cable-lateral-raise",
+    "why": "Cable, loadable, steady tension"
+   },
+   {
+    "id": "machine-lateral-raise",
+    "why": "Machine, arms on pads, loadable"
+   },
+   {
+    "id": "seated-db-lateral-raise",
+    "why": "Seated with DBs, strict"
+   },
+   {
+    "id": "lean-away-lateral-raise",
+    "why": "One arm, DB, longer stretch"
+   }
+  ]
+ },
+ {
+  "id": "band-curl",
+  "name": "Band Curl",
+  "aliases": [
+   "Banded Biceps Curl",
+   "Resistance Band Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis",
+   "forearm-flexors"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Stand on the band, elbows pinned to the sides. Curl up, lower slowly. Harder: wider stance, thicker band.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Elbow bends under load through the full range"
+  },
+  "alternatives": [
+   {
+    "id": "ez-bar-curl",
+    "why": "EZ-bar curl, loadable"
+   },
+   {
+    "id": "hammer-curl",
+    "why": "Dumbbells, neutral grip, loadable"
+   },
+   {
+    "id": "concentration-curl",
+    "why": "One DB, seated, strict"
+   },
+   {
+    "id": "barbell-curl",
+    "why": "Barbell curl, heavier"
+   },
+   {
+    "id": "cable-rope-hammer-curl",
+    "why": "Cable rope, neutral grip"
    }
   ]
  }

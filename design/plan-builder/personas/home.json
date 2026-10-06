@@ -1,0 +1,27 @@
+{
+  "goal": "lean",
+  "focus": [
+    "glutes"
+  ],
+  "experience": "some",
+  "days": [
+    "monday",
+    "tuesday",
+    "thursday",
+    "saturday"
+  ],
+  "minutes": 45,
+  "equipment": [
+    "dumbbells",
+    "adjustable-bench",
+    "flat-bench",
+    "mat",
+    "step",
+    "resistance-band"
+  ],
+  "injuries": {
+    "knee": "care"
+  },
+  "cardio": 1,
+  "age": null
+}

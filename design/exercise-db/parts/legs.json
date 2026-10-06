@@ -27,6 +27,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Bar on upper traps, brace hard. Sit down between the heels to parallel, chest up.",
   "injury": {
    "neck": 1,
@@ -99,6 +100,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "advanced",
+  "tier": 2,
   "cue": "Bar on the front delts, elbows high. Sit straight down, torso upright.",
   "injury": {
    "neck": 1,
@@ -168,6 +170,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "One DB held at the chest. Sit between the heels, elbows inside the knees, chest tall.",
   "injury": {
    "neck": 0,
@@ -244,6 +247,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Feet slightly ahead of the bar. Sit down to parallel, back stays tall against the path.",
   "injury": {
    "neck": 1,
@@ -303,6 +307,7 @@
   "loadType": "plates",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Back flat on the pad, feet mid-platform. Lower under control, drive through the whole foot.",
   "injury": {
    "neck": 1,
@@ -370,6 +375,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Arms forward for balance. Sit down between the heels, stand tall and squeeze.",
   "injury": {
    "neck": 0,
@@ -398,6 +404,14 @@
    {
     "id": "sissy-squat",
     "why": "Knee-forward quad squat, much harder"
+   },
+   {
+    "id": "bodyweight-reverse-lunge",
+    "why": "One leg at a time, stepping back"
+   },
+   {
+    "id": "bodyweight-split-squat",
+    "why": "Split stance, one leg works harder"
    }
   ]
  },
@@ -426,6 +440,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "advanced",
+  "tier": 3,
   "cue": "Free leg straight out front. Sit all the way down on one leg, heel flat.",
   "injury": {
    "neck": 0,
@@ -488,6 +503,7 @@
   "loadType": "plates",
   "incrementKg": 10,
   "level": "beginner",
+  "tier": 1,
   "cue": "Feet mid-plate, shoulder width. Stop before hips lift off the pad, that's your back rounding.",
   "injury": {
    "neck": 0,
@@ -564,6 +580,7 @@
   "loadType": "plates",
   "incrementKg": 5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "One foot mid-plate. Lower only as far as the hips stay down, press through the heel.",
   "injury": {
    "neck": 0,
@@ -600,6 +617,10 @@
    {
     "id": "single-leg-extension",
     "why": "One-leg quad isolation on a machine"
+   },
+   {
+    "id": "bodyweight-split-squat",
+    "why": "Split stance, bodyweight, no machine"
    }
   ]
  },
@@ -629,6 +650,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "DBs at the sides, long steps. Back knee kisses the floor, front shin near vertical.",
   "injury": {
    "neck": 0,
@@ -665,6 +687,10 @@
    {
     "id": "single-leg-extension",
     "why": "One leg, seated, light on the hip"
+   },
+   {
+    "id": "bodyweight-reverse-lunge",
+    "why": "Step back in place, no weights"
    }
   ]
  },
@@ -695,6 +721,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "DBs at the sides. Step back, drop the back knee, push up through the front heel.",
   "injury": {
    "neck": 0,
@@ -730,6 +757,10 @@
    {
     "id": "single-leg-extension",
     "why": "One leg, seated, light on the hip"
+   },
+   {
+    "id": "bodyweight-reverse-lunge",
+    "why": "Same lunge, no weights, at home"
    }
   ]
  },
@@ -759,6 +790,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Long split stance, DBs at the sides. Drop straight down, torso upright.",
   "injury": {
    "neck": 0,
@@ -794,6 +826,14 @@
    {
     "id": "single-leg-extension",
     "why": "One leg, seated, light on the hip"
+   },
+   {
+    "id": "bodyweight-reverse-lunge",
+    "why": "Step back each rep, no weights"
+   },
+   {
+    "id": "bodyweight-split-squat",
+    "why": "Same stance, no weights, at home"
    }
   ]
  },
@@ -827,6 +867,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Rear foot on bench, DBs at the sides. Upright torso, drop straight down.",
   "injury": {
    "neck": 0,
@@ -905,6 +946,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Whole foot on a knee-high bench. Drive up through the heel, no push from the back foot.",
   "injury": {
    "neck": 0,
@@ -979,6 +1021,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "Back flat on the wall, thighs level, shins vertical. Hold and breathe.",
   "injury": {
    "neck": 0,
@@ -1033,6 +1076,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "advanced",
+  "tier": 3,
   "cue": "On the toes, lean back as the knees travel forward. Hips stay straight, hold a support.",
   "injury": {
    "neck": 0,
@@ -1086,6 +1130,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Knee-friendly quad volume. Squeeze 1 sec at top.",
   "injury": {
    "neck": 0,
@@ -1156,6 +1201,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 2,
   "cue": "One leg, pad on the low shin. Squeeze 1 sec at top, lower slowly.",
   "injury": {
    "neck": 0,
@@ -1229,6 +1275,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Bar end at the chest, lean slightly into it. Sit down between the heels.",
   "injury": {
    "neck": 0,
@@ -1293,6 +1340,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Bar over midfoot, flat back, lats tight. Push the floor away, hips and chest rise together.",
   "injury": {
    "neck": 1,
@@ -1356,6 +1404,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Wide stance, toes out, hands inside the knees. Spread the floor and stand up tall.",
   "injury": {
    "neck": 1,
@@ -1417,6 +1466,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Soft knees, push hips back with the bar on the thighs. Stop at the hamstring stretch.",
   "injury": {
    "neck": 1,
@@ -1493,6 +1543,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "DBs down the front of the thighs, soft knees. Hips back to the stretch, flat back.",
   "injury": {
    "neck": 0,
@@ -1536,6 +1587,10 @@
    {
     "id": "kettlebell-swing",
     "why": "Fast hinge with a kettlebell"
+   },
+   {
+    "id": "band-pull-through",
+    "why": "Band hinge at home, light on the back"
    }
   ]
  },
@@ -1566,6 +1621,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "DB in the opposite hand, hips square. Back leg and torso move as one line.",
   "injury": {
    "neck": 0,
@@ -1598,6 +1654,10 @@
    {
     "id": "cable-leg-curl",
     "why": "Standing one leg, no hinge"
+   },
+   {
+    "id": "bodyweight-single-leg-rdl",
+    "why": "Same hinge, no weight, at home"
    }
   ]
  },
@@ -1627,6 +1687,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "advanced",
+  "tier": 3,
   "cue": "Bar on upper traps, soft knees. Push the hips back with a flat back, stop at the stretch.",
   "injury": {
    "neck": 1,
@@ -1689,6 +1750,7 @@
   "loadType": "single-weight",
   "incrementKg": 4,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Hike the bell back, snap the hips through. Arms float to chest height, ribs down.",
   "injury": {
    "neck": 0,
@@ -1720,6 +1782,10 @@
    {
     "id": "glute-bridge",
     "why": "Bodyweight bridge, easy on the back"
+   },
+   {
+    "id": "band-pull-through",
+    "why": "Same hip snap on a band, slower"
    }
   ]
  },
@@ -1749,6 +1815,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Face away, rope between the legs. Hips back, then squeeze them through to stand tall.",
   "injury": {
    "neck": 0,
@@ -1822,6 +1889,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "advanced",
+  "tier": 3,
   "cue": "Kneel, heels hooked under a pad. Lower as slowly as you can, hips straight, push back up.",
   "injury": {
    "neck": 0,
@@ -1848,6 +1916,10 @@
    {
     "id": "stability-ball-leg-curl",
     "why": "Lighter curl on a ball"
+   },
+   {
+    "id": "band-leg-curl",
+    "why": "Band curl, much easier to scale"
    }
   ]
  },
@@ -1877,6 +1949,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Replaces RDL, zero spinal load. Hips pressed down, 3-sec lower.",
   "injury": {
    "neck": 0,
@@ -1947,6 +2020,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Thigh pad snug, lean forward a little. Curl fully, 3-sec lower.",
   "injury": {
    "neck": 0,
@@ -2018,6 +2092,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Strap on the ankle, hold the frame. Thigh still, curl the heel to the glute.",
   "injury": {
    "neck": 0,
@@ -2046,6 +2121,10 @@
    {
     "id": "single-leg-rdl",
     "why": "One-leg hinge with a DB"
+   },
+   {
+    "id": "band-leg-curl",
+    "why": "Band at home, both legs, lying"
    }
   ]
  },
@@ -2074,6 +2153,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "On your back, heels on the ball, hips up. Roll the ball in without dropping the hips.",
   "injury": {
    "neck": 0,
@@ -2102,6 +2182,14 @@
    {
     "id": "nordic-curl",
     "why": "Bodyweight, much harder"
+   },
+   {
+    "id": "bodyweight-single-leg-rdl",
+    "why": "Standing one-leg hinge, no ball"
+   },
+   {
+    "id": "band-leg-curl",
+    "why": "Lying band curl, hips stay down"
    }
   ]
  },
@@ -2132,6 +2220,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Stand centred, grip the handles, flat back. Push the floor away and stand tall.",
   "injury": {
    "neck": 1,
@@ -2198,6 +2287,7 @@
   "loadType": "barbell-total",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Upper back on the bench, pad on the bar. Pause 2 sec at top, chin tucked, ribs down.",
   "injury": {
    "neck": 1,
@@ -2241,6 +2331,10 @@
    {
     "id": "cable-glute-kickback",
     "why": "One leg on a cable, light on the back"
+   },
+   {
+    "id": "band-pull-through",
+    "why": "Band hinge at home, no bench"
    }
   ]
  },
@@ -2267,6 +2361,7 @@
   "loadType": "plates",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Back on the pad, belt across the hips. Pause 2 sec at top, ribs down.",
   "injury": {
    "neck": 1,
@@ -2326,6 +2421,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Upper back on the bench, one foot down. Hips level, pause at the top.",
   "injury": {
    "neck": 1,
@@ -2384,6 +2480,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "On your back, feet flat. Squeeze glutes 3 sec at the top.",
   "injury": {
    "neck": 0,
@@ -2453,6 +2550,7 @@
   "loadType": "barbell-total",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 2,
   "cue": "On the floor, padded bar over the hips. Drive up, squeeze 2 sec, ribs down.",
   "injury": {
    "neck": 0,
@@ -2507,6 +2605,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "On your back, one foot down, other knee to chest. Hips level, squeeze at the top.",
   "injury": {
    "neck": 0,
@@ -2535,6 +2634,14 @@
    {
     "id": "machine-glute-kickback",
     "why": "On a machine, loadable"
+   },
+   {
+    "id": "bodyweight-single-leg-rdl",
+    "why": "Standing one-leg hinge, no kit"
+   },
+   {
+    "id": "band-pull-through",
+    "why": "Standing band hinge, both feet down"
    }
   ]
  },
@@ -2562,6 +2669,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Strap on the ankle, lean on the frame. Kick back and up without arching the back.",
   "injury": {
    "neck": 0,
@@ -2616,6 +2724,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Chest on the pad, foot on the plate. Push back to straight, no back arch.",
   "injury": {
    "neck": 0,
@@ -2671,6 +2780,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "advanced",
+  "tier": 3,
   "cue": "Top leg on bench, side plank on the forearm. Inner thigh, prevents groin strains.",
   "injury": {
    "neck": 1,
@@ -2727,6 +2837,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Top knee on the bench, side plank on the forearm. Lift the bottom leg, hips in line.",
   "injury": {
    "neck": 1,
@@ -2779,6 +2890,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Back on the pad, start at a comfortable width. Squeeze the knees together, slow return.",
   "injury": {
    "neck": 0,
@@ -2830,6 +2942,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Strap on the inside ankle, side to the stack. Sweep the leg across, slow return.",
   "injury": {
    "neck": 0,
@@ -2882,6 +2995,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Back on the pad, pads outside the knees. Push out, pause 1 sec, slow return.",
   "injury": {
    "neck": 0,
@@ -2934,6 +3048,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Strap on the outside ankle, far side to the stack. Lift the leg out, no lean.",
   "injury": {
    "neck": 0,
@@ -2987,6 +3102,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "Band above the knees, quarter squat. Step sideways, knees pushed out, no rocking.",
   "injury": {
    "neck": 0,
@@ -3040,6 +3156,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Sit on the bench edge, band above the knees. Push the knees out, pause, slow return.",
   "injury": {
    "neck": 0,
@@ -3094,6 +3211,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Full stretch at bottom, 2-sec pause. Calves take the most load in running.",
   "injury": {
    "neck": 1,
@@ -3129,6 +3247,10 @@
    {
     "id": "tibialis-raise",
     "why": "Front of the shin instead"
+   },
+   {
+    "id": "bodyweight-calf-raise",
+    "why": "Bodyweight on a step, at home"
    }
   ]
  },
@@ -3152,6 +3274,7 @@
   "loadType": "plates",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Pad on the lower thighs, balls of feet on the edge. Full stretch, 2-sec pause.",
   "injury": {
    "neck": 0,
@@ -3182,6 +3305,10 @@
    {
     "id": "tibialis-raise",
     "why": "Front of the shin instead"
+   },
+   {
+    "id": "bodyweight-calf-raise",
+    "why": "Standing on a step, bodyweight only"
    }
   ]
  },
@@ -3208,6 +3335,7 @@
   "loadType": "plates",
   "incrementKg": 10,
   "level": "beginner",
+  "tier": 2,
   "cue": "Balls of feet on the plate edge, knees soft but still. Full stretch, push through the big toe.",
   "injury": {
    "neck": 0,
@@ -3234,6 +3362,10 @@
    {
     "id": "smith-calf-raise",
     "why": "Bar on the back, on a step"
+   },
+   {
+    "id": "bodyweight-calf-raise",
+    "why": "Bodyweight on a step, no machine"
    }
   ]
  },
@@ -3261,6 +3393,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "On a step, DB in the same-side hand, other hand on support. Full stretch, 2-sec pause.",
   "injury": {
    "neck": 0,
@@ -3291,6 +3424,10 @@
    {
     "id": "tibialis-raise",
     "why": "Front of the shin instead"
+   },
+   {
+    "id": "bodyweight-calf-raise",
+    "why": "Both legs, bodyweight, at home"
    }
   ]
  },
@@ -3318,6 +3455,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Balls of feet on a step under the bar. Full stretch, 2-sec pause, straight knees.",
   "injury": {
    "neck": 1,
@@ -3370,6 +3508,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 1,
   "cue": "Back on the wall, heels a foot out. Pull the toes up high, lower slowly.",
   "injury": {
    "neck": 0,
@@ -3396,6 +3535,383 @@
    {
     "id": "single-leg-db-calf-raise",
     "why": "Calves, one leg with a DB"
+   },
+   {
+    "id": "bodyweight-calf-raise",
+    "why": "Calves instead, bodyweight on a step"
+   }
+  ]
+ },
+ {
+  "id": "bodyweight-calf-raise",
+  "name": "Bodyweight Calf Raise",
+  "aliases": [
+   "Step Calf Raise",
+   "Bodyweight Heel Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "calves",
+  "primaryMuscles": [
+   "calves"
+  ],
+  "secondaryMuscles": [
+   "soleus"
+  ],
+  "pattern": "calf-raise",
+  "equipment": [
+   "step"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "On a step, hand on a wall. Full stretch, 2-sec pause up top. Harder: one leg, slower lowering.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "ankle": "The ankle is the target, but bodyweight only"
+  },
+  "alternatives": [
+   {
+    "id": "single-leg-db-calf-raise",
+    "why": "One leg with a DB, loadable"
+   },
+   {
+    "id": "standing-calf-raise",
+    "why": "Machine, same straight-knee raise, heavier"
+   },
+   {
+    "id": "seated-calf-raise",
+    "why": "Seated machine, bent knee, soleus"
+   },
+   {
+    "id": "leg-press-calf-raise",
+    "why": "On the leg press, loadable"
+   },
+   {
+    "id": "tibialis-raise",
+    "why": "Front of the shin instead"
+   }
+  ]
+ },
+ {
+  "id": "bodyweight-reverse-lunge",
+  "name": "Bodyweight Reverse Lunge",
+  "aliases": [
+   "Air Reverse Lunge",
+   "Backward Lunge"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "glute-med",
+   "hamstrings"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Hands on hips. Step back, drop the back knee, drive up through the front heel. Harder: slower lowering.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Front hip bends deep with most of the bodyweight",
+   "knee": "Front knee bends with most of the bodyweight"
+  },
+  "alternatives": [
+   {
+    "id": "reverse-lunge",
+    "why": "Same lunge holding DBs"
+   },
+   {
+    "id": "bodyweight-split-squat",
+    "why": "Fixed stance, easier to balance"
+   },
+   {
+    "id": "walking-lunge",
+    "why": "Moving lunge with DBs"
+   },
+   {
+    "id": "db-split-squat",
+    "why": "Fixed stance holding DBs"
+   },
+   {
+    "id": "bodyweight-squat",
+    "why": "Both legs, easier on hip and knee"
+   }
+  ]
+ },
+ {
+  "id": "bodyweight-split-squat",
+  "name": "Bodyweight Split Squat",
+  "aliases": [
+   "Static Lunge",
+   "Air Split Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "glute-med"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Long stance, feet hip-width. Drop the back knee straight down, push through the front heel. Harder: slower.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Front hip bends deep with most of the bodyweight",
+   "knee": "Front knee bends with most of the bodyweight"
+  },
+  "alternatives": [
+   {
+    "id": "db-split-squat",
+    "why": "Same stance holding DBs"
+   },
+   {
+    "id": "bodyweight-reverse-lunge",
+    "why": "Step back each rep, more balance"
+   },
+   {
+    "id": "single-leg-press",
+    "why": "One leg on the machine, loadable"
+   },
+   {
+    "id": "bodyweight-squat",
+    "why": "Both legs, easier on hip and knee"
+   }
+  ]
+ },
+ {
+  "id": "bodyweight-single-leg-rdl",
+  "name": "Bodyweight Single-Leg RDL",
+  "aliases": [
+   "Single-Leg Hinge",
+   "Airplane RDL"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "glute-med",
+   "spinal-erectors",
+   "deep-core"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "tier": 2,
+  "cue": "Hips square, soft knee. Back leg and torso move as one line. Harder: slower lowering, pause at the bottom.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "hip": "Deep hip bend balanced on one leg",
+   "ankle": "Balance on one foot"
+  },
+  "alternatives": [
+   {
+    "id": "single-leg-rdl",
+    "why": "Same hinge with a DB, loadable"
+   },
+   {
+    "id": "band-pull-through",
+    "why": "Both feet down, band hinge, no balance"
+   },
+   {
+    "id": "single-leg-glute-bridge",
+    "why": "Lying, no balance, easy on the ankle"
+   },
+   {
+    "id": "band-leg-curl",
+    "why": "Lying curl, easier on hip and ankle"
+   },
+   {
+    "id": "stability-ball-leg-curl",
+    "why": "Lying on the floor, no balance needed"
+   }
+  ]
+ },
+ {
+  "id": "band-pull-through",
+  "name": "Band Pull-Through",
+  "aliases": [
+   "Banded Pull-Through"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes",
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "spinal-erectors",
+   "grip"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Band anchored low behind you, between the legs. Hips back, squeeze through. Harder: step further out.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "kettlebell-swing",
+    "why": "Same hip snap with a kettlebell"
+   },
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Dumbbell hinge, loadable"
+   },
+   {
+    "id": "bodyweight-single-leg-rdl",
+    "why": "One leg, no kit, harder balance"
+   },
+   {
+    "id": "hip-thrust",
+    "why": "Glutes with the back on a bench"
+   },
+   {
+    "id": "single-leg-glute-bridge",
+    "why": "Lying glute work, no band"
+   }
+  ]
+ },
+ {
+  "id": "band-leg-curl",
+  "name": "Band Leg Curl",
+  "aliases": [
+   "Banded Lying Leg Curl",
+   "Prone Band Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "calves"
+  ],
+  "pattern": "knee-flexion",
+  "equipment": [
+   "resistance-band",
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Face down, band from a low anchor to the ankles. Heels to glutes, lower slowly. Harder: move further away.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "cable-leg-curl",
+    "why": "Cable curl, loadable"
+   },
+   {
+    "id": "stability-ball-leg-curl",
+    "why": "Ball curl, hips up, no anchor needed"
+   },
+   {
+    "id": "nordic-curl",
+    "why": "Bodyweight, far harder lowering"
+   },
+   {
+    "id": "bodyweight-single-leg-rdl",
+    "why": "Hinge for the hamstrings, no band"
    }
   ]
  }

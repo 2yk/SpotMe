@@ -26,6 +26,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Handles at mid-chest, feet planted. Push close to failure safely; control the way back.",
   "injury": {
    "neck": 1,
@@ -95,6 +96,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Flat bench, feet planted. Lower deeper than a barbell allows, then press up and slightly in.",
   "injury": {
    "neck": 1,
@@ -171,6 +173,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Eyes under the bar, shoulder blades pinned. Bar to lower chest, elbows about 45° out.",
   "injury": {
    "neck": 1,
@@ -238,6 +241,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Bench set so the bar meets lower chest. Unhook, lower under control, press without bouncing.",
   "injury": {
    "neck": 1,
@@ -297,6 +301,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Lie on the floor, knees bent. Lower until upper arms touch the floor, pause, press.",
   "injury": {
    "neck": 1,
@@ -370,6 +375,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Split stance between the pulleys, handles at chest height. Press forward and together, ribs down.",
   "injury": {
    "neck": 1,
@@ -430,6 +436,7 @@
   "loadType": "added",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Hands under shoulders, body in one line. Chest to a fist from the floor; a plate on the back adds load.",
   "injury": {
    "neck": 1,
@@ -504,6 +511,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "Knees on a mat, body straight from knees to head. Chest to a fist from the floor.",
   "injury": {
    "neck": 1,
@@ -559,6 +567,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Hands on a bench or Smith bar, body in one line. Chest to the edge, push away.",
   "injury": {
    "neck": 1,
@@ -617,6 +626,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Feet on a bench, hands on the floor. Keep hips level with the body; lower forehead toward the floor.",
   "injury": {
    "neck": 1,
@@ -678,6 +688,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 3,
   "cue": "Hands on hex dumbbells or handles, wrists straight. Lower past the hands for a deep stretch.",
   "injury": {
    "neck": 1,
@@ -742,6 +753,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "30° bench. Deep stretch at the bottom, drive up. Main chest builder.",
   "injury": {
    "neck": 1,
@@ -817,6 +829,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Bench at 30° under the rack. Bar to upper chest, elbows slightly in, press back over the shoulders.",
   "injury": {
    "neck": 1,
@@ -876,6 +889,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Bench at 30°, bar meets upper chest. Lower under control and press without bouncing.",
   "injury": {
    "neck": 1,
@@ -934,6 +948,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Seat so handles start at upper chest, back on the pad. Press up and in, slow on the way back.",
   "injury": {
    "neck": 1,
@@ -993,6 +1008,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Feet locked in, bench 15 to 30° down. Bar to lower chest, press back over the chest. Use a spotter.",
   "injury": {
    "neck": 1,
@@ -1058,6 +1074,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Feet locked in, bench slightly down. Lower to the lower chest, press up and in.",
   "injury": {
    "neck": 1,
@@ -1122,6 +1139,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Decline bench under the Smith bar so it meets lower chest. Lower under control, press.",
   "injury": {
    "neck": 1,
@@ -1179,6 +1197,7 @@
   "loadType": "plates",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Seat so handles start at lower chest. Press down and forward, slow return.",
   "injury": {
    "neck": 1,
@@ -1239,6 +1258,7 @@
   "loadType": "added",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Lean forward slightly, elbows a little out. Lower to upper arms parallel, no deeper. Belt to add weight.",
   "injury": {
    "neck": 1,
@@ -1307,6 +1327,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Slight bend in the elbows, fixed. Open to a stretch at chest level, hug back up.",
   "injury": {
    "neck": 1,
@@ -1364,6 +1385,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Bench at 30°, elbows softly bent. Open to a stretch, bring the dumbbells together over the face.",
   "injury": {
    "neck": 1,
@@ -1423,6 +1445,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Pulleys at shoulder height, split stance. Soft elbows, hug forward until the hands meet.",
   "injury": {
    "neck": 1,
@@ -1482,6 +1505,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Pulleys high, lean slightly forward. Sweep the hands down and together toward the hips.",
   "injury": {
    "neck": 1,
@@ -1547,6 +1571,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Pulleys low. Sweep the hands up and together to chin height. Upper-chest emphasis; squeeze at the top.",
   "injury": {
    "neck": 1,
@@ -1604,6 +1629,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Handles at chest height, back on the pad. Bring the handles together, slow on the way back.",
   "injury": {
    "neck": 1,
@@ -1666,6 +1692,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Elbows pinned to the ribs. Spread the rope at the bottom, 1-sec squeeze.",
   "injury": {
    "neck": 1,
@@ -1708,6 +1735,10 @@
    {
     "id": "reverse-grip-pushdown",
     "why": "Palms up, more medial head"
+   },
+   {
+    "id": "band-overhead-extension",
+    "why": "Band overhead at home, long head"
    }
   ]
  },
@@ -1736,6 +1767,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Elbows at the sides, wrists straight. Push the bar to the thighs, control it back to chest height.",
   "injury": {
    "neck": 1,
@@ -1795,6 +1827,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Palms up, elbows tight to the sides. Push down to full lockout, slow on the way up.",
   "injury": {
    "neck": 1,
@@ -1855,6 +1888,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Elbow pinned at the side, other hand on the stack. Push to lockout, squeeze, return slowly.",
   "injury": {
    "neck": 1,
@@ -1915,6 +1949,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Face away from a low pulley. Long-head stretch, elbows by the ears. The best triceps size builder.",
   "injury": {
    "neck": 1,
@@ -1954,6 +1989,10 @@
    {
     "id": "ez-bar-skull-crusher",
     "why": "Lying long-head stretch"
+   },
+   {
+    "id": "band-overhead-extension",
+    "why": "Band at home, same stretch"
    }
   ]
  },
@@ -1981,6 +2020,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Sit tall, back on an upright bench. Cup one dumbbell, lower it behind the head, elbows in.",
   "injury": {
    "neck": 1,
@@ -2012,6 +2052,10 @@
    {
     "id": "db-kickback",
     "why": "Arms down, easy on shoulder and elbow"
+   },
+   {
+    "id": "band-overhead-extension",
+    "why": "Band at home, no bench"
    }
   ]
  },
@@ -2038,6 +2082,7 @@
   "loadType": "single-weight",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 2,
   "cue": "Sit tall, elbow pointing up beside the head. Lower behind the head, extend fully.",
   "injury": {
    "neck": 1,
@@ -2065,6 +2110,10 @@
    {
     "id": "db-kickback",
     "why": "Arm down, easy on shoulder and elbow"
+   },
+   {
+    "id": "band-overhead-extension",
+    "why": "Band at home, both arms"
    }
   ]
  },
@@ -2092,6 +2141,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Sit tall, back supported. Lower the bar behind the head, elbows forward and in, then extend.",
   "injury": {
    "neck": 1,
@@ -2148,6 +2198,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Lower behind the head for more stretch. Elbows stay in.",
   "injury": {
    "neck": 1,
@@ -2210,6 +2261,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Palms facing each other, elbows pointing up. Lower beside the head, extend without flaring.",
   "injury": {
    "neck": 1,
@@ -2263,6 +2315,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 1,
   "level": "beginner",
+  "tier": 3,
   "cue": "Hand and knee on a bench, upper arm parallel to the floor. Extend fully, squeeze, lower slowly.",
   "injury": {
    "neck": 1,
@@ -2336,6 +2389,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Low pulley, hinge forward with a hand on the frame. Upper arm still, extend straight back.",
   "injury": {
    "neck": 1,
@@ -2370,6 +2424,10 @@
    {
     "id": "triceps-extension-machine",
     "why": "Machine, heavier and steadier"
+   },
+   {
+    "id": "band-overhead-extension",
+    "why": "Band overhead at home, more stretch"
    }
   ]
  },
@@ -2400,6 +2458,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Hands shoulder-width, elbows tucked. Bar to lower chest, press to lockout.",
   "injury": {
    "neck": 1,
@@ -2456,6 +2515,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Upper arms on the pad, seat so elbows line up with the pivot. Extend fully, slow return.",
   "injury": {
    "neck": 1,
@@ -2522,6 +2582,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Sit tall, handles at the sides. Press down to lockout, let the hands rise only to chest level.",
   "injury": {
    "neck": 1,
@@ -2588,6 +2649,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Hands together under the chest, thumbs and index fingers touching. Elbows back along the ribs.",
   "injury": {
    "neck": 1,
@@ -2644,6 +2706,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Hands on the bench edge behind you, knees bent. Lower only until upper arms are parallel.",
   "injury": {
    "neck": 1,
@@ -2672,6 +2735,67 @@
    {
     "id": "dips",
     "why": "Harder: full bodyweight on bars"
+   }
+  ]
+ },
+ {
+  "id": "band-overhead-extension",
+  "name": "Band Overhead Extension",
+  "aliases": [
+   "Banded Overhead Triceps Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps-long-head",
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Band under the back foot, hands behind the head. Elbows up, straighten. Harder: thicker band, slower.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms held overhead at full flexion",
+   "elbow": "Elbow bends under load at full stretch"
+  },
+  "alternatives": [
+   {
+    "id": "overhead-cable-extension",
+    "why": "Cable, same overhead stretch, loadable"
+   },
+   {
+    "id": "db-overhead-extension",
+    "why": "One DB in both hands, loadable"
+   },
+   {
+    "id": "single-arm-db-overhead-extension",
+    "why": "One arm with a DB"
+   },
+   {
+    "id": "rope-pushdown",
+    "why": "Arms down, easier on the shoulder"
+   },
+   {
+    "id": "cable-kickback",
+    "why": "Arm at the side, easier on the elbow"
    }
   ]
  }

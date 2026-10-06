@@ -1,0 +1,542 @@
+{
+  "planVersion": 1,
+  "deloadEveryNthWeek": 6,
+  "days": [
+    {
+      "key": "monday",
+      "weekday": 2,
+      "title": "Monday",
+      "focus": "Upper A · Press & Row",
+      "time": "~50 min",
+      "items": [
+        {
+          "name": "Warmup · 6 min",
+          "exerciseId": "monday-warmup",
+          "group": "Warmup",
+          "kind": "checklist",
+          "steps": [
+            "Light cardio 2–3 min",
+            "Arm circles · 10 each way",
+            "Band pull-aparts · 1 × 15",
+            "Scapular push-ups · 1 × 10",
+            "Light set of your first lift · 1 × 10 at ~50%"
+          ],
+          "display": "6 min"
+        },
+        {
+          "name": "DB Bench Press",
+          "exerciseId": "db-bench-press",
+          "group": "Chest",
+          "note": "Flat bench, feet planted. Lower deeper than a barbell allows, then press up and slightly in.",
+          "display": "3 × 6–10",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 6,
+          "repMax": 10,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 120,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Chest-Supported DB Row",
+          "exerciseId": "chest-supported-db-row",
+          "group": "Back",
+          "note": "Chest on a 30-45° bench, zero back load. Pause a second at the top and squeeze the blades.",
+          "display": "3 × 8–12",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 90,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Seated DB Shoulder Press",
+          "exerciseId": "seated-db-shoulder-press",
+          "group": "Shoulders",
+          "note": "Back fully supported on the bench, no arching. Lower to ear level, press up and slightly in.",
+          "display": "3 × 8–12",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 90,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Band Lat Pulldown",
+          "exerciseId": "band-lat-pulldown",
+          "group": "Back",
+          "note": "Kneel under a high anchor. Pull elbows down to the ribs, chest up. Harder: thicker band, slower return.",
+          "display": "3 × 8–12",
+          "sets": 3,
+          "kind": "reps",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": false,
+          "loadable": false,
+          "restSec": 90
+        },
+        {
+          "name": "DB Lateral Raise",
+          "exerciseId": "db-lateral-raise",
+          "group": "Shoulders",
+          "note": "Light, strict, 20-rep burn. Lead with the elbows to shoulder height, no swing.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "increment": 1,
+          "restSec": 60,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "DB Lying Triceps Extension",
+          "exerciseId": "db-lying-extension",
+          "group": "Triceps",
+          "note": "Palms facing each other, elbows pointing up. Lower beside the head, extend without flaring.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "increment": 1,
+          "restSec": 60,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Cooldown stretches",
+          "exerciseId": "monday-cooldown",
+          "group": "Cooldown",
+          "kind": "checklist",
+          "note": "Doorway pec stretch · overhead triceps stretch · lat stretch, 30s each.",
+          "display": "4 min"
+        }
+      ]
+    },
+    {
+      "key": "tuesday",
+      "weekday": 3,
+      "title": "Tuesday",
+      "focus": "Lower A · Squat Focus",
+      "time": "~50 min",
+      "items": [
+        {
+          "name": "Warmup · 6 min",
+          "exerciseId": "tuesday-warmup",
+          "group": "Warmup",
+          "kind": "checklist",
+          "steps": [
+            "Light cardio 3 min",
+            "Bodyweight squats · 1 × 10",
+            "Hip hinges · 1 × 10",
+            "Glute bridges · 1 × 10",
+            "Light set of your first lift · 1 × 10 at ~50%"
+          ],
+          "display": "6 min"
+        },
+        {
+          "name": "Goblet Squat",
+          "exerciseId": "goblet-squat",
+          "group": "Quads",
+          "note": "One DB held at the chest. Sit between the heels, elbows inside the knees, chest tall.",
+          "display": "3 × 6–10",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 6,
+          "repMax": 10,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 120,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "DB Romanian Deadlift",
+          "exerciseId": "db-romanian-deadlift",
+          "group": "Hamstrings",
+          "note": "DBs down the front of the thighs, soft knees. Hips back to the stretch, flat back.",
+          "display": "3 × 8–12",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 90,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "DB Reverse Lunge",
+          "exerciseId": "reverse-lunge",
+          "group": "Quads",
+          "note": "DBs at the sides. Step back, drop the back knee, push up through the front heel.",
+          "display": "3 × 8–12/side",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": true,
+          "increment": 2.5,
+          "restSec": 90,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Band Leg Curl",
+          "exerciseId": "band-leg-curl",
+          "group": "Hamstrings",
+          "note": "Face down, band from a low anchor to the ankles. Heels to glutes, lower slowly. Harder: move further away.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "kind": "reps",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "loadable": false,
+          "restSec": 60
+        },
+        {
+          "name": "Glute Bridge with Hold",
+          "exerciseId": "glute-bridge",
+          "group": "Glutes",
+          "note": "On your back, feet flat. Squeeze glutes 3 sec at the top.",
+          "display": "4 × 12–15",
+          "sets": 4,
+          "kind": "reps",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "loadable": false,
+          "restSec": 60
+        },
+        {
+          "name": "Dead Bug",
+          "exerciseId": "dead-bug",
+          "group": "Core",
+          "note": "Lower back pressed to the floor. Slowly reach the opposite arm and leg out, then switch.",
+          "display": "2 × 10–15/side",
+          "sets": 2,
+          "kind": "reps",
+          "repMin": 10,
+          "repMax": 15,
+          "perSide": true,
+          "loadable": false,
+          "restSec": 45
+        },
+        {
+          "name": "Cooldown stretches",
+          "exerciseId": "tuesday-cooldown",
+          "group": "Cooldown",
+          "kind": "checklist",
+          "note": "Couch stretch · hamstring stretch · calf stretch, 30s each side.",
+          "display": "4 min"
+        }
+      ]
+    },
+    {
+      "key": "wednesday",
+      "weekday": 4,
+      "title": "Wednesday",
+      "focus": "Rest",
+      "time": "Nothing planned",
+      "items": [
+        {
+          "name": "Rest day",
+          "exerciseId": "rest-wednesday",
+          "group": "Recovery",
+          "kind": "checklist",
+          "display": "—",
+          "note": "No lifting today. Walk, sleep and eat well."
+        }
+      ]
+    },
+    {
+      "key": "thursday",
+      "weekday": 5,
+      "title": "Thursday",
+      "focus": "Upper B · Incline & Pull",
+      "time": "~50 min",
+      "items": [
+        {
+          "name": "Warmup · 6 min",
+          "exerciseId": "thursday-warmup",
+          "group": "Warmup",
+          "kind": "checklist",
+          "steps": [
+            "Light cardio 2–3 min",
+            "Arm circles · 10 each way",
+            "Band pull-aparts · 1 × 15",
+            "Scapular push-ups · 1 × 10",
+            "Light set of your first lift · 1 × 10 at ~50%"
+          ],
+          "display": "6 min"
+        },
+        {
+          "name": "Incline DB Press",
+          "exerciseId": "incline-db-press",
+          "group": "Chest",
+          "note": "30° bench. Deep stretch at the bottom, drive up. Main chest builder.",
+          "display": "3 × 6–10",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 6,
+          "repMax": 10,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 120,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Band Lat Pulldown",
+          "exerciseId": "band-lat-pulldown",
+          "group": "Back",
+          "note": "Kneel under a high anchor. Pull elbows down to the ribs, chest up. Harder: thicker band, slower return.",
+          "display": "3 × 8–12",
+          "sets": 3,
+          "kind": "reps",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": false,
+          "loadable": false,
+          "restSec": 90
+        },
+        {
+          "name": "One-Arm DB Row",
+          "exerciseId": "one-arm-db-row",
+          "group": "Back",
+          "note": "Hand and knee on the bench, back flat. Pull the DB to the hip, no twisting.",
+          "display": "3 × 8–12/side",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": true,
+          "increment": 2.5,
+          "restSec": 90,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "DB Fly",
+          "exerciseId": "db-fly",
+          "group": "Chest",
+          "note": "Slight bend in the elbows, fixed. Open to a stretch at chest level, hug back up.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 60,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Incline DB Reverse Fly",
+          "exerciseId": "incline-db-reverse-fly",
+          "group": "Shoulders",
+          "note": "Chest on a 30-45° bench. Raise the dumbbells out wide to shoulder height, pause.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "increment": 1,
+          "restSec": 60,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "DB Curl",
+          "exerciseId": "db-curl",
+          "group": "Biceps",
+          "note": "Elbows at the sides, turn the palm up as you curl. Lower for 2-3 seconds.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "increment": 2.5,
+          "restSec": 60,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Cooldown stretches",
+          "exerciseId": "thursday-cooldown",
+          "group": "Cooldown",
+          "kind": "checklist",
+          "note": "Doorway pec stretch · overhead triceps stretch · lat stretch, 30s each.",
+          "display": "4 min"
+        }
+      ]
+    },
+    {
+      "key": "friday",
+      "weekday": 6,
+      "title": "Friday",
+      "focus": "Rest",
+      "time": "Nothing planned",
+      "items": [
+        {
+          "name": "Rest day",
+          "exerciseId": "rest-friday",
+          "group": "Recovery",
+          "kind": "checklist",
+          "display": "—",
+          "note": "No lifting today. Walk, sleep and eat well."
+        }
+      ]
+    },
+    {
+      "key": "saturday",
+      "weekday": 7,
+      "title": "Saturday",
+      "focus": "Lower B · Hinge Focus",
+      "time": "~45 min",
+      "items": [
+        {
+          "name": "Warmup · 6 min",
+          "exerciseId": "saturday-warmup",
+          "group": "Warmup",
+          "kind": "checklist",
+          "steps": [
+            "Light cardio 3 min",
+            "Bodyweight squats · 1 × 10",
+            "Hip hinges · 1 × 10",
+            "Glute bridges · 1 × 10",
+            "Light set of your first lift · 1 × 10 at ~50%"
+          ],
+          "display": "6 min"
+        },
+        {
+          "name": "Single-Leg RDL",
+          "exerciseId": "single-leg-rdl",
+          "group": "Hamstrings",
+          "note": "DB in the opposite hand, hips square. Back leg and torso move as one line.",
+          "display": "3 × 6–10/side",
+          "sets": 3,
+          "kind": "weighted",
+          "repMin": 6,
+          "repMax": 10,
+          "perSide": true,
+          "increment": 2.5,
+          "restSec": 120,
+          "sessionsAtTopToProgress": 1
+        },
+        {
+          "name": "Bodyweight Squat",
+          "exerciseId": "bodyweight-squat",
+          "group": "Quads",
+          "note": "Arms forward for balance. Sit down between the heels, stand tall and squeeze.",
+          "display": "3 × 8–12",
+          "sets": 3,
+          "kind": "reps",
+          "repMin": 8,
+          "repMax": 12,
+          "perSide": false,
+          "loadable": false,
+          "restSec": 90
+        },
+        {
+          "name": "Band Leg Curl",
+          "exerciseId": "band-leg-curl",
+          "group": "Hamstrings",
+          "note": "Face down, band from a low anchor to the ankles. Heels to glutes, lower slowly. Harder: move further away.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "kind": "reps",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": false,
+          "loadable": false,
+          "restSec": 60
+        },
+        {
+          "name": "Single-Leg Hip Thrust",
+          "exerciseId": "single-leg-hip-thrust",
+          "group": "Glutes",
+          "note": "Upper back on the bench, one foot down. Hips level, pause at the top.",
+          "display": "4 × 12–15/side",
+          "sets": 4,
+          "kind": "reps",
+          "repMin": 12,
+          "repMax": 15,
+          "perSide": true,
+          "loadable": true,
+          "increment": 2.5,
+          "restSec": 60
+        },
+        {
+          "name": "Side Plank",
+          "exerciseId": "side-plank",
+          "group": "Core",
+          "note": "Forearm under the shoulder, body in one straight line. Hips high, no rolling forward.",
+          "display": "3 × 20–30s/side",
+          "sets": 3,
+          "kind": "timed",
+          "secMin": 20,
+          "secMax": 30,
+          "perSide": true,
+          "loadable": false,
+          "restSec": 45
+        },
+        {
+          "name": "Cooldown stretches",
+          "exerciseId": "saturday-cooldown",
+          "group": "Cooldown",
+          "kind": "checklist",
+          "note": "Couch stretch · hamstring stretch · calf stretch, 30s each side.",
+          "display": "4 min"
+        }
+      ]
+    },
+    {
+      "key": "sunday",
+      "weekday": 1,
+      "title": "Sunday",
+      "focus": "Rest",
+      "time": "Nothing planned",
+      "items": [
+        {
+          "name": "Rest day",
+          "exerciseId": "rest-sunday",
+          "group": "Recovery",
+          "kind": "checklist",
+          "display": "—",
+          "note": "No lifting today. Walk, sleep and eat well."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "split": "Upper / Lower",
+    "daysPerWeek": 4,
+    "minutes": 45,
+    "weeklySets": {
+      "chest": 9,
+      "back": 12,
+      "shoulders": 9,
+      "arms": 6,
+      "quads": 9,
+      "glutesHamstrings": 20,
+      "calves": 0,
+      "core": 5
+    },
+    "notes": [
+      "Upper / Lower, four days: every muscle is trained twice a week.",
+      "Same lifting as for muscle, with shorter rests. The fat loss comes from eating, the lifting keeps your muscle.",
+      "Extra sets for glutes, and it is the last thing to be cut when time is short.",
+      "Knee: nothing risky for it is in the plan, and gentler options were picked first.",
+      "Trimmed to fit 45 minutes: the most important lifts stayed.",
+      "Nothing for leg extension suits your knee, so it is left out.",
+      "Weights go up by themselves: reach the top of the rep range on every set and next time adds one step. Every 6th week is a lighter deload week."
+    ]
+  }
+}

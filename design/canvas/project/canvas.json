@@ -619,6 +619,222 @@
    "title": "10.1 · Settings",
    "page": "review",
    "radius": 40
+  },
+  "O111-Welcome.dc.html": {
+   "x": 0,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.1 · Welcome",
+   "page": "review",
+   "radius": 40
+  },
+  "O112-Goal.dc.html": {
+   "x": 520,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.2 · Goal",
+   "page": "review",
+   "radius": 40
+  },
+  "O113-Focus.dc.html": {
+   "x": 1040,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.3 · Focus",
+   "page": "review",
+   "radius": 40
+  },
+  "O114-Experience.dc.html": {
+   "x": 1560,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.4 · Experience",
+   "page": "review",
+   "radius": 40
+  },
+  "O115-Days.dc.html": {
+   "x": 2080,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.5 · Days",
+   "page": "review",
+   "radius": 40
+  },
+  "O116-Minutes.dc.html": {
+   "x": 2600,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.6 · Session length",
+   "page": "review",
+   "radius": 40
+  },
+  "O117-Place.dc.html": {
+   "x": 3120,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.7 · Where",
+   "page": "review",
+   "radius": 40
+  },
+  "O118-Equipment.dc.html": {
+   "x": 3640,
+   "y": 15715,
+   "w": 440,
+   "h": 1658,
+   "title": "11.8 · Equipment list",
+   "page": "review",
+   "radius": 40
+  },
+  "O119-Injuries.dc.html": {
+   "x": 4160,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.9 · Injuries",
+   "page": "review",
+   "radius": 40
+  },
+  "O1110-AboutYou.dc.html": {
+   "x": 4680,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.10 · Running and age",
+   "page": "review",
+   "radius": 40
+  },
+  "O1111-Answers.dc.html": {
+   "x": 5200,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.11 · Your answers",
+   "page": "review",
+   "radius": 40
+  },
+  "O1112-Building.dc.html": {
+   "x": 5720,
+   "y": 15715,
+   "w": 440,
+   "h": 956,
+   "title": "11.12 · Building",
+   "page": "review",
+   "radius": 40
+  },
+  "O121-Plan.dc.html": {
+   "x": 0,
+   "y": 17833,
+   "w": 440,
+   "h": 1225,
+   "title": "12.1 · Your plan",
+   "page": "review",
+   "radius": 40
+  },
+  "O122-Day.dc.html": {
+   "x": 520,
+   "y": 17833,
+   "w": 440,
+   "h": 1021,
+   "title": "12.2 · One day",
+   "page": "review",
+   "radius": 40
+  },
+  "O123-Why.dc.html": {
+   "x": 1040,
+   "y": 17833,
+   "w": 440,
+   "h": 1148,
+   "title": "12.3 · Why this plan",
+   "page": "review",
+   "radius": 40
+  },
+  "O124-Swap.dc.html": {
+   "x": 1560,
+   "y": 17833,
+   "w": 440,
+   "h": 956,
+   "title": "12.4 · Swap an exercise",
+   "page": "review",
+   "radius": 40
+  },
+  "O125-Ready.dc.html": {
+   "x": 2080,
+   "y": 17833,
+   "w": 440,
+   "h": 956,
+   "title": "12.5 · Ready",
+   "page": "review",
+   "radius": 40
+  },
+  "O126-Rebuild.dc.html": {
+   "x": 2600,
+   "y": 17833,
+   "w": 440,
+   "h": 956,
+   "title": "12.6 · Rebuild later",
+   "page": "review",
+   "radius": 40
+  },
+  "W19-Setup.dc.html": {
+   "x": 3968,
+   "y": 1160,
+   "w": 416,
+   "h": 496,
+   "title": "1.9 · Before a plan exists",
+   "page": "review",
+   "radius": 96
+  },
+  "F131-Figures.dc.html": {
+   "x": 0,
+   "y": 19518,
+   "w": 1280,
+   "h": 780,
+   "title": "13.1 · The twelve figures",
+   "page": "review",
+   "radius": 0
+  },
+  "W211-SetFigure.dc.html": {
+   "x": 1360,
+   "y": 19518,
+   "w": 416,
+   "h": 496,
+   "title": "2.11 · Set · with a figure",
+   "page": "review",
+   "radius": 96
+  },
+  "W212-How.dc.html": {
+   "x": 1856,
+   "y": 19518,
+   "w": 416,
+   "h": 496,
+   "title": "2.12 · How",
+   "page": "review",
+   "radius": 96
+  },
+  "W312-BreakFigure.dc.html": {
+   "x": 2352,
+   "y": 19518,
+   "w": 416,
+   "h": 496,
+   "title": "3.12 · Break · with a figure",
+   "page": "review",
+   "radius": 96
+  },
+  "P77-ExerciseFigure.dc.html": {
+   "x": 2848,
+   "y": 19518,
+   "w": 440,
+   "h": 956,
+   "title": "7.7 · Exercise sheet with a figure",
+   "page": "review",
+   "radius": 40
   }
  },
  "order": [
@@ -686,7 +902,31 @@
   "P93-Editor.dc.html",
   "P94-AddNew.dc.html",
   "P95-AddFromPlan.dc.html",
-  "P101-Settings.dc.html"
+  "P101-Settings.dc.html",
+  "O111-Welcome.dc.html",
+  "O112-Goal.dc.html",
+  "O113-Focus.dc.html",
+  "O114-Experience.dc.html",
+  "O115-Days.dc.html",
+  "O116-Minutes.dc.html",
+  "O117-Place.dc.html",
+  "O118-Equipment.dc.html",
+  "O119-Injuries.dc.html",
+  "O1110-AboutYou.dc.html",
+  "O1111-Answers.dc.html",
+  "O1112-Building.dc.html",
+  "O121-Plan.dc.html",
+  "O122-Day.dc.html",
+  "O123-Why.dc.html",
+  "O124-Swap.dc.html",
+  "O125-Ready.dc.html",
+  "O126-Rebuild.dc.html",
+  "W19-Setup.dc.html",
+  "F131-Figures.dc.html",
+  "W211-SetFigure.dc.html",
+  "W212-How.dc.html",
+  "W312-BreakFigure.dc.html",
+  "P77-ExerciseFigure.dc.html"
  ],
  "notes": {
   "top": {
@@ -836,6 +1076,50 @@
    "fill": "orange",
    "page": "review",
    "text": "iPhone: what changes besides the look. Yes or no to each?\n\ng · Today's card counts what goes up and what goes lighter today.\nh · Rows lose the kind icons and the chevrons. Target weight and its tag sit on the right."
+  },
+  "row11": {
+   "x": 0,
+   "y": 15385,
+   "text": "11.1–11.12 · Onboarding: the questions",
+   "kind": "title1",
+   "maxW": 2400,
+   "page": "review"
+  },
+  "row12": {
+   "x": 0,
+   "y": 17503,
+   "text": "12.1–12.6 · The plan it builds",
+   "kind": "title1",
+   "maxW": 2400,
+   "page": "review"
+  },
+  "row13": {
+   "x": 0,
+   "y": 19188,
+   "text": "13.1 · Form figures: which exercise is which",
+   "kind": "title1",
+   "maxW": 2400,
+   "page": "review"
+  },
+  "decide-onboarding": {
+   "x": 6240,
+   "y": 15715,
+   "w": 560,
+   "maxH": 700,
+   "size": "m",
+   "fill": "orange",
+   "page": "review",
+   "text": "Onboarding and the plan: yes or no to each?\n\ni · The plan is built by fixed rules on the phone: no account, no server, no AI call. Rules and six test plans are in design/plan-builder.\nj · Nine questions. Weight, height and sex are not asked.\nk · Your own v11 plan stays. Onboarding is for a new install and for \"Rebuild my plan\" in Settings.\nl · Swapping in exercises from the database replaces the spec line \"never suggest exercises that are not in the plan\".\n\nBoards 12.1 to 12.4 show the plan the rules build for your answers."
+  },
+  "decide-figures": {
+   "x": 3368,
+   "y": 19518,
+   "w": 520,
+   "maxH": 520,
+   "size": "m",
+   "fill": "orange",
+   "page": "review",
+   "text": "Form figures: yes or no?\n\nm · These twelve are a proof of concept, drawn from two poses each and animated by the app. If you like the look, all 247 exercises get one, and they also go into swap lists and the plan screens.\n\nThey move on board 13.1."
   }
  },
  "designSystems": []

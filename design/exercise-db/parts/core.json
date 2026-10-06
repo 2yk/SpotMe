@@ -27,6 +27,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Hang still, no swinging. Raise the legs and curl the pelvis up toward the ribs.",
   "injury": {
    "neck": 0,
@@ -98,6 +99,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 1,
   "cue": "Hang still. Bring knees up past the hips and tilt the pelvis up. Lower slowly.",
   "injury": {
    "neck": 0,
@@ -160,6 +162,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Back flat on the pad, forearms down. Lift knees to chest and curl the pelvis.",
   "injury": {
    "neck": 0,
@@ -220,6 +223,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Back flat on the pad. Raise straight legs to hip height, curl the pelvis, lower slowly.",
   "injury": {
    "neck": 0,
@@ -284,6 +288,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "advanced",
+  "tier": 3,
   "cue": "Hang, press the bar down with straight arms and lift the toes to touch it. No kip.",
   "injury": {
    "neck": 0,
@@ -346,6 +351,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 3,
   "cue": "Hang still. Bring the knees up and across toward the opposite elbow. Alternate.",
   "injury": {
    "neck": 0,
@@ -402,6 +408,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Hands under the hips. Lower straight legs only as far as the low back stays flat.",
   "injury": {
    "neck": 0,
@@ -456,6 +463,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Knees bent at 90°. Curl the hips off the floor toward the ribs, lower slowly. No swing.",
   "injury": {
    "neck": 0,
@@ -527,6 +535,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Knees bent, hands at the temples. Curl ribs toward hips. Never pull on the head.",
   "injury": {
    "neck": 1,
@@ -591,6 +600,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Kneel facing a high cable, rope by the ears. Crunch down, rounding the upper spine. Hips still.",
   "injury": {
    "neck": 1,
@@ -648,6 +658,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Seat so the pivot is at the waist. Curl ribs toward hips, pause, return slowly.",
   "injury": {
    "neck": 1,
@@ -702,6 +713,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Feet hooked, slight decline. Curl up only until the low back lifts, lower slowly.",
   "injury": {
    "neck": 1,
@@ -761,6 +773,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Feet hooked on a decline bench. Sit all the way up, lower under control. Hold a plate to load it.",
   "injury": {
    "neck": 1,
@@ -818,6 +831,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Slow and controlled. Opposite elbow to knee, other leg long. Fingertips light on the head.",
   "injury": {
    "neck": 2,
@@ -874,6 +888,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "Lie back, legs straight up. Reach for the toes, curling the shoulders off the floor.",
   "injury": {
    "neck": 1,
@@ -926,6 +941,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 3,
   "cue": "Lie long. Lift straight legs and arms together, touch hands to shins, lower slowly.",
   "injury": {
    "neck": 1,
@@ -990,6 +1006,7 @@
   "loadType": "added",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Forearms down, plate on the upper back. Glutes squeezed, ribs down, no sag.",
   "injury": {
    "neck": 0,
@@ -1069,6 +1086,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 1,
   "cue": "From the knees, only if the back has felt solid for 6+ weeks. Brace hard, stop before it arches.",
   "injury": {
    "neck": 0,
@@ -1138,6 +1156,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Kneel behind a barbell with round plates. Brace, roll out only as far as the back stays flat.",
   "injury": {
    "neck": 0,
@@ -1194,6 +1213,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Kneel, forearms on the ball. Roll forward with ribs down, return before the back sags.",
   "injury": {
    "neck": 0,
@@ -1254,6 +1274,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "advanced",
+  "tier": 3,
   "cue": "Forearm plank, feet in the straps. Rock back past the elbows and return, no sag.",
   "injury": {
    "neck": 0,
@@ -1313,6 +1334,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Forearm plank on a ball. Small circles with the elbows, hips still. Count per direction.",
   "injury": {
    "neck": 0,
@@ -1374,6 +1396,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 2,
   "cue": "Low back flat on the floor, arms overhead, legs low. Bend the knees if the back lifts.",
   "injury": {
    "neck": 1,
@@ -1433,6 +1456,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "advanced",
+  "tier": 3,
   "cue": "Lie on a bench gripping behind the head. Body rigid on the shoulders, lower slowly as one piece.",
   "injury": {
    "neck": 1,
@@ -1492,6 +1516,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 1,
   "cue": "Tucked, then one leg, then full. Shoulders pushed down, legs level. Build to 30 sec.",
   "injury": {
    "neck": 0,
@@ -1551,6 +1576,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 3,
   "cue": "From a high plank, slowly lift the opposite arm and leg. Hips level, no twist.",
   "injury": {
    "neck": 0,
@@ -1611,6 +1637,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "High plank, feet wide. Tap the opposite shoulder without the hips rocking.",
   "injury": {
    "neck": 0,
@@ -1668,6 +1695,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "High plank, hips level. Drive one knee to the chest at a time, controlled, back flat.",
   "injury": {
    "neck": 0,
@@ -1723,6 +1751,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 1,
   "cue": "Forearm under the shoulder, body in one straight line. Hips high, no rolling forward.",
   "injury": {
    "neck": 0,
@@ -1784,6 +1813,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 3,
   "cue": "Side plank on the forearm. Reach the top arm under and through, then back to the ceiling.",
   "injury": {
    "neck": 0,
@@ -1839,6 +1869,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Knees bent and stacked, forearm under the shoulder. Lift the hips in line and hold.",
   "injury": {
    "neck": 0,
@@ -1899,6 +1930,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "One DB at the side, other hand on the hip. Bend sideways slowly, no twist, stand tall.",
   "injury": {
    "neck": 0,
@@ -1962,6 +1994,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Cable at chest height, stand side-on. Press straight out and back, resist the twist.",
   "injury": {
    "neck": 0,
@@ -2033,6 +2066,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Band anchored at chest height, stand side-on. Press out, hold a second, resist the twist.",
   "injury": {
    "neck": 0,
@@ -2088,6 +2122,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Inside knee down, cable at chest height. Squeeze the down-side glute, press out, no twist.",
   "injury": {
    "neck": 0,
@@ -2142,6 +2177,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 1,
   "cue": "Lower back pressed to the floor. Slowly reach the opposite arm and leg out, then switch.",
   "injury": {
    "neck": 0,
@@ -2216,6 +2252,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "On all fours, spine neutral. Reach the opposite arm and leg long, pause 2 sec, no hip tilt.",
   "injury": {
    "neck": 0,
@@ -2290,6 +2327,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 1,
   "cue": "Face down. Lift arms and legs a few cm, hold 3 sec, lower. Look at the floor.",
   "injury": {
    "neck": 1,
@@ -2355,6 +2393,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Lean back 45°, feet up, plate at the chest. Rotate slowly side to side.",
   "injury": {
    "neck": 0,
@@ -2416,6 +2455,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Cable high to one side. Pull across and down to the far hip, turning through hips and chest.",
   "injury": {
    "neck": 0,
@@ -2480,6 +2520,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Bar end at chest height, arms long. Arc it hip to hip, pivot the feet, hips turn with it.",
   "injury": {
    "neck": 0,
@@ -2540,6 +2581,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "One heavy DB at one side. Walk tall 30s without leaning, then switch.",
   "injury": {
    "neck": 1,
@@ -2619,6 +2661,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Heavy DB in each hand, shoulders back. Walk tall with short quick steps.",
   "injury": {
    "neck": 1,
@@ -2678,6 +2721,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "One DB locked out overhead, biceps by the ear. Ribs down, walk slowly, then switch.",
   "injury": {
    "neck": 1,
@@ -2737,6 +2781,7 @@
   "loadType": "single-weight",
   "incrementKg": 4,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Kettlebell in the rack at one shoulder, wrist straight. Walk tall without leaning, then switch.",
   "injury": {
    "neck": 1,

@@ -21,7 +21,7 @@ BODY, MUSCLES, PATTERNS, EQUIP = vocab('bodyPart'), vocab('muscles'), vocab('pat
 ATTACH, LOADTYPES, LEVELS, LOGAS = vocab('attachment'), vocab('loadType'), vocab('level'), vocab('logAs')
 AREAS = ['neck', 'shoulder', 'elbow', 'wrist', 'lowerBack', 'hip', 'knee', 'ankle']
 KEYS = ['id', 'name', 'aliases', 'planIds', 'bodyPart', 'primaryMuscles', 'secondaryMuscles', 'pattern', 'equipment',
-        'attachment', 'logAs', 'perSide', 'loadable', 'loadType', 'incrementKg', 'level', 'cue', 'injury',
+        'attachment', 'logAs', 'perSide', 'loadable', 'loadType', 'incrementKg', 'level', 'tier', 'cue', 'injury',
         'injuryNotes', 'alternatives']
 REQUIRED = [k for k in KEYS if k not in ('attachment', 'loadable', 'incrementKg')]
 
@@ -71,6 +71,7 @@ def check_entry(e, where, err):
     if not isinstance(e['perSide'], bool): bad('perSide must be true or false')
     if e['loadType'] not in LOADTYPES: bad(f'loadType "{e["loadType"]}" not in vocabulary')
     if e['level'] not in LEVELS: bad(f'level "{e["level"]}"')
+    if e['tier'] not in (1, 2, 3): bad('tier must be 1, 2 or 3')
     if e['logAs'] == 'weighted':
         if 'loadable' in e: bad('loadable is only for reps and timed')
         if e['loadType'] == 'bodyweight': bad('weighted but loadType is bodyweight')
@@ -143,6 +144,13 @@ def check_set(entries, where_of, err, warn, complete):
             if r >= 2 and alts and not any(isinstance(t.get('injury'), dict) and t['injury'].get(area, 9) < r for t in alts):
                 warn(f'{eid}: {area} is {r} and no alternative is easier on it')
     if complete:
+        groups = {}
+        for e in entries:
+            if 'tier' in e and 'pattern' in e: groups.setdefault((e['pattern'], e.get('bodyPart')), []).append(e['tier'])
+        for (pat, part), tiers in sorted(groups.items()):
+            ones = tiers.count(1)
+            if ones == 0: warn(f'tier: no staple (tier 1) for {pat} · {part} ({len(tiers)} exercises)')
+            elif len(tiers) >= 3 and ones > max(1, -(-len(tiers) // 3)): warn(f'tier: {ones} of {len(tiers)} are tier 1 for {pat} · {part} (at most a third)')
         items = plan_items()
         covered = {}
         for e in entries:

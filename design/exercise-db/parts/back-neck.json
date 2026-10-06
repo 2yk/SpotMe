@@ -30,6 +30,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "intermediate",
+  "tier": 1,
   "cue": "Strict: full hang, chin over bar. Crisp reps, never grinding.",
   "injury": {
    "neck": 1,
@@ -109,6 +110,7 @@
   "loadType": "added",
   "incrementKg": 2.5,
   "level": "advanced",
+  "tier": 2,
   "cue": "Dip belt. Full hang, chin over bar. Rest 3 min between sets.",
   "injury": {
    "neck": 1,
@@ -175,6 +177,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Light band under the knees or feet. Full hang, chin over bar, extra volume past strict reps.",
   "injury": {
    "neck": 1,
@@ -205,6 +208,10 @@
    {
     "id": "lat-pulldown",
     "why": "Cable pull, lighter on the shoulders"
+   },
+   {
+    "id": "band-lat-pulldown",
+    "why": "Band from above, no bar needed"
    }
   ]
  },
@@ -236,6 +243,7 @@
   "loadType": "added",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Underhand, shoulder width. Full hang, chest to bar, no kipping.",
   "injury": {
    "neck": 1,
@@ -271,6 +279,10 @@
    {
     "id": "weighted-pull-ups",
     "why": "Add load once chin-ups get easy"
+   },
+   {
+    "id": "band-lat-pulldown",
+    "why": "Band at home, easy to scale"
    }
   ]
  },
@@ -302,6 +314,7 @@
   "loadType": "added",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Palms facing on parallel handles. Full hang, elbows to ribs.",
   "injury": {
    "neck": 1,
@@ -366,6 +379,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Knees on the pad. Note the assist used; less assist is progress. Full hang, chin over bar.",
   "injury": {
    "neck": 1,
@@ -439,6 +453,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "Jump or step to chin over bar, then lower for 3 to 5 seconds to a full hang.",
   "injury": {
    "neck": 1,
@@ -496,6 +511,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 3,
   "cue": "Dead hang, arms straight. Pull the shoulders down and back, pause, lower slowly.",
   "injury": {
    "neck": 1,
@@ -551,6 +567,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 1,
   "cue": "Overhand, shoulder width. Hang still, ribs down, breathe. Builds grip for pull-ups.",
   "injury": {
    "neck": 1,
@@ -608,6 +625,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Hands just outside shoulders. Pull to the upper chest, chest up, no leaning back.",
   "injury": {
    "neck": 1,
@@ -648,6 +666,10 @@
    {
     "id": "weighted-pull-ups",
     "why": "Heavy bar work once pull-ups are easy"
+   },
+   {
+    "id": "band-lat-pulldown",
+    "why": "Band at home, same pull"
    }
   ]
  },
@@ -681,6 +703,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Neutral handle. Full stretch at top, elbows to ribs.",
   "injury": {
    "neck": 1,
@@ -751,6 +774,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Palms toward you, shoulder width. Pull to the upper chest, elbows down and in.",
   "injury": {
    "neck": 1,
@@ -806,6 +830,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "D-handle. Reach up for a full stretch, pull the elbow down to the hip.",
   "injury": {
    "neck": 1,
@@ -830,6 +855,10 @@
    {
     "id": "single-arm-cable-row",
     "why": "Row version, same elbow-to-hip pull"
+   },
+   {
+    "id": "band-lat-pulldown",
+    "why": "Band at home, both arms"
    }
   ]
  },
@@ -862,6 +891,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Arms straight, slight hinge. Sweep the bar to the thighs. Pure lats, helps pull-up reps.",
   "injury": {
    "neck": 1,
@@ -886,6 +916,10 @@
    {
     "id": "scapular-pull-ups",
     "why": "Lats on the bar, small range"
+   },
+   {
+    "id": "band-lat-pulldown",
+    "why": "Band at home, bent-arm pull"
    }
   ]
  },
@@ -915,6 +949,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Lie on the bench, one DB in both hands. Lower behind the head, slight elbow bend, ribs down.",
   "injury": {
    "neck": 1,
@@ -970,6 +1005,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Lie on a bench, head to a low pulley, rope in both hands. Pull arms straight over to the hips.",
   "injury": {
    "neck": 1,
@@ -1028,6 +1064,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Chest on a 30-45° bench, zero back load. Pause a second at the top and squeeze the blades.",
   "injury": {
    "neck": 1,
@@ -1103,6 +1140,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Sit tall, knees soft. Pull the handle to the belly, elbows close, no rocking.",
   "injury": {
    "neck": 1,
@@ -1177,6 +1215,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Overhand on a long bar, sit tall. Pull to the lower chest, elbows out at about 45°.",
   "injury": {
    "neck": 1,
@@ -1238,6 +1277,7 @@
   "loadType": "stack",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Seated or half-kneeling. Stretch forward, pull the elbow to the hip.",
   "injury": {
    "neck": 1,
@@ -1270,6 +1310,10 @@
    {
     "id": "meadows-row",
     "why": "Landmine, heavier, but bent over"
+   },
+   {
+    "id": "band-row",
+    "why": "Band at home, both arms"
    }
   ]
  },
@@ -1299,6 +1343,7 @@
   "loadType": "stack",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Chest on the pad, set the seat so handles are at chest height. Squeeze the blades, slow return.",
   "injury": {
    "neck": 1,
@@ -1368,6 +1413,7 @@
   "loadType": "plates",
   "incrementKg": 5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Chest on the pad. Row one or both arms, elbows back, pause and squeeze.",
   "injury": {
    "neck": 1,
@@ -1429,6 +1475,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Chest on the pad, feet planted. Pull the handles to the lower chest, squeeze, lower slowly.",
   "injury": {
    "neck": 1,
@@ -1495,6 +1542,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Hand and knee on the bench, back flat. Pull the DB to the hip, no twisting.",
   "injury": {
    "neck": 1,
@@ -1523,6 +1571,10 @@
    {
     "id": "bent-over-db-row",
     "why": "Both arms at once, standing hinged"
+   },
+   {
+    "id": "band-row",
+    "why": "Band at home, no bench"
    }
   ]
  },
@@ -1553,6 +1605,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Hinge to about 45°, back flat, DBs under the shoulders. Row to the hips.",
   "injury": {
    "neck": 1,
@@ -1613,6 +1666,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Hinge to about 45°, back flat, bar over mid-foot. Pull to the lower ribs.",
   "injury": {
    "neck": 1,
@@ -1681,6 +1735,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 2,
   "cue": "Straddle the bar, hinge with a flat back. Pull the handle to the chest, no jerking.",
   "injury": {
    "neck": 1,
@@ -1741,6 +1796,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Staggered stance beside the landmine, forearm on the front knee. Row the bar end to the hip.",
   "injury": {
    "neck": 1,
@@ -1800,6 +1856,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 3,
   "cue": "Hinge to about 45° under a fixed bar, back flat. Pull to the lower ribs.",
   "injury": {
    "neck": 1,
@@ -1856,6 +1913,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Hang under a Smith or rack bar, body straight, heels down. Pull the chest to the bar.",
   "injury": {
    "neck": 1,
@@ -1884,6 +1942,10 @@
    {
     "id": "wide-grip-seated-cable-row",
     "why": "Wide bar on a cable"
+   },
+   {
+    "id": "band-row",
+    "why": "Band at home, easy to scale"
    }
   ]
  },
@@ -1913,6 +1975,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Lean back on the straps, body straight. Pull the hands to the ribs, walk the feet in for harder reps.",
   "injury": {
    "neck": 1,
@@ -1937,6 +2000,10 @@
    {
     "id": "machine-row",
     "why": "Machine with a chest pad, add load"
+   },
+   {
+    "id": "band-row",
+    "why": "Band at home, easy to scale"
    }
   ]
  },
@@ -1967,6 +2034,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "intermediate",
+  "tier": 3,
   "cue": "Lie face down on a raised flat bench. Row the bar to the bench, zero back load.",
   "injury": {
    "neck": 1,
@@ -2023,6 +2091,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Bar from the rack at hip height. Shoulders straight up to the ears, pause, lower slowly. No rolling.",
   "injury": {
    "neck": 2,
@@ -2081,6 +2150,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "DBs at the sides, arms long. Shoulders straight up to the ears, pause a second, lower slowly.",
   "injury": {
    "neck": 2,
@@ -2135,6 +2205,7 @@
   "loadType": "plates",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 2,
   "cue": "Bar at hip height, hands just outside the thighs. Shrug straight up, pause, lower slowly.",
   "injury": {
    "neck": 2,
@@ -2191,6 +2262,7 @@
   "loadType": "per-dumbbell",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 3,
   "cue": "Chest on a 45° bench, arms hanging. Shrug up and back toward the ears, pause, lower slowly.",
   "injury": {
    "neck": 1,
@@ -2248,6 +2320,7 @@
   "loadType": "barbell-total",
   "incrementKg": 2.5,
   "level": "advanced",
+  "tier": 1,
   "cue": "Bar on the pins just below the knee. Brace, push the hips through to stand tall, lower under control.",
   "injury": {
    "neck": 1,
@@ -2304,6 +2377,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "beginner",
+  "tier": 1,
   "cue": "Pad just below the hips. Lower with a flat back, rise to a straight line, no arching. Hold a plate to load.",
   "injury": {
    "neck": 1,
@@ -2363,6 +2437,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Hips on the ball, feet braced on a wall. Lift to a straight line, pause, lower slowly. No arching.",
   "injury": {
    "neck": 1,
@@ -2415,6 +2490,7 @@
   "loadType": "single-weight",
   "incrementKg": 1.25,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Lie face up, head off the bench end, towel and light plate on the forehead. Chin to chest, slowly.",
   "injury": {
    "neck": 3,
@@ -2477,6 +2553,7 @@
   "loadType": "single-weight",
   "incrementKg": 1.25,
   "level": "intermediate",
+  "tier": 1,
   "cue": "Lie face down, head off the bench end, towel and light plate behind the head. Lift to level, slowly.",
   "injury": {
    "neck": 3,
@@ -2539,6 +2616,7 @@
   "loadType": "single-weight",
   "incrementKg": 2.5,
   "level": "advanced",
+  "tier": 3,
   "cue": "Sit on the bench end, hands on knees, harness on. Lower the chin, then lift to level. Small range, slow.",
   "injury": {
    "neck": 3,
@@ -2600,6 +2678,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Band round the head, anchored to one side. Sit tall, tilt ear toward shoulder against it, slowly.",
   "injury": {
    "neck": 2,
@@ -2663,6 +2742,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Ball between head and wall. Press gently and hold the head still; face, back and each side.",
   "injury": {
    "neck": 2,
@@ -2724,6 +2804,7 @@
   "loadable": false,
   "loadType": "bodyweight",
   "level": "beginner",
+  "tier": 2,
   "cue": "Lie face up, head off the bench end. Tuck the chin and hold the head level with the body.",
   "injury": {
    "neck": 2,
@@ -2758,6 +2839,130 @@
    {
     "id": "ball-neck-isometric",
     "why": "Hold against a ball, no movement"
+   }
+  ]
+ },
+ {
+  "id": "band-row",
+  "name": "Band Row",
+  "aliases": [
+   "Banded Row",
+   "Resistance Band Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Band anchored at chest height. Sit tall, elbows to ribs, squeeze the blades. Harder: step further back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "single-arm-cable-row",
+    "why": "Cable row, loadable"
+   },
+   {
+    "id": "one-arm-db-row",
+    "why": "Dumbbell row, loadable"
+   },
+   {
+    "id": "inverted-row",
+    "why": "Bodyweight row under a bar"
+   },
+   {
+    "id": "suspension-trainer-row",
+    "why": "Straps, bodyweight row"
+   },
+   {
+    "id": "band-pull-apart",
+    "why": "Band again, rear delts and upper back"
+   }
+  ]
+ },
+ {
+  "id": "band-lat-pulldown",
+  "name": "Band Lat Pulldown",
+  "aliases": [
+   "Banded Pulldown",
+   "Kneeling Band Pulldown"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "biceps",
+   "rear-delts"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "tier": 2,
+  "cue": "Kneel under a high anchor. Pull elbows down to the ribs, chest up. Harder: thicker band, slower return.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "lat-pulldown",
+    "why": "Machine, same pull, loadable"
+   },
+   {
+    "id": "single-arm-lat-pulldown",
+    "why": "One arm on the machine, loadable"
+   },
+   {
+    "id": "band-assisted-pull-ups",
+    "why": "On a bar, the band helps you up"
+   },
+   {
+    "id": "chin-ups",
+    "why": "Bodyweight on a bar, much harder"
+   },
+   {
+    "id": "straight-arm-pulldown",
+    "why": "Straight arms, lats only, on a cable"
    }
   ]
  }
