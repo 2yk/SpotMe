@@ -1,0 +1,3402 @@
+[
+ {
+  "id": "barbell-back-squat",
+  "name": "Barbell Back Squat",
+  "aliases": [
+   "Back Squat",
+   "High-Bar Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "spinal-erectors",
+   "deep-core"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "barbell",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Bar on upper traps, brace hard. Sit down between the heels to parallel, chest up.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "shoulder": "Arms held back in external rotation under the bar",
+   "lowerBack": "Heavy axial load on the spine, more lean at depth",
+   "hip": "Loaded hip bend to parallel",
+   "knee": "Knees bend under heavy load",
+   "ankle": "Ankles flex forward under load"
+  },
+  "alternatives": [
+   {
+    "id": "front-squat",
+    "why": "Bar in front, more upright torso"
+   },
+   {
+    "id": "hack-squat",
+    "why": "Back on a pad, guided path"
+   },
+   {
+    "id": "leg-press",
+    "why": "Same quads, far less load on the spine"
+   },
+   {
+    "id": "smith-machine-squat",
+    "why": "Guided bar, feet can go forward"
+   },
+   {
+    "id": "goblet-squat",
+    "why": "Light front load, gentler on the back"
+   },
+   {
+    "id": "leg-extension",
+    "why": "Quads only, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "front-squat",
+  "name": "Front Squat",
+  "aliases": [
+   "Barbell Front Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "deep-core",
+   "adductors"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "barbell",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "advanced",
+  "cue": "Bar on the front delts, elbows high. Sit straight down, torso upright.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "shoulder": "Front-rack hold with elbows high",
+   "wrist": "Front-rack hold bends the wrists back",
+   "lowerBack": "Heavy axial load, though the torso stays upright",
+   "hip": "Loaded hip bend to parallel or below",
+   "knee": "Knees travel far forward under load",
+   "ankle": "Deep ankle bend under load"
+  },
+  "alternatives": [
+   {
+    "id": "barbell-back-squat",
+    "why": "Bar on the back, easier to hold"
+   },
+   {
+    "id": "goblet-squat",
+    "why": "Same upright squat, far lighter load"
+   },
+   {
+    "id": "hack-squat",
+    "why": "Back on a pad, no rack hold"
+   },
+   {
+    "id": "landmine-squat",
+    "why": "Front-loaded and upright, lighter on the back"
+   },
+   {
+    "id": "leg-extension",
+    "why": "Quads only, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "goblet-squat",
+  "name": "Goblet Squat",
+  "aliases": [
+   "DB Goblet Squat",
+   "KB Goblet Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "deep-core",
+   "upper-back"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "One DB held at the chest. Sit between the heels, elbows inside the knees, chest tall.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "hip": "Deep hip bend, the squat goes below parallel",
+   "knee": "Knees bend fully under load",
+   "ankle": "Deep ankle bend with knees forward"
+  },
+  "alternatives": [
+   {
+    "id": "landmine-squat",
+    "why": "Same front-loaded squat, more weight"
+   },
+   {
+    "id": "front-squat",
+    "why": "Barbell version once the DB is too light"
+   },
+   {
+    "id": "barbell-back-squat",
+    "why": "Heavier loading, more back work"
+   },
+   {
+    "id": "leg-press",
+    "why": "Machine quads when the DBs are taken"
+   },
+   {
+    "id": "smith-machine-squat",
+    "why": "Guided bar, heavier load"
+   },
+   {
+    "id": "bodyweight-squat",
+    "why": "No load at all, easy on the knees"
+   },
+   {
+    "id": "hack-squat",
+    "why": "Machine squat, heavier, back on a pad"
+   },
+   {
+    "id": "wall-sit",
+    "why": "No load, a static quad hold"
+   }
+  ]
+ },
+ {
+  "id": "smith-machine-squat",
+  "name": "Smith Machine Squat",
+  "aliases": [
+   "Smith Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "deep-core"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "smith-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Feet slightly ahead of the bar. Sit down to parallel, back stays tall against the path.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Bar on the back still loads the spine",
+   "hip": "Loaded hip bend to parallel",
+   "knee": "Knees bend under load"
+  },
+  "alternatives": [
+   {
+    "id": "hack-squat",
+    "why": "Back on a pad, similar guided path"
+   },
+   {
+    "id": "barbell-back-squat",
+    "why": "Free bar, more balance and back work"
+   },
+   {
+    "id": "goblet-squat",
+    "why": "Light front load, gentler on the back"
+   },
+   {
+    "id": "leg-extension",
+    "why": "Quads only, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "hack-squat",
+  "name": "Hack Squat",
+  "aliases": [
+   "Machine Hack Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "hack-squat-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Back flat on the pad, feet mid-platform. Lower under control, drive through the whole foot.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 3,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Shoulder pads press load down through the spine",
+   "hip": "Deep loaded hip bend",
+   "knee": "Deep knee bend under heavy load"
+  },
+  "alternatives": [
+   {
+    "id": "leg-press",
+    "why": "Same machine quads, less depth for the knee"
+   },
+   {
+    "id": "smith-machine-squat",
+    "why": "Guided bar when the hack is taken"
+   },
+   {
+    "id": "barbell-back-squat",
+    "why": "Free-bar squat, more back work"
+   },
+   {
+    "id": "front-squat",
+    "why": "Upright bar squat, quad focus"
+   },
+   {
+    "id": "goblet-squat",
+    "why": "Light front load, gentler on back and knee"
+   },
+   {
+    "id": "leg-extension",
+    "why": "Quads only, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "bodyweight-squat",
+  "name": "Bodyweight Squat",
+  "aliases": [
+   "Air Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Arms forward for balance. Sit down between the heels, stand tall and squeeze.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "goblet-squat",
+    "why": "Add a DB at the chest for load"
+   },
+   {
+    "id": "wall-sit",
+    "why": "Hold the bottom instead of moving"
+   },
+   {
+    "id": "pistol-squat",
+    "why": "One leg at a time when this is easy"
+   },
+   {
+    "id": "sissy-squat",
+    "why": "Knee-forward quad squat, much harder"
+   }
+  ]
+ },
+ {
+  "id": "pistol-squat",
+  "name": "Pistol Squat",
+  "aliases": [
+   "Single-Leg Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "glute-med",
+   "deep-core"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "advanced",
+  "cue": "Free leg straight out front. Sit all the way down on one leg, heel flat.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 3,
+   "knee": 3,
+   "ankle": 3
+  },
+  "injuryNotes": {
+   "hip": "Deepest hip bend on one leg",
+   "knee": "Full knee bend with all bodyweight on one leg",
+   "ankle": "Deep knee-over-toe ankle bend"
+  },
+  "alternatives": [
+   {
+    "id": "bulgarian-split-squat",
+    "why": "One leg, less depth and easier balance"
+   },
+   {
+    "id": "step-up",
+    "why": "One leg, shorter range for hip and knee"
+   },
+   {
+    "id": "single-leg-press",
+    "why": "One leg on a machine, no balance needed"
+   },
+   {
+    "id": "bodyweight-squat",
+    "why": "Both legs, much easier on the knee"
+   }
+  ]
+ },
+ {
+  "id": "leg-press",
+  "name": "Leg Press",
+  "aliases": [
+   "45-Degree Leg Press"
+  ],
+  "planIds": [
+   "leg-press"
+  ],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "hamstrings"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "leg-press-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 10,
+  "level": "beginner",
+  "cue": "Feet mid-plate, shoulder width. Stop before hips lift off the pad, that's your back rounding.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Pelvis can tuck under and round the back at the bottom",
+   "hip": "Deep loaded hip bend",
+   "knee": "Knees bend under heavy load"
+  },
+  "alternatives": [
+   {
+    "id": "hack-squat",
+    "why": "Same machine quads, back flat on a pad"
+   },
+   {
+    "id": "bulgarian-split-squat",
+    "why": "One leg, half the load, running carryover"
+   },
+   {
+    "id": "single-leg-press",
+    "why": "One leg, less weight, easier on the back"
+   },
+   {
+    "id": "goblet-squat",
+    "why": "Light front load, lighter on the back"
+   },
+   {
+    "id": "barbell-back-squat",
+    "why": "Free-bar squat when the machine is taken"
+   },
+   {
+    "id": "leg-extension",
+    "why": "Zero spine load, quads only"
+   },
+   {
+    "id": "landmine-squat",
+    "why": "Front-loaded squat, light on the back"
+   },
+   {
+    "id": "step-up",
+    "why": "One leg, nothing on the lower back"
+   }
+  ]
+ },
+ {
+  "id": "single-leg-press",
+  "name": "Single-Leg Press",
+  "aliases": [
+   "One-Leg Leg Press"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings",
+   "glute-med"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "leg-press-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "plates",
+  "incrementKg": 5,
+  "level": "intermediate",
+  "cue": "One foot mid-plate. Lower only as far as the hips stay down, press through the heel.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Lighter load, but stop before the pelvis tucks",
+   "hip": "Deep loaded hip bend on one side",
+   "knee": "Knee bends under load"
+  },
+  "alternatives": [
+   {
+    "id": "leg-press",
+    "why": "Both legs, more total load"
+   },
+   {
+    "id": "bulgarian-split-squat",
+    "why": "Free-weight single-leg squat"
+   },
+   {
+    "id": "step-up",
+    "why": "Free-weight single leg, short range"
+   },
+   {
+    "id": "pistol-squat",
+    "why": "No machine, harder balance"
+   },
+   {
+    "id": "single-leg-extension",
+    "why": "One-leg quad isolation on a machine"
+   }
+  ]
+ },
+ {
+  "id": "walking-lunge",
+  "name": "DB Walking Lunge",
+  "aliases": [
+   "Walking Lunge"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "glute-med",
+   "hamstrings"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "DBs at the sides, long steps. Back knee kisses the floor, front shin near vertical.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "hip": "Loaded hip bend on the front leg",
+   "knee": "Both knees bend under load",
+   "ankle": "Balance and ankle bend on each step"
+  },
+  "alternatives": [
+   {
+    "id": "reverse-lunge",
+    "why": "Step back, easier on the knee and ankle"
+   },
+   {
+    "id": "db-split-squat",
+    "why": "Stay in place, easier to balance"
+   },
+   {
+    "id": "bulgarian-split-squat",
+    "why": "Rear foot up, more front-leg work"
+   },
+   {
+    "id": "step-up",
+    "why": "Shorter range, easier on hip and knee"
+   },
+   {
+    "id": "single-leg-extension",
+    "why": "One leg, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "reverse-lunge",
+  "name": "DB Reverse Lunge",
+  "aliases": [
+   "Reverse Lunge",
+   "Backward Lunge"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "glute-med",
+   "hamstrings"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "DBs at the sides. Step back, drop the back knee, push up through the front heel.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Loaded hip bend on the front leg",
+   "knee": "Front knee bends under load"
+  },
+  "alternatives": [
+   {
+    "id": "walking-lunge",
+    "why": "Moving lunge, more conditioning"
+   },
+   {
+    "id": "db-split-squat",
+    "why": "Fixed stance, easier to balance"
+   },
+   {
+    "id": "bulgarian-split-squat",
+    "why": "Rear foot up for more range"
+   },
+   {
+    "id": "step-up",
+    "why": "Box instead, shorter hip and knee range"
+   },
+   {
+    "id": "single-leg-extension",
+    "why": "One leg, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "db-split-squat",
+  "name": "DB Split Squat",
+  "aliases": [
+   "Static Lunge",
+   "Split Squat"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "glute-med"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Long split stance, DBs at the sides. Drop straight down, torso upright.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Loaded hip bend on the front leg",
+   "knee": "Front knee bends under load"
+  },
+  "alternatives": [
+   {
+    "id": "bulgarian-split-squat",
+    "why": "Rear foot on a bench, more range"
+   },
+   {
+    "id": "reverse-lunge",
+    "why": "Step back each rep"
+   },
+   {
+    "id": "walking-lunge",
+    "why": "Moving lunge"
+   },
+   {
+    "id": "step-up",
+    "why": "Box instead, shorter hip and knee range"
+   },
+   {
+    "id": "single-leg-extension",
+    "why": "One leg, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "bulgarian-split-squat",
+  "name": "Bulgarian Split Squat",
+  "aliases": [
+   "Rear-Foot-Elevated Split Squat",
+   "RFESS"
+  ],
+  "planIds": [
+   "bulgarian-split-squat-dbs"
+  ],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "glute-med",
+   "hamstrings"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Rear foot on bench, DBs at the sides. Upright torso, drop straight down.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "lowerBack": "Rear leg pulls the pelvis forward and arches the back",
+   "hip": "Deep loaded hip bend, rear hip stretched",
+   "knee": "Front knee bends under load",
+   "ankle": "Front ankle bends, balance on one foot"
+  },
+  "alternatives": [
+   {
+    "id": "db-split-squat",
+    "why": "Rear foot on the floor, less back arch"
+   },
+   {
+    "id": "reverse-lunge",
+    "why": "Same muscles, easier balance"
+   },
+   {
+    "id": "step-up",
+    "why": "Shorter range, easy on the lower back"
+   },
+   {
+    "id": "single-leg-press",
+    "why": "One leg, back on a pad"
+   },
+   {
+    "id": "walking-lunge",
+    "why": "Moving lunge, same dumbbells"
+   },
+   {
+    "id": "leg-press",
+    "why": "Both legs on a machine"
+   },
+   {
+    "id": "pistol-squat",
+    "why": "No dumbbells, much harder"
+   },
+   {
+    "id": "single-leg-extension",
+    "why": "One leg, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "step-up",
+  "name": "DB Step-Up",
+  "aliases": [
+   "Box Step-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "glute-med",
+   "hamstrings"
+  ],
+  "pattern": "single-leg",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Whole foot on a knee-high bench. Drive up through the heel, no push from the back foot.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Loaded hip bend on the working leg",
+   "knee": "Knee straightens under load"
+  },
+  "alternatives": [
+   {
+    "id": "bulgarian-split-squat",
+    "why": "More range, same dumbbells"
+   },
+   {
+    "id": "reverse-lunge",
+    "why": "No bench needed"
+   },
+   {
+    "id": "db-split-squat",
+    "why": "Fixed stance, no bench"
+   },
+   {
+    "id": "walking-lunge",
+    "why": "Moving lunge, no bench"
+   },
+   {
+    "id": "single-leg-press",
+    "why": "One leg on a machine"
+   },
+   {
+    "id": "leg-press",
+    "why": "Both legs on a machine"
+   },
+   {
+    "id": "pistol-squat",
+    "why": "No equipment, much harder"
+   },
+   {
+    "id": "single-leg-extension",
+    "why": "One leg, seated, light on the hip"
+   }
+  ]
+ },
+ {
+  "id": "wall-sit",
+  "name": "Wall Sit",
+  "aliases": [
+   "Wall Squat Hold"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "adductors"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "wall"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Back flat on the wall, thighs level, shins vertical. Hold and breathe.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "knee": "Long hold with the knee bent to 90 degrees"
+  },
+  "alternatives": [
+   {
+    "id": "bodyweight-squat",
+    "why": "Moving squat, lighter on the knee"
+   },
+   {
+    "id": "leg-extension",
+    "why": "Quads on a machine"
+   },
+   {
+    "id": "goblet-squat",
+    "why": "Loaded squat when a hold is too easy"
+   },
+   {
+    "id": "landmine-squat",
+    "why": "Moving front-loaded squat"
+   }
+  ]
+ },
+ {
+  "id": "sissy-squat",
+  "name": "Sissy Squat",
+  "aliases": [],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads"
+  ],
+  "secondaryMuscles": [
+   "hip-flexors"
+  ],
+  "pattern": "knee-extension",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "advanced",
+  "cue": "On the toes, lean back as the knees travel forward. Hips stay straight, hold a support.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 3,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "knee": "Knees go far past the toes under full bodyweight",
+   "ankle": "Up on the toes with the ankle bent"
+  },
+  "alternatives": [
+   {
+    "id": "leg-extension",
+    "why": "Quads on a machine, far easier on the knee"
+   },
+   {
+    "id": "single-leg-extension",
+    "why": "One leg on the machine"
+   },
+   {
+    "id": "bodyweight-squat",
+    "why": "Normal squat, easy on the knee"
+   }
+  ]
+ },
+ {
+  "id": "leg-extension",
+  "name": "Leg Extension",
+  "aliases": [
+   "Machine Leg Extension"
+  ],
+  "planIds": [
+   "leg-extension"
+  ],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "knee-extension",
+  "equipment": [
+   "leg-extension-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Knee-friendly quad volume. Squeeze 1 sec at top.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 2,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "knee": "Shear on the knee near lockout; keep the load moderate"
+  },
+  "alternatives": [
+   {
+    "id": "single-leg-extension",
+    "why": "Same machine, one leg at a time"
+   },
+   {
+    "id": "leg-press",
+    "why": "Compound quads, both legs"
+   },
+   {
+    "id": "wall-sit",
+    "why": "No machine, a quad hold"
+   },
+   {
+    "id": "sissy-squat",
+    "why": "No machine, hard on the knee"
+   },
+   {
+    "id": "barbell-back-squat",
+    "why": "Back squat, loads spine and hip"
+   },
+   {
+    "id": "hack-squat",
+    "why": "Machine squat, deeper hip and knee"
+   },
+   {
+    "id": "smith-machine-squat",
+    "why": "Guided squat, loads the hip"
+   },
+   {
+    "id": "front-squat",
+    "why": "Barbell front squat, loads the hip"
+   }
+  ]
+ },
+ {
+  "id": "single-leg-extension",
+  "name": "Single-Leg Extension",
+  "aliases": [
+   "One-Leg Leg Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "knee-extension",
+  "equipment": [
+   "leg-extension-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "One leg, pad on the low shin. Squeeze 1 sec at top, lower slowly.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 2,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "knee": "Shear on the knee near lockout; keep the load moderate"
+  },
+  "alternatives": [
+   {
+    "id": "leg-extension",
+    "why": "Both legs at once"
+   },
+   {
+    "id": "sissy-squat",
+    "why": "No machine, hard on the knee"
+   },
+   {
+    "id": "single-leg-press",
+    "why": "One leg, compound on the leg press"
+   },
+   {
+    "id": "bulgarian-split-squat",
+    "why": "Free-weight single leg, loads the hip"
+   },
+   {
+    "id": "step-up",
+    "why": "Free-weight single leg, short range"
+   },
+   {
+    "id": "reverse-lunge",
+    "why": "Lunge, loads hip and knee"
+   },
+   {
+    "id": "walking-lunge",
+    "why": "Moving lunge, loads hip and knee"
+   },
+   {
+    "id": "db-split-squat",
+    "why": "Split squat, loads the hip"
+   }
+  ]
+ },
+ {
+  "id": "landmine-squat",
+  "name": "Landmine Squat",
+  "aliases": [],
+  "planIds": [],
+  "bodyPart": "quads",
+  "primaryMuscles": [
+   "quads",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "deep-core",
+   "upper-back"
+  ],
+  "pattern": "squat",
+  "equipment": [
+   "landmine",
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Bar end at the chest, lean slightly into it. Sit down between the heels.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "hip": "Loaded hip bend below parallel",
+   "knee": "Knees bend under load",
+   "ankle": "Ankle bend with knees forward"
+  },
+  "alternatives": [
+   {
+    "id": "goblet-squat",
+    "why": "Same front-loaded squat with a DB"
+   },
+   {
+    "id": "front-squat",
+    "why": "Heavier barbell front squat"
+   },
+   {
+    "id": "leg-press",
+    "why": "Machine quads, no load in the hands"
+   },
+   {
+    "id": "wall-sit",
+    "why": "No load, short hip range, a quad hold"
+   }
+  ]
+ },
+ {
+  "id": "deadlift",
+  "name": "Deadlift",
+  "aliases": [
+   "Conventional Deadlift",
+   "Barbell Deadlift"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "glutes",
+   "hamstrings",
+   "spinal-erectors"
+  ],
+  "secondaryMuscles": [
+   "quads",
+   "upper-back",
+   "grip",
+   "lats"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Bar over midfoot, flat back, lats tight. Push the floor away, hips and chest rise together.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Heaviest load on the spine, pulled from the floor",
+   "hip": "Heavy loaded hip bend"
+  },
+  "alternatives": [
+   {
+    "id": "trap-bar-deadlift",
+    "why": "More upright, handles at the sides"
+   },
+   {
+    "id": "romanian-deadlift",
+    "why": "From the top, lighter, more hamstring"
+   },
+   {
+    "id": "sumo-deadlift",
+    "why": "Wide stance, more upright torso"
+   },
+   {
+    "id": "cable-pull-through",
+    "why": "Light hinge, little load on the spine"
+   },
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Zero spinal load, hamstrings only"
+   }
+  ]
+ },
+ {
+  "id": "sumo-deadlift",
+  "name": "Sumo Deadlift",
+  "aliases": [],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "glutes",
+   "adductors",
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "quads",
+   "spinal-erectors",
+   "grip"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Wide stance, toes out, hands inside the knees. Spread the floor and stand up tall.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 3,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Heavy floor pull through the spine, if more upright",
+   "hip": "Wide stance loads the hip and groin hard"
+  },
+  "alternatives": [
+   {
+    "id": "deadlift",
+    "why": "Narrow stance, easier on the hips"
+   },
+   {
+    "id": "trap-bar-deadlift",
+    "why": "Neutral stance, upright pull"
+   },
+   {
+    "id": "cable-pull-through",
+    "why": "Light hinge, easy on back and hips"
+   },
+   {
+    "id": "seated-leg-curl",
+    "why": "Back on a pad, nothing on the spine"
+   }
+  ]
+ },
+ {
+  "id": "romanian-deadlift",
+  "name": "Romanian Deadlift",
+  "aliases": [
+   "RDL",
+   "Barbell RDL"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "spinal-erectors",
+   "grip",
+   "upper-back"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Soft knees, push hips back with the bar on the thighs. Stop at the hamstring stretch.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Spine holds a heavy bar far forward as you hinge",
+   "hip": "Hips bend under load into a stretch"
+  },
+  "alternatives": [
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Same hinge with DBs, lighter"
+   },
+   {
+    "id": "single-leg-rdl",
+    "why": "One leg, much lighter load"
+   },
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Zero spinal load, hamstrings only"
+   },
+   {
+    "id": "seated-leg-curl",
+    "why": "Back on a pad, nothing on the spine"
+   },
+   {
+    "id": "cable-pull-through",
+    "why": "Light hinge on a cable"
+   },
+   {
+    "id": "good-morning",
+    "why": "Bar on the back, same hinge"
+   },
+   {
+    "id": "deadlift",
+    "why": "From the floor, more weight"
+   },
+   {
+    "id": "trap-bar-deadlift",
+    "why": "Upright pull, more quads"
+   }
+  ]
+ },
+ {
+  "id": "db-romanian-deadlift",
+  "name": "DB Romanian Deadlift",
+  "aliases": [
+   "DB RDL",
+   "Dumbbell RDL"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "spinal-erectors",
+   "grip"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "DBs down the front of the thighs, soft knees. Hips back to the stretch, flat back.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Same hinge as the barbell, but a lighter load",
+   "hip": "Hips bend under load into a stretch"
+  },
+  "alternatives": [
+   {
+    "id": "romanian-deadlift",
+    "why": "Barbell version, heavier"
+   },
+   {
+    "id": "single-leg-rdl",
+    "why": "One leg, lighter still"
+   },
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Zero spinal load, hamstrings only"
+   },
+   {
+    "id": "seated-leg-curl",
+    "why": "Back on a pad, nothing on the spine"
+   },
+   {
+    "id": "cable-pull-through",
+    "why": "Cable hinge, lighter on the back"
+   },
+   {
+    "id": "good-morning",
+    "why": "Bar on the back, same hinge"
+   },
+   {
+    "id": "kettlebell-swing",
+    "why": "Fast hinge with a kettlebell"
+   }
+  ]
+ },
+ {
+  "id": "single-leg-rdl",
+  "name": "Single-Leg RDL",
+  "aliases": [
+   "One-Leg Romanian Deadlift",
+   "SL RDL"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "glute-med",
+   "spinal-erectors",
+   "deep-core"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "DB in the opposite hand, hips square. Back leg and torso move as one line.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "lowerBack": "Hinge with some twist if the hips open",
+   "hip": "Loaded hip bend on one leg",
+   "ankle": "Balance on one foot"
+  },
+  "alternatives": [
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Both legs, easier balance"
+   },
+   {
+    "id": "romanian-deadlift",
+    "why": "Barbell hinge, heavier"
+   },
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Zero spinal load, no balance needed"
+   },
+   {
+    "id": "cable-leg-curl",
+    "why": "Standing one leg, no hinge"
+   }
+  ]
+ },
+ {
+  "id": "good-morning",
+  "name": "Good Morning",
+  "aliases": [
+   "Barbell Good Morning"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings",
+   "glutes",
+   "spinal-erectors"
+  ],
+  "secondaryMuscles": [
+   "upper-back"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "barbell",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "advanced",
+  "cue": "Bar on upper traps, soft knees. Push the hips back with a flat back, stop at the stretch.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "shoulder": "Arms held back under the bar",
+   "lowerBack": "Long lever: the bar on the back pulls the spine forward",
+   "hip": "Hips bend under load into a stretch"
+  },
+  "alternatives": [
+   {
+    "id": "romanian-deadlift",
+    "why": "Bar in the hands, shorter lever"
+   },
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Lighter hinge with DBs"
+   },
+   {
+    "id": "cable-pull-through",
+    "why": "Light hinge, little spinal load"
+   },
+   {
+    "id": "seated-leg-curl",
+    "why": "Back on a pad, nothing on the spine"
+   }
+  ]
+ },
+ {
+  "id": "kettlebell-swing",
+  "name": "Kettlebell Swing",
+  "aliases": [
+   "KB Swing",
+   "Russian Swing"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes",
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "spinal-erectors",
+   "deep-core",
+   "grip"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "kettlebell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 4,
+  "level": "intermediate",
+  "cue": "Hike the bell back, snap the hips through. Arms float to chest height, ribs down.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Fast loaded hinge, the position that hurts a bad back",
+   "hip": "Hips snap from a loaded bend"
+  },
+  "alternatives": [
+   {
+    "id": "cable-pull-through",
+    "why": "Same hip snap, slow and light on the back"
+   },
+   {
+    "id": "hip-thrust",
+    "why": "Glutes with the back on a bench"
+   },
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Slow hinge with DBs"
+   },
+   {
+    "id": "glute-bridge",
+    "why": "Bodyweight bridge, easy on the back"
+   }
+  ]
+ },
+ {
+  "id": "cable-pull-through",
+  "name": "Cable Pull-Through",
+  "aliases": [
+   "Pull-Through"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes",
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "spinal-erectors",
+   "grip"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Face away, rope between the legs. Hips back, then squeeze them through to stand tall.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Light hinge; the cable pulls the hips back, not the spine down"
+  },
+  "alternatives": [
+   {
+    "id": "kettlebell-swing",
+    "why": "Same hip snap, done fast"
+   },
+   {
+    "id": "romanian-deadlift",
+    "why": "Barbell hinge, heavier"
+   },
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Dumbbell hinge, no cable needed"
+   },
+   {
+    "id": "hip-thrust",
+    "why": "Glutes with the back on a bench"
+   },
+   {
+    "id": "good-morning",
+    "why": "Barbell hinge, much harder on the back"
+   },
+   {
+    "id": "deadlift",
+    "why": "Heavy floor pull"
+   },
+   {
+    "id": "sumo-deadlift",
+    "why": "Heavy wide-stance pull"
+   },
+   {
+    "id": "trap-bar-deadlift",
+    "why": "Heavy upright pull"
+   }
+  ]
+ },
+ {
+  "id": "nordic-curl",
+  "name": "Nordic Curl",
+  "aliases": [
+   "Nordic Hamstring Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "calves"
+  ],
+  "pattern": "knee-flexion",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "advanced",
+  "cue": "Kneel, heels hooked under a pad. Lower as slowly as you can, hips straight, push back up.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "knee": "Kneeling on the knee with a big pull on the hamstring"
+  },
+  "alternatives": [
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Machine curl, easy on the knee"
+   },
+   {
+    "id": "seated-leg-curl",
+    "why": "Seated machine curl"
+   },
+   {
+    "id": "stability-ball-leg-curl",
+    "why": "Lighter curl on a ball"
+   }
+  ]
+ },
+ {
+  "id": "lying-hamstring-curl",
+  "name": "Lying Hamstring Curl",
+  "aliases": [
+   "Lying Leg Curl",
+   "Prone Leg Curl"
+  ],
+  "planIds": [
+   "lying-hamstring-curl"
+  ],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "calves"
+  ],
+  "pattern": "knee-flexion",
+  "equipment": [
+   "lying-leg-curl-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Replaces RDL, zero spinal load. Hips pressed down, 3-sec lower.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "seated-leg-curl",
+    "why": "Same curl seated, longer stretch"
+   },
+   {
+    "id": "cable-leg-curl",
+    "why": "Standing curl on a cable"
+   },
+   {
+    "id": "stability-ball-leg-curl",
+    "why": "No machine, ball and mat"
+   },
+   {
+    "id": "nordic-curl",
+    "why": "Bodyweight, much harder"
+   },
+   {
+    "id": "romanian-deadlift",
+    "why": "Hinge instead, loads the back"
+   },
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Lighter hinge, loads the back"
+   },
+   {
+    "id": "single-leg-rdl",
+    "why": "One-leg hinge, balance work"
+   },
+   {
+    "id": "deadlift",
+    "why": "Heavy floor pull, loads the back"
+   }
+  ]
+ },
+ {
+  "id": "seated-leg-curl",
+  "name": "Seated Leg Curl",
+  "aliases": [
+   "Seated Hamstring Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "calves"
+  ],
+  "pattern": "knee-flexion",
+  "equipment": [
+   "seated-leg-curl-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Thigh pad snug, lean forward a little. Curl fully, 3-sec lower.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Same curl lying down"
+   },
+   {
+    "id": "cable-leg-curl",
+    "why": "Standing curl on a cable"
+   },
+   {
+    "id": "stability-ball-leg-curl",
+    "why": "No machine, ball and mat"
+   },
+   {
+    "id": "nordic-curl",
+    "why": "Bodyweight, much harder"
+   },
+   {
+    "id": "romanian-deadlift",
+    "why": "Hinge instead, loads the back"
+   },
+   {
+    "id": "db-romanian-deadlift",
+    "why": "Lighter hinge, loads the back"
+   },
+   {
+    "id": "good-morning",
+    "why": "Barbell hinge, loads the back"
+   },
+   {
+    "id": "sumo-deadlift",
+    "why": "Heavy wide pull, loads back and hips"
+   }
+  ]
+ },
+ {
+  "id": "cable-leg-curl",
+  "name": "Standing Cable Leg Curl",
+  "aliases": [
+   "Cable Hamstring Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "calves"
+  ],
+  "pattern": "knee-flexion",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "ankle-strap",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Strap on the ankle, hold the frame. Thigh still, curl the heel to the glute.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Machine curl, both legs"
+   },
+   {
+    "id": "seated-leg-curl",
+    "why": "Seated machine curl"
+   },
+   {
+    "id": "stability-ball-leg-curl",
+    "why": "Ball curl when the cable is taken"
+   },
+   {
+    "id": "single-leg-rdl",
+    "why": "One-leg hinge with a DB"
+   }
+  ]
+ },
+ {
+  "id": "stability-ball-leg-curl",
+  "name": "Stability Ball Leg Curl",
+  "aliases": [
+   "Swiss Ball Hamstring Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "hamstrings",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "deep-core"
+  ],
+  "pattern": "knee-flexion",
+  "equipment": [
+   "stability-ball",
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "On your back, heels on the ball, hips up. Roll the ball in without dropping the hips.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "lying-hamstring-curl",
+    "why": "Machine curl, loadable"
+   },
+   {
+    "id": "seated-leg-curl",
+    "why": "Seated machine curl"
+   },
+   {
+    "id": "cable-leg-curl",
+    "why": "Standing cable curl"
+   },
+   {
+    "id": "nordic-curl",
+    "why": "Bodyweight, much harder"
+   }
+  ]
+ },
+ {
+  "id": "trap-bar-deadlift",
+  "name": "Trap-Bar Deadlift",
+  "aliases": [
+   "Hex Bar Deadlift"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes",
+   "quads",
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "spinal-erectors",
+   "upper-back",
+   "grip"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "trap-bar"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Stand centred, grip the handles, flat back. Push the floor away and stand tall.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Heavy floor pull through the spine, if more upright",
+   "hip": "Heavy loaded hip bend",
+   "knee": "Knees bend more than in a deadlift"
+  },
+  "alternatives": [
+   {
+    "id": "deadlift",
+    "why": "Straight bar, more hamstring"
+   },
+   {
+    "id": "sumo-deadlift",
+    "why": "Wide stance, upright barbell pull"
+   },
+   {
+    "id": "romanian-deadlift",
+    "why": "From the top, lighter"
+   },
+   {
+    "id": "cable-pull-through",
+    "why": "Light hinge, little spinal load"
+   },
+   {
+    "id": "glute-bridge",
+    "why": "Bodyweight bridge, easy on the back"
+   }
+  ]
+ },
+ {
+  "id": "hip-thrust",
+  "name": "Hip Thrust",
+  "aliases": [
+   "Barbell Hip Thrust"
+  ],
+  "planIds": [
+   "hip-thrust"
+  ],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings",
+   "quads"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "barbell",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Upper back on the bench, pad on the bar. Pause 2 sec at top, chin tucked, ribs down.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Back can arch at the top if the ribs flare",
+   "hip": "Heavy load in the hip crease"
+  },
+  "alternatives": [
+   {
+    "id": "machine-hip-thrust",
+    "why": "Same thrust, no bar to set up"
+   },
+   {
+    "id": "barbell-glute-bridge",
+    "why": "From the floor, shorter range"
+   },
+   {
+    "id": "single-leg-hip-thrust",
+    "why": "One leg, much lighter"
+   },
+   {
+    "id": "glute-bridge",
+    "why": "Bodyweight, easy on back and hips"
+   },
+   {
+    "id": "cable-pull-through",
+    "why": "Standing hip extension on a cable"
+   },
+   {
+    "id": "kettlebell-swing",
+    "why": "Fast hip snap with a kettlebell"
+   },
+   {
+    "id": "cable-glute-kickback",
+    "why": "One leg on a cable, light on the back"
+   }
+  ]
+ },
+ {
+  "id": "machine-hip-thrust",
+  "name": "Machine Hip Thrust",
+  "aliases": [
+   "Glute Drive"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "hip-thrust-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Back on the pad, belt across the hips. Pause 2 sec at top, ribs down.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Back can arch at the top if the ribs flare",
+   "hip": "Heavy load in the hip crease"
+  },
+  "alternatives": [
+   {
+    "id": "hip-thrust",
+    "why": "Barbell version, same move"
+   },
+   {
+    "id": "barbell-glute-bridge",
+    "why": "From the floor with a bar"
+   },
+   {
+    "id": "glute-bridge",
+    "why": "Bodyweight, easy on back and hips"
+   },
+   {
+    "id": "machine-glute-kickback",
+    "why": "Machine glutes, one leg"
+   }
+  ]
+ },
+ {
+  "id": "single-leg-hip-thrust",
+  "name": "Single-Leg Hip Thrust",
+  "aliases": [
+   "One-Leg Hip Thrust"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings",
+   "glute-med"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Upper back on the bench, one foot down. Hips level, pause at the top.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "All the load on one hip at full extension"
+  },
+  "alternatives": [
+   {
+    "id": "hip-thrust",
+    "why": "Both legs, more load"
+   },
+   {
+    "id": "single-leg-glute-bridge",
+    "why": "From the floor, easier on the hip"
+   },
+   {
+    "id": "glute-bridge",
+    "why": "Both legs on the floor"
+   },
+   {
+    "id": "cable-glute-kickback",
+    "why": "One leg on a cable"
+   }
+  ]
+ },
+ {
+  "id": "glute-bridge",
+  "name": "Glute Bridge with Hold",
+  "aliases": [
+   "Glute Bridge"
+  ],
+  "planIds": [
+   "glute-bridge-with-hold"
+  ],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "On your back, feet flat. Squeeze glutes 3 sec at the top.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "single-leg-glute-bridge",
+    "why": "One leg, harder"
+   },
+   {
+    "id": "hip-thrust",
+    "why": "Back on a bench, loaded with a bar"
+   },
+   {
+    "id": "barbell-glute-bridge",
+    "why": "Same bridge with a bar"
+   },
+   {
+    "id": "machine-hip-thrust",
+    "why": "Loaded on a machine"
+   },
+   {
+    "id": "single-leg-hip-thrust",
+    "why": "One leg on a bench"
+   },
+   {
+    "id": "trap-bar-deadlift",
+    "why": "Heavy upright pull from the floor"
+   },
+   {
+    "id": "kettlebell-swing",
+    "why": "Fast loaded hinge with a kettlebell"
+   },
+   {
+    "id": "superman-hold",
+    "why": "Back-chain hold on the floor, no load"
+   }
+  ]
+ },
+ {
+  "id": "barbell-glute-bridge",
+  "name": "Barbell Glute Bridge",
+  "aliases": [],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "barbell",
+   "mat"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "On the floor, padded bar over the hips. Drive up, squeeze 2 sec, ribs down.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Back can arch at the top if the ribs flare",
+   "hip": "Heavy load in the hip crease"
+  },
+  "alternatives": [
+   {
+    "id": "hip-thrust",
+    "why": "Back on a bench, more range"
+   },
+   {
+    "id": "machine-hip-thrust",
+    "why": "No bar to set up"
+   },
+   {
+    "id": "glute-bridge",
+    "why": "Bodyweight, easy on back and hips"
+   }
+  ]
+ },
+ {
+  "id": "single-leg-glute-bridge",
+  "name": "Single-Leg Glute Bridge",
+  "aliases": [
+   "One-Leg Bridge"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings",
+   "glute-med"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "On your back, one foot down, other knee to chest. Hips level, squeeze at the top.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "glute-bridge",
+    "why": "Both legs, easier"
+   },
+   {
+    "id": "single-leg-hip-thrust",
+    "why": "Back on a bench, more range"
+   },
+   {
+    "id": "cable-glute-kickback",
+    "why": "Standing, on a cable"
+   },
+   {
+    "id": "machine-glute-kickback",
+    "why": "On a machine, loadable"
+   }
+  ]
+ },
+ {
+  "id": "cable-glute-kickback",
+  "name": "Cable Glute Kickback",
+  "aliases": [
+   "Cable Kickback"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "ankle-strap",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Strap on the ankle, lean on the frame. Kick back and up without arching the back.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "machine-glute-kickback",
+    "why": "Same move, braced on a machine"
+   },
+   {
+    "id": "hip-thrust",
+    "why": "Both legs, heavier"
+   },
+   {
+    "id": "single-leg-hip-thrust",
+    "why": "One leg, bench and bodyweight"
+   },
+   {
+    "id": "single-leg-glute-bridge",
+    "why": "Floor version, no cable"
+   }
+  ]
+ },
+ {
+  "id": "machine-glute-kickback",
+  "name": "Machine Glute Kickback",
+  "aliases": [
+   "Glute Kickback Machine"
+  ],
+  "planIds": [],
+  "bodyPart": "glutes",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings"
+  ],
+  "pattern": "hip-extension",
+  "equipment": [
+   "glute-kickback-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Chest on the pad, foot on the plate. Push back to straight, no back arch.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "cable-glute-kickback",
+    "why": "Same move on a cable"
+   },
+   {
+    "id": "machine-hip-thrust",
+    "why": "Both legs on a machine"
+   },
+   {
+    "id": "single-leg-glute-bridge",
+    "why": "Floor version, no machine"
+   }
+  ]
+ },
+ {
+  "id": "copenhagen-plank",
+  "name": "Copenhagen Plank",
+  "aliases": [
+   "Copenhagen Side Plank",
+   "Copenhagen Adduction"
+  ],
+  "planIds": [
+   "copenhagen-plank"
+  ],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "adductors"
+  ],
+  "secondaryMuscles": [
+   "obliques",
+   "glute-med",
+   "deep-core"
+  ],
+  "pattern": "hip-adduction",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "advanced",
+  "cue": "Top leg on bench, side plank on the forearm. Inner thigh, prevents groin strains.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 3,
+   "knee": 2,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "shoulder": "Side plank holds your weight on one shoulder",
+   "hip": "Adductor holds bodyweight on a long lever",
+   "knee": "Long lever pulls sideways on the top knee"
+  },
+  "alternatives": [
+   {
+    "id": "short-lever-copenhagen",
+    "why": "Knee on the bench, shorter lever"
+   },
+   {
+    "id": "cable-hip-adduction",
+    "why": "Standing on a cable, lighter on the hip"
+   },
+   {
+    "id": "machine-hip-adduction",
+    "why": "Seated machine, no shoulder load"
+   }
+  ]
+ },
+ {
+  "id": "short-lever-copenhagen",
+  "name": "Short-Lever Copenhagen Plank",
+  "aliases": [
+   "Bent-Knee Copenhagen"
+  ],
+  "planIds": [],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "adductors"
+  ],
+  "secondaryMuscles": [
+   "obliques",
+   "glute-med",
+   "deep-core"
+  ],
+  "pattern": "hip-adduction",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Top knee on the bench, side plank on the forearm. Lift the bottom leg, hips in line.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "shoulder": "Side plank holds your weight on one shoulder",
+   "hip": "Adductor holds bodyweight, shorter lever"
+  },
+  "alternatives": [
+   {
+    "id": "copenhagen-plank",
+    "why": "Foot on the bench, harder"
+   },
+   {
+    "id": "cable-hip-adduction",
+    "why": "Standing on a cable, no shoulder load"
+   },
+   {
+    "id": "machine-hip-adduction",
+    "why": "Seated machine, no shoulder load"
+   }
+  ]
+ },
+ {
+  "id": "machine-hip-adduction",
+  "name": "Hip Adduction Machine",
+  "aliases": [
+   "Seated Adduction",
+   "Inner Thigh Machine"
+  ],
+  "planIds": [],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "adductors"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "hip-adduction",
+  "equipment": [
+   "hip-adduction-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Back on the pad, start at a comfortable width. Squeeze the knees together, slow return.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 3,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "hip": "Groin loaded at full stretch; it is the target"
+  },
+  "alternatives": [
+   {
+    "id": "cable-hip-adduction",
+    "why": "One leg on a cable, lighter on the hip"
+   },
+   {
+    "id": "copenhagen-plank",
+    "why": "Bodyweight on a bench"
+   },
+   {
+    "id": "short-lever-copenhagen",
+    "why": "Bench and bodyweight, shorter lever"
+   }
+  ]
+ },
+ {
+  "id": "cable-hip-adduction",
+  "name": "Cable Hip Adduction",
+  "aliases": [
+   "Standing Cable Adduction"
+  ],
+  "planIds": [],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "adductors"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "hip-adduction",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "ankle-strap",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Strap on the inside ankle, side to the stack. Sweep the leg across, slow return.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Adductor works through a loaded range"
+  },
+  "alternatives": [
+   {
+    "id": "machine-hip-adduction",
+    "why": "Seated machine, both legs"
+   },
+   {
+    "id": "copenhagen-plank",
+    "why": "Bodyweight on a bench"
+   },
+   {
+    "id": "short-lever-copenhagen",
+    "why": "Bench and bodyweight, shorter lever"
+   }
+  ]
+ },
+ {
+  "id": "machine-hip-abduction",
+  "name": "Hip Abduction Machine",
+  "aliases": [
+   "Seated Abduction",
+   "Outer Thigh Machine"
+  ],
+  "planIds": [],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "glute-med",
+   "glutes"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "hip-abduction",
+  "equipment": [
+   "hip-abduction-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Back on the pad, pads outside the knees. Push out, pause 1 sec, slow return.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 3,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "hip": "Side of the hip is the target, under heavy load"
+  },
+  "alternatives": [
+   {
+    "id": "cable-hip-abduction",
+    "why": "One leg on a cable, lighter on the hip"
+   },
+   {
+    "id": "banded-lateral-walk",
+    "why": "Band only, light on the hip"
+   },
+   {
+    "id": "seated-band-abduction",
+    "why": "Band only, seated"
+   }
+  ]
+ },
+ {
+  "id": "cable-hip-abduction",
+  "name": "Cable Hip Abduction",
+  "aliases": [
+   "Standing Cable Abduction"
+  ],
+  "planIds": [],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "glute-med",
+   "glutes"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "hip-abduction",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "ankle-strap",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Strap on the outside ankle, far side to the stack. Lift the leg out, no lean.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Side of the hip works through a loaded range"
+  },
+  "alternatives": [
+   {
+    "id": "machine-hip-abduction",
+    "why": "Seated machine, both legs"
+   },
+   {
+    "id": "banded-lateral-walk",
+    "why": "Band only, light on the hip"
+   },
+   {
+    "id": "seated-band-abduction",
+    "why": "Band only, seated"
+   }
+  ]
+ },
+ {
+  "id": "banded-lateral-walk",
+  "name": "Banded Lateral Walk",
+  "aliases": [
+   "Monster Walk",
+   "Band Side Walk"
+  ],
+  "planIds": [],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "glute-med"
+  ],
+  "secondaryMuscles": [
+   "glutes"
+  ],
+  "pattern": "hip-abduction",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Band above the knees, quarter squat. Step sideways, knees pushed out, no rocking.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "hip": "Side of the hip is the target, light band load"
+  },
+  "alternatives": [
+   {
+    "id": "seated-band-abduction",
+    "why": "Same band, seated"
+   },
+   {
+    "id": "cable-hip-abduction",
+    "why": "Loaded on a cable"
+   },
+   {
+    "id": "machine-hip-abduction",
+    "why": "Loaded on a machine"
+   }
+  ]
+ },
+ {
+  "id": "seated-band-abduction",
+  "name": "Seated Band Abduction",
+  "aliases": [
+   "Banded Seated Abduction"
+  ],
+  "planIds": [],
+  "bodyPart": "hips",
+  "primaryMuscles": [
+   "glute-med"
+  ],
+  "secondaryMuscles": [
+   "glutes"
+  ],
+  "pattern": "hip-abduction",
+  "equipment": [
+   "resistance-band",
+   "flat-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Sit on the bench edge, band above the knees. Push the knees out, pause, slow return.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "hip": "Side of the hip is the target, light band load"
+  },
+  "alternatives": [
+   {
+    "id": "banded-lateral-walk",
+    "why": "Same band, walking"
+   },
+   {
+    "id": "machine-hip-abduction",
+    "why": "Seated machine, loadable"
+   },
+   {
+    "id": "cable-hip-abduction",
+    "why": "Loaded on a cable"
+   }
+  ]
+ },
+ {
+  "id": "standing-calf-raise",
+  "name": "Standing Calf Raise",
+  "aliases": [
+   "Machine Calf Raise"
+  ],
+  "planIds": [
+   "standing-calf-raise"
+  ],
+  "bodyPart": "calves",
+  "primaryMuscles": [
+   "calves"
+  ],
+  "secondaryMuscles": [
+   "soleus"
+  ],
+  "pattern": "calf-raise",
+  "equipment": [
+   "standing-calf-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Full stretch at bottom, 2-sec pause. Calves take the most load in running.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 3
+  },
+  "injuryNotes": {
+   "lowerBack": "Shoulder pads press the load down through the spine",
+   "ankle": "The ankle is the target and takes the load"
+  },
+  "alternatives": [
+   {
+    "id": "smith-calf-raise",
+    "why": "Bar on the back, same move"
+   },
+   {
+    "id": "single-leg-db-calf-raise",
+    "why": "One leg with a DB, light on the back"
+   },
+   {
+    "id": "leg-press-calf-raise",
+    "why": "Back on a pad, no load on the spine"
+   },
+   {
+    "id": "seated-calf-raise",
+    "why": "Seated, nothing on the spine"
+   },
+   {
+    "id": "tibialis-raise",
+    "why": "Front of the shin instead"
+   }
+  ]
+ },
+ {
+  "id": "seated-calf-raise",
+  "name": "Seated Calf Raise",
+  "aliases": [],
+  "planIds": [],
+  "bodyPart": "calves",
+  "primaryMuscles": [
+   "soleus",
+   "calves"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "calf-raise",
+  "equipment": [
+   "seated-calf-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Pad on the lower thighs, balls of feet on the edge. Full stretch, 2-sec pause.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 3
+  },
+  "injuryNotes": {
+   "ankle": "The ankle is the target and takes the load"
+  },
+  "alternatives": [
+   {
+    "id": "standing-calf-raise",
+    "why": "Straight knee, more gastrocnemius"
+   },
+   {
+    "id": "leg-press-calf-raise",
+    "why": "On the leg press, straight knee"
+   },
+   {
+    "id": "single-leg-db-calf-raise",
+    "why": "One leg, no machine"
+   },
+   {
+    "id": "tibialis-raise",
+    "why": "Front of the shin instead"
+   }
+  ]
+ },
+ {
+  "id": "leg-press-calf-raise",
+  "name": "Leg Press Calf Raise",
+  "aliases": [
+   "Calf Press"
+  ],
+  "planIds": [],
+  "bodyPart": "calves",
+  "primaryMuscles": [
+   "calves"
+  ],
+  "secondaryMuscles": [
+   "soleus"
+  ],
+  "pattern": "calf-raise",
+  "equipment": [
+   "leg-press-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 10,
+  "level": "beginner",
+  "cue": "Balls of feet on the plate edge, knees soft but still. Full stretch, push through the big toe.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 3
+  },
+  "injuryNotes": {
+   "ankle": "The ankle is the target and takes the load"
+  },
+  "alternatives": [
+   {
+    "id": "standing-calf-raise",
+    "why": "Standing machine, same straight knee"
+   },
+   {
+    "id": "seated-calf-raise",
+    "why": "Seated, bent knee"
+   },
+   {
+    "id": "smith-calf-raise",
+    "why": "Bar on the back, on a step"
+   }
+  ]
+ },
+ {
+  "id": "single-leg-db-calf-raise",
+  "name": "Single-Leg DB Calf Raise",
+  "aliases": [
+   "One-Leg Calf Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "calves",
+  "primaryMuscles": [
+   "calves"
+  ],
+  "secondaryMuscles": [
+   "soleus"
+  ],
+  "pattern": "calf-raise",
+  "equipment": [
+   "dumbbells",
+   "step"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "On a step, DB in the same-side hand, other hand on support. Full stretch, 2-sec pause.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 3
+  },
+  "injuryNotes": {
+   "ankle": "The ankle is the target and takes the load"
+  },
+  "alternatives": [
+   {
+    "id": "standing-calf-raise",
+    "why": "Machine, both legs, heavier"
+   },
+   {
+    "id": "seated-calf-raise",
+    "why": "Seated machine, bent knee"
+   },
+   {
+    "id": "smith-calf-raise",
+    "why": "Both legs, bar on the back"
+   },
+   {
+    "id": "tibialis-raise",
+    "why": "Front of the shin instead"
+   }
+  ]
+ },
+ {
+  "id": "smith-calf-raise",
+  "name": "Smith Machine Calf Raise",
+  "aliases": [
+   "Smith Calf Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "calves",
+  "primaryMuscles": [
+   "calves"
+  ],
+  "secondaryMuscles": [
+   "soleus"
+  ],
+  "pattern": "calf-raise",
+  "equipment": [
+   "smith-machine",
+   "step"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Balls of feet on a step under the bar. Full stretch, 2-sec pause, straight knees.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 3
+  },
+  "injuryNotes": {
+   "lowerBack": "Bar on the back loads the spine",
+   "ankle": "The ankle is the target and takes the load"
+  },
+  "alternatives": [
+   {
+    "id": "standing-calf-raise",
+    "why": "Calf machine, same move"
+   },
+   {
+    "id": "leg-press-calf-raise",
+    "why": "Back on a pad, no load on the spine"
+   },
+   {
+    "id": "single-leg-db-calf-raise",
+    "why": "One leg with a DB, light on the back"
+   }
+  ]
+ },
+ {
+  "id": "tibialis-raise",
+  "name": "Tibialis Raise",
+  "aliases": [
+   "Wall Tib Raise",
+   "Toe Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "calves",
+  "primaryMuscles": [
+   "tibialis"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "tibialis-raise",
+  "equipment": [
+   "wall"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Back on the wall, heels a foot out. Pull the toes up high, lower slowly.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "ankle": "The ankle is the target, but bodyweight rehab-level load"
+  },
+  "alternatives": [
+   {
+    "id": "standing-calf-raise",
+    "why": "Calves, the back of the lower leg"
+   },
+   {
+    "id": "seated-calf-raise",
+    "why": "Soleus, seated on a machine"
+   },
+   {
+    "id": "single-leg-db-calf-raise",
+    "why": "Calves, one leg with a DB"
+   }
+  ]
+ }
+]

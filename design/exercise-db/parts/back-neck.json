@@ -1,0 +1,2764 @@
+[
+ {
+  "id": "pull-ups",
+  "name": "Pull-ups",
+  "aliases": [
+   "Pull-up",
+   "Overhand Pull-up"
+  ],
+  "planIds": [
+   "max-rep-set",
+   "volume-sets"
+  ],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "brachialis",
+   "lower-traps",
+   "grip"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Strict: full hang, chin over bar. Crisp reps, never grinding.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded overhead through the full range",
+   "elbow": "Full bodyweight through the elbows"
+  },
+  "alternatives": [
+   {
+    "id": "neutral-grip-pull-ups",
+    "why": "Neutral grip, often easier on the shoulders"
+   },
+   {
+    "id": "chin-ups",
+    "why": "Underhand grip, more biceps"
+   },
+   {
+    "id": "band-assisted-pull-ups",
+    "why": "Band takes some weight for more reps"
+   },
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Set the assist, lighter on shoulders and elbows"
+   },
+   {
+    "id": "lat-pulldown",
+    "why": "Same pull on a cable, any load you like"
+   },
+   {
+    "id": "negative-pull-ups",
+    "why": "Lowering only, builds toward full reps"
+   },
+   {
+    "id": "weighted-pull-ups",
+    "why": "Add a belt once reps are easy"
+   },
+   {
+    "id": "dead-hang",
+    "why": "Same bar, a hold instead of reps"
+   }
+  ]
+ },
+ {
+  "id": "weighted-pull-ups",
+  "name": "Weighted Pull-ups",
+  "aliases": [
+   "Belt Pull-up"
+  ],
+  "planIds": [
+   "weighted-pull-ups"
+  ],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "brachialis",
+   "grip"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "pull-up-bar",
+   "dip-belt"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "added",
+  "incrementKg": 2.5,
+  "level": "advanced",
+  "cue": "Dip belt. Full hang, chin over bar. Rest 3 min between sets.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Heavy load overhead through the full range",
+   "elbow": "Bodyweight plus a plate through the elbows"
+  },
+  "alternatives": [
+   {
+    "id": "pull-ups",
+    "why": "Bodyweight only, for when the belt is taken"
+   },
+   {
+    "id": "neutral-grip-pull-ups",
+    "why": "Neutral grip, can be weighted too"
+   },
+   {
+    "id": "chin-ups",
+    "why": "Weighted chin-ups for a biceps bias"
+   },
+   {
+    "id": "lat-pulldown",
+    "why": "Heavy cable pull, lighter on elbows"
+   },
+   {
+    "id": "close-grip-lat-pulldown",
+    "why": "Neutral handle on a cable, heavy and controlled"
+   }
+  ]
+ },
+ {
+  "id": "band-assisted-pull-ups",
+  "name": "Band-Assisted Pull-ups",
+  "aliases": [
+   "Banded Pull-up"
+  ],
+  "planIds": [
+   "band-assisted-pull-ups"
+  ],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "lower-traps"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "pull-up-bar",
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Light band under the knees or feet. Full hang, chin over bar, extra volume past strict reps.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Still the full overhead range, with less load"
+  },
+  "alternatives": [
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Machine assist, easy to set the exact load"
+   },
+   {
+    "id": "pull-ups",
+    "why": "Full bodyweight when the reps are there"
+   },
+   {
+    "id": "negative-pull-ups",
+    "why": "Slow lowering adds volume without the band"
+   },
+   {
+    "id": "lat-pulldown",
+    "why": "Cable pull, lighter on the shoulders"
+   }
+  ]
+ },
+ {
+  "id": "chin-ups",
+  "name": "Chin-ups",
+  "aliases": [
+   "Underhand Pull-up",
+   "Supinated Pull-up"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "brachialis",
+   "grip"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "added",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Underhand, shoulder width. Full hang, chest to bar, no kipping.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded overhead through the full range",
+   "elbow": "Supinated grip loads the elbow and biceps tendon"
+  },
+  "alternatives": [
+   {
+    "id": "pull-ups",
+    "why": "Overhand grip, more lats, less biceps"
+   },
+   {
+    "id": "neutral-grip-pull-ups",
+    "why": "Neutral grip, less wrist twist"
+   },
+   {
+    "id": "underhand-lat-pulldown",
+    "why": "Same grip on a cable, any load"
+   },
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Machine assist, easier on shoulders and elbows"
+   },
+   {
+    "id": "weighted-pull-ups",
+    "why": "Add load once chin-ups get easy"
+   }
+  ]
+ },
+ {
+  "id": "neutral-grip-pull-ups",
+  "name": "Neutral-Grip Pull-ups",
+  "aliases": [
+   "Parallel-Grip Pull-up",
+   "Hammer-Grip Pull-up"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "brachialis",
+   "biceps",
+   "grip"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "added",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Palms facing on parallel handles. Full hang, elbows to ribs.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded overhead through the full range",
+   "elbow": "Full bodyweight through the elbows"
+  },
+  "alternatives": [
+   {
+    "id": "pull-ups",
+    "why": "Overhand bar, same pull"
+   },
+   {
+    "id": "chin-ups",
+    "why": "Underhand grip, more biceps"
+   },
+   {
+    "id": "close-grip-lat-pulldown",
+    "why": "Same neutral grip on a cable"
+   },
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Machine assist, lighter on shoulders and elbows"
+   },
+   {
+    "id": "weighted-pull-ups",
+    "why": "Belt and plate for heavy sets"
+   }
+  ]
+ },
+ {
+  "id": "assisted-pull-up-machine",
+  "name": "Assisted Pull-up Machine",
+  "aliases": [
+   "Gravitron",
+   "Assisted Chin-up"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "brachialis"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "assisted-pull-up-machine"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Knees on the pad. Note the assist used; less assist is progress. Full hang, chin over bar.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "band-assisted-pull-ups",
+    "why": "Band on the bar when the machine is taken"
+   },
+   {
+    "id": "pull-ups",
+    "why": "Full bodyweight when the reps are there"
+   },
+   {
+    "id": "lat-pulldown",
+    "why": "Seated, thighs pinned, any load"
+   },
+   {
+    "id": "neutral-grip-pull-ups",
+    "why": "Neutral handles, full bodyweight"
+   },
+   {
+    "id": "chin-ups",
+    "why": "Underhand, full bodyweight"
+   },
+   {
+    "id": "negative-pull-ups",
+    "why": "Lowering only, no machine needed"
+   },
+   {
+    "id": "dead-hang",
+    "why": "Bar hold for grip and shoulders"
+   },
+   {
+    "id": "scapular-pull-ups",
+    "why": "Shoulder-setting pulls on the bar"
+   }
+  ]
+ },
+ {
+  "id": "negative-pull-ups",
+  "name": "Negative Pull-ups",
+  "aliases": [
+   "Eccentric Pull-up"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "brachialis",
+   "grip"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Jump or step to chin over bar, then lower for 3 to 5 seconds to a full hang.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "shoulder": "Slow lowering into the full overhead stretch",
+   "elbow": "Heavy eccentric load through the elbows"
+  },
+  "alternatives": [
+   {
+    "id": "band-assisted-pull-ups",
+    "why": "Band help for full reps instead"
+   },
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Machine assist, lighter on shoulders and elbows"
+   },
+   {
+    "id": "pull-ups",
+    "why": "Full reps once you can do them"
+   }
+  ]
+ },
+ {
+  "id": "scapular-pull-ups",
+  "name": "Scapular Pull-ups",
+  "aliases": [
+   "Scap Pull-up",
+   "Scapular Shrug on Bar"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lower-traps",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "rotator-cuff",
+   "grip"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Dead hang, arms straight. Pull the shoulders down and back, pause, lower slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Full bodyweight at the end of the overhead range"
+  },
+  "alternatives": [
+   {
+    "id": "dead-hang",
+    "why": "Same hang, held without the shrug"
+   },
+   {
+    "id": "straight-arm-pulldown",
+    "why": "Lats with arms straight, lighter on shoulders"
+   },
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Assisted pulls, less load on the shoulders"
+   }
+  ]
+ },
+ {
+  "id": "dead-hang",
+  "name": "Dead Hang",
+  "aliases": [
+   "Bar Hang",
+   "Passive Hang"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "grip",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "forearm-flexors",
+   "lower-traps"
+  ],
+  "pattern": "hang",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Overhand, shoulder width. Hang still, ribs down, breathe. Builds grip for pull-ups.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Full bodyweight at the end of the overhead range"
+  },
+  "alternatives": [
+   {
+    "id": "scapular-pull-ups",
+    "why": "Same hang with a small shoulder pull"
+   },
+   {
+    "id": "pull-ups",
+    "why": "Same bar, full reps instead of a hold"
+   },
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Hang with assist, less weight on shoulders"
+   }
+  ]
+ },
+ {
+  "id": "lat-pulldown",
+  "name": "Lat Pulldown",
+  "aliases": [
+   "Wide-Grip Pulldown",
+   "Front Pulldown"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "rear-delts",
+   "lower-traps"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "lat-pulldown-machine"
+  ],
+  "attachment": "lat-bar",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Hands just outside shoulders. Pull to the upper chest, chest up, no leaning back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "close-grip-lat-pulldown",
+    "why": "Neutral handle, more stretch"
+   },
+   {
+    "id": "single-arm-lat-pulldown",
+    "why": "One arm at a time, longer range"
+   },
+   {
+    "id": "underhand-lat-pulldown",
+    "why": "Underhand grip, more lower lats and biceps"
+   },
+   {
+    "id": "assisted-pull-up-machine",
+    "why": "Assisted pull-up, closer to the real thing"
+   },
+   {
+    "id": "pull-ups",
+    "why": "Bodyweight version on a bar"
+   },
+   {
+    "id": "band-assisted-pull-ups",
+    "why": "Banded pull-ups when the machine is taken"
+   },
+   {
+    "id": "weighted-pull-ups",
+    "why": "Heavy bar work once pull-ups are easy"
+   }
+  ]
+ },
+ {
+  "id": "close-grip-lat-pulldown",
+  "name": "Close-Grip Lat Pulldown",
+  "aliases": [
+   "V-Bar Pulldown",
+   "Neutral-Grip Pulldown"
+  ],
+  "planIds": [
+   "close-grip-lat-pulldown"
+  ],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "brachialis",
+   "lower-traps"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "lat-pulldown-machine"
+  ],
+  "attachment": "v-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Neutral handle. Full stretch at top, elbows to ribs.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "lat-pulldown",
+    "why": "Wide bar, same machine"
+   },
+   {
+    "id": "single-arm-lat-pulldown",
+    "why": "One arm, elbow to ribs, same stretch"
+   },
+   {
+    "id": "underhand-lat-pulldown",
+    "why": "Underhand bar, more biceps"
+   },
+   {
+    "id": "neutral-grip-pull-ups",
+    "why": "Same neutral grip on a pull-up bar"
+   },
+   {
+    "id": "weighted-pull-ups",
+    "why": "Heavy pull on the bar"
+   },
+   {
+    "id": "db-pullover",
+    "why": "Lats through a big stretch on a bench"
+   },
+   {
+    "id": "cable-pullover",
+    "why": "Lats with straight arms, on a bench"
+   }
+  ]
+ },
+ {
+  "id": "underhand-lat-pulldown",
+  "name": "Underhand Lat Pulldown",
+  "aliases": [
+   "Reverse-Grip Pulldown",
+   "Supinated Pulldown"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "brachialis"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "lat-pulldown-machine"
+  ],
+  "attachment": "lat-bar",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Palms toward you, shoulder width. Pull to the upper chest, elbows down and in.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Supinated grip loads the elbow and biceps tendon"
+  },
+  "alternatives": [
+   {
+    "id": "lat-pulldown",
+    "why": "Overhand bar, same machine"
+   },
+   {
+    "id": "close-grip-lat-pulldown",
+    "why": "Neutral handle, easier on the elbows"
+   },
+   {
+    "id": "chin-ups",
+    "why": "Same grip on a pull-up bar"
+   }
+  ]
+ },
+ {
+  "id": "single-arm-lat-pulldown",
+  "name": "Single-Arm Lat Pulldown",
+  "aliases": [
+   "One-Arm Pulldown"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "biceps",
+   "lower-traps"
+  ],
+  "pattern": "vertical-pull",
+  "equipment": [
+   "lat-pulldown-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "D-handle. Reach up for a full stretch, pull the elbow down to the hip.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "close-grip-lat-pulldown",
+    "why": "Both arms, neutral handle"
+   },
+   {
+    "id": "lat-pulldown",
+    "why": "Both arms on the wide bar"
+   },
+   {
+    "id": "single-arm-cable-row",
+    "why": "Row version, same elbow-to-hip pull"
+   }
+  ]
+ },
+ {
+  "id": "straight-arm-pulldown",
+  "name": "Straight-Arm Pulldown",
+  "aliases": [
+   "Straight-Arm Lat Pulldown",
+   "Cable Pullover Standing"
+  ],
+  "planIds": [
+   "straight-arm-pulldown"
+  ],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "triceps-long-head",
+   "rear-delts",
+   "deep-core"
+  ],
+  "pattern": "straight-arm-pull",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "straight-bar",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Arms straight, slight hinge. Sweep the bar to the thighs. Pure lats, helps pull-up reps.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "cable-pullover",
+    "why": "Lying on a bench, back fully supported"
+   },
+   {
+    "id": "db-pullover",
+    "why": "Same lat sweep with a dumbbell"
+   },
+   {
+    "id": "scapular-pull-ups",
+    "why": "Lats on the bar, small range"
+   }
+  ]
+ },
+ {
+  "id": "db-pullover",
+  "name": "DB Pullover",
+  "aliases": [
+   "Dumbbell Pullover"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "upper-chest",
+   "triceps-long-head",
+   "serratus"
+  ],
+  "pattern": "straight-arm-pull",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Lie on the bench, one DB in both hands. Lower behind the head, slight elbow bend, ribs down.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded deep overhead stretch"
+  },
+  "alternatives": [
+   {
+    "id": "cable-pullover",
+    "why": "Cable keeps tension at the top"
+   },
+   {
+    "id": "straight-arm-pulldown",
+    "why": "Standing on a cable, lighter overhead stretch"
+   },
+   {
+    "id": "close-grip-lat-pulldown",
+    "why": "Lats with a big stretch, less on the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "cable-pullover",
+  "name": "Cable Pullover",
+  "aliases": [
+   "Lying Cable Pullover"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "triceps-long-head",
+   "serratus"
+  ],
+  "pattern": "straight-arm-pull",
+  "equipment": [
+   "cable-machine",
+   "flat-bench"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Lie on a bench, head to a low pulley, rope in both hands. Pull arms straight over to the hips.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded overhead stretch at the start of each rep"
+  },
+  "alternatives": [
+   {
+    "id": "straight-arm-pulldown",
+    "why": "Standing version, shorter overhead stretch"
+   },
+   {
+    "id": "db-pullover",
+    "why": "Dumbbell when the cable is taken"
+   },
+   {
+    "id": "close-grip-lat-pulldown",
+    "why": "Lats with a stretch, less on the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "chest-supported-db-row",
+  "name": "Chest-Supported DB Row",
+  "aliases": [
+   "Incline Dumbbell Row",
+   "Prone Dumbbell Row"
+  ],
+  "planIds": [
+   "chest-supported-db-row"
+  ],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Chest on a 30-45° bench, zero back load. Pause a second at the top and squeeze the blades.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "seated-cable-row",
+    "why": "Same pull on a cable; sit tall, light back work"
+   },
+   {
+    "id": "machine-row",
+    "why": "Chest pad too; use it when the benches are taken"
+   },
+   {
+    "id": "chest-supported-t-bar-row",
+    "why": "Chest pad, heavier plate-loaded pull"
+   },
+   {
+    "id": "seal-row",
+    "why": "Lying flat on a bench, barbell or DBs"
+   },
+   {
+    "id": "one-arm-db-row",
+    "why": "One arm, hand and knee on a bench"
+   },
+   {
+    "id": "suspension-trainer-row",
+    "why": "Bodyweight row on straps, light on the back"
+   },
+   {
+    "id": "bent-over-db-row",
+    "why": "Same DBs standing, but hard on the back"
+   },
+   {
+    "id": "iso-lateral-row",
+    "why": "Plate-loaded machine, same chest support"
+   }
+  ]
+ },
+ {
+  "id": "seated-cable-row",
+  "name": "Seated Cable Row",
+  "aliases": [
+   "Low Row",
+   "V-Bar Cable Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "spinal-erectors"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "seated-row-machine"
+  ],
+  "attachment": "v-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Sit tall, knees soft. Pull the handle to the belly, elbows close, no rocking.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "chest-supported-db-row",
+    "why": "Chest on a pad, nothing on the lower back"
+   },
+   {
+    "id": "machine-row",
+    "why": "Chest pad, no back load"
+   },
+   {
+    "id": "wide-grip-seated-cable-row",
+    "why": "Wide bar, more upper back"
+   },
+   {
+    "id": "single-arm-cable-row",
+    "why": "One arm at a time, longer stretch"
+   },
+   {
+    "id": "inverted-row",
+    "why": "Bodyweight row under a bar"
+   },
+   {
+    "id": "bent-over-db-row",
+    "why": "Dumbbells standing hinged, more back load"
+   },
+   {
+    "id": "barbell-row",
+    "why": "Heavy barbell, but hinged and unsupported"
+   },
+   {
+    "id": "t-bar-row",
+    "why": "Heavy plate-loaded row, hinged"
+   }
+  ]
+ },
+ {
+  "id": "wide-grip-seated-cable-row",
+  "name": "Wide-Grip Seated Cable Row",
+  "aliases": [
+   "Wide-Grip Cable Row",
+   "Upper-Back Cable Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "rear-delts"
+  ],
+  "secondaryMuscles": [
+   "lats",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "seated-row-machine"
+  ],
+  "attachment": "lat-bar",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Overhand on a long bar, sit tall. Pull to the lower chest, elbows out at about 45°.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "seated-cable-row",
+    "why": "V-handle, more lats"
+   },
+   {
+    "id": "machine-row",
+    "why": "Chest pad, nothing on the lower back"
+   },
+   {
+    "id": "seal-row",
+    "why": "Lying on a bench, wide grip, no back load"
+   },
+   {
+    "id": "inverted-row",
+    "why": "Wide grip on a bar, bodyweight"
+   }
+  ]
+ },
+ {
+  "id": "single-arm-cable-row",
+  "name": "Single-Arm Cable Row",
+  "aliases": [
+   "One-Arm Cable Row",
+   "Half-Kneeling Cable Row"
+  ],
+  "planIds": [
+   "single-arm-cable-row"
+  ],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "obliques"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Seated or half-kneeling. Stretch forward, pull the elbow to the hip.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "one-arm-db-row",
+    "why": "One DB, hand and knee on a bench"
+   },
+   {
+    "id": "seated-cable-row",
+    "why": "Both arms on the low row, sit tall"
+   },
+   {
+    "id": "iso-lateral-row",
+    "why": "Chest pad, one arm at a time, no kneeling"
+   },
+   {
+    "id": "single-arm-lat-pulldown",
+    "why": "Same elbow-to-hip pull from above"
+   },
+   {
+    "id": "meadows-row",
+    "why": "Landmine, heavier, but bent over"
+   }
+  ]
+ },
+ {
+  "id": "machine-row",
+  "name": "Machine Row",
+  "aliases": [
+   "Seated Row Machine",
+   "Chest-Supported Machine Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "row-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Chest on the pad, set the seat so handles are at chest height. Squeeze the blades, slow return.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "chest-supported-db-row",
+    "why": "Dumbbells on an incline bench, same support"
+   },
+   {
+    "id": "iso-lateral-row",
+    "why": "Plate-loaded, each arm on its own"
+   },
+   {
+    "id": "seated-cable-row",
+    "why": "Cable version; sit tall"
+   },
+   {
+    "id": "wide-grip-seated-cable-row",
+    "why": "Wide bar on the cable, more upper back"
+   },
+   {
+    "id": "chest-supported-t-bar-row",
+    "why": "Chest pad, plate-loaded T-bar"
+   },
+   {
+    "id": "smith-machine-row",
+    "why": "Smith bar, but hinged and unsupported"
+   },
+   {
+    "id": "suspension-trainer-row",
+    "why": "Bodyweight on straps, any gym corner"
+   }
+  ]
+ },
+ {
+  "id": "iso-lateral-row",
+  "name": "Iso-Lateral Row",
+  "aliases": [
+   "Plate-Loaded Row",
+   "Hammer Strength Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "row-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Chest on the pad. Row one or both arms, elbows back, pause and squeeze.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "machine-row",
+    "why": "Stack machine, same chest pad"
+   },
+   {
+    "id": "chest-supported-t-bar-row",
+    "why": "Chest pad, both arms on a T-bar"
+   },
+   {
+    "id": "chest-supported-db-row",
+    "why": "Dumbbells on an incline bench"
+   },
+   {
+    "id": "single-arm-cable-row",
+    "why": "One arm on a cable, longer stretch"
+   },
+   {
+    "id": "meadows-row",
+    "why": "One arm on a landmine, but bent over"
+   }
+  ]
+ },
+ {
+  "id": "chest-supported-t-bar-row",
+  "name": "Chest-Supported T-Bar Row",
+  "aliases": [
+   "Incline T-Bar Row",
+   "Lying T-Bar Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "t-bar-row"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Chest on the pad, feet planted. Pull the handles to the lower chest, squeeze, lower slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "chest-supported-db-row",
+    "why": "Dumbbells on an incline bench, same support"
+   },
+   {
+    "id": "machine-row",
+    "why": "Stack machine with a chest pad"
+   },
+   {
+    "id": "iso-lateral-row",
+    "why": "Plate-loaded, each arm on its own"
+   },
+   {
+    "id": "t-bar-row",
+    "why": "Same bar without the pad, hard on the back"
+   },
+   {
+    "id": "seal-row",
+    "why": "Lying flat on a bench with a barbell"
+   },
+   {
+    "id": "barbell-row",
+    "why": "Standing barbell, but hard on the back"
+   }
+  ]
+ },
+ {
+  "id": "one-arm-db-row",
+  "name": "One-Arm DB Row",
+  "aliases": [
+   "Single-Arm Dumbbell Row",
+   "Bench Dumbbell Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Hand and knee on the bench, back flat. Pull the DB to the hip, no twisting.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "single-arm-cable-row",
+    "why": "Cable, seated or half-kneeling"
+   },
+   {
+    "id": "chest-supported-db-row",
+    "why": "Both arms, chest on a pad, no back load"
+   },
+   {
+    "id": "meadows-row",
+    "why": "Landmine, heavier, but bent over"
+   },
+   {
+    "id": "bent-over-db-row",
+    "why": "Both arms at once, standing hinged"
+   }
+  ]
+ },
+ {
+  "id": "bent-over-db-row",
+  "name": "Bent-Over DB Row",
+  "aliases": [
+   "Dumbbell Bent-Over Row",
+   "Two-Arm Dumbbell Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "spinal-erectors"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Hinge to about 45°, back flat, DBs under the shoulders. Row to the hips.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Hinged and unsupported, the lower back holds the load"
+  },
+  "alternatives": [
+   {
+    "id": "chest-supported-db-row",
+    "why": "Chest on a pad, nothing on the lower back"
+   },
+   {
+    "id": "one-arm-db-row",
+    "why": "Hand on a bench takes the back load off"
+   },
+   {
+    "id": "seated-cable-row",
+    "why": "Sit tall on a cable, light back work"
+   },
+   {
+    "id": "barbell-row",
+    "why": "Barbell, heavier, same hinge"
+   }
+  ]
+ },
+ {
+  "id": "barbell-row",
+  "name": "Bent-Over Barbell Row",
+  "aliases": [
+   "Barbell Row",
+   "Bent-Over Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "spinal-erectors"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Hinge to about 45°, back flat, bar over mid-foot. Pull to the lower ribs.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Hinged and unsupported, the lower back holds the load"
+  },
+  "alternatives": [
+   {
+    "id": "chest-supported-t-bar-row",
+    "why": "Chest pad, nothing on the lower back"
+   },
+   {
+    "id": "smith-machine-row",
+    "why": "Fixed bar path, same hinge"
+   },
+   {
+    "id": "t-bar-row",
+    "why": "Plate-loaded, neutral grip, same hinge"
+   },
+   {
+    "id": "bent-over-db-row",
+    "why": "Dumbbells, same hinge"
+   },
+   {
+    "id": "seal-row",
+    "why": "Lying on a bench, zero back load"
+   },
+   {
+    "id": "seated-cable-row",
+    "why": "Sit tall on a cable, light back work"
+   }
+  ]
+ },
+ {
+  "id": "t-bar-row",
+  "name": "T-Bar Row",
+  "aliases": [
+   "Landmine T-Bar Row",
+   "Standing T-Bar Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "spinal-erectors"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "t-bar-row"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Straddle the bar, hinge with a flat back. Pull the handle to the chest, no jerking.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Hinged and unsupported, the lower back holds the load"
+  },
+  "alternatives": [
+   {
+    "id": "chest-supported-t-bar-row",
+    "why": "Same bar with a chest pad, no back load"
+   },
+   {
+    "id": "barbell-row",
+    "why": "Barbell, same hinge"
+   },
+   {
+    "id": "meadows-row",
+    "why": "One arm, hand on knee, less back load"
+   },
+   {
+    "id": "seated-cable-row",
+    "why": "Neutral V-handle, sitting tall"
+   }
+  ]
+ },
+ {
+  "id": "meadows-row",
+  "name": "Meadows Row",
+  "aliases": [
+   "Landmine One-Arm Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "lats",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "grip"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "landmine",
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Staggered stance beside the landmine, forearm on the front knee. Row the bar end to the hip.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Staggered hinge, only partly braced on the knee"
+  },
+  "alternatives": [
+   {
+    "id": "single-arm-cable-row",
+    "why": "Cable, seated or kneeling, light back work"
+   },
+   {
+    "id": "one-arm-db-row",
+    "why": "Hand and knee on a bench, less back load"
+   },
+   {
+    "id": "t-bar-row",
+    "why": "Both arms on the T-bar, hinged"
+   },
+   {
+    "id": "iso-lateral-row",
+    "why": "Chest pad, one arm, no back load"
+   }
+  ]
+ },
+ {
+  "id": "smith-machine-row",
+  "name": "Smith Machine Row",
+  "aliases": [
+   "Smith Bent-Over Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "spinal-erectors"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "smith-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Hinge to about 45° under a fixed bar, back flat. Pull to the lower ribs.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Hinged and unsupported; the fixed bar does not help the back"
+  },
+  "alternatives": [
+   {
+    "id": "barbell-row",
+    "why": "Free barbell, same hinge"
+   },
+   {
+    "id": "inverted-row",
+    "why": "Same Smith bar, lying under it, light on back"
+   },
+   {
+    "id": "machine-row",
+    "why": "Chest pad, nothing on the lower back"
+   }
+  ]
+ },
+ {
+  "id": "inverted-row",
+  "name": "Inverted Row",
+  "aliases": [
+   "Bodyweight Row",
+   "Australian Pull-up"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps",
+   "glutes"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "smith-machine"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Hang under a Smith or rack bar, body straight, heels down. Pull the chest to the bar.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "suspension-trainer-row",
+    "why": "Straps, easy to change the angle"
+   },
+   {
+    "id": "seated-cable-row",
+    "why": "Cable row, any load you like"
+   },
+   {
+    "id": "smith-machine-row",
+    "why": "Same bar, heavier, but bent over"
+   },
+   {
+    "id": "wide-grip-seated-cable-row",
+    "why": "Wide bar on a cable"
+   }
+  ]
+ },
+ {
+  "id": "suspension-trainer-row",
+  "name": "Suspension Trainer Row",
+  "aliases": [
+   "TRX Row",
+   "Ring Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "suspension-trainer"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Lean back on the straps, body straight. Pull the hands to the ribs, walk the feet in for harder reps.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 1
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "inverted-row",
+    "why": "Fixed bar instead of straps"
+   },
+   {
+    "id": "chest-supported-db-row",
+    "why": "Dumbbells with the chest on a pad"
+   },
+   {
+    "id": "machine-row",
+    "why": "Machine with a chest pad, add load"
+   }
+  ]
+ },
+ {
+  "id": "seal-row",
+  "name": "Seal Row",
+  "aliases": [
+   "Prone Bench Row",
+   "Lying Barbell Row"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "biceps"
+  ],
+  "pattern": "horizontal-pull",
+  "equipment": [
+   "barbell",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Lie face down on a raised flat bench. Row the bar to the bench, zero back load.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "chest-supported-db-row",
+    "why": "Incline bench and DBs, easier to set up"
+   },
+   {
+    "id": "chest-supported-t-bar-row",
+    "why": "Chest pad on the T-bar"
+   },
+   {
+    "id": "barbell-row",
+    "why": "Standing barbell, but hard on the back"
+   },
+   {
+    "id": "wide-grip-seated-cable-row",
+    "why": "Cable, wide grip, sit tall"
+   }
+  ]
+ },
+ {
+  "id": "barbell-shrug",
+  "name": "Barbell Shrug",
+  "aliases": [
+   "Standing Barbell Shrug"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-traps"
+  ],
+  "secondaryMuscles": [
+   "grip",
+   "upper-back"
+  ],
+  "pattern": "shrug",
+  "equipment": [
+   "barbell",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Bar from the rack at hip height. Shoulders straight up to the ears, pause, lower slowly. No rolling.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Shrugging under load works the upper traps and neck",
+   "lowerBack": "Heavy load held standing compresses the spine"
+  },
+  "alternatives": [
+   {
+    "id": "db-shrug",
+    "why": "Dumbbells at the sides, freer path"
+   },
+   {
+    "id": "smith-machine-shrug",
+    "why": "Fixed bar, easy to rack"
+   },
+   {
+    "id": "incline-db-shrug",
+    "why": "Chest on a bench, no load on the spine"
+   },
+   {
+    "id": "rack-pull",
+    "why": "Heavy partial pull, traps and back"
+   }
+  ]
+ },
+ {
+  "id": "db-shrug",
+  "name": "DB Shrug",
+  "aliases": [
+   "Dumbbell Shrug"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-traps"
+  ],
+  "secondaryMuscles": [
+   "grip",
+   "upper-back"
+  ],
+  "pattern": "shrug",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "DBs at the sides, arms long. Shoulders straight up to the ears, pause a second, lower slowly.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Shrugging under load works the upper traps and neck",
+   "lowerBack": "Heavy load held standing compresses the spine"
+  },
+  "alternatives": [
+   {
+    "id": "barbell-shrug",
+    "why": "Barbell, heavier loads"
+   },
+   {
+    "id": "smith-machine-shrug",
+    "why": "Fixed bar, easy to rack"
+   },
+   {
+    "id": "incline-db-shrug",
+    "why": "Chest on a bench, no load on the spine"
+   }
+  ]
+ },
+ {
+  "id": "smith-machine-shrug",
+  "name": "Smith Machine Shrug",
+  "aliases": [
+   "Smith Shrug"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-traps"
+  ],
+  "secondaryMuscles": [
+   "grip",
+   "upper-back"
+  ],
+  "pattern": "shrug",
+  "equipment": [
+   "smith-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Bar at hip height, hands just outside the thighs. Shrug straight up, pause, lower slowly.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Shrugging under load works the upper traps and neck",
+   "lowerBack": "Heavy load held standing compresses the spine"
+  },
+  "alternatives": [
+   {
+    "id": "barbell-shrug",
+    "why": "Free barbell from the rack"
+   },
+   {
+    "id": "db-shrug",
+    "why": "Dumbbells at the sides"
+   },
+   {
+    "id": "incline-db-shrug",
+    "why": "Chest on a bench, no load on the spine"
+   }
+  ]
+ },
+ {
+  "id": "incline-db-shrug",
+  "name": "Incline DB Shrug",
+  "aliases": [
+   "Prone Incline Shrug",
+   "Chest-Supported Shrug"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-traps",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "lower-traps"
+  ],
+  "pattern": "shrug",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Chest on a 45° bench, arms hanging. Shrug up and back toward the ears, pause, lower slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "db-shrug",
+    "why": "Standing, heavier, more upper traps"
+   },
+   {
+    "id": "barbell-shrug",
+    "why": "Barbell standing, heaviest option"
+   },
+   {
+    "id": "smith-machine-shrug",
+    "why": "Smith bar, standing"
+   }
+  ]
+ },
+ {
+  "id": "rack-pull",
+  "name": "Rack Pull",
+  "aliases": [
+   "Block Pull",
+   "Partial Deadlift"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "upper-back",
+   "spinal-erectors",
+   "upper-traps"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "hamstrings",
+   "lats",
+   "grip"
+  ],
+  "pattern": "hinge",
+  "equipment": [
+   "barbell",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "advanced",
+  "cue": "Bar on the pins just below the knee. Brace, push the hips through to stand tall, lower under control.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Heavy hinge, the lower back holds the bar",
+   "hip": "Heavy loaded hinge through the hips"
+  },
+  "alternatives": [
+   {
+    "id": "barbell-shrug",
+    "why": "Traps only, no hinge, less back load"
+   },
+   {
+    "id": "back-extension",
+    "why": "Erectors with a light load"
+   },
+   {
+    "id": "stability-ball-back-extension",
+    "why": "Erectors with bodyweight only"
+   }
+  ]
+ },
+ {
+  "id": "back-extension",
+  "name": "Back Extension",
+  "aliases": [
+   "45° Hyperextension",
+   "Roman Chair Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "spinal-erectors",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings"
+  ],
+  "pattern": "core-extension",
+  "equipment": [
+   "back-extension-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pad just below the hips. Lower with a flat back, rise to a straight line, no arching. Hold a plate to load.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "The back extensors lift the torso, even to neutral",
+   "hip": "Hips hinge over the pad through a loaded range"
+  },
+  "alternatives": [
+   {
+    "id": "stability-ball-back-extension",
+    "why": "Ball and wall, smaller range"
+   },
+   {
+    "id": "rack-pull",
+    "why": "Heavy partial pull, more back load"
+   },
+   {
+    "id": "bird-dog",
+    "why": "Back extensors with no load on the spine"
+   },
+   {
+    "id": "superman-hold",
+    "why": "Floor hold, no bench needed"
+   }
+  ]
+ },
+ {
+  "id": "stability-ball-back-extension",
+  "name": "Stability Ball Back Extension",
+  "aliases": [
+   "Swiss Ball Hyperextension"
+  ],
+  "planIds": [],
+  "bodyPart": "back",
+  "primaryMuscles": [
+   "spinal-erectors",
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "hamstrings"
+  ],
+  "pattern": "core-extension",
+  "equipment": [
+   "stability-ball",
+   "wall"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Hips on the ball, feet braced on a wall. Lift to a straight line, pause, lower slowly. No arching.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 1
+  },
+  "injuryNotes": {
+   "lowerBack": "Back extensors lift the torso, bodyweight only"
+  },
+  "alternatives": [
+   {
+    "id": "back-extension",
+    "why": "Bench version, add a plate"
+   },
+   {
+    "id": "rack-pull",
+    "why": "Heavy partial pull, more back load"
+   },
+   {
+    "id": "superman-hold",
+    "why": "Floor hold, no ball or wall needed"
+   }
+  ]
+ },
+ {
+  "id": "plate-neck-flexion",
+  "name": "Plate Neck Flexion",
+  "aliases": [
+   "Lying Neck Curl",
+   "Supine Neck Flexion"
+  ],
+  "planIds": [],
+  "bodyPart": "neck",
+  "primaryMuscles": [
+   "neck-flexors"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "neck-work",
+  "equipment": [
+   "weight-plate",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 1.25,
+  "level": "intermediate",
+  "cue": "Lie face up, head off the bench end, towel and light plate on the forehead. Chin to chest, slowly.",
+  "injury": {
+   "neck": 3,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Trains the neck itself"
+  },
+  "alternatives": [
+   {
+    "id": "plate-neck-extension",
+    "why": "Plate on the back of the head, lying face down"
+   },
+   {
+    "id": "neck-harness-extension",
+    "why": "Harness and plates, easy to load up"
+   },
+   {
+    "id": "band-neck-lateral-flexion",
+    "why": "Band, side to side, light and simple"
+   },
+   {
+    "id": "ball-neck-isometric",
+    "why": "Hold against a ball, no movement"
+   },
+   {
+    "id": "supine-head-hold",
+    "why": "Hold the head level, bodyweight only"
+   }
+  ]
+ },
+ {
+  "id": "plate-neck-extension",
+  "name": "Plate Neck Extension",
+  "aliases": [
+   "Lying Neck Extension",
+   "Prone Neck Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "neck",
+  "primaryMuscles": [
+   "neck-extensors"
+  ],
+  "secondaryMuscles": [
+   "upper-traps"
+  ],
+  "pattern": "neck-work",
+  "equipment": [
+   "weight-plate",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 1.25,
+  "level": "intermediate",
+  "cue": "Lie face down, head off the bench end, towel and light plate behind the head. Lift to level, slowly.",
+  "injury": {
+   "neck": 3,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Trains the neck itself"
+  },
+  "alternatives": [
+   {
+    "id": "plate-neck-flexion",
+    "why": "Plate on the forehead, lying face up"
+   },
+   {
+    "id": "neck-harness-extension",
+    "why": "Harness and plates, easy to load up"
+   },
+   {
+    "id": "band-neck-lateral-flexion",
+    "why": "Band, side to side, light and simple"
+   },
+   {
+    "id": "ball-neck-isometric",
+    "why": "Hold against a ball, no movement"
+   },
+   {
+    "id": "supine-head-hold",
+    "why": "Hold the head level, bodyweight only"
+   }
+  ]
+ },
+ {
+  "id": "neck-harness-extension",
+  "name": "Neck Harness Extension",
+  "aliases": [
+   "Head Harness Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "neck",
+  "primaryMuscles": [
+   "neck-extensors"
+  ],
+  "secondaryMuscles": [
+   "upper-traps"
+  ],
+  "pattern": "neck-work",
+  "equipment": [
+   "neck-harness",
+   "weight-plate",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "advanced",
+  "cue": "Sit on the bench end, hands on knees, harness on. Lower the chin, then lift to level. Small range, slow.",
+  "injury": {
+   "neck": 3,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Trains the neck itself, with the heaviest loads"
+  },
+  "alternatives": [
+   {
+    "id": "plate-neck-flexion",
+    "why": "Plate on the forehead, lying face up"
+   },
+   {
+    "id": "plate-neck-extension",
+    "why": "Plate on the back of the head, lying face down"
+   },
+   {
+    "id": "band-neck-lateral-flexion",
+    "why": "Band, side to side, light and simple"
+   },
+   {
+    "id": "ball-neck-isometric",
+    "why": "Hold against a ball, no movement"
+   },
+   {
+    "id": "supine-head-hold",
+    "why": "Hold the head level, bodyweight only"
+   }
+  ]
+ },
+ {
+  "id": "band-neck-lateral-flexion",
+  "name": "Band Neck Side Bend",
+  "aliases": [
+   "Band Neck Lateral Flexion"
+  ],
+  "planIds": [],
+  "bodyPart": "neck",
+  "primaryMuscles": [
+   "neck-flexors",
+   "neck-extensors"
+  ],
+  "secondaryMuscles": [
+   "upper-traps"
+  ],
+  "pattern": "neck-work",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Band round the head, anchored to one side. Sit tall, tilt ear toward shoulder against it, slowly.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Light band work on the neck itself; pain-free range only"
+  },
+  "alternatives": [
+   {
+    "id": "plate-neck-flexion",
+    "why": "Plate on the forehead, lying face up"
+   },
+   {
+    "id": "plate-neck-extension",
+    "why": "Plate on the back of the head, lying face down"
+   },
+   {
+    "id": "neck-harness-extension",
+    "why": "Harness and plates, easy to load up"
+   },
+   {
+    "id": "ball-neck-isometric",
+    "why": "Hold against a ball, no movement"
+   },
+   {
+    "id": "supine-head-hold",
+    "why": "Hold the head level, bodyweight only"
+   }
+  ]
+ },
+ {
+  "id": "ball-neck-isometric",
+  "name": "Ball Neck Isometric Hold",
+  "aliases": [
+   "Swiss Ball Neck Hold",
+   "Wall Ball Neck Press"
+  ],
+  "planIds": [],
+  "bodyPart": "neck",
+  "primaryMuscles": [
+   "neck-flexors",
+   "neck-extensors"
+  ],
+  "secondaryMuscles": [
+   "upper-traps"
+  ],
+  "pattern": "neck-work",
+  "equipment": [
+   "stability-ball",
+   "wall"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Ball between head and wall. Press gently and hold the head still; face, back and each side.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Gentle hold on the neck itself; press only pain-free"
+  },
+  "alternatives": [
+   {
+    "id": "plate-neck-flexion",
+    "why": "Plate on the forehead, lying face up"
+   },
+   {
+    "id": "plate-neck-extension",
+    "why": "Plate on the back of the head, lying face down"
+   },
+   {
+    "id": "neck-harness-extension",
+    "why": "Harness and plates, easy to load up"
+   },
+   {
+    "id": "band-neck-lateral-flexion",
+    "why": "Band, side to side, light and simple"
+   },
+   {
+    "id": "supine-head-hold",
+    "why": "Hold the head level, bodyweight only"
+   }
+  ]
+ },
+ {
+  "id": "supine-head-hold",
+  "name": "Supine Head Hold",
+  "aliases": [
+   "Lying Neck Flexion Hold",
+   "Head Lift Hold"
+  ],
+  "planIds": [],
+  "bodyPart": "neck",
+  "primaryMuscles": [
+   "neck-flexors"
+  ],
+  "secondaryMuscles": [
+   "deep-core"
+  ],
+  "pattern": "neck-work",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Lie face up, head off the bench end. Tuck the chin and hold the head level with the body.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Bodyweight hold on the neck itself; stop if it hurts"
+  },
+  "alternatives": [
+   {
+    "id": "plate-neck-flexion",
+    "why": "Plate on the forehead, lying face up"
+   },
+   {
+    "id": "plate-neck-extension",
+    "why": "Plate on the back of the head, lying face down"
+   },
+   {
+    "id": "neck-harness-extension",
+    "why": "Harness and plates, easy to load up"
+   },
+   {
+    "id": "band-neck-lateral-flexion",
+    "why": "Band, side to side, light and simple"
+   },
+   {
+    "id": "ball-neck-isometric",
+    "why": "Hold against a ball, no movement"
+   }
+  ]
+ }
+]

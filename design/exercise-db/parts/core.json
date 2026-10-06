@@ -1,0 +1,2771 @@
+[
+ {
+  "id": "hanging-leg-raise",
+  "name": "Hanging Leg Raise",
+  "aliases": [
+   "Straight-Leg Hanging Raise"
+  ],
+  "planIds": [
+   "hanging-leg-raise"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "lower-abs",
+   "hip-flexors"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "obliques",
+   "grip"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Hang still, no swinging. Raise the legs and curl the pelvis up toward the ribs.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Hanging from the bar loads the shoulders overhead",
+   "hip": "Hip flexors lift straight legs through full range"
+  },
+  "alternatives": [
+   {
+    "id": "captains-chair-leg-raise",
+    "why": "Same raise, back on a pad, arms off the bar"
+   },
+   {
+    "id": "hanging-knee-raise",
+    "why": "Bent knees, shorter lever, easier on hips"
+   },
+   {
+    "id": "captains-chair-knee-raise",
+    "why": "Forearm pads, nothing hanging off the shoulders"
+   },
+   {
+    "id": "reverse-crunch",
+    "why": "Pelvis curl on the floor, light on the hips"
+   },
+   {
+    "id": "toes-to-bar",
+    "why": "Harder: legs all the way to the bar"
+   },
+   {
+    "id": "lying-leg-raise",
+    "why": "Floor version when the bar is taken"
+   },
+   {
+    "id": "l-sit",
+    "why": "Hip flexors and abs held, on dip bars"
+   }
+  ]
+ },
+ {
+  "id": "hanging-knee-raise",
+  "name": "Hanging Knee Raise",
+  "aliases": [
+   "Hanging Knee Tuck"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "lower-abs",
+   "hip-flexors"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "grip"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Hang still. Bring knees up past the hips and tilt the pelvis up. Lower slowly.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Hanging from the bar loads the shoulders overhead"
+  },
+  "alternatives": [
+   {
+    "id": "captains-chair-knee-raise",
+    "why": "Same move on forearm pads, shoulders spared"
+   },
+   {
+    "id": "hanging-leg-raise",
+    "why": "Harder: straight legs"
+   },
+   {
+    "id": "hanging-knee-to-elbow-twist",
+    "why": "Adds a twist for the obliques"
+   },
+   {
+    "id": "reverse-crunch",
+    "why": "Floor pelvis curl, no hanging at all"
+   },
+   {
+    "id": "toes-to-bar",
+    "why": "Much harder: toes to the bar"
+   }
+  ]
+ },
+ {
+  "id": "captains-chair-knee-raise",
+  "name": "Captain's Chair Knee Raise",
+  "aliases": [
+   "Vertical Knee Raise",
+   "Roman Chair Knee Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "lower-abs",
+   "hip-flexors"
+  ],
+  "secondaryMuscles": [
+   "abs"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "captains-chair"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Back flat on the pad, forearms down. Lift knees to chest and curl the pelvis.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "hanging-knee-raise",
+    "why": "Same move hanging, adds grip work"
+   },
+   {
+    "id": "captains-chair-leg-raise",
+    "why": "Harder: straight legs on the same chair"
+   },
+   {
+    "id": "reverse-crunch",
+    "why": "Floor pelvis curl when the chair is taken"
+   },
+   {
+    "id": "hanging-leg-raise",
+    "why": "Harder hanging version"
+   },
+   {
+    "id": "l-sit",
+    "why": "Hold the legs up on dip bars"
+   }
+  ]
+ },
+ {
+  "id": "captains-chair-leg-raise",
+  "name": "Captain's Chair Leg Raise",
+  "aliases": [
+   "Vertical Leg Raise",
+   "Roman Chair Leg Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "lower-abs",
+   "hip-flexors"
+  ],
+  "secondaryMuscles": [
+   "abs"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "captains-chair"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Back flat on the pad. Raise straight legs to hip height, curl the pelvis, lower slowly.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "hip": "Hip flexors lift straight legs through full range"
+  },
+  "alternatives": [
+   {
+    "id": "hanging-leg-raise",
+    "why": "Same raise hanging from a bar"
+   },
+   {
+    "id": "captains-chair-knee-raise",
+    "why": "Bent knees, easier on the hip flexors"
+   },
+   {
+    "id": "lying-leg-raise",
+    "why": "Floor version when the chair is taken"
+   },
+   {
+    "id": "reverse-crunch",
+    "why": "Pelvis curl on the floor, light on the hips"
+   },
+   {
+    "id": "toes-to-bar",
+    "why": "Much harder: toes to the bar"
+   }
+  ]
+ },
+ {
+  "id": "toes-to-bar",
+  "name": "Toes-to-Bar",
+  "aliases": [
+   "Strict Toes-to-Bar",
+   "T2B"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "lower-abs",
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "hip-flexors",
+   "lats",
+   "grip"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "advanced",
+  "cue": "Hang, press the bar down with straight arms and lift the toes to touch it. No kip.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Hanging and pressing the bar down at full stretch",
+   "lowerBack": "Full lumbar flexion at the top, swing is common",
+   "hip": "Hip flexors lift straight legs through full range"
+  },
+  "alternatives": [
+   {
+    "id": "hanging-leg-raise",
+    "why": "Same pattern, stop at hip height"
+   },
+   {
+    "id": "captains-chair-leg-raise",
+    "why": "Back on a pad, low back is supported"
+   },
+   {
+    "id": "v-up",
+    "why": "Floor version of the full fold"
+   },
+   {
+    "id": "hanging-knee-raise",
+    "why": "Bent knees, much gentler on back and hips"
+   }
+  ]
+ },
+ {
+  "id": "hanging-knee-to-elbow-twist",
+  "name": "Hanging Knee-to-Elbow Twist",
+  "aliases": [
+   "Hanging Oblique Knee Raise"
+  ],
+  "planIds": [
+   "hanging-knee-to-elbow-twist"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "lower-abs"
+  ],
+  "secondaryMuscles": [
+   "hip-flexors",
+   "grip"
+  ],
+  "pattern": "core-rotation",
+  "equipment": [
+   "pull-up-bar"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Hang still. Bring the knees up and across toward the opposite elbow. Alternate.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Hanging from the bar loads the shoulders overhead",
+   "lowerBack": "Flexing and twisting the spine together",
+   "hip": "Hip flexors lift the legs with a twist"
+  },
+  "alternatives": [
+   {
+    "id": "hanging-knee-raise",
+    "why": "Straight up, no twist, easier on the low back"
+   },
+   {
+    "id": "bicycle-crunch",
+    "why": "Same elbow-to-knee idea on the floor"
+   },
+   {
+    "id": "cable-woodchop",
+    "why": "Oblique work standing on a cable"
+   }
+  ]
+ },
+ {
+  "id": "lying-leg-raise",
+  "name": "Lying Leg Raise",
+  "aliases": [
+   "Floor Leg Raise",
+   "Bench Leg Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "lower-abs",
+   "hip-flexors"
+  ],
+  "secondaryMuscles": [
+   "abs"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Hands under the hips. Lower straight legs only as far as the low back stays flat.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Long-lever legs pull the low back into an arch",
+   "hip": "Hip flexors lower and lift straight legs"
+  },
+  "alternatives": [
+   {
+    "id": "reverse-crunch",
+    "why": "Bent knees, short lever, low back stays down"
+   },
+   {
+    "id": "captains-chair-leg-raise",
+    "why": "Same raise with the back on a pad"
+   },
+   {
+    "id": "hanging-leg-raise",
+    "why": "Hanging version on a bar"
+   }
+  ]
+ },
+ {
+  "id": "reverse-crunch",
+  "name": "Reverse Crunch",
+  "aliases": [
+   "Lying Knee Tuck"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "lower-abs"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "hip-flexors"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Knees bent at 90°. Curl the hips off the floor toward the ribs, lower slowly. No swing.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "captains-chair-knee-raise",
+    "why": "Same pelvis curl on the chair"
+   },
+   {
+    "id": "lying-leg-raise",
+    "why": "Straight legs, harder on the low back"
+   },
+   {
+    "id": "hanging-knee-raise",
+    "why": "Hanging version, adds grip work"
+   },
+   {
+    "id": "hanging-leg-raise",
+    "why": "Harder hanging version"
+   },
+   {
+    "id": "captains-chair-leg-raise",
+    "why": "Straight legs on the chair"
+   },
+   {
+    "id": "v-up",
+    "why": "Harder: both ends fold together"
+   },
+   {
+    "id": "dragon-flag",
+    "why": "Far harder long-lever lower abs"
+   },
+   {
+    "id": "mountain-climber",
+    "why": "Knees to chest from a plank"
+   }
+  ]
+ },
+ {
+  "id": "crunch",
+  "name": "Crunch",
+  "aliases": [
+   "Floor Crunch",
+   "Ab Crunch"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "obliques"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Knees bent, hands at the temples. Curl ribs toward hips. Never pull on the head.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "cable-crunch",
+    "why": "Same curl with a weight stack"
+   },
+   {
+    "id": "toe-touches",
+    "why": "Legs up, reach for the toes"
+   },
+   {
+    "id": "decline-crunch",
+    "why": "Harder: on a decline bench"
+   },
+   {
+    "id": "ab-crunch-machine",
+    "why": "Machine crunch with a stack"
+   },
+   {
+    "id": "decline-sit-up",
+    "why": "Full sit-up, much harder on the back"
+   }
+  ]
+ },
+ {
+  "id": "cable-crunch",
+  "name": "Cable Crunch",
+  "aliases": [
+   "Kneeling Cable Crunch",
+   "Rope Crunch"
+  ],
+  "planIds": [
+   "cable-crunch"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "obliques"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "cable-machine",
+   "mat"
+  ],
+  "attachment": "rope",
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Kneel facing a high cable, rope by the ears. Crunch down, rounding the upper spine. Hips still.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Loaded spinal flexion, the classic disc stress"
+  },
+  "alternatives": [
+   {
+    "id": "ab-crunch-machine",
+    "why": "Same loaded crunch on a machine"
+   },
+   {
+    "id": "decline-crunch",
+    "why": "Bodyweight crunch on a bench, lighter on back"
+   },
+   {
+    "id": "crunch",
+    "why": "Floor crunch, far less load on the low back"
+   },
+   {
+    "id": "toe-touches",
+    "why": "Short curl, low back stays on the floor"
+   }
+  ]
+ },
+ {
+  "id": "ab-crunch-machine",
+  "name": "Ab Crunch Machine",
+  "aliases": [
+   "Machine Crunch",
+   "Seated Ab Crunch"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "obliques"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "ab-crunch-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Seat so the pivot is at the waist. Curl ribs toward hips, pause, return slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Loaded spinal flexion, the classic disc stress"
+  },
+  "alternatives": [
+   {
+    "id": "cable-crunch",
+    "why": "Same loaded crunch on a cable"
+   },
+   {
+    "id": "decline-crunch",
+    "why": "Bodyweight crunch on a bench, lighter on back"
+   },
+   {
+    "id": "crunch",
+    "why": "Floor crunch, far less load on the low back"
+   }
+  ]
+ },
+ {
+  "id": "decline-crunch",
+  "name": "Decline Crunch",
+  "aliases": [
+   "Decline Bench Crunch"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "obliques",
+   "hip-flexors"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "decline-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Feet hooked, slight decline. Curl up only until the low back lifts, lower slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Flexion against gravity, the low back takes more load"
+  },
+  "alternatives": [
+   {
+    "id": "crunch",
+    "why": "Flat floor crunch, easier on the low back"
+   },
+   {
+    "id": "cable-crunch",
+    "why": "Loaded crunch on a cable"
+   },
+   {
+    "id": "decline-sit-up",
+    "why": "Full range sit-up, harder"
+   },
+   {
+    "id": "ab-crunch-machine",
+    "why": "Machine crunch with a stack"
+   }
+  ]
+ },
+ {
+  "id": "decline-sit-up",
+  "name": "Decline Sit-Up",
+  "aliases": [
+   "Weighted Sit-Up",
+   "Decline Bench Sit-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "hip-flexors"
+  ],
+  "secondaryMuscles": [
+   "obliques"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "decline-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Feet hooked on a decline bench. Sit all the way up, lower under control. Hold a plate to load it.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Full sit-up, hip flexors pull on a flexing spine",
+   "hip": "Hip flexors do much of the lifting"
+  },
+  "alternatives": [
+   {
+    "id": "decline-crunch",
+    "why": "Shorter range, less low-back flexion"
+   },
+   {
+    "id": "crunch",
+    "why": "Floor crunch, far less load on the low back"
+   },
+   {
+    "id": "v-up",
+    "why": "Bodyweight full fold on the floor"
+   }
+  ]
+ },
+ {
+  "id": "bicycle-crunch",
+  "name": "Bicycle Crunch",
+  "aliases": [
+   "Bicycle",
+   "Elbow-to-Knee Crunch"
+  ],
+  "planIds": [
+   "bicycle-crunch"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "hip-flexors"
+  ],
+  "pattern": "core-rotation",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Slow and controlled. Opposite elbow to knee, other leg long. Fingertips light on the head.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 0,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Hands behind the head tempt you to pull on it",
+   "lowerBack": "Repeated flexion with twisting"
+  },
+  "alternatives": [
+   {
+    "id": "hanging-knee-to-elbow-twist",
+    "why": "Same elbow-to-knee idea, hanging"
+   },
+   {
+    "id": "russian-twist",
+    "why": "Seated twist, can be loaded"
+   },
+   {
+    "id": "pallof-press",
+    "why": "Obliques without twisting the spine"
+   }
+  ]
+ },
+ {
+  "id": "toe-touches",
+  "name": "Toe Touches",
+  "aliases": [
+   "Toe Reach",
+   "Lying Toe Touch"
+  ],
+  "planIds": [
+   "toe-touches"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "obliques"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Lie back, legs straight up. Reach for the toes, curling the shoulders off the floor.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "crunch",
+    "why": "Same upper-ab curl, feet down"
+   },
+   {
+    "id": "cable-crunch",
+    "why": "Loaded upper-ab crunch on a cable"
+   },
+   {
+    "id": "v-up",
+    "why": "Harder: both ends fold together"
+   }
+  ]
+ },
+ {
+  "id": "v-up",
+  "name": "V-Up",
+  "aliases": [
+   "Jackknife",
+   "Jackknife Sit-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "lower-abs"
+  ],
+  "secondaryMuscles": [
+   "hip-flexors"
+  ],
+  "pattern": "core-flexion",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Lie long. Lift straight legs and arms together, touch hands to shins, lower slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 3,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Long-lever flexion, hip flexors yank the low back",
+   "hip": "Hip flexors lift straight legs fast"
+  },
+  "alternatives": [
+   {
+    "id": "toe-touches",
+    "why": "Legs stay up, only the top half curls"
+   },
+   {
+    "id": "toes-to-bar",
+    "why": "Same full fold, hanging"
+   },
+   {
+    "id": "decline-sit-up",
+    "why": "Loaded full sit-up on a bench"
+   },
+   {
+    "id": "reverse-crunch",
+    "why": "Short lever, gentle on the low back"
+   }
+  ]
+ },
+ {
+  "id": "plank",
+  "name": "Plank",
+  "aliases": [
+   "Weighted Plank",
+   "Forearm Plank",
+   "Front Plank"
+  ],
+  "planIds": [
+   "weighted-plank"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "front-delts"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "added",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Forearms down, plate on the upper back. Glutes squeezed, ribs down, no sag.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Loaded hold, a sag puts the low back in extension"
+  },
+  "alternatives": [
+   {
+    "id": "stir-the-pot",
+    "why": "Harder plank on a ball"
+   },
+   {
+    "id": "dead-bug",
+    "why": "Same bracing lying down, no load on the back"
+   },
+   {
+    "id": "ab-wheel-rollout",
+    "why": "Harder: rolling anti-extension"
+   },
+   {
+    "id": "bird-dog-plank",
+    "why": "Plank with arm and leg lifts"
+   },
+   {
+    "id": "hollow-body-hold",
+    "why": "Anti-extension hold on your back"
+   },
+   {
+    "id": "kneeling-side-plank",
+    "why": "Short side hold, light on the low back"
+   },
+   {
+    "id": "barbell-rollout",
+    "why": "Much harder rolling anti-extension"
+   },
+   {
+    "id": "body-saw",
+    "why": "Much harder: rock back in straps"
+   }
+  ]
+ },
+ {
+  "id": "ab-wheel-rollout",
+  "name": "Ab Wheel Rollout",
+  "aliases": [
+   "Kneeling Ab Wheel Rollout",
+   "Ab Roller"
+  ],
+  "planIds": [
+   "ab-wheel-rollout-knees"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "lats",
+   "front-delts",
+   "obliques"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "ab-wheel",
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "From the knees, only if the back has felt solid for 6+ weeks. Brace hard, stop before it arches.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms reach overhead under load at full extension",
+   "lowerBack": "Long-lever anti-extension, the back arches if it fails"
+  },
+  "alternatives": [
+   {
+    "id": "stability-ball-rollout",
+    "why": "Shorter lever on a ball, gentler on the back"
+   },
+   {
+    "id": "barbell-rollout",
+    "why": "Same rollout with a loaded barbell"
+   },
+   {
+    "id": "body-saw",
+    "why": "Rolling anti-extension in straps"
+   },
+   {
+    "id": "plank",
+    "why": "Static hold, much less low-back load"
+   },
+   {
+    "id": "dead-bug",
+    "why": "Neutral spine, lightest on the low back"
+   },
+   {
+    "id": "dragon-flag",
+    "why": "Harder long-lever anti-extension"
+   }
+  ]
+ },
+ {
+  "id": "barbell-rollout",
+  "name": "Barbell Rollout",
+  "aliases": [
+   "Barbell Ab Rollout"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "lats",
+   "front-delts"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "barbell",
+   "weight-plate",
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Kneel behind a barbell with round plates. Brace, roll out only as far as the back stays flat.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms reach overhead under load at full extension",
+   "lowerBack": "Long-lever anti-extension, the back arches if it fails"
+  },
+  "alternatives": [
+   {
+    "id": "ab-wheel-rollout",
+    "why": "Same rollout on an ab wheel"
+   },
+   {
+    "id": "stability-ball-rollout",
+    "why": "Shorter lever on a ball, gentler on the back"
+   },
+   {
+    "id": "plank",
+    "why": "Static hold, much less low-back load"
+   }
+  ]
+ },
+ {
+  "id": "stability-ball-rollout",
+  "name": "Stability Ball Rollout",
+  "aliases": [
+   "Swiss Ball Rollout",
+   "Ball Rollout"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "front-delts"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "stability-ball",
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Kneel, forearms on the ball. Roll forward with ribs down, return before the back sags.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Anti-extension under body weight, keep the range short"
+  },
+  "alternatives": [
+   {
+    "id": "ab-wheel-rollout",
+    "why": "Harder rollout on a wheel"
+   },
+   {
+    "id": "stir-the-pot",
+    "why": "Same ball, small circles instead"
+   },
+   {
+    "id": "barbell-rollout",
+    "why": "Harder rollout on a barbell"
+   },
+   {
+    "id": "dead-bug",
+    "why": "Neutral spine, lightest on the low back"
+   }
+  ]
+ },
+ {
+  "id": "body-saw",
+  "name": "Body Saw",
+  "aliases": [
+   "TRX Body Saw",
+   "Suspended Body Saw"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "serratus"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "suspension-trainer",
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "advanced",
+  "cue": "Forearm plank, feet in the straps. Rock back past the elbows and return, no sag.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 3,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Shoulders flex overhead as you saw back",
+   "lowerBack": "Long lever as the body slides past the elbows"
+  },
+  "alternatives": [
+   {
+    "id": "ab-wheel-rollout",
+    "why": "Rolling anti-extension on a wheel"
+   },
+   {
+    "id": "stir-the-pot",
+    "why": "Moving plank on a ball, gentler"
+   },
+   {
+    "id": "plank",
+    "why": "Static hold, much less low-back load"
+   },
+   {
+    "id": "dead-bug",
+    "why": "Neutral spine, lightest on the low back"
+   }
+  ]
+ },
+ {
+  "id": "stir-the-pot",
+  "name": "Stir the Pot",
+  "aliases": [
+   "Stability Ball Stir the Pot"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "obliques",
+   "front-delts"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "stability-ball"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Forearm plank on a ball. Small circles with the elbows, hips still. Count per direction.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Plank load with small moving circles"
+  },
+  "alternatives": [
+   {
+    "id": "plank",
+    "why": "Static plank on the floor"
+   },
+   {
+    "id": "stability-ball-rollout",
+    "why": "Same ball, roll in and out"
+   },
+   {
+    "id": "body-saw",
+    "why": "Harder: rock in straps"
+   },
+   {
+    "id": "dead-bug",
+    "why": "Neutral spine, lightest on the low back"
+   }
+  ]
+ },
+ {
+  "id": "hollow-body-hold",
+  "name": "Hollow Body Hold",
+  "aliases": [
+   "Hollow Hold",
+   "Dish Hold"
+  ],
+  "planIds": [
+   "hollow-body-hold"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "hip-flexors",
+   "lower-abs"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Low back flat on the floor, arms overhead, legs low. Bend the knees if the back lifts.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Long-lever hold, the low back arches if it fails"
+  },
+  "alternatives": [
+   {
+    "id": "dead-bug",
+    "why": "Same back-flat position, one limb at a time"
+   },
+   {
+    "id": "plank",
+    "why": "Anti-extension hold face down"
+   },
+   {
+    "id": "l-sit",
+    "why": "Harder hold on bars"
+   },
+   {
+    "id": "dragon-flag",
+    "why": "Much harder long-lever hold on a bench"
+   }
+  ]
+ },
+ {
+  "id": "dragon-flag",
+  "name": "Dragon Flag",
+  "aliases": [
+   "Dragon Flag Negative"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "lower-abs",
+   "lats",
+   "obliques"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "advanced",
+  "cue": "Lie on a bench gripping behind the head. Body rigid on the shoulders, lower slowly as one piece.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Gripping behind the head holds the body up",
+   "lowerBack": "Long-lever anti-extension with full body weight"
+  },
+  "alternatives": [
+   {
+    "id": "hollow-body-hold",
+    "why": "Same rigid body, lying on the floor"
+   },
+   {
+    "id": "ab-wheel-rollout",
+    "why": "Rolling anti-extension, from the knees"
+   },
+   {
+    "id": "reverse-crunch",
+    "why": "Short lever, gentle on the low back"
+   }
+  ]
+ },
+ {
+  "id": "l-sit",
+  "name": "L-Sit",
+  "aliases": [
+   "L-Sit Hold",
+   "Tuck L-Sit"
+  ],
+  "planIds": [
+   "l-sit-progression"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "hip-flexors",
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "lower-abs",
+   "lower-traps"
+  ],
+  "pattern": "hip-flexion",
+  "equipment": [
+   "dip-bars"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Tucked, then one leg, then full. Shoulders pushed down, legs level. Build to 30 sec.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 2,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Body weight pressed down through the shoulders",
+   "hip": "Hip flexors hold the legs up, the main load"
+  },
+  "alternatives": [
+   {
+    "id": "hanging-leg-raise",
+    "why": "Hip flexors and lower abs, hanging"
+   },
+   {
+    "id": "captains-chair-knee-raise",
+    "why": "Same shape on pads, easier on hips"
+   },
+   {
+    "id": "hollow-body-hold",
+    "why": "Lying hold, no weight on the shoulders"
+   }
+  ]
+ },
+ {
+  "id": "bird-dog-plank",
+  "name": "Bird-Dog Plank",
+  "aliases": [
+   "Bird-Dog Plank Hybrid",
+   "Plank Opposite Arm-Leg Lift"
+  ],
+  "planIds": [
+   "bird-dog-plank-hybrid"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "deep-core",
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "obliques",
+   "front-delts"
+  ],
+  "pattern": "core-anti-rotation",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "From a high plank, slowly lift the opposite arm and leg. Hips level, no twist.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "One arm holds the upper body during each lift",
+   "wrist": "Weight on flat hands",
+   "lowerBack": "Plank load while resisting a twist"
+  },
+  "alternatives": [
+   {
+    "id": "bird-dog",
+    "why": "Same lift from all fours, lightest on the back"
+   },
+   {
+    "id": "plank-shoulder-tap",
+    "why": "Plank with one hand lifting"
+   },
+   {
+    "id": "plank",
+    "why": "Static hold on both forearms"
+   },
+   {
+    "id": "superman-hold",
+    "why": "Back-chain work lying face down"
+   }
+  ]
+ },
+ {
+  "id": "plank-shoulder-tap",
+  "name": "Plank Shoulder Tap",
+  "aliases": [
+   "High Plank Shoulder Tap"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "deep-core",
+   "obliques"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "front-delts"
+  ],
+  "pattern": "core-anti-rotation",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "High plank, feet wide. Tap the opposite shoulder without the hips rocking.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "One arm holds the body during each tap",
+   "wrist": "Weight on flat hands",
+   "lowerBack": "Plank load while resisting a twist"
+  },
+  "alternatives": [
+   {
+    "id": "bird-dog-plank",
+    "why": "Harder: arm and leg lift together"
+   },
+   {
+    "id": "bird-dog",
+    "why": "From all fours, lightest on the back"
+   },
+   {
+    "id": "mountain-climber",
+    "why": "Moving plank, faster"
+   }
+  ]
+ },
+ {
+  "id": "mountain-climber",
+  "name": "Mountain Climber",
+  "aliases": [
+   "Mountain Climbers"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "abs",
+   "hip-flexors"
+  ],
+  "secondaryMuscles": [
+   "deep-core",
+   "front-delts",
+   "quads"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "High plank, hips level. Drive one knee to the chest at a time, controlled, back flat.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 2,
+   "hip": 2,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "wrist": "Weight on flat hands",
+   "lowerBack": "Fast knee drives can sag or round the back",
+   "hip": "Fast repeated hip flexion"
+  },
+  "alternatives": [
+   {
+    "id": "plank-shoulder-tap",
+    "why": "Moving plank, hips still"
+   },
+   {
+    "id": "dead-bug",
+    "why": "Same knee drive lying down, back supported"
+   },
+   {
+    "id": "reverse-crunch",
+    "why": "Knees to chest on the floor"
+   }
+  ]
+ },
+ {
+  "id": "side-plank",
+  "name": "Side Plank",
+  "aliases": [
+   "Forearm Side Plank"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "glute-med"
+  ],
+  "pattern": "core-lateral",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Forearm under the shoulder, body in one straight line. Hips high, no rolling forward.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "One shoulder carries the body"
+  },
+  "alternatives": [
+   {
+    "id": "side-plank-with-reach",
+    "why": "Adds a reach through for rotation"
+   },
+   {
+    "id": "kneeling-side-plank",
+    "why": "From the knees, lighter on the shoulder"
+   },
+   {
+    "id": "suitcase-carry",
+    "why": "Same side bracing, standing with a weight"
+   },
+   {
+    "id": "db-side-bend",
+    "why": "Moving side work with a dumbbell"
+   }
+  ]
+ },
+ {
+  "id": "side-plank-with-reach",
+  "name": "Side Plank with Reach",
+  "aliases": [
+   "Side Plank Thread the Needle",
+   "Side Plank Reach-Through"
+  ],
+  "planIds": [
+   "side-plank-with-reach"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "glute-med",
+   "upper-back"
+  ],
+  "pattern": "core-lateral",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Side plank on the forearm. Reach the top arm under and through, then back to the ceiling.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "One shoulder carries the body",
+   "lowerBack": "Side-plank load with a twist through the reach"
+  },
+  "alternatives": [
+   {
+    "id": "side-plank",
+    "why": "Static hold, no twist"
+   },
+   {
+    "id": "kneeling-side-plank",
+    "why": "From the knees, lighter on back and shoulder"
+   },
+   {
+    "id": "suitcase-carry",
+    "why": "Side bracing on your feet"
+   }
+  ]
+ },
+ {
+  "id": "kneeling-side-plank",
+  "name": "Kneeling Side Plank",
+  "aliases": [
+   "Short Side Plank",
+   "Modified Side Plank"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "glute-med"
+  ],
+  "pattern": "core-lateral",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Knees bent and stacked, forearm under the shoulder. Lift the hips in line and hold.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "side-plank",
+    "why": "Harder: from the feet"
+   },
+   {
+    "id": "side-plank-with-reach",
+    "why": "Harder, with a reach through"
+   },
+   {
+    "id": "suitcase-carry",
+    "why": "Side bracing standing with a weight"
+   },
+   {
+    "id": "db-side-bend",
+    "why": "Moving side work with a dumbbell"
+   },
+   {
+    "id": "plank",
+    "why": "Front hold on both forearms"
+   }
+  ]
+ },
+ {
+  "id": "db-side-bend",
+  "name": "DB Side Bend",
+  "aliases": [
+   "Dumbbell Side Bend",
+   "Standing Side Bend"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques"
+  ],
+  "secondaryMuscles": [
+   "deep-core",
+   "grip"
+  ],
+  "pattern": "core-lateral",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "One DB at the side, other hand on the hip. Bend sideways slowly, no twist, stand tall.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Bending the spine sideways under load"
+  },
+  "alternatives": [
+   {
+    "id": "suitcase-carry",
+    "why": "Same one-sided DB, spine stays still"
+   },
+   {
+    "id": "side-plank",
+    "why": "Side work on the floor, no weight"
+   },
+   {
+    "id": "kneeling-side-plank",
+    "why": "Lightest side work on the low back"
+   },
+   {
+    "id": "cable-woodchop",
+    "why": "Loaded oblique work on a cable"
+   }
+  ]
+ },
+ {
+  "id": "pallof-press",
+  "name": "Pallof Press",
+  "aliases": [
+   "Cable Pallof Press",
+   "Anti-Rotation Press"
+  ],
+  "planIds": [
+   "pallof-press"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "glutes"
+  ],
+  "pattern": "core-anti-rotation",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Cable at chest height, stand side-on. Press straight out and back, resist the twist.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "half-kneeling-pallof-press",
+    "why": "Kneeling, the hips cannot help"
+   },
+   {
+    "id": "band-pallof-press",
+    "why": "Same press with a band"
+   },
+   {
+    "id": "bird-dog",
+    "why": "Anti-rotation from all fours"
+   },
+   {
+    "id": "cable-woodchop",
+    "why": "Loaded rotation instead of resisting it"
+   },
+   {
+    "id": "suitcase-carry",
+    "why": "Anti-side-bend while walking"
+   },
+   {
+    "id": "bicycle-crunch",
+    "why": "Twisting crunch on the floor"
+   },
+   {
+    "id": "russian-twist",
+    "why": "Loaded seated twist, hard on the back"
+   },
+   {
+    "id": "landmine-rotation",
+    "why": "Loaded rotation, hard on the back"
+   }
+  ]
+ },
+ {
+  "id": "band-pallof-press",
+  "name": "Band Pallof Press",
+  "aliases": [
+   "Banded Anti-Rotation Press"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "abs"
+  ],
+  "pattern": "core-anti-rotation",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Band anchored at chest height, stand side-on. Press out, hold a second, resist the twist.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "pallof-press",
+    "why": "Same press on a cable, easy to load"
+   },
+   {
+    "id": "half-kneeling-pallof-press",
+    "why": "Kneeling version on a cable"
+   },
+   {
+    "id": "bird-dog",
+    "why": "Anti-rotation on the floor"
+   }
+  ]
+ },
+ {
+  "id": "half-kneeling-pallof-press",
+  "name": "Half-Kneeling Pallof Press",
+  "aliases": [
+   "Kneeling Pallof Press"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "abs"
+  ],
+  "pattern": "core-anti-rotation",
+  "equipment": [
+   "cable-machine",
+   "mat"
+  ],
+  "attachment": "d-handle",
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Inside knee down, cable at chest height. Squeeze the down-side glute, press out, no twist.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "pallof-press",
+    "why": "Standing version, same cable"
+   },
+   {
+    "id": "band-pallof-press",
+    "why": "Band version when the cable is taken"
+   },
+   {
+    "id": "bird-dog",
+    "why": "Anti-rotation from all fours"
+   }
+  ]
+ },
+ {
+  "id": "dead-bug",
+  "name": "Dead Bug",
+  "aliases": [
+   "Dead Bugs"
+  ],
+  "planIds": [
+   "dead-bug"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "deep-core",
+   "abs"
+  ],
+  "secondaryMuscles": [
+   "lower-abs",
+   "hip-flexors"
+  ],
+  "pattern": "core-anti-extension",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Lower back pressed to the floor. Slowly reach the opposite arm and leg out, then switch.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "bird-dog",
+    "why": "Same opposite arm and leg, from all fours"
+   },
+   {
+    "id": "hollow-body-hold",
+    "why": "Harder: both legs out and held"
+   },
+   {
+    "id": "plank",
+    "why": "Anti-extension hold face down"
+   },
+   {
+    "id": "ab-wheel-rollout",
+    "why": "Same anti-extension, no load on the back"
+   },
+   {
+    "id": "stability-ball-rollout",
+    "why": "Harder: rollout on a ball"
+   },
+   {
+    "id": "stir-the-pot",
+    "why": "Harder: moving plank on a ball"
+   },
+   {
+    "id": "body-saw",
+    "why": "Much harder long-lever plank"
+   },
+   {
+    "id": "mountain-climber",
+    "why": "Knee drives from a plank, faster"
+   }
+  ]
+ },
+ {
+  "id": "bird-dog",
+  "name": "Bird-Dog",
+  "aliases": [
+   "Quadruped Opposite Arm-Leg Raise"
+  ],
+  "planIds": [
+   "bird-dog"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "deep-core",
+   "spinal-erectors"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "obliques"
+  ],
+  "pattern": "core-anti-rotation",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": true,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "On all fours, spine neutral. Reach the opposite arm and leg long, pause 2 sec, no hip tilt.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "dead-bug",
+    "why": "Same pattern lying on the back"
+   },
+   {
+    "id": "bird-dog-plank",
+    "why": "Harder: from a plank"
+   },
+   {
+    "id": "superman-hold",
+    "why": "Back extensors face down"
+   },
+   {
+    "id": "pallof-press",
+    "why": "Anti-rotation standing on a cable"
+   },
+   {
+    "id": "band-pallof-press",
+    "why": "Anti-rotation with a band"
+   },
+   {
+    "id": "half-kneeling-pallof-press",
+    "why": "Anti-rotation kneeling on a cable"
+   },
+   {
+    "id": "plank-shoulder-tap",
+    "why": "Harder anti-rotation in a plank"
+   },
+   {
+    "id": "back-extension",
+    "why": "Back extensors on a bench, can be loaded"
+   }
+  ]
+ },
+ {
+  "id": "superman-hold",
+  "name": "Superman Hold",
+  "aliases": [
+   "Superman",
+   "Prone Superman"
+  ],
+  "planIds": [
+   "superman-hold"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "spinal-erectors"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "upper-back"
+  ],
+  "pattern": "core-extension",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Face down. Lift arms and legs a few cm, hold 3 sec, lower. Look at the floor.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Active back arch compresses the low-back joints"
+  },
+  "alternatives": [
+   {
+    "id": "bird-dog",
+    "why": "One arm and leg at a time, spine neutral"
+   },
+   {
+    "id": "bird-dog-plank",
+    "why": "Back chain from a plank"
+   },
+   {
+    "id": "back-extension",
+    "why": "Same extension on a bench, to neutral"
+   },
+   {
+    "id": "stability-ball-back-extension",
+    "why": "Same extension over a ball"
+   },
+   {
+    "id": "glute-bridge",
+    "why": "Back-chain work at the hips, spine neutral"
+   }
+  ]
+ },
+ {
+  "id": "russian-twist",
+  "name": "Russian Twist",
+  "aliases": [
+   "Weighted Russian Twist",
+   "Seated Twist"
+  ],
+  "planIds": [
+   "russian-twist-weighted"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "hip-flexors"
+  ],
+  "pattern": "core-rotation",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Lean back 45°, feet up, plate at the chest. Rotate slowly side to side.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Twisting a weight while seated and flexed"
+  },
+  "alternatives": [
+   {
+    "id": "cable-woodchop",
+    "why": "Loaded rotation standing, hips can turn"
+   },
+   {
+    "id": "bicycle-crunch",
+    "why": "Bodyweight twist on the floor"
+   },
+   {
+    "id": "landmine-rotation",
+    "why": "Loaded rotation with a landmine"
+   },
+   {
+    "id": "pallof-press",
+    "why": "Obliques, no twist, kind to the low back"
+   }
+  ]
+ },
+ {
+  "id": "cable-woodchop",
+  "name": "Cable Woodchop",
+  "aliases": [
+   "High-to-Low Woodchop",
+   "Cable Chop",
+   "Low-to-High Chop"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "deep-core",
+   "front-delts"
+  ],
+  "pattern": "core-rotation",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Cable high to one side. Pull across and down to the far hip, turning through hips and chest.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Rotation under load, turn the hips with it"
+  },
+  "alternatives": [
+   {
+    "id": "landmine-rotation",
+    "why": "Loaded rotation with a landmine"
+   },
+   {
+    "id": "russian-twist",
+    "why": "Seated twist with a plate"
+   },
+   {
+    "id": "pallof-press",
+    "why": "Same cable, resist the twist, back-friendly"
+   },
+   {
+    "id": "hanging-knee-to-elbow-twist",
+    "why": "Oblique work hanging, no cable"
+   },
+   {
+    "id": "db-side-bend",
+    "why": "Oblique work with a dumbbell"
+   }
+  ]
+ },
+ {
+  "id": "landmine-rotation",
+  "name": "Landmine Rotation",
+  "aliases": [
+   "Landmine Rainbow",
+   "Landmine Twist"
+  ],
+  "planIds": [],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques"
+  ],
+  "secondaryMuscles": [
+   "abs",
+   "front-delts",
+   "glutes"
+  ],
+  "pattern": "core-rotation",
+  "equipment": [
+   "landmine",
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Bar end at chest height, arms long. Arc it hip to hip, pivot the feet, hips turn with it.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 3,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms arc a heavy bar end side to side",
+   "lowerBack": "Rotation under load on a long lever"
+  },
+  "alternatives": [
+   {
+    "id": "cable-woodchop",
+    "why": "Loaded rotation on a cable, lighter"
+   },
+   {
+    "id": "russian-twist",
+    "why": "Seated twist with a plate"
+   },
+   {
+    "id": "pallof-press",
+    "why": "Resist the twist, back-friendly"
+   }
+  ]
+ },
+ {
+  "id": "suitcase-carry",
+  "name": "Suitcase Carry",
+  "aliases": [
+   "One-Arm Farmer's Carry",
+   "Single-Arm Carry"
+  ],
+  "planIds": [
+   "suitcase-carry"
+  ],
+  "bodyPart": "core",
+  "primaryMuscles": [
+   "obliques",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "grip",
+   "upper-traps",
+   "glute-med"
+  ],
+  "pattern": "carry",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "One heavy DB at one side. Walk tall 30s without leaning, then switch.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "lowerBack": "Heavy one-sided load, the spine resists bending",
+   "ankle": "Walking under load"
+  },
+  "alternatives": [
+   {
+    "id": "farmers-carry",
+    "why": "Both hands loaded, even load"
+   },
+   {
+    "id": "side-plank",
+    "why": "Same side bracing on the floor, no walking"
+   },
+   {
+    "id": "kneeling-side-plank",
+    "why": "Side bracing, light on the low back"
+   },
+   {
+    "id": "pallof-press",
+    "why": "Anti-rotation on a cable, standing still"
+   },
+   {
+    "id": "db-side-bend",
+    "why": "Moving side work with a dumbbell"
+   },
+   {
+    "id": "front-rack-carry",
+    "why": "One-sided carry held at the chest"
+   },
+   {
+    "id": "overhead-carry",
+    "why": "One-sided carry held overhead"
+   },
+   {
+    "id": "side-plank-with-reach",
+    "why": "Side plank with a reach through"
+   }
+  ]
+ },
+ {
+  "id": "farmers-carry",
+  "name": "Farmer's Carry",
+  "aliases": [
+   "Farmer's Walk",
+   "DB Farmer's Walk"
+  ],
+  "planIds": [],
+  "bodyPart": "full-body",
+  "primaryMuscles": [
+   "grip",
+   "upper-traps",
+   "deep-core"
+  ],
+  "secondaryMuscles": [
+   "forearm-flexors",
+   "glutes",
+   "quads"
+  ],
+  "pattern": "carry",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "timed",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Heavy DB in each hand, shoulders back. Walk tall with short quick steps.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "lowerBack": "Heavy load compresses the spine",
+   "ankle": "Walking under load"
+  },
+  "alternatives": [
+   {
+    "id": "suitcase-carry",
+    "why": "One side only, more core"
+   },
+   {
+    "id": "front-rack-carry",
+    "why": "Weight held at the chest"
+   },
+   {
+    "id": "overhead-carry",
+    "why": "Weight held overhead"
+   }
+  ]
+ },
+ {
+  "id": "overhead-carry",
+  "name": "Overhead Carry",
+  "aliases": [
+   "Waiter's Carry",
+   "Single-Arm Overhead Carry"
+  ],
+  "planIds": [],
+  "bodyPart": "full-body",
+  "primaryMuscles": [
+   "deep-core",
+   "side-delts",
+   "obliques"
+  ],
+  "secondaryMuscles": [
+   "upper-traps",
+   "triceps",
+   "rotator-cuff"
+  ],
+  "pattern": "carry",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "One DB locked out overhead, biceps by the ear. Ribs down, walk slowly, then switch.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "shoulder": "Weight locked out overhead while walking",
+   "lowerBack": "Overhead load, ribs flare into a back arch",
+   "ankle": "Walking under load"
+  },
+  "alternatives": [
+   {
+    "id": "suitcase-carry",
+    "why": "One-sided carry at the side, easier on shoulder"
+   },
+   {
+    "id": "front-rack-carry",
+    "why": "Weight at the chest, not overhead"
+   },
+   {
+    "id": "farmers-carry",
+    "why": "Both hands, at the sides"
+   }
+  ]
+ },
+ {
+  "id": "front-rack-carry",
+  "name": "Kettlebell Front-Rack Carry",
+  "aliases": [
+   "Front-Rack Walk",
+   "Single-Arm Rack Carry"
+  ],
+  "planIds": [],
+  "bodyPart": "full-body",
+  "primaryMuscles": [
+   "deep-core",
+   "obliques"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "biceps",
+   "upper-traps"
+  ],
+  "pattern": "carry",
+  "equipment": [
+   "kettlebell"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 4,
+  "level": "intermediate",
+  "cue": "Kettlebell in the rack at one shoulder, wrist straight. Walk tall without leaning, then switch.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 1,
+   "ankle": 2
+  },
+  "injuryNotes": {
+   "wrist": "Front-rack hold bends the wrist under the bell",
+   "lowerBack": "One-sided load, the spine resists bending",
+   "ankle": "Walking under load"
+  },
+  "alternatives": [
+   {
+    "id": "suitcase-carry",
+    "why": "Weight at the side, wrist stays straight"
+   },
+   {
+    "id": "farmers-carry",
+    "why": "Both hands, at the sides"
+   },
+   {
+    "id": "overhead-carry",
+    "why": "Weight held overhead"
+   }
+  ]
+ }
+]

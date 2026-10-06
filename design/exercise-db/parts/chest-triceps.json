@@ -1,0 +1,2678 @@
+[
+ {
+  "id": "machine-chest-press",
+  "name": "Machine Chest Press",
+  "aliases": [
+   "Seated Chest Press",
+   "Chest Press Machine"
+  ],
+  "planIds": [
+   "machine-chest-press-or-flat-bench"
+  ],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "chest-press-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Handles at mid-chest, feet planted. Push close to failure safely; control the way back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press; set the seat so handles start at mid-chest"
+  },
+  "alternatives": [
+   {
+    "id": "db-bench-press",
+    "why": "Free weights, deeper stretch, same flat press"
+   },
+   {
+    "id": "smith-bench-press",
+    "why": "Fixed bar path when the machine is taken"
+   },
+   {
+    "id": "barbell-bench-press",
+    "why": "Classic flat press, heaviest loading"
+   },
+   {
+    "id": "standing-cable-press",
+    "why": "Cables, lighter and easy on the shoulder"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Floor stops the depth, kinder to the shoulder"
+   },
+   {
+    "id": "push-up",
+    "why": "No kit at all, shoulder blades move freely"
+   }
+  ]
+ },
+ {
+  "id": "db-bench-press",
+  "name": "DB Bench Press",
+  "aliases": [
+   "Flat Dumbbell Press",
+   "Dumbbell Bench Press"
+  ],
+  "planIds": [
+   "db-bench-press"
+  ],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Flat bench, feet planted. Lower deeper than a barbell allows, then press up and slightly in.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Deep stretch under load; stop where it stays pain-free"
+  },
+  "alternatives": [
+   {
+    "id": "machine-chest-press",
+    "why": "Machine, nothing on the lower back"
+   },
+   {
+    "id": "barbell-bench-press",
+    "why": "Barbell version, heavier, less depth"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Floor limits depth, kinder to the shoulder"
+   },
+   {
+    "id": "smith-bench-press",
+    "why": "Fixed path, no balancing"
+   },
+   {
+    "id": "incline-db-press",
+    "why": "Same dumbbells, upper-chest angle"
+   },
+   {
+    "id": "push-up",
+    "why": "No kit, shoulder blades move freely"
+   },
+   {
+    "id": "standing-cable-press",
+    "why": "Cables, light and easy on the shoulder"
+   },
+   {
+    "id": "deficit-push-up",
+    "why": "Bodyweight press with a dumbbell-like stretch"
+   }
+  ]
+ },
+ {
+  "id": "barbell-bench-press",
+  "name": "Barbell Bench Press",
+  "aliases": [
+   "Flat Bench Press",
+   "Bench Press"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "barbell",
+   "flat-bench",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Eyes under the bar, shoulder blades pinned. Bar to lower chest, elbows about 45° out.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press to the chest; wide grip adds strain",
+   "wrist": "Straight bar loads the wrists in extension"
+  },
+  "alternatives": [
+   {
+    "id": "db-bench-press",
+    "why": "Dumbbells, neutral-ish wrists and deeper range"
+   },
+   {
+    "id": "machine-chest-press",
+    "why": "Machine, nothing on the lower back"
+   },
+   {
+    "id": "smith-bench-press",
+    "why": "Same bar press on a fixed path"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Shorter range, kinder to the shoulder"
+   },
+   {
+    "id": "close-grip-bench-press",
+    "why": "Same bar, more triceps"
+   },
+   {
+    "id": "decline-barbell-bench-press",
+    "why": "Head-down bench, lower-chest bias"
+   }
+  ]
+ },
+ {
+  "id": "smith-bench-press",
+  "name": "Smith Machine Bench Press",
+  "aliases": [
+   "Smith Flat Press"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "smith-machine",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Bench set so the bar meets lower chest. Unhook, lower under control, press without bouncing.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Fixed path; set the bench so it meets lower chest",
+   "wrist": "Straight bar loads the wrists in extension"
+  },
+  "alternatives": [
+   {
+    "id": "barbell-bench-press",
+    "why": "Free bar, same press"
+   },
+   {
+    "id": "machine-chest-press",
+    "why": "Handles and a seat, easy on wrists and back"
+   },
+   {
+    "id": "db-bench-press",
+    "why": "Dumbbells, easier on the wrists"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Shorter range, kinder to the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "db-floor-press",
+  "name": "DB Floor Press",
+  "aliases": [
+   "Dumbbell Floor Press"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "front-delts"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "dumbbells",
+   "mat"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Lie on the floor, knees bent. Lower until upper arms touch the floor, pause, press.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "db-bench-press",
+    "why": "Same dumbbells on a bench, full range"
+   },
+   {
+    "id": "push-up",
+    "why": "No kit, free shoulder blades"
+   },
+   {
+    "id": "machine-chest-press",
+    "why": "Machine press, nothing on the back"
+   },
+   {
+    "id": "barbell-bench-press",
+    "why": "Barbell, full range, heavier"
+   },
+   {
+    "id": "smith-bench-press",
+    "why": "Fixed bar path on a bench"
+   },
+   {
+    "id": "incline-db-press",
+    "why": "Upper-chest angle, full range"
+   },
+   {
+    "id": "incline-barbell-bench-press",
+    "why": "Upper-chest barbell press, full range"
+   },
+   {
+    "id": "smith-incline-press",
+    "why": "Upper-chest Smith press, full range"
+   }
+  ]
+ },
+ {
+  "id": "standing-cable-press",
+  "name": "Standing Cable Chest Press",
+  "aliases": [
+   "Cable Chest Press"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps",
+   "deep-core"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "cable-crossover"
+  ],
+  "attachment": "dual-d-handles",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Split stance between the pulleys, handles at chest height. Press forward and together, ribs down.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Light load and short stretch",
+   "lowerBack": "Standing; brace and keep ribs down"
+  },
+  "alternatives": [
+   {
+    "id": "machine-chest-press",
+    "why": "Seated machine press, nothing on the back"
+   },
+   {
+    "id": "db-bench-press",
+    "why": "Dumbbells on a bench, heavier"
+   },
+   {
+    "id": "push-up",
+    "why": "Bodyweight press, no kit"
+   },
+   {
+    "id": "incline-push-up",
+    "why": "Hands on a bench, lighter bodyweight press"
+   }
+  ]
+ },
+ {
+  "id": "push-up",
+  "name": "Push-Up",
+  "aliases": [
+   "Press-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "front-delts",
+   "serratus"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "added",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Hands under shoulders, body in one line. Chest to a fist from the floor; a plate on the back adds load.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "wrist": "Flat hands put bodyweight on extended wrists",
+   "lowerBack": "Plank position; squeeze glutes so hips do not sag"
+  },
+  "alternatives": [
+   {
+    "id": "knee-push-up",
+    "why": "Easier: knees down, less load"
+   },
+   {
+    "id": "incline-push-up",
+    "why": "Easier: hands on a bench"
+   },
+   {
+    "id": "deficit-push-up",
+    "why": "On dumbbell handles, wrists stay straight"
+   },
+   {
+    "id": "decline-push-up",
+    "why": "Harder: feet up, upper-chest bias"
+   },
+   {
+    "id": "db-bench-press",
+    "why": "Bench and dumbbells, wrists stay straighter"
+   },
+   {
+    "id": "machine-chest-press",
+    "why": "Machine, nothing on wrists or back"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Floor press, wrists straight"
+   },
+   {
+    "id": "standing-cable-press",
+    "why": "Cables, standing, light"
+   }
+  ]
+ },
+ {
+  "id": "knee-push-up",
+  "name": "Knee Push-Up",
+  "aliases": [
+   "Kneeling Push-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "front-delts"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "mat"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Knees on a mat, body straight from knees to head. Chest to a fist from the floor.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 1,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "wrist": "Flat hands, lighter but still extended wrists"
+  },
+  "alternatives": [
+   {
+    "id": "push-up",
+    "why": "Harder: full push-up"
+   },
+   {
+    "id": "incline-push-up",
+    "why": "Hands on a bench, no kneeling"
+   },
+   {
+    "id": "deficit-push-up",
+    "why": "On dumbbell handles, wrists stay straight"
+   }
+  ]
+ },
+ {
+  "id": "incline-push-up",
+  "name": "Incline Push-Up",
+  "aliases": [
+   "Hands-Elevated Push-Up",
+   "Bench Push-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "lower-chest",
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "front-delts"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Hands on a bench or Smith bar, body in one line. Chest to the edge, push away.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "wrist": "Flat hands, less bodyweight but extended wrists"
+  },
+  "alternatives": [
+   {
+    "id": "push-up",
+    "why": "Harder: hands on the floor"
+   },
+   {
+    "id": "knee-push-up",
+    "why": "Similar load, on the floor"
+   },
+   {
+    "id": "standing-cable-press",
+    "why": "Cables, wrists stay straight"
+   },
+   {
+    "id": "deficit-push-up",
+    "why": "Harder, on handles so wrists stay straight"
+   }
+  ]
+ },
+ {
+  "id": "decline-push-up",
+  "name": "Decline Push-Up",
+  "aliases": [
+   "Feet-Elevated Push-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps",
+   "serratus"
+  ],
+  "pattern": "incline-push",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Feet on a bench, hands on the floor. Keep hips level with the body; lower forehead toward the floor.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 2,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "More load and an overhead-leaning angle",
+   "wrist": "Flat hands carry most of your bodyweight",
+   "lowerBack": "Feet up loads the plank; hips sag easily"
+  },
+  "alternatives": [
+   {
+    "id": "push-up",
+    "why": "Easier: feet on the floor, less shoulder load"
+   },
+   {
+    "id": "incline-db-press",
+    "why": "Bench-supported upper-chest press"
+   },
+   {
+    "id": "deficit-push-up",
+    "why": "On handles, wrists stay straight"
+   },
+   {
+    "id": "incline-machine-press",
+    "why": "Machine, nothing on back or wrists"
+   }
+  ]
+ },
+ {
+  "id": "deficit-push-up",
+  "name": "Deficit Push-Up",
+  "aliases": [
+   "DB Handle Push-Up",
+   "Push-Up on Handles"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "front-delts",
+   "serratus"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Hands on hex dumbbells or handles, wrists straight. Lower past the hands for a deep stretch.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Extra depth stretches the shoulder under bodyweight"
+  },
+  "alternatives": [
+   {
+    "id": "push-up",
+    "why": "Easier: no deficit, less shoulder stretch"
+   },
+   {
+    "id": "db-bench-press",
+    "why": "Same deep press with dumbbells"
+   },
+   {
+    "id": "decline-push-up",
+    "why": "Feet up, upper-chest bias"
+   },
+   {
+    "id": "knee-push-up",
+    "why": "Easier: knees down"
+   },
+   {
+    "id": "incline-push-up",
+    "why": "Easier: hands on a bench"
+   }
+  ]
+ },
+ {
+  "id": "incline-db-press",
+  "name": "Incline DB Press",
+  "aliases": [
+   "Incline Dumbbell Press"
+  ],
+  "planIds": [
+   "incline-db-press"
+  ],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "incline-push",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "30° bench. Deep stretch at the bottom, drive up. Main chest builder.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Deep loaded stretch at an overhead-leaning angle"
+  },
+  "alternatives": [
+   {
+    "id": "incline-machine-press",
+    "why": "Machine, nothing on the lower back"
+   },
+   {
+    "id": "smith-incline-press",
+    "why": "Fixed bar path, no balancing"
+   },
+   {
+    "id": "incline-barbell-bench-press",
+    "why": "Barbell version, heavier"
+   },
+   {
+    "id": "db-bench-press",
+    "why": "Same dumbbells, flat bench"
+   },
+   {
+    "id": "decline-push-up",
+    "why": "Bodyweight upper-chest press"
+   },
+   {
+    "id": "low-to-high-cable-fly",
+    "why": "Cable fly for the upper chest"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Shorter range, kinder to the shoulder"
+   },
+   {
+    "id": "incline-db-fly",
+    "why": "Fly instead, upper-chest stretch"
+   }
+  ]
+ },
+ {
+  "id": "incline-barbell-bench-press",
+  "name": "Incline Barbell Bench Press",
+  "aliases": [
+   "Incline Bench Press"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "incline-push",
+  "equipment": [
+   "barbell",
+   "adjustable-bench",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Bench at 30° under the rack. Bar to upper chest, elbows slightly in, press back over the shoulders.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press at an overhead-leaning angle",
+   "wrist": "Straight bar loads the wrists in extension"
+  },
+  "alternatives": [
+   {
+    "id": "incline-db-press",
+    "why": "Dumbbells, easier on the wrists"
+   },
+   {
+    "id": "smith-incline-press",
+    "why": "Same bar press on a fixed path"
+   },
+   {
+    "id": "incline-machine-press",
+    "why": "Machine, nothing on wrists or back"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Shorter range, kinder to the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "smith-incline-press",
+  "name": "Smith Machine Incline Press",
+  "aliases": [
+   "Smith Incline Bench"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "incline-push",
+  "equipment": [
+   "smith-machine",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Bench at 30°, bar meets upper chest. Lower under control and press without bouncing.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Fixed path; set the bench so it meets upper chest",
+   "wrist": "Straight bar loads the wrists in extension"
+  },
+  "alternatives": [
+   {
+    "id": "incline-db-press",
+    "why": "Dumbbells, easier on the wrists"
+   },
+   {
+    "id": "incline-barbell-bench-press",
+    "why": "Free bar, same angle"
+   },
+   {
+    "id": "incline-machine-press",
+    "why": "Machine handles, nothing on the back"
+   },
+   {
+    "id": "db-floor-press",
+    "why": "Shorter range, kinder to the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "incline-machine-press",
+  "name": "Incline Machine Press",
+  "aliases": [
+   "Incline Chest Press Machine"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "triceps"
+  ],
+  "pattern": "incline-push",
+  "equipment": [
+   "incline-press-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Seat so handles start at upper chest, back on the pad. Press up and in, slow on the way back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press at an overhead-leaning angle"
+  },
+  "alternatives": [
+   {
+    "id": "incline-db-press",
+    "why": "Free weights, deeper stretch"
+   },
+   {
+    "id": "smith-incline-press",
+    "why": "Bar on a fixed path"
+   },
+   {
+    "id": "incline-barbell-bench-press",
+    "why": "Barbell, heavier"
+   },
+   {
+    "id": "decline-push-up",
+    "why": "Bodyweight upper-chest press"
+   }
+  ]
+ },
+ {
+  "id": "decline-barbell-bench-press",
+  "name": "Decline Barbell Bench Press",
+  "aliases": [
+   "Decline Bench Press"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "lower-chest"
+  ],
+  "secondaryMuscles": [
+   "mid-chest",
+   "triceps",
+   "front-delts"
+  ],
+  "pattern": "decline-push",
+  "equipment": [
+   "barbell",
+   "decline-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Feet locked in, bench 15 to 30° down. Bar to lower chest, press back over the chest. Use a spotter.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press, though shorter range than flat",
+   "wrist": "Straight bar loads the wrists in extension",
+   "lowerBack": "Getting in and out of the head-down bench"
+  },
+  "alternatives": [
+   {
+    "id": "decline-db-press",
+    "why": "Dumbbells, easier on the wrists"
+   },
+   {
+    "id": "smith-decline-press",
+    "why": "Same bar press on a fixed path"
+   },
+   {
+    "id": "decline-machine-press",
+    "why": "Machine, nothing on wrists or back"
+   },
+   {
+    "id": "dips",
+    "why": "Bodyweight lower-chest press"
+   },
+   {
+    "id": "barbell-bench-press",
+    "why": "Flat bench when no decline is free"
+   }
+  ]
+ },
+ {
+  "id": "decline-db-press",
+  "name": "Decline DB Press",
+  "aliases": [
+   "Decline Dumbbell Press"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "lower-chest"
+  ],
+  "secondaryMuscles": [
+   "mid-chest",
+   "triceps",
+   "front-delts"
+  ],
+  "pattern": "decline-push",
+  "equipment": [
+   "dumbbells",
+   "decline-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Feet locked in, bench slightly down. Lower to the lower chest, press up and in.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press, though shorter range than flat",
+   "lowerBack": "Getting in and out of the head-down bench"
+  },
+  "alternatives": [
+   {
+    "id": "decline-barbell-bench-press",
+    "why": "Barbell version, heavier"
+   },
+   {
+    "id": "decline-machine-press",
+    "why": "Machine, nothing on the lower back"
+   },
+   {
+    "id": "dips",
+    "why": "Bodyweight lower-chest press"
+   },
+   {
+    "id": "smith-decline-press",
+    "why": "Fixed bar path, no balancing"
+   },
+   {
+    "id": "high-to-low-cable-fly",
+    "why": "Cable fly for the lower chest"
+   }
+  ]
+ },
+ {
+  "id": "smith-decline-press",
+  "name": "Smith Machine Decline Press",
+  "aliases": [
+   "Smith Decline Bench"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "lower-chest"
+  ],
+  "secondaryMuscles": [
+   "mid-chest",
+   "triceps",
+   "front-delts"
+  ],
+  "pattern": "decline-push",
+  "equipment": [
+   "smith-machine",
+   "decline-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Decline bench under the Smith bar so it meets lower chest. Lower under control, press.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press, though shorter range than flat",
+   "wrist": "Straight bar loads the wrists in extension",
+   "lowerBack": "Getting in and out of the head-down bench"
+  },
+  "alternatives": [
+   {
+    "id": "decline-barbell-bench-press",
+    "why": "Free bar, same angle"
+   },
+   {
+    "id": "decline-machine-press",
+    "why": "Machine, nothing on wrists or back"
+   },
+   {
+    "id": "decline-db-press",
+    "why": "Dumbbells, easier on the wrists"
+   }
+  ]
+ },
+ {
+  "id": "decline-machine-press",
+  "name": "Decline Machine Press",
+  "aliases": [
+   "Hammer Decline Press",
+   "Decline Chest Press Machine"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "lower-chest"
+  ],
+  "secondaryMuscles": [
+   "mid-chest",
+   "triceps",
+   "front-delts"
+  ],
+  "pattern": "decline-push",
+  "equipment": [
+   "chest-press-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Seat so handles start at lower chest. Press down and forward, slow return.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded press, though shorter range than flat"
+  },
+  "alternatives": [
+   {
+    "id": "decline-db-press",
+    "why": "Free weights, same angle"
+   },
+   {
+    "id": "smith-decline-press",
+    "why": "Bar on a fixed path"
+   },
+   {
+    "id": "decline-barbell-bench-press",
+    "why": "Barbell, heaviest loading"
+   },
+   {
+    "id": "dips",
+    "why": "Bodyweight lower-chest press"
+   }
+  ]
+ },
+ {
+  "id": "dips",
+  "name": "Dips",
+  "aliases": [
+   "Chest Dips",
+   "Parallel Bar Dips",
+   "Weighted Dips"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "lower-chest",
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "front-delts"
+  ],
+  "pattern": "dip",
+  "equipment": [
+   "dip-bars"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": true,
+  "loadType": "added",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Lean forward slightly, elbows a little out. Lower to upper arms parallel, no deeper. Belt to add weight.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded stretch at the bottom; deeper than parallel is risky",
+   "elbow": "Full bodyweight through bent elbows",
+   "wrist": "Full bodyweight through the wrists"
+  },
+  "alternatives": [
+   {
+    "id": "decline-machine-press",
+    "why": "Machine lower-chest press, easy on joints"
+   },
+   {
+    "id": "decline-db-press",
+    "why": "Bench press for the lower chest"
+   },
+   {
+    "id": "seated-dip-machine",
+    "why": "Same dip, seated, easier on the shoulder"
+   },
+   {
+    "id": "decline-barbell-bench-press",
+    "why": "Barbell lower-chest press"
+   },
+   {
+    "id": "bench-dips",
+    "why": "Feet down, lighter bodyweight dip"
+   },
+   {
+    "id": "high-to-low-cable-fly",
+    "why": "Cable fly for the lower chest"
+   }
+  ]
+ },
+ {
+  "id": "db-fly",
+  "name": "DB Fly",
+  "aliases": [
+   "Flat Dumbbell Fly",
+   "Dumbbell Flye"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts"
+  ],
+  "pattern": "chest-fly",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Slight bend in the elbows, fixed. Open to a stretch at chest level, hug back up.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Long lever stretches the shoulder at the bottom"
+  },
+  "alternatives": [
+   {
+    "id": "pec-deck-fly",
+    "why": "Machine fly, controlled path"
+   },
+   {
+    "id": "cable-crossover-fly",
+    "why": "Cables keep tension at the top"
+   },
+   {
+    "id": "incline-db-fly",
+    "why": "Same dumbbells, upper-chest angle"
+   },
+   {
+    "id": "high-to-low-cable-fly",
+    "why": "Cables from high, lower-chest angle"
+   }
+  ]
+ },
+ {
+  "id": "incline-db-fly",
+  "name": "Incline DB Fly",
+  "aliases": [
+   "Incline Dumbbell Flye"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts"
+  ],
+  "pattern": "chest-fly",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Bench at 30°, elbows softly bent. Open to a stretch, bring the dumbbells together over the face.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Long lever stretches the shoulder at the bottom"
+  },
+  "alternatives": [
+   {
+    "id": "low-to-high-cable-fly",
+    "why": "Cables, upper-chest fly"
+   },
+   {
+    "id": "db-fly",
+    "why": "Same dumbbells, flat bench"
+   },
+   {
+    "id": "pec-deck-fly",
+    "why": "Machine fly, controlled path"
+   },
+   {
+    "id": "incline-db-press",
+    "why": "Press instead, shorter lever"
+   }
+  ]
+ },
+ {
+  "id": "cable-crossover-fly",
+  "name": "Cable Crossover Fly",
+  "aliases": [
+   "Standing Cable Fly",
+   "Cable Crossover"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "lower-chest"
+  ],
+  "pattern": "chest-fly",
+  "equipment": [
+   "cable-crossover"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pulleys at shoulder height, split stance. Soft elbows, hug forward until the hands meet.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded stretch as the arms open behind the body"
+  },
+  "alternatives": [
+   {
+    "id": "pec-deck-fly",
+    "why": "Seated machine fly, back supported"
+   },
+   {
+    "id": "db-fly",
+    "why": "Dumbbells on a bench"
+   },
+   {
+    "id": "high-to-low-cable-fly",
+    "why": "Same cables, lower-chest angle"
+   },
+   {
+    "id": "low-to-high-cable-fly",
+    "why": "Same cables, upper-chest angle"
+   }
+  ]
+ },
+ {
+  "id": "high-to-low-cable-fly",
+  "name": "High-to-Low Cable Fly",
+  "aliases": [
+   "Decline Cable Fly",
+   "High Cable Crossover"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "lower-chest"
+  ],
+  "secondaryMuscles": [
+   "mid-chest",
+   "front-delts"
+  ],
+  "pattern": "chest-fly",
+  "equipment": [
+   "cable-crossover"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pulleys high, lean slightly forward. Sweep the hands down and together toward the hips.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded stretch as the arms open up and back"
+  },
+  "alternatives": [
+   {
+    "id": "cable-crossover-fly",
+    "why": "Same cables, mid-chest angle"
+   },
+   {
+    "id": "pec-deck-fly",
+    "why": "Seated machine fly, back supported"
+   },
+   {
+    "id": "db-fly",
+    "why": "Dumbbells on a bench"
+   },
+   {
+    "id": "decline-db-press",
+    "why": "Lower-chest press instead"
+   },
+   {
+    "id": "dips",
+    "why": "Bodyweight lower-chest work"
+   }
+  ]
+ },
+ {
+  "id": "low-to-high-cable-fly",
+  "name": "Low-to-High Cable Fly",
+  "aliases": [
+   "Low Cable Crossover",
+   "Incline Cable Fly"
+  ],
+  "planIds": [
+   "low-to-high-cable-fly"
+  ],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "mid-chest"
+  ],
+  "pattern": "chest-fly",
+  "equipment": [
+   "cable-crossover"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pulleys low. Sweep the hands up and together to chin height. Upper-chest emphasis; squeeze at the top.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded stretch as the arms open low and back"
+  },
+  "alternatives": [
+   {
+    "id": "incline-db-fly",
+    "why": "Dumbbells on an incline bench"
+   },
+   {
+    "id": "cable-crossover-fly",
+    "why": "Same cables, mid-chest angle"
+   },
+   {
+    "id": "pec-deck-fly",
+    "why": "Seated machine fly, back supported"
+   },
+   {
+    "id": "incline-db-press",
+    "why": "Upper-chest press instead"
+   }
+  ]
+ },
+ {
+  "id": "pec-deck-fly",
+  "name": "Pec Deck Fly",
+  "aliases": [
+   "Machine Fly",
+   "Pec Deck"
+  ],
+  "planIds": [],
+  "bodyPart": "chest",
+  "primaryMuscles": [
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts"
+  ],
+  "pattern": "chest-fly",
+  "equipment": [
+   "pec-deck"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Handles at chest height, back on the pad. Bring the handles together, slow on the way back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded stretch as the arms open behind the body"
+  },
+  "alternatives": [
+   {
+    "id": "cable-crossover-fly",
+    "why": "Cables when the machine is taken"
+   },
+   {
+    "id": "db-fly",
+    "why": "Dumbbells on a bench"
+   },
+   {
+    "id": "low-to-high-cable-fly",
+    "why": "Cables, upper-chest angle"
+   },
+   {
+    "id": "incline-db-fly",
+    "why": "Dumbbells, upper-chest angle"
+   },
+   {
+    "id": "high-to-low-cable-fly",
+    "why": "Cables, lower-chest angle"
+   }
+  ]
+ },
+ {
+  "id": "rope-pushdown",
+  "name": "Rope Pushdown",
+  "aliases": [
+   "Rope Triceps Pushdown",
+   "Cable Rope Pushdown"
+  ],
+  "planIds": [
+   "rope-pushdown"
+  ],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Elbows pinned to the ribs. Spread the rope at the bottom, 1-sec squeeze.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Elbow extension under load is the whole job"
+  },
+  "alternatives": [
+   {
+    "id": "straight-bar-pushdown",
+    "why": "Bar instead of rope, a little heavier"
+   },
+   {
+    "id": "single-arm-cable-pushdown",
+    "why": "One arm at a time, fix imbalances"
+   },
+   {
+    "id": "triceps-extension-machine",
+    "why": "Machine when the cable is taken"
+   },
+   {
+    "id": "seated-dip-machine",
+    "why": "Seated pressing-down machine"
+   },
+   {
+    "id": "db-kickback",
+    "why": "Lighter load, easier on the elbow"
+   },
+   {
+    "id": "overhead-cable-extension",
+    "why": "Overhead, more long-head stretch"
+   },
+   {
+    "id": "reverse-grip-pushdown",
+    "why": "Palms up, more medial head"
+   }
+  ]
+ },
+ {
+  "id": "straight-bar-pushdown",
+  "name": "Straight-Bar Pushdown",
+  "aliases": [
+   "Bar Pushdown",
+   "Triceps Pushdown"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "forearm-extensors"
+  ],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "straight-bar",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Elbows at the sides, wrists straight. Push the bar to the thighs, control it back to chest height.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Elbow extension under load is the whole job",
+   "wrist": "Straight bar can bend the wrists back under load"
+  },
+  "alternatives": [
+   {
+    "id": "rope-pushdown",
+    "why": "Rope, wrists find their own angle"
+   },
+   {
+    "id": "reverse-grip-pushdown",
+    "why": "Palms up, more medial head"
+   },
+   {
+    "id": "triceps-extension-machine",
+    "why": "Machine when the cable is taken"
+   },
+   {
+    "id": "db-kickback",
+    "why": "Lighter load, easier on the elbow"
+   }
+  ]
+ },
+ {
+  "id": "reverse-grip-pushdown",
+  "name": "Reverse-Grip Pushdown",
+  "aliases": [
+   "Underhand Pushdown",
+   "Supinated Pushdown"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "forearm-flexors"
+  ],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "straight-bar",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Palms up, elbows tight to the sides. Push down to full lockout, slow on the way up.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Elbow extension under load is the whole job",
+   "wrist": "Palms-up grip strains the wrist under load"
+  },
+  "alternatives": [
+   {
+    "id": "single-arm-cable-pushdown",
+    "why": "One handle, wrist free to turn"
+   },
+   {
+    "id": "straight-bar-pushdown",
+    "why": "Overhand bar, heavier"
+   },
+   {
+    "id": "rope-pushdown",
+    "why": "Rope, easier on the wrists"
+   },
+   {
+    "id": "cable-kickback",
+    "why": "Cable kickback, lighter load"
+   },
+   {
+    "id": "db-kickback",
+    "why": "Dumbbells when the cables are busy"
+   }
+  ]
+ },
+ {
+  "id": "single-arm-cable-pushdown",
+  "name": "Single-Arm Cable Pushdown",
+  "aliases": [
+   "One-Arm Pushdown"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Elbow pinned at the side, other hand on the stack. Push to lockout, squeeze, return slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Elbow extension under load is the whole job"
+  },
+  "alternatives": [
+   {
+    "id": "rope-pushdown",
+    "why": "Both arms at once, faster"
+   },
+   {
+    "id": "reverse-grip-pushdown",
+    "why": "Palms up, same cable"
+   },
+   {
+    "id": "cable-kickback",
+    "why": "Same cable, arm behind the body"
+   },
+   {
+    "id": "db-kickback",
+    "why": "Dumbbell, lighter on the elbow"
+   }
+  ]
+ },
+ {
+  "id": "overhead-cable-extension",
+  "name": "Overhead Cable Extension",
+  "aliases": [
+   "Cable Overhead Extension",
+   "Overhead Rope Extension"
+  ],
+  "planIds": [
+   "overhead-cable-extension",
+   "cable-overhead-extension"
+  ],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps-long-head",
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Face away from a low pulley. Long-head stretch, elbows by the ears. The best triceps size builder.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms overhead under load at full stretch",
+   "elbow": "Loaded at a deep stretch"
+  },
+  "alternatives": [
+   {
+    "id": "db-overhead-extension",
+    "why": "Seated with one dumbbell, same stretch"
+   },
+   {
+    "id": "ez-bar-overhead-extension",
+    "why": "EZ bar overhead, heavier"
+   },
+   {
+    "id": "single-arm-db-overhead-extension",
+    "why": "One arm at a time, dumbbell"
+   },
+   {
+    "id": "rope-pushdown",
+    "why": "Arms down, easy on the shoulder"
+   },
+   {
+    "id": "cable-kickback",
+    "why": "Light, easy on shoulder and elbow"
+   },
+   {
+    "id": "ez-bar-skull-crusher",
+    "why": "Lying long-head stretch"
+   }
+  ]
+ },
+ {
+  "id": "db-overhead-extension",
+  "name": "DB Overhead Extension",
+  "aliases": [
+   "Seated Dumbbell Triceps Extension",
+   "Two-Hand DB Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps-long-head",
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Sit tall, back on an upright bench. Cup one dumbbell, lower it behind the head, elbows in.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms overhead under load at full stretch",
+   "elbow": "Loaded at a deep stretch"
+  },
+  "alternatives": [
+   {
+    "id": "overhead-cable-extension",
+    "why": "Cable keeps tension at the top"
+   },
+   {
+    "id": "ez-bar-overhead-extension",
+    "why": "EZ bar, easier to load up"
+   },
+   {
+    "id": "single-arm-db-overhead-extension",
+    "why": "One arm at a time"
+   },
+   {
+    "id": "db-kickback",
+    "why": "Arms down, easy on shoulder and elbow"
+   }
+  ]
+ },
+ {
+  "id": "single-arm-db-overhead-extension",
+  "name": "Single-Arm DB Overhead Extension",
+  "aliases": [
+   "One-Arm Overhead Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps-long-head",
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "single-weight",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Sit tall, elbow pointing up beside the head. Lower behind the head, extend fully.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm overhead under load at full stretch",
+   "elbow": "Loaded at a deep stretch"
+  },
+  "alternatives": [
+   {
+    "id": "db-overhead-extension",
+    "why": "Both hands on one dumbbell, heavier"
+   },
+   {
+    "id": "overhead-cable-extension",
+    "why": "Cable version, steady tension"
+   },
+   {
+    "id": "db-kickback",
+    "why": "Arm down, easy on shoulder and elbow"
+   }
+  ]
+ },
+ {
+  "id": "ez-bar-overhead-extension",
+  "name": "EZ-Bar Overhead Extension",
+  "aliases": [
+   "French Press",
+   "Seated EZ Triceps Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps-long-head",
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "ez-bar",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Sit tall, back supported. Lower the bar behind the head, elbows forward and in, then extend.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 3,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms overhead under load at full stretch",
+   "elbow": "Heavy bar at full stretch strains the elbow"
+  },
+  "alternatives": [
+   {
+    "id": "db-overhead-extension",
+    "why": "One dumbbell, easier to control"
+   },
+   {
+    "id": "overhead-cable-extension",
+    "why": "Cable, smoother on the elbow"
+   },
+   {
+    "id": "ez-bar-skull-crusher",
+    "why": "Lying, less overhead shoulder load"
+   }
+  ]
+ },
+ {
+  "id": "ez-bar-skull-crusher",
+  "name": "EZ-Bar Skull Crusher",
+  "aliases": [
+   "Lying Triceps Extension",
+   "Skull Crusher"
+  ],
+  "planIds": [
+   "ez-bar-skull-crusher"
+  ],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps",
+   "triceps-long-head"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "ez-bar",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Lower behind the head for more stretch. Elbows stay in.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 3,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Lowering behind the head adds stretch",
+   "elbow": "Heavy load at full elbow bend, a classic elbow irritant"
+  },
+  "alternatives": [
+   {
+    "id": "db-lying-extension",
+    "why": "Dumbbells, wrists and elbows move freely"
+   },
+   {
+    "id": "overhead-cable-extension",
+    "why": "Cable, smoother on the elbow"
+   },
+   {
+    "id": "ez-bar-overhead-extension",
+    "why": "Same bar, seated overhead"
+   },
+   {
+    "id": "triceps-extension-machine",
+    "why": "Machine, steadier on the elbow"
+   },
+   {
+    "id": "close-grip-bench-press",
+    "why": "Compound press, heavier loading"
+   }
+  ]
+ },
+ {
+  "id": "db-lying-extension",
+  "name": "DB Lying Triceps Extension",
+  "aliases": [
+   "Dumbbell Skull Crusher",
+   "Neutral-Grip Lying Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps",
+   "triceps-long-head"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "intermediate",
+  "cue": "Palms facing each other, elbows pointing up. Lower beside the head, extend without flaring.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 3,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded at full elbow bend, like any skull crusher"
+  },
+  "alternatives": [
+   {
+    "id": "ez-bar-skull-crusher",
+    "why": "EZ bar version, heavier"
+   },
+   {
+    "id": "triceps-extension-machine",
+    "why": "Machine, steadier on the elbow"
+   },
+   {
+    "id": "db-kickback",
+    "why": "Light, much easier on the elbow"
+   }
+  ]
+ },
+ {
+  "id": "db-kickback",
+  "name": "DB Kickback",
+  "aliases": [
+   "Dumbbell Triceps Kickback"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "rear-delts"
+  ],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Hand and knee on a bench, upper arm parallel to the floor. Extend fully, squeeze, lower slowly.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Bent over, but braced on the bench"
+  },
+  "alternatives": [
+   {
+    "id": "cable-kickback",
+    "why": "Cable keeps tension through the range"
+   },
+   {
+    "id": "rope-pushdown",
+    "why": "Heavier pushdown on a cable"
+   },
+   {
+    "id": "single-arm-cable-pushdown",
+    "why": "One arm on a cable"
+   },
+   {
+    "id": "straight-bar-pushdown",
+    "why": "Bar pushdown, heavier"
+   },
+   {
+    "id": "reverse-grip-pushdown",
+    "why": "Palms up on a cable"
+   },
+   {
+    "id": "db-overhead-extension",
+    "why": "Overhead, more long-head stretch"
+   },
+   {
+    "id": "single-arm-db-overhead-extension",
+    "why": "One arm overhead, long-head stretch"
+   },
+   {
+    "id": "db-lying-extension",
+    "why": "Lying, long-head stretch"
+   }
+  ]
+ },
+ {
+  "id": "cable-kickback",
+  "name": "Cable Kickback",
+  "aliases": [
+   "Cable Triceps Kickback"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "rear-delts"
+  ],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Low pulley, hinge forward with a hand on the frame. Upper arm still, extend straight back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Hinged forward; keep a hand on the frame"
+  },
+  "alternatives": [
+   {
+    "id": "db-kickback",
+    "why": "Dumbbell, braced on a bench"
+   },
+   {
+    "id": "single-arm-cable-pushdown",
+    "why": "One-arm cable pushdown, upright"
+   },
+   {
+    "id": "reverse-grip-pushdown",
+    "why": "Palms-up pushdown on a cable"
+   },
+   {
+    "id": "overhead-cable-extension",
+    "why": "Overhead, more long-head stretch"
+   },
+   {
+    "id": "triceps-extension-machine",
+    "why": "Machine, heavier and steadier"
+   }
+  ]
+ },
+ {
+  "id": "close-grip-bench-press",
+  "name": "Close-Grip Bench Press",
+  "aliases": [
+   "CGBP",
+   "Narrow-Grip Bench Press"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps",
+   "mid-chest"
+  ],
+  "secondaryMuscles": [
+   "front-delts"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "barbell",
+   "flat-bench",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Hands shoulder-width, elbows tucked. Bar to lower chest, press to lockout.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 3,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded bench press to the chest",
+   "elbow": "Heavy close-grip pressing loads the elbows hard",
+   "wrist": "Narrow straight-bar grip loads the wrists"
+  },
+  "alternatives": [
+   {
+    "id": "diamond-push-up",
+    "why": "Bodyweight close-grip press"
+   },
+   {
+    "id": "ez-bar-skull-crusher",
+    "why": "Lying extension, triceps only"
+   },
+   {
+    "id": "seated-dip-machine",
+    "why": "Machine press-down, easier on joints"
+   },
+   {
+    "id": "barbell-bench-press",
+    "why": "Wider grip, more chest"
+   }
+  ]
+ },
+ {
+  "id": "triceps-extension-machine",
+  "name": "Triceps Extension Machine",
+  "aliases": [
+   "Seated Triceps Extension Machine"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [],
+  "pattern": "triceps-extension",
+  "equipment": [
+   "triceps-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Upper arms on the pad, seat so elbows line up with the pivot. Extend fully, slow return.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Elbow extension under load is the whole job"
+  },
+  "alternatives": [
+   {
+    "id": "rope-pushdown",
+    "why": "Cable pushdown when the machine is taken"
+   },
+   {
+    "id": "straight-bar-pushdown",
+    "why": "Bar pushdown on a cable"
+   },
+   {
+    "id": "ez-bar-skull-crusher",
+    "why": "Free-weight lying extension"
+   },
+   {
+    "id": "db-lying-extension",
+    "why": "Dumbbells, lying extension"
+   },
+   {
+    "id": "seated-dip-machine",
+    "why": "Seated press-down machine"
+   },
+   {
+    "id": "cable-kickback",
+    "why": "Light cable kickback, easy on the elbow"
+   }
+  ]
+ },
+ {
+  "id": "seated-dip-machine",
+  "name": "Seated Dip Machine",
+  "aliases": [
+   "Triceps Dip Machine",
+   "Machine Dip"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "lower-chest",
+   "front-delts"
+  ],
+  "pattern": "dip",
+  "equipment": [
+   "dip-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Sit tall, handles at the sides. Press down to lockout, let the hands rise only to chest level.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Heavy pressing to lockout loads the elbows"
+  },
+  "alternatives": [
+   {
+    "id": "dips",
+    "why": "Bodyweight dips on bars"
+   },
+   {
+    "id": "close-grip-bench-press",
+    "why": "Barbell close-grip press"
+   },
+   {
+    "id": "rope-pushdown",
+    "why": "Cable pushdown when the machine is taken"
+   },
+   {
+    "id": "triceps-extension-machine",
+    "why": "Isolation machine"
+   },
+   {
+    "id": "bench-dips",
+    "why": "Bodyweight on a bench"
+   },
+   {
+    "id": "diamond-push-up",
+    "why": "Bodyweight close-grip press"
+   }
+  ]
+ },
+ {
+  "id": "diamond-push-up",
+  "name": "Diamond Push-Up",
+  "aliases": [
+   "Close-Grip Push-Up",
+   "Triangle Push-Up"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "mid-chest",
+   "front-delts"
+  ],
+  "pattern": "horizontal-push",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Hands together under the chest, thumbs and index fingers touching. Elbows back along the ribs.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Close-grip pressing with bodyweight",
+   "wrist": "Bent-back, turned-in wrists carry bodyweight",
+   "lowerBack": "Plank position; squeeze glutes so hips do not sag"
+  },
+  "alternatives": [
+   {
+    "id": "close-grip-bench-press",
+    "why": "Barbell close-grip press"
+   },
+   {
+    "id": "bench-dips",
+    "why": "Bodyweight on a bench"
+   },
+   {
+    "id": "seated-dip-machine",
+    "why": "Machine, wrists stay straight"
+   }
+  ]
+ },
+ {
+  "id": "bench-dips",
+  "name": "Bench Dips",
+  "aliases": [
+   "Triceps Bench Dip",
+   "Chair Dips"
+  ],
+  "planIds": [],
+  "bodyPart": "triceps",
+  "primaryMuscles": [
+   "triceps"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "lower-chest"
+  ],
+  "pattern": "dip",
+  "equipment": [
+   "flat-bench"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Hands on the bench edge behind you, knees bent. Lower only until upper arms are parallel.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 3,
+   "elbow": 2,
+   "wrist": 3,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Shoulders forced into deep extension, a common injury position",
+   "elbow": "Bodyweight through bent elbows",
+   "wrist": "Wrists bent back hard under bodyweight"
+  },
+  "alternatives": [
+   {
+    "id": "seated-dip-machine",
+    "why": "Machine, kinder to shoulders and wrists"
+   },
+   {
+    "id": "diamond-push-up",
+    "why": "Bodyweight close-grip press"
+   },
+   {
+    "id": "dips",
+    "why": "Harder: full bodyweight on bars"
+   }
+  ]
+ }
+]

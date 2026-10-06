@@ -1,0 +1,2971 @@
+[
+ {
+  "id": "seated-db-shoulder-press",
+  "name": "Seated DB Shoulder Press",
+  "aliases": [
+   "Seated Dumbbell Press",
+   "Seated DB Press"
+  ],
+  "planIds": [
+   "seated-db-shoulder-press"
+  ],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-chest",
+   "upper-traps"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Back fully supported on the bench, no arching. Lower to ear level, press up and slightly in.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded overhead press; keep the elbows slightly forward"
+  },
+  "alternatives": [
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine path and back pad, nothing to balance"
+   },
+   {
+    "id": "smith-machine-shoulder-press",
+    "why": "Bar on rails, same supported seat"
+   },
+   {
+    "id": "arnold-press",
+    "why": "Same seat, adds rotation for front delts"
+   },
+   {
+    "id": "seated-barbell-press",
+    "why": "Barbell on the same supported seat"
+   },
+   {
+    "id": "landmine-press",
+    "why": "Angled press, easier on the shoulder"
+   },
+   {
+    "id": "standing-db-shoulder-press",
+    "why": "Standing, more core but more lower back"
+   },
+   {
+    "id": "standing-barbell-press",
+    "why": "Standing barbell, heavier, more lower back"
+   },
+   {
+    "id": "pike-push-up",
+    "why": "No equipment, bodyweight press"
+   }
+  ]
+ },
+ {
+  "id": "machine-shoulder-press",
+  "name": "Machine Shoulder Press",
+  "aliases": [
+   "Seated Shoulder Press Machine"
+  ],
+  "planIds": [
+   "machine-shoulder-press"
+  ],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-chest"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "shoulder-press-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Back supported. Controlled: two seconds down, stop just above the shoulders.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Overhead press; set the seat so handles start at the shoulder"
+  },
+  "alternatives": [
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Free weights, back still supported"
+   },
+   {
+    "id": "smith-machine-shoulder-press",
+    "why": "Bar on rails, seated with a back pad"
+   },
+   {
+    "id": "arnold-press",
+    "why": "Dumbbells, seated, extra front delt"
+   },
+   {
+    "id": "landmine-press",
+    "why": "Easier on the shoulder, standing"
+   },
+   {
+    "id": "standing-barbell-press",
+    "why": "Free bar, standing, more lower back"
+   },
+   {
+    "id": "standing-db-shoulder-press",
+    "why": "Dumbbells standing, more lower back"
+   },
+   {
+    "id": "pike-push-up",
+    "why": "No equipment, bodyweight press"
+   },
+   {
+    "id": "plate-front-raise",
+    "why": "Front-delt isolation with one plate"
+   }
+  ]
+ },
+ {
+  "id": "standing-barbell-press",
+  "name": "Barbell Overhead Press",
+  "aliases": [
+   "Military Press",
+   "Standing Barbell Press",
+   "OHP"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-chest",
+   "upper-traps",
+   "abs"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "barbell",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Squeeze glutes, ribs down. Bar from collarbone straight up, head through at the top. No leaning back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Heavy load pressed overhead on a fixed bar path",
+   "wrist": "Straight bar sits in the palms, wrists bent back under load",
+   "lowerBack": "Standing; the spine holds the load and tends to arch"
+  },
+  "alternatives": [
+   {
+    "id": "seated-barbell-press",
+    "why": "Seated with a back pad, much less lower back"
+   },
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Back supported, dumbbells kinder on wrists"
+   },
+   {
+    "id": "smith-machine-shoulder-press",
+    "why": "Seated on rails, back supported"
+   },
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine, back pad, nothing on the lower back"
+   },
+   {
+    "id": "standing-db-shoulder-press",
+    "why": "Dumbbells, freer wrists, still standing"
+   },
+   {
+    "id": "landmine-press",
+    "why": "Angled press, easier on shoulder and back"
+   }
+  ]
+ },
+ {
+  "id": "seated-barbell-press",
+  "name": "Seated Barbell Press",
+  "aliases": [
+   "Seated Military Press"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-chest"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "barbell",
+   "adjustable-bench",
+   "squat-rack"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Bench upright inside the rack, back on the pad. Bar to the collarbone, press over the head.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded overhead press on a fixed bar path",
+   "wrist": "Straight bar sits in the palms, wrists bent back under load"
+  },
+  "alternatives": [
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Dumbbells, kinder on the wrists"
+   },
+   {
+    "id": "smith-machine-shoulder-press",
+    "why": "Same seat, bar on fixed rails"
+   },
+   {
+    "id": "standing-barbell-press",
+    "why": "Standing, full brace, more back load"
+   }
+  ]
+ },
+ {
+  "id": "standing-db-shoulder-press",
+  "name": "Standing DB Shoulder Press",
+  "aliases": [
+   "Standing Dumbbell Press"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-traps",
+   "abs"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Feet hip-width, glutes and abs tight. Press straight up without leaning back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loaded overhead press",
+   "lowerBack": "Standing; the spine holds the load and tends to arch"
+  },
+  "alternatives": [
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Seated with back support, spares the back"
+   },
+   {
+    "id": "standing-barbell-press",
+    "why": "Barbell, heavier loading"
+   },
+   {
+    "id": "landmine-press",
+    "why": "Angled press, easier on shoulder and back"
+   },
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine with back pad, no lower-back load"
+   },
+   {
+    "id": "arnold-press",
+    "why": "Seated rotating press, back supported"
+   }
+  ]
+ },
+ {
+  "id": "smith-machine-shoulder-press",
+  "name": "Smith Machine Shoulder Press",
+  "aliases": [
+   "Smith Overhead Press"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-chest"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "smith-machine",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Bench upright, back on the pad, bar just in front of the face. Lower to the chin, press up.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Fixed rail path overhead; set the bench so the bar clears the face",
+   "wrist": "Straight bar sits in the palms, wrists bent back under load"
+  },
+  "alternatives": [
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine handles, easier on the wrists"
+   },
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Dumbbells, freer path for the shoulder"
+   },
+   {
+    "id": "seated-barbell-press",
+    "why": "Free bar, same seated setup"
+   },
+   {
+    "id": "standing-barbell-press",
+    "why": "Free bar standing, more lower back"
+   },
+   {
+    "id": "landmine-press",
+    "why": "Angled press, easier on the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "arnold-press",
+  "name": "Arnold Press",
+  "aliases": [
+   "Seated Arnold Press"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-chest"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Back on the pad. Start palms facing you at the chin, turn them out as you press up.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Rotates into the overhead position under load"
+  },
+  "alternatives": [
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Plain press, less shoulder rotation"
+   },
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine, back pad, simple path"
+   },
+   {
+    "id": "landmine-press",
+    "why": "Angled press, easier on the shoulder"
+   },
+   {
+    "id": "standing-db-shoulder-press",
+    "why": "Standing, more core, more lower back"
+   },
+   {
+    "id": "db-front-raise",
+    "why": "Front-delt raise, lighter load"
+   },
+   {
+    "id": "cable-front-raise",
+    "why": "Cable front raise, steady tension"
+   }
+  ]
+ },
+ {
+  "id": "landmine-press",
+  "name": "Landmine Press",
+  "aliases": [
+   "Single-Arm Landmine Press"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "upper-chest"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "serratus",
+   "side-delts",
+   "obliques"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "landmine",
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "plates",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Staggered stance, bar end at the shoulder. Press up and forward, ribs down, no twist.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Straight overhead, back supported"
+   },
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine with a back pad"
+   },
+   {
+    "id": "standing-barbell-press",
+    "why": "Barbell straight overhead, heavier"
+   },
+   {
+    "id": "arnold-press",
+    "why": "Dumbbells, seated, full overhead range"
+   },
+   {
+    "id": "pike-push-up",
+    "why": "No equipment, bodyweight press"
+   },
+   {
+    "id": "smith-machine-shoulder-press",
+    "why": "Seated on rails, back supported"
+   },
+   {
+    "id": "standing-db-shoulder-press",
+    "why": "Dumbbells straight overhead, standing"
+   },
+   {
+    "id": "db-front-raise",
+    "why": "Front-delt raise, dumbbells"
+   }
+  ]
+ },
+ {
+  "id": "pike-push-up",
+  "name": "Pike Push-Up",
+  "aliases": [
+   "Pike Press"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "upper-chest",
+   "serratus"
+  ],
+  "pattern": "vertical-push",
+  "equipment": [
+   "bodyweight"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "intermediate",
+  "cue": "Hips high, body in an upside-down V. Lower the head between the hands, press back up.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Bodyweight pressed overhead at an angle",
+   "wrist": "Flat hands bent back under bodyweight"
+  },
+  "alternatives": [
+   {
+    "id": "landmine-press",
+    "why": "Angled press, easier on shoulders and wrists"
+   },
+   {
+    "id": "seated-db-shoulder-press",
+    "why": "Weighted press, back supported"
+   },
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine handles, no bent-back wrists"
+   }
+  ]
+ },
+ {
+  "id": "db-lateral-raise",
+  "name": "DB Lateral Raise",
+  "aliases": [
+   "Dumbbell Side Raise",
+   "Side Lateral Raise"
+  ],
+  "planIds": [
+   "db-lateral-raise"
+  ],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "upper-traps"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Light, strict, 20-rep burn. Lead with the elbows to shoulder height, no swing.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised out to shoulder height under load"
+  },
+  "alternatives": [
+   {
+    "id": "cable-lateral-raise",
+    "why": "Cable keeps tension at the bottom"
+   },
+   {
+    "id": "seated-db-lateral-raise",
+    "why": "Seated, no swinging"
+   },
+   {
+    "id": "machine-lateral-raise",
+    "why": "Machine with arm pads, chest supported"
+   },
+   {
+    "id": "lean-away-lateral-raise",
+    "why": "One arm, longer range"
+   },
+   {
+    "id": "cable-upright-row",
+    "why": "Rope pull for side delts, heavier"
+   },
+   {
+    "id": "barbell-upright-row",
+    "why": "Barbell pull, heavier, harder on shoulders"
+   },
+   {
+    "id": "incline-y-raise",
+    "why": "Chest on a bench, lower traps too"
+   }
+  ]
+ },
+ {
+  "id": "cable-lateral-raise",
+  "name": "Cable Lateral Raise",
+  "aliases": [
+   "Single-Arm Cable Side Raise"
+  ],
+  "planIds": [
+   "cable-lateral-raise"
+  ],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "upper-traps"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Cable behind the body, pulley at hip height. Lead with the elbow out to shoulder height.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised out to shoulder height under load"
+  },
+  "alternatives": [
+   {
+    "id": "db-lateral-raise",
+    "why": "Dumbbells, no cable needed"
+   },
+   {
+    "id": "machine-lateral-raise",
+    "why": "Machine with arm pads, chest supported"
+   },
+   {
+    "id": "lean-away-lateral-raise",
+    "why": "Dumbbell version of the long range"
+   },
+   {
+    "id": "seated-db-lateral-raise",
+    "why": "Seated dumbbells, no swinging"
+   },
+   {
+    "id": "cable-upright-row",
+    "why": "Same cable, rope pull for side delts"
+   },
+   {
+    "id": "barbell-upright-row",
+    "why": "Barbell pull, harder on shoulders"
+   }
+  ]
+ },
+ {
+  "id": "machine-lateral-raise",
+  "name": "Machine Lateral Raise",
+  "aliases": [
+   "Lateral Raise Machine"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "upper-traps"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "lateral-raise-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Chest on the pad, shoulders in line with the pivots. Push the pads out with the elbows.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised out to shoulder height under load"
+  },
+  "alternatives": [
+   {
+    "id": "cable-lateral-raise",
+    "why": "Cable, one arm at a time"
+   },
+   {
+    "id": "db-lateral-raise",
+    "why": "Dumbbells, no machine needed"
+   },
+   {
+    "id": "seated-db-lateral-raise",
+    "why": "Seated dumbbells, strict"
+   },
+   {
+    "id": "lean-away-lateral-raise",
+    "why": "One dumbbell, longer range"
+   },
+   {
+    "id": "cable-upright-row",
+    "why": "Rope pull for side delts"
+   },
+   {
+    "id": "barbell-upright-row",
+    "why": "Barbell pull, harder on shoulders"
+   }
+  ]
+ },
+ {
+  "id": "seated-db-lateral-raise",
+  "name": "Seated DB Lateral Raise",
+  "aliases": [
+   "Seated Side Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "upper-traps"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Sit tall on the end of a bench. Raise to shoulder height with no swing.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised out to shoulder height under load"
+  },
+  "alternatives": [
+   {
+    "id": "db-lateral-raise",
+    "why": "Standing, same raise"
+   },
+   {
+    "id": "machine-lateral-raise",
+    "why": "Machine, chest on a pad, nothing to swing"
+   },
+   {
+    "id": "cable-lateral-raise",
+    "why": "Cable keeps tension at the bottom"
+   }
+  ]
+ },
+ {
+  "id": "lean-away-lateral-raise",
+  "name": "Lean-Away Lateral Raise",
+  "aliases": [
+   "Single-Arm Leaning Lateral Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "upper-traps",
+   "obliques"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "intermediate",
+  "cue": "Hold an upright and lean away. Raise one dumbbell from across the hip to shoulder height.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised out to shoulder height from a stretch"
+  },
+  "alternatives": [
+   {
+    "id": "cable-lateral-raise",
+    "why": "Cable gives the same long range"
+   },
+   {
+    "id": "db-lateral-raise",
+    "why": "Both arms, standing upright"
+   },
+   {
+    "id": "machine-lateral-raise",
+    "why": "Machine, arm pads, nothing to balance"
+   }
+  ]
+ },
+ {
+  "id": "incline-y-raise",
+  "name": "Incline Y-Raise",
+  "aliases": [
+   "Prone Y-Raise",
+   "Chest-Supported Y-Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "lower-traps",
+   "side-delts"
+  ],
+  "secondaryMuscles": [
+   "rear-delts",
+   "upper-back",
+   "rotator-cuff"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Chest on a 30-45° bench, thumbs up. Raise the arms in a Y to ear height, very light.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms raised overhead in a Y; keep it light"
+  },
+  "alternatives": [
+   {
+    "id": "incline-db-reverse-fly",
+    "why": "Same chest-supported setup, rear delts"
+   },
+   {
+    "id": "face-pulls",
+    "why": "Cable, rear delts and rotator cuff"
+   },
+   {
+    "id": "band-pull-apart",
+    "why": "Band only, light upper-back work"
+   },
+   {
+    "id": "db-lateral-raise",
+    "why": "Standing side-delt raise"
+   }
+  ]
+ },
+ {
+  "id": "db-front-raise",
+  "name": "DB Front Raise",
+  "aliases": [
+   "Dumbbell Front Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts"
+  ],
+  "secondaryMuscles": [
+   "side-delts",
+   "upper-chest"
+  ],
+  "pattern": "front-raise",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Stand tall, slight bend in the elbows. Raise to shoulder height, no leaning back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised to shoulder height in front under load"
+  },
+  "alternatives": [
+   {
+    "id": "cable-front-raise",
+    "why": "Cable, steady tension"
+   },
+   {
+    "id": "plate-front-raise",
+    "why": "One plate, both hands"
+   },
+   {
+    "id": "arnold-press",
+    "why": "Seated press for front delts, back supported"
+   },
+   {
+    "id": "landmine-press",
+    "why": "Angled press, easier on the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "cable-front-raise",
+  "name": "Cable Front Raise",
+  "aliases": [
+   "Rope Front Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts"
+  ],
+  "secondaryMuscles": [
+   "side-delts",
+   "upper-chest"
+  ],
+  "pattern": "front-raise",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Face away from a low pulley, rope between the legs. Raise to shoulder height, no swing.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised to shoulder height in front under load"
+  },
+  "alternatives": [
+   {
+    "id": "db-front-raise",
+    "why": "Dumbbells, no cable needed"
+   },
+   {
+    "id": "plate-front-raise",
+    "why": "One plate, both hands"
+   },
+   {
+    "id": "arnold-press",
+    "why": "Seated press for front delts, back supported"
+   }
+  ]
+ },
+ {
+  "id": "plate-front-raise",
+  "name": "Plate Front Raise",
+  "aliases": [
+   "Plate Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "front-delts"
+  ],
+  "secondaryMuscles": [
+   "side-delts",
+   "upper-chest",
+   "upper-traps"
+  ],
+  "pattern": "front-raise",
+  "equipment": [
+   "weight-plate"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Hold the plate at 3 and 9 o'clock. Raise to eye level, ribs down, no leaning back.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm raised to shoulder height in front under load"
+  },
+  "alternatives": [
+   {
+    "id": "db-front-raise",
+    "why": "Dumbbells, arms move freely"
+   },
+   {
+    "id": "cable-front-raise",
+    "why": "Cable, steady tension"
+   },
+   {
+    "id": "machine-shoulder-press",
+    "why": "Machine press, back supported"
+   }
+  ]
+ },
+ {
+  "id": "reverse-pec-deck",
+  "name": "Reverse Pec Deck",
+  "aliases": [
+   "Rear Delt Machine",
+   "Reverse Fly Machine"
+  ],
+  "planIds": [
+   "reverse-pec-deck"
+  ],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rear-delts"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "lower-traps"
+  ],
+  "pattern": "rear-delt-pull",
+  "equipment": [
+   "pec-deck"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Chest on the pad, arms at shoulder height. Sweep back to the sides, squeeze the rear delts.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "incline-db-reverse-fly",
+    "why": "Dumbbells, chest on a bench, same angle"
+   },
+   {
+    "id": "cable-reverse-fly",
+    "why": "Cable crossover, standing"
+   },
+   {
+    "id": "face-pulls",
+    "why": "Cable, adds rotator-cuff work"
+   },
+   {
+    "id": "bent-over-db-reverse-fly",
+    "why": "No bench needed, but the back holds a hinge"
+   },
+   {
+    "id": "band-pull-apart",
+    "why": "Band only, light and anywhere"
+   }
+  ]
+ },
+ {
+  "id": "face-pulls",
+  "name": "Face Pulls",
+  "aliases": [
+   "Rope Face Pull"
+  ],
+  "planIds": [
+   "face-pulls"
+  ],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rear-delts",
+   "rotator-cuff"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "lower-traps",
+   "upper-traps"
+  ],
+  "pattern": "rear-delt-pull",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Rope to the eyebrows, elbows high, pull the ends apart. Posture and shoulder health.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "reverse-pec-deck",
+    "why": "Machine with chest pad, back fully rested"
+   },
+   {
+    "id": "cable-reverse-fly",
+    "why": "Cable, arms straight, rear delts"
+   },
+   {
+    "id": "band-pull-apart",
+    "why": "Band, same posture work anywhere"
+   },
+   {
+    "id": "incline-db-reverse-fly",
+    "why": "Chest-supported, dumbbells"
+   },
+   {
+    "id": "incline-y-raise",
+    "why": "Lower traps, chest on a bench"
+   },
+   {
+    "id": "cable-external-rotation",
+    "why": "Rotator cuff only, lighter"
+   },
+   {
+    "id": "side-lying-db-external-rotation",
+    "why": "Rotator cuff, lying, dumbbell"
+   },
+   {
+    "id": "bent-over-db-reverse-fly",
+    "why": "Dumbbells, hinged over, more back work"
+   }
+  ]
+ },
+ {
+  "id": "bent-over-db-reverse-fly",
+  "name": "Bent-Over DB Reverse Fly",
+  "aliases": [
+   "Bent-Over Rear Delt Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rear-delts"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "lower-traps"
+  ],
+  "pattern": "rear-delt-pull",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Hinge to near flat, back neutral. Raise the dumbbells out wide, pinkies leading.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 2,
+   "hip": 1,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "lowerBack": "Bent over unsupported; the back holds the hinge"
+  },
+  "alternatives": [
+   {
+    "id": "incline-db-reverse-fly",
+    "why": "Chest on a bench, nothing on the lower back"
+   },
+   {
+    "id": "reverse-pec-deck",
+    "why": "Machine with chest pad, no back load"
+   },
+   {
+    "id": "cable-reverse-fly",
+    "why": "Standing upright on cables"
+   },
+   {
+    "id": "face-pulls",
+    "why": "Standing cable pull, light back load"
+   }
+  ]
+ },
+ {
+  "id": "incline-db-reverse-fly",
+  "name": "Incline DB Reverse Fly",
+  "aliases": [
+   "Chest-Supported Rear Delt Raise"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rear-delts"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "lower-traps"
+  ],
+  "pattern": "rear-delt-pull",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Chest on a 30-45° bench. Raise the dumbbells out wide to shoulder height, pause.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "reverse-pec-deck",
+    "why": "Machine, same chest support"
+   },
+   {
+    "id": "bent-over-db-reverse-fly",
+    "why": "No bench, hinged over, more back work"
+   },
+   {
+    "id": "cable-reverse-fly",
+    "why": "Cable crossover, standing"
+   },
+   {
+    "id": "face-pulls",
+    "why": "Cable rope, adds rotator cuff"
+   },
+   {
+    "id": "incline-y-raise",
+    "why": "Arms overhead in a Y, lower traps"
+   }
+  ]
+ },
+ {
+  "id": "cable-reverse-fly",
+  "name": "Cable Reverse Fly",
+  "aliases": [
+   "Cable Rear Delt Fly",
+   "Reverse Cable Crossover"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rear-delts"
+  ],
+  "secondaryMuscles": [
+   "upper-back",
+   "lower-traps"
+  ],
+  "pattern": "rear-delt-pull",
+  "equipment": [
+   "cable-crossover"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pulleys at shoulder height, cables crossed. Sweep the arms back wide, arms nearly straight.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "reverse-pec-deck",
+    "why": "Machine, chest pad, back rested"
+   },
+   {
+    "id": "face-pulls",
+    "why": "Single cable with a rope"
+   },
+   {
+    "id": "incline-db-reverse-fly",
+    "why": "Dumbbells, chest on a bench"
+   },
+   {
+    "id": "bent-over-db-reverse-fly",
+    "why": "Dumbbells, no bench, hinged"
+   },
+   {
+    "id": "band-pull-apart",
+    "why": "Band only, light and anywhere"
+   }
+  ]
+ },
+ {
+  "id": "band-pull-apart",
+  "name": "Band Pull-Apart",
+  "aliases": [
+   "Resistance Band Pull-Apart"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rear-delts",
+   "upper-back"
+  ],
+  "secondaryMuscles": [
+   "lower-traps",
+   "rotator-cuff"
+  ],
+  "pattern": "rear-delt-pull",
+  "equipment": [
+   "resistance-band"
+  ],
+  "logAs": "reps",
+  "perSide": false,
+  "loadable": false,
+  "loadType": "bodyweight",
+  "level": "beginner",
+  "cue": "Arms straight at shoulder height. Pull the band to the chest, squeeze the blades.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 0,
+   "wrist": 0,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "face-pulls",
+    "why": "Cable rope, loadable"
+   },
+   {
+    "id": "reverse-pec-deck",
+    "why": "Machine, chest pad, loadable"
+   },
+   {
+    "id": "cable-reverse-fly",
+    "why": "Cables, same sweep, loadable"
+   },
+   {
+    "id": "incline-y-raise",
+    "why": "Dumbbells, chest on a bench"
+   },
+   {
+    "id": "cable-internal-rotation",
+    "why": "Rotator-cuff cable work"
+   }
+  ]
+ },
+ {
+  "id": "barbell-upright-row",
+  "name": "Barbell Upright Row",
+  "aliases": [
+   "Upright Row"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts",
+   "upper-traps"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "biceps",
+   "forearm-flexors"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Hands shoulder-width. Lead with the elbows and stop when they reach shoulder height.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 3,
+   "elbow": 1,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Traps shrug up under load",
+   "shoulder": "Elbows pulled above the chest with the arms turned in",
+   "wrist": "Narrow grip bends the wrists under load"
+  },
+  "alternatives": [
+   {
+    "id": "cable-upright-row",
+    "why": "Rope to chest height, easier on shoulders"
+   },
+   {
+    "id": "db-lateral-raise",
+    "why": "Side delts without the shoulder pinch"
+   },
+   {
+    "id": "cable-lateral-raise",
+    "why": "Cable side raise, no inward turn"
+   },
+   {
+    "id": "machine-lateral-raise",
+    "why": "Machine, chest pad, gentle on the neck"
+   }
+  ]
+ },
+ {
+  "id": "cable-upright-row",
+  "name": "Cable Upright Row",
+  "aliases": [
+   "Rope Upright Row"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "side-delts",
+   "upper-traps"
+  ],
+  "secondaryMuscles": [
+   "front-delts",
+   "biceps"
+  ],
+  "pattern": "lateral-raise",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Low pulley, rope, hands apart. Pull the elbows out to chest height, no higher.",
+  "injury": {
+   "neck": 2,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "neck": "Traps work hard as the elbows rise",
+   "shoulder": "Arm raised with inward rotation; stop at chest height"
+  },
+  "alternatives": [
+   {
+    "id": "db-lateral-raise",
+    "why": "Side delts, easier on the neck"
+   },
+   {
+    "id": "cable-lateral-raise",
+    "why": "Same cable, side raise, easier on the neck"
+   },
+   {
+    "id": "machine-lateral-raise",
+    "why": "Machine, chest pad, gentle on the neck"
+   },
+   {
+    "id": "barbell-upright-row",
+    "why": "Barbell, heavier, harder on the shoulder"
+   }
+  ]
+ },
+ {
+  "id": "cable-external-rotation",
+  "name": "Cable External Rotation",
+  "aliases": [
+   "Standing Cable External Rotation"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rotator-cuff"
+  ],
+  "secondaryMuscles": [
+   "rear-delts"
+  ],
+  "pattern": "shoulder-rotation",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pulley at elbow height, towel between elbow and ribs. Rotate the hand out, keep the elbow pinned.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loads the shoulder joint itself; light and pain-free only"
+  },
+  "alternatives": [
+   {
+    "id": "side-lying-db-external-rotation",
+    "why": "Dumbbell, lying on the side, no cable"
+   },
+   {
+    "id": "face-pulls",
+    "why": "Rotation plus rear delts, heavier"
+   },
+   {
+    "id": "cable-internal-rotation",
+    "why": "Opposite direction on the same cable"
+   }
+  ]
+ },
+ {
+  "id": "side-lying-db-external-rotation",
+  "name": "Side-Lying DB External Rotation",
+  "aliases": [
+   "Side-Lying External Rotation"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rotator-cuff"
+  ],
+  "secondaryMuscles": [
+   "rear-delts"
+  ],
+  "pattern": "shoulder-rotation",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Lie on your side, elbow on the hip at 90°. Rotate the dumbbell up slowly, elbow stays put.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loads the shoulder joint itself; light and pain-free only"
+  },
+  "alternatives": [
+   {
+    "id": "cable-external-rotation",
+    "why": "Cable, standing, steady tension"
+   },
+   {
+    "id": "cable-internal-rotation",
+    "why": "Cable, the opposite rotation"
+   },
+   {
+    "id": "face-pulls",
+    "why": "Rotation plus rear delts, heavier"
+   }
+  ]
+ },
+ {
+  "id": "cable-internal-rotation",
+  "name": "Cable Internal Rotation",
+  "aliases": [
+   "Standing Cable Internal Rotation"
+  ],
+  "planIds": [],
+  "bodyPart": "shoulders",
+  "primaryMuscles": [
+   "rotator-cuff"
+  ],
+  "secondaryMuscles": [
+   "mid-chest"
+  ],
+  "pattern": "shoulder-rotation",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pulley at elbow height, towel at the ribs. Rotate the hand in across the belly, elbow pinned.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Loads the shoulder joint itself; light and pain-free only"
+  },
+  "alternatives": [
+   {
+    "id": "cable-external-rotation",
+    "why": "Same cable, outward rotation"
+   },
+   {
+    "id": "side-lying-db-external-rotation",
+    "why": "Dumbbell, lying, outward rotation"
+   },
+   {
+    "id": "band-pull-apart",
+    "why": "Band, light cuff and upper-back work"
+   }
+  ]
+ },
+ {
+  "id": "incline-db-curl",
+  "name": "Incline DB Curl",
+  "aliases": [
+   "Incline Dumbbell Curl"
+  ],
+  "planIds": [
+   "incline-db-curl"
+  ],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis",
+   "forearm-flexors"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "45° bench, arms hang behind the body. Biggest stretch, most growth. Slow 3-second lower.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arms hang behind the body, stretching the front of the shoulder",
+   "elbow": "Loaded curl from a full stretch"
+  },
+  "alternatives": [
+   {
+    "id": "bayesian-cable-curl",
+    "why": "Cable, same stretched position"
+   },
+   {
+    "id": "db-curl",
+    "why": "Standing, arms at sides, easier shoulder"
+   },
+   {
+    "id": "preacher-curl",
+    "why": "Stretch on a pad, arms in front"
+   },
+   {
+    "id": "spider-curl",
+    "why": "Chest on the bench, arms in front"
+   },
+   {
+    "id": "concentration-curl",
+    "why": "Seated, one arm, strict"
+   }
+  ]
+ },
+ {
+  "id": "hammer-curl",
+  "name": "Hammer Curl",
+  "aliases": [
+   "Neutral-Grip DB Curl"
+  ],
+  "planIds": [
+   "hammer-curl"
+  ],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "brachialis",
+   "brachioradialis"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "forearm-flexors"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Thumbs up, elbows at the sides. Brachialis pushes the biceps up for visible arm size.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion"
+  },
+  "alternatives": [
+   {
+    "id": "cable-rope-hammer-curl",
+    "why": "Same grip on a rope, steady tension"
+   },
+   {
+    "id": "db-curl",
+    "why": "Palms up for more biceps"
+   },
+   {
+    "id": "reverse-curl",
+    "why": "Palms down, more forearm"
+   },
+   {
+    "id": "concentration-curl",
+    "why": "Seated, one arm, no swinging"
+   }
+  ]
+ },
+ {
+  "id": "preacher-curl",
+  "name": "Preacher Curl",
+  "aliases": [
+   "EZ-Bar Preacher Curl"
+  ],
+  "planIds": [
+   "preacher-curl"
+  ],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "ez-bar",
+   "preacher-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Armpits on the pad. Full stretch at the bottom, no bounce. 3-second lower.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded at full stretch; stop short of lockout if sore"
+  },
+  "alternatives": [
+   {
+    "id": "db-preacher-curl",
+    "why": "One arm at a time on the same pad"
+   },
+   {
+    "id": "machine-biceps-curl",
+    "why": "Machine, fixed path, padded"
+   },
+   {
+    "id": "spider-curl",
+    "why": "Dumbbells, chest on an incline bench"
+   },
+   {
+    "id": "cable-curl",
+    "why": "Cable, standing, steady tension"
+   },
+   {
+    "id": "concentration-curl",
+    "why": "Elbow on the thigh, no preacher needed"
+   },
+   {
+    "id": "incline-db-curl",
+    "why": "Stretch from behind instead, dumbbells"
+   },
+   {
+    "id": "barbell-curl",
+    "why": "Standing barbell, no pad needed"
+   },
+   {
+    "id": "ez-bar-curl",
+    "why": "Standing EZ bar, no pad needed"
+   }
+  ]
+ },
+ {
+  "id": "cable-curl",
+  "name": "Cable Curl",
+  "aliases": [
+   "Straight-Bar Cable Curl",
+   "Cable Curl Drop Set"
+  ],
+  "planIds": [
+   "cable-curl-drop-set"
+  ],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis",
+   "forearm-flexors"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "straight-bar",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Elbows pinned, stand tall. Last set: drop the weight 30% and rep out.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion",
+   "wrist": "Straight bar locks the wrists palms-up under load"
+  },
+  "alternatives": [
+   {
+    "id": "db-curl",
+    "why": "Dumbbells let the wrists turn freely"
+   },
+   {
+    "id": "ez-bar-curl",
+    "why": "Free bar with an angled grip"
+   },
+   {
+    "id": "cable-rope-hammer-curl",
+    "why": "Rope on the same cable, neutral wrists"
+   },
+   {
+    "id": "machine-biceps-curl",
+    "why": "Machine, seated, back rested"
+   },
+   {
+    "id": "bayesian-cable-curl",
+    "why": "Cable behind you, longer stretch"
+   },
+   {
+    "id": "preacher-curl",
+    "why": "EZ bar on a pad, seated, kinder wrists"
+   },
+   {
+    "id": "high-cable-curl",
+    "why": "Crossover cables, arms up"
+   },
+   {
+    "id": "barbell-curl",
+    "why": "Free barbell, heavier loading"
+   }
+  ]
+ },
+ {
+  "id": "bayesian-cable-curl",
+  "name": "Bayesian Cable Curl",
+  "aliases": [
+   "Behind-the-Body Cable Curl"
+  ],
+  "planIds": [
+   "bayesian-cable-curl"
+  ],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Face away from a low cable, arm behind the body. Stretched biceps curl, then go to the next exercise.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 2,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "shoulder": "Arm drawn behind the body at the stretch",
+   "elbow": "Loaded curl from a full stretch"
+  },
+  "alternatives": [
+   {
+    "id": "cable-curl",
+    "why": "Arms at the sides, easier on the shoulder"
+   },
+   {
+    "id": "incline-db-curl",
+    "why": "Dumbbells, same stretch"
+   },
+   {
+    "id": "high-cable-curl",
+    "why": "Crossover cables, arms up"
+   },
+   {
+    "id": "db-curl",
+    "why": "Dumbbells, arms at sides, no cable"
+   }
+  ]
+ },
+ {
+  "id": "barbell-curl",
+  "name": "Barbell Curl",
+  "aliases": [
+   "Standing Barbell Curl",
+   "Straight-Bar Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis",
+   "forearm-flexors",
+   "front-delts"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Elbows at the sides, body still. Curl to the chest and lower slowly. No leaning back.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion",
+   "wrist": "Straight bar locks the wrists palms-up under load",
+   "lowerBack": "Stand tall; leaning back to swing loads the back"
+  },
+  "alternatives": [
+   {
+    "id": "ez-bar-curl",
+    "why": "Angled grip, easier on the wrists"
+   },
+   {
+    "id": "preacher-curl",
+    "why": "Seated on a pad, no lower-back load"
+   },
+   {
+    "id": "cable-curl",
+    "why": "Cable, steady tension all the way"
+   },
+   {
+    "id": "db-curl",
+    "why": "Dumbbells, wrists free to turn"
+   },
+   {
+    "id": "machine-biceps-curl",
+    "why": "Machine, seated, no back load"
+   }
+  ]
+ },
+ {
+  "id": "ez-bar-curl",
+  "name": "EZ-Bar Curl",
+  "aliases": [
+   "Standing EZ Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis",
+   "forearm-flexors",
+   "front-delts"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "ez-bar"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Grip the inner angles, elbows at the sides. Curl up, lower slowly, no leaning back.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion",
+   "lowerBack": "Stand tall; leaning back to swing loads the back"
+  },
+  "alternatives": [
+   {
+    "id": "preacher-curl",
+    "why": "Seated on a pad, no lower-back load"
+   },
+   {
+    "id": "cable-curl",
+    "why": "Cable, steady tension all the way"
+   },
+   {
+    "id": "barbell-curl",
+    "why": "Straight bar, more wrist strain"
+   },
+   {
+    "id": "db-curl",
+    "why": "Dumbbells, one at a time if needed"
+   },
+   {
+    "id": "machine-biceps-curl",
+    "why": "Machine, seated, no back load"
+   }
+  ]
+ },
+ {
+  "id": "db-curl",
+  "name": "DB Curl",
+  "aliases": [
+   "Dumbbell Curl",
+   "Alternating DB Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis",
+   "forearm-flexors"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "dumbbells"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Elbows at the sides, turn the palm up as you curl. Lower for 2-3 seconds.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion"
+  },
+  "alternatives": [
+   {
+    "id": "hammer-curl",
+    "why": "Thumbs-up grip, more brachialis"
+   },
+   {
+    "id": "cable-curl",
+    "why": "Cable, steady tension"
+   },
+   {
+    "id": "incline-db-curl",
+    "why": "Seated back, bigger stretch"
+   },
+   {
+    "id": "concentration-curl",
+    "why": "Seated, one arm, strict"
+   },
+   {
+    "id": "bayesian-cable-curl",
+    "why": "Cable behind you, longer stretch"
+   },
+   {
+    "id": "ez-bar-curl",
+    "why": "EZ bar, both arms together"
+   },
+   {
+    "id": "barbell-curl",
+    "why": "Straight bar, heavier"
+   },
+   {
+    "id": "high-cable-curl",
+    "why": "Crossover cables, arms up"
+   }
+  ]
+ },
+ {
+  "id": "concentration-curl",
+  "name": "Concentration Curl",
+  "aliases": [
+   "Seated Concentration Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Sit, elbow against the inner thigh. Curl to the shoulder, squeeze, lower slowly.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion"
+  },
+  "alternatives": [
+   {
+    "id": "db-preacher-curl",
+    "why": "One arm on a pad, similar strict curl"
+   },
+   {
+    "id": "spider-curl",
+    "why": "Both arms, chest on a bench"
+   },
+   {
+    "id": "preacher-curl",
+    "why": "EZ bar on a preacher pad"
+   },
+   {
+    "id": "db-curl",
+    "why": "Standing, both arms"
+   },
+   {
+    "id": "hammer-curl",
+    "why": "Thumbs up, more brachialis"
+   },
+   {
+    "id": "incline-db-curl",
+    "why": "Bigger stretch, back supported"
+   }
+  ]
+ },
+ {
+  "id": "spider-curl",
+  "name": "Spider Curl",
+  "aliases": [
+   "Prone Incline Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "dumbbells",
+   "adjustable-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Chest on a 45° bench, arms hanging straight down. Curl up hard, squeeze, lower slowly.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion"
+  },
+  "alternatives": [
+   {
+    "id": "preacher-curl",
+    "why": "EZ bar on a pad, same short range"
+   },
+   {
+    "id": "incline-db-curl",
+    "why": "Back on the bench, arms behind, stretch"
+   },
+   {
+    "id": "concentration-curl",
+    "why": "One arm, seated"
+   },
+   {
+    "id": "machine-biceps-curl",
+    "why": "Machine, fixed path, padded"
+   }
+  ]
+ },
+ {
+  "id": "cable-rope-hammer-curl",
+  "name": "Rope Hammer Curl",
+  "aliases": [
+   "Cable Rope Hammer Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "brachialis",
+   "brachioradialis"
+  ],
+  "secondaryMuscles": [
+   "biceps",
+   "forearm-flexors"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "cable-machine"
+  ],
+  "attachment": "rope",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Low pulley, rope, thumbs up. Elbows pinned, curl the rope ends to the shoulders.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion"
+  },
+  "alternatives": [
+   {
+    "id": "hammer-curl",
+    "why": "Dumbbells, same thumbs-up grip"
+   },
+   {
+    "id": "cable-curl",
+    "why": "Straight bar on the cable, more biceps"
+   },
+   {
+    "id": "reverse-curl",
+    "why": "Palms down, more forearm"
+   }
+  ]
+ },
+ {
+  "id": "machine-biceps-curl",
+  "name": "Biceps Curl Machine",
+  "aliases": [
+   "Machine Curl",
+   "Machine Preacher Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "biceps-curl-machine"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 5,
+  "level": "beginner",
+  "cue": "Elbows lined up with the pivot, arms on the pad. Curl up, lower for 3 seconds.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion"
+  },
+  "alternatives": [
+   {
+    "id": "preacher-curl",
+    "why": "EZ bar on a preacher pad"
+   },
+   {
+    "id": "db-preacher-curl",
+    "why": "One arm on a pad, dumbbell"
+   },
+   {
+    "id": "cable-curl",
+    "why": "Standing cable, steady tension"
+   },
+   {
+    "id": "barbell-curl",
+    "why": "Standing barbell, no pad needed"
+   },
+   {
+    "id": "ez-bar-curl",
+    "why": "Standing EZ bar, no pad needed"
+   },
+   {
+    "id": "spider-curl",
+    "why": "Dumbbells, chest on a bench"
+   }
+  ]
+ },
+ {
+  "id": "db-preacher-curl",
+  "name": "DB Preacher Curl",
+  "aliases": [
+   "Single-Arm Preacher Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "dumbbells",
+   "preacher-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": true,
+  "loadType": "per-dumbbell",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Armpit on the pad, one arm. Full stretch, no bounce, slow lower.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded at full stretch; stop short of lockout if sore"
+  },
+  "alternatives": [
+   {
+    "id": "preacher-curl",
+    "why": "EZ bar, both arms on the pad"
+   },
+   {
+    "id": "concentration-curl",
+    "why": "Elbow on the thigh, no preacher needed"
+   },
+   {
+    "id": "machine-biceps-curl",
+    "why": "Machine, fixed path, padded"
+   }
+  ]
+ },
+ {
+  "id": "high-cable-curl",
+  "name": "High Cable Curl",
+  "aliases": [
+   "Double Biceps Cable Curl",
+   "Overhead Cable Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "biceps",
+  "primaryMuscles": [
+   "biceps"
+  ],
+  "secondaryMuscles": [
+   "brachialis"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "cable-crossover"
+  ],
+  "attachment": "d-handle",
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "stack",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Stand between high pulleys, arms out at shoulder height. Curl the handles to the ears.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 1,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Loaded elbow flexion"
+  },
+  "alternatives": [
+   {
+    "id": "bayesian-cable-curl",
+    "why": "Single cable, arm behind, longer stretch"
+   },
+   {
+    "id": "cable-curl",
+    "why": "Standard cable curl, arms down"
+   },
+   {
+    "id": "db-curl",
+    "why": "Dumbbells, no cable needed"
+   }
+  ]
+ },
+ {
+  "id": "reverse-curl",
+  "name": "Reverse Curl",
+  "aliases": [
+   "EZ-Bar Reverse Curl",
+   "Overhand Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "forearms",
+  "primaryMuscles": [
+   "brachioradialis",
+   "brachialis"
+  ],
+  "secondaryMuscles": [
+   "forearm-extensors",
+   "biceps"
+  ],
+  "pattern": "curl",
+  "equipment": [
+   "ez-bar"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Overhand grip on the EZ bar, elbows at the sides. Curl up, wrists straight, lower slowly.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 2,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Palms-down curl strains the outer elbow",
+   "wrist": "Wrists held straight against the load, palms down"
+  },
+  "alternatives": [
+   {
+    "id": "hammer-curl",
+    "why": "Thumbs-up grip, easier on the wrists"
+   },
+   {
+    "id": "cable-rope-hammer-curl",
+    "why": "Rope, neutral grip, easier on wrists"
+   },
+   {
+    "id": "reverse-wrist-curl",
+    "why": "Forearm extensors only, no elbow bend"
+   }
+  ]
+ },
+ {
+  "id": "wrist-curl",
+  "name": "DB Wrist Curl",
+  "aliases": [
+   "Seated Wrist Curl",
+   "Dumbbell Wrist Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "forearms",
+  "primaryMuscles": [
+   "forearm-flexors"
+  ],
+  "secondaryMuscles": [
+   "grip"
+  ],
+  "pattern": "wrist-work",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Forearms on the bench, wrists over the edge, palms up. Roll the weight down to the fingers, curl up.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 3,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Forearm flexors pull on the inner elbow",
+   "wrist": "The wrist is the target, moved under load"
+  },
+  "alternatives": [
+   {
+    "id": "behind-the-back-wrist-curl",
+    "why": "Barbell behind the back, standing"
+   },
+   {
+    "id": "plate-pinch",
+    "why": "Static grip hold, the wrist stays still"
+   },
+   {
+    "id": "reverse-wrist-curl",
+    "why": "The other side of the forearm"
+   }
+  ]
+ },
+ {
+  "id": "reverse-wrist-curl",
+  "name": "Reverse Wrist Curl",
+  "aliases": [
+   "Wrist Extension"
+  ],
+  "planIds": [],
+  "bodyPart": "forearms",
+  "primaryMuscles": [
+   "forearm-extensors"
+  ],
+  "secondaryMuscles": [
+   "brachioradialis"
+  ],
+  "pattern": "wrist-work",
+  "equipment": [
+   "dumbbells",
+   "flat-bench"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "per-dumbbell",
+  "incrementKg": 1,
+  "level": "beginner",
+  "cue": "Forearms on the bench, palms down. Lift the back of the hand up, lower slowly. Go light.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 0,
+   "elbow": 2,
+   "wrist": 3,
+   "lowerBack": 0,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Extensors pull on the outer elbow",
+   "wrist": "The wrist is the target, moved under load"
+  },
+  "alternatives": [
+   {
+    "id": "wrist-curl",
+    "why": "Palms up, forearm flexors"
+   },
+   {
+    "id": "reverse-curl",
+    "why": "Elbow curl palms down, wrist held still"
+   },
+   {
+    "id": "plate-pinch",
+    "why": "Static grip hold, the wrist stays still"
+   },
+   {
+    "id": "behind-the-back-wrist-curl",
+    "why": "Barbell, flexors, standing"
+   }
+  ]
+ },
+ {
+  "id": "behind-the-back-wrist-curl",
+  "name": "Behind-the-Back Wrist Curl",
+  "aliases": [
+   "Standing Barbell Wrist Curl"
+  ],
+  "planIds": [],
+  "bodyPart": "forearms",
+  "primaryMuscles": [
+   "forearm-flexors"
+  ],
+  "secondaryMuscles": [
+   "grip"
+  ],
+  "pattern": "wrist-work",
+  "equipment": [
+   "barbell"
+  ],
+  "logAs": "weighted",
+  "perSide": false,
+  "loadType": "barbell-total",
+  "incrementKg": 2.5,
+  "level": "intermediate",
+  "cue": "Bar behind the thighs, palms facing back. Let it roll to the fingers, curl the wrists up.",
+  "injury": {
+   "neck": 0,
+   "shoulder": 1,
+   "elbow": 2,
+   "wrist": 3,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {
+   "elbow": "Forearm flexors pull on the inner elbow",
+   "wrist": "The wrist is the target, moved under load"
+  },
+  "alternatives": [
+   {
+    "id": "wrist-curl",
+    "why": "Seated, forearms on a bench"
+   },
+   {
+    "id": "plate-pinch",
+    "why": "Static grip hold, the wrist stays still"
+   },
+   {
+    "id": "reverse-wrist-curl",
+    "why": "Extensors, seated"
+   }
+  ]
+ },
+ {
+  "id": "plate-pinch",
+  "name": "Plate Pinch",
+  "aliases": [
+   "Plate Pinch Hold"
+  ],
+  "planIds": [],
+  "bodyPart": "forearms",
+  "primaryMuscles": [
+   "grip",
+   "forearm-flexors"
+  ],
+  "secondaryMuscles": [
+   "forearm-extensors"
+  ],
+  "pattern": "wrist-work",
+  "equipment": [
+   "weight-plate"
+  ],
+  "logAs": "timed",
+  "perSide": true,
+  "loadable": true,
+  "loadType": "single-weight",
+  "incrementKg": 2.5,
+  "level": "beginner",
+  "cue": "Pinch two smooth plates together, fingers one side, thumb the other. Stand tall, hold.",
+  "injury": {
+   "neck": 1,
+   "shoulder": 1,
+   "elbow": 1,
+   "wrist": 1,
+   "lowerBack": 1,
+   "hip": 0,
+   "knee": 0,
+   "ankle": 0
+  },
+  "injuryNotes": {},
+  "alternatives": [
+   {
+    "id": "wrist-curl",
+    "why": "Moving wrist curls for the flexors"
+   },
+   {
+    "id": "behind-the-back-wrist-curl",
+    "why": "Barbell wrist curl, standing"
+   },
+   {
+    "id": "reverse-wrist-curl",
+    "why": "Extensors, seated"
+   }
+  ]
+ }
+]
