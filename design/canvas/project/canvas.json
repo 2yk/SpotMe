@@ -8,7 +8,7 @@
    "title": "13.1 · The twelve figures",
    "w": 1280,
    "x": 0,
-   "y": 7300
+   "y": 1160
   },
   "F132-Turn.dc.html": {
    "h": 940,
@@ -16,7 +16,7 @@
    "title": "13.2 · Turning a figure",
    "w": 1280,
    "x": 0,
-   "y": 9412
+   "y": 2270
   },
   "Main.dc.html": {
    "h": 780,
@@ -361,7 +361,7 @@
   },
   "W11-TodayStart.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.1 · Today · before the workout",
    "w": 416,
@@ -370,7 +370,7 @@
   },
   "W110-TodayWaiting.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.10 · Today · one waiting",
    "w": 416,
@@ -379,7 +379,7 @@
   },
   "W12-TodayList.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.2 · Today · the list",
    "w": 416,
@@ -388,7 +388,7 @@
   },
   "W13-TodayRunning.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.3 · Today · workout running",
    "w": 416,
@@ -397,7 +397,7 @@
   },
   "W14-TodayPaused.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.4 · Today · paused",
    "w": 416,
@@ -406,7 +406,7 @@
   },
   "W15-TodayEnd.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.5 · Today · end of the list",
    "w": 416,
@@ -415,7 +415,7 @@
   },
   "W16-TodayAllDone.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.6 · Today · all done",
    "w": 416,
@@ -424,7 +424,7 @@
   },
   "W17-Days.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.7 · Days",
    "w": 416,
@@ -433,7 +433,7 @@
   },
   "W18-RestDay.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.8 · Today · rest day",
    "w": 416,
@@ -451,7 +451,7 @@
   },
   "W210-SetDeload.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.10 · Set · deload week",
    "w": 416,
@@ -460,25 +460,25 @@
   },
   "W211-SetFigure.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.11 · Set · with a figure",
    "w": 416,
-   "x": 1360,
+   "x": 0,
    "y": 7300
   },
   "W212-How.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.12 · How",
    "w": 416,
-   "x": 1856,
+   "x": 496,
    "y": 7300
   },
   "W213-RampUp.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.13 · Ramp-up set",
    "w": 416,
@@ -487,7 +487,7 @@
   },
   "W214-HowTurn.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.14 · How · turn it",
    "w": 416,
@@ -496,7 +496,7 @@
   },
   "W21A-SetTiles.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.1A · Set · side by side",
    "w": 416,
@@ -514,7 +514,7 @@
   },
   "W22-SetWeight.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.2 · Set · Crown on weight",
    "w": 416,
@@ -523,7 +523,7 @@
   },
   "W23-SetFirst.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.3 · Set · first time",
    "w": 416,
@@ -532,7 +532,7 @@
   },
   "W24-SetReps.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.4 · Set · reps only",
    "w": 416,
@@ -541,7 +541,7 @@
   },
   "W25-SetSide.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.5 · Set · per side, optional weight",
    "w": 416,
@@ -550,7 +550,7 @@
   },
   "W26-SetMax.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.6 · Set · max reps",
    "w": 416,
@@ -559,7 +559,7 @@
   },
   "W27-SetVolume.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.7 · Set · volume sets",
    "w": 416,
@@ -568,7 +568,7 @@
   },
   "W28-SetSuperset.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.8 · Set · superset",
    "w": 416,
@@ -577,7 +577,7 @@
   },
   "W29-SetPaused.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.9 · Set · paused",
    "w": 416,
@@ -586,7 +586,7 @@
   },
   "W310-BreakPick.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.10 · Break · do another next",
    "w": 416,
@@ -595,7 +595,7 @@
   },
   "W311-BreakMax.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.11 · Break · after the max-rep set",
    "w": 416,
@@ -604,16 +604,16 @@
   },
   "W312-BreakFigure.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.12 · Break · with a figure",
    "w": 416,
-   "x": 2352,
+   "x": 992,
    "y": 7300
   },
   "W313-RestRampUp.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.13 · Rest · after the last ramp-up",
    "w": 416,
@@ -622,7 +622,7 @@
   },
   "W314-BreakBack.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.14 · Break · back to a waiting one",
    "w": 416,
@@ -631,7 +631,7 @@
   },
   "W31A-RestEdge.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.1A · Rest · timer round the edge",
    "w": 416,
@@ -649,7 +649,7 @@
   },
   "W32-RestDrop.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.2 · Rest · next set lighter",
    "w": 416,
@@ -658,7 +658,7 @@
   },
   "W33-RestUp.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.3 · Rest · next set heavier",
    "w": 416,
@@ -667,7 +667,7 @@
   },
   "W34-RestReps.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.4 · Rest · reps exercise",
    "w": 416,
@@ -676,7 +676,7 @@
   },
   "W35-RestPaused.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.5 · Rest · paused",
    "w": 416,
@@ -685,7 +685,7 @@
   },
   "W36-RestSuperset.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.6 · Rest · after a superset pair",
    "w": 416,
@@ -694,7 +694,7 @@
   },
   "W37-RestAlwaysOn.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.7 · Rest · wrist down",
    "w": 416,
@@ -703,7 +703,7 @@
   },
   "W38-Break.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.8 · Break · next exercise",
    "w": 416,
@@ -712,7 +712,7 @@
   },
   "W39-BreakChecklist.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.9 · Break · before a tick-off item",
    "w": 416,
@@ -721,7 +721,7 @@
   },
   "W41-HoldReady.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "4.1 · Hold · ready",
    "w": 416,
@@ -730,7 +730,7 @@
   },
   "W42-HoldRunning.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "4.2 · Hold · under the range",
    "w": 416,
@@ -739,7 +739,7 @@
   },
   "W43-HoldInRange.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "4.3 · Hold · in range",
    "w": 416,
@@ -748,7 +748,7 @@
   },
   "W44-HoldTop.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "4.4 · Hold · top reached",
    "w": 416,
@@ -757,7 +757,7 @@
   },
   "W45-ChecklistSteps.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "4.5 · Tick-off · steps",
    "w": 416,
@@ -766,7 +766,7 @@
   },
   "W46-ChecklistEnd.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "4.6 · Tick-off · end of the steps",
    "w": 416,
@@ -775,7 +775,7 @@
   },
   "W47-ChecklistNote.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "4.7 · Tick-off · note only",
    "w": 416,
@@ -784,7 +784,7 @@
   },
   "W51-Controls.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.1 · Controls",
    "w": 416,
@@ -793,7 +793,7 @@
   },
   "W510-ControlsSkip.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.10 · Controls · Skip means later",
    "w": 416,
@@ -802,7 +802,7 @@
   },
   "W52-ControlsPaused.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.2 · Controls · paused",
    "w": 416,
@@ -811,7 +811,7 @@
   },
   "W53-End.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.3 · End workout?",
    "w": 416,
@@ -820,7 +820,7 @@
   },
   "W54-Discard.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.4 · Discard workout?",
    "w": 416,
@@ -829,7 +829,7 @@
   },
   "W55-AllDone.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.5 · All done",
    "w": 416,
@@ -838,7 +838,7 @@
   },
   "W56-Summary.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.6 · Summary",
    "w": 416,
@@ -847,7 +847,7 @@
   },
   "W57-HealthAlert.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.7 · Not saving to Health",
    "w": 416,
@@ -856,7 +856,7 @@
   },
   "W58-Effort.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.8 · Effort",
    "w": 416,
@@ -865,7 +865,7 @@
   },
   "W59-SummaryEffort.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.9 · Summary with effort",
    "w": 416,
@@ -874,7 +874,7 @@
   },
   "W61-Complications.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "title": "6.1 · Complication",
    "w": 1040,
    "x": 0,
@@ -886,7 +886,7 @@
    "title": "13.3 · Your plan's figures",
    "w": 1280,
    "x": 0,
-   "y": 10682
+   "y": 3540
   }
  },
  "createdOnFiles": {
@@ -923,17 +923,17 @@
    "maxH": 520,
    "page": "approved",
    "size": 24,
-   "text": "Form figures: approved for the watch on 6 Oct.\n\nm · Every exercise in your plan has a figure, and every one turns: board 13.3 at the bottom of this page shows all 50, moving. They are with the builder. The other 200 in the database wait for the iPhone and onboarding work.",
+   "text": "Form figures: built for the watch in build 7.\n\nm · Every exercise in your plan has a figure, and every one turns: board 13.3 shows all 50, moving. The other 200 in the database wait for the iPhone and onboarding work.",
    "w": 520,
-   "x": 2848,
-   "y": 7300
+   "x": 1360,
+   "y": 1160
   },
   "decide-notes": {
    "fill": "orange",
    "maxH": 760,
-   "page": "approved",
+   "page": "live-watch",
    "size": 24,
-   "text": "Approved by Yeshu on 6 Oct and sent to the builder:\n\nn · Ramp-up sets: two lighter sets before the first main lift (50% × 8, 75% × 4), one before other main lifts. Not counted, tapped off. Working sets and \"Last\" stay as they are.\no · Effort: the watch asks 1 to 10 after Finish and saves it with the workout, so Fitness shows it. Needs one more Health permission.\np · Skip in the controls jumps to the next exercise and leaves this one open; the workout comes back to it. Dropping one for the day is the swipe in Today.\nq · Figures store depth, so they can be turned with the Crown on the watch. Every exercise in the plan gets one.",
+   "text": "Approved by Yeshu on 6 Oct and built as build 7. To confirm on your watch: effort shows on the workout in Fitness, and the controls icons no longer start small.\n\n\nn · Ramp-up sets: two lighter sets before the first main lift (50% × 8, 75% × 4), one before other main lifts. Not counted, tapped off. Working sets and \"Last\" stay as they are.\no · Effort: the watch asks 1 to 10 after Finish and saves it with the workout, so Fitness shows it. Needs one more Health permission.\np · Skip in the controls jumps to the next exercise and leaves this one open; the workout comes back to it. Dropping one for the day is the swipe in Today.\nq · Figures store depth, so they can be turned with the Crown on the watch. Every exercise in the plan gets one.",
    "w": 620,
    "x": 3968,
    "y": 8716
@@ -961,9 +961,9 @@
   "decide-watch": {
    "fill": "orange",
    "maxH": 780,
-   "page": "approved",
+   "page": "live-watch",
    "size": 24,
-   "text": "Approved by Yeshu on 6 Oct and sent to the builder. Set screen 2.1A, rest screen 3.1A.\n\nWhat changes besides the look:\n\na · The set screen shows last time's reps for this set (\"Last 9\").\nb · Undo moves from the set screen to the rest and break screens.\nc · Today rows lose the round kind icons. The target weight sits on the right, with an arrow when it goes up or down today.\nd · A rest day has no Start workout button.\ne · End workout is one screen with three buttons, no scrolling.\nf · \"Back to list\" under All done is gone (Back is already there).",
+   "text": "Approved by Yeshu on 6 Oct and built as build 7. Set screen 2.1A, rest screen 3.1A.\n\nWhat changes besides the look:\n\na · The set screen shows last time's reps for this set (\"Last 9\").\nb · Undo moves from the set screen to the rest and break screens.\nc · Today rows lose the round kind icons. The target weight sits on the right, with an arrow when it goes up or down today.\nd · A rest day has no Start workout button.\ne · End workout is one screen with three buttons, no scrolling.\nf · \"Back to list\" under All done is gone (Back is already there).",
    "w": 620,
    "x": 1360,
    "y": 0
@@ -971,7 +971,7 @@
   "row1": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-watch",
    "text": "1 · Today",
    "w": 240,
    "x": 0,
@@ -1008,16 +1008,16 @@
    "kind": "title1",
    "maxW": 2400,
    "page": "approved",
-   "text": "13.1 · Form figures · approved for the watch",
+   "text": "13 · Form figures (reference): the first twelve, turning, and all 50 of your plan",
    "w": 240,
    "x": 0,
-   "y": 6970
+   "y": 830
   },
   "row14": {
    "kind": "title1",
    "maxW": 3600,
-   "page": "approved",
-   "text": "Approved 6 Oct · ramp-up · effort · skip · turning figures",
+   "page": "live-watch",
+   "text": "Built 6 Oct · ramp-up · effort · skip · turning figures",
    "w": 240,
    "x": 0,
    "y": 8386
@@ -1025,7 +1025,7 @@
   "row2": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-watch",
    "text": "2 · Logging a set",
    "w": 240,
    "x": 0,
@@ -1034,7 +1034,7 @@
   "row3": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-watch",
    "text": "3 · Rest, and the break between exercises",
    "w": 240,
    "x": 0,
@@ -1043,7 +1043,7 @@
   "row4": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-watch",
    "text": "4 · Holds and tick-off items",
    "w": 240,
    "x": 0,
@@ -1052,7 +1052,7 @@
   "row5": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-watch",
    "text": "5 · Controls and the end",
    "w": 240,
    "x": 0,
@@ -1061,7 +1061,7 @@
   "row6": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-watch",
    "text": "6 · Complication",
    "w": 240,
    "x": 0,
@@ -1097,8 +1097,26 @@
   "top": {
    "kind": "title1",
    "maxW": 2400,
+   "page": "live-watch",
+   "text": "Built 6 Oct · build 7 · every screen checked against its board",
+   "w": 240,
+   "x": 0,
+   "y": -330
+  },
+  "row13w": {
+   "kind": "title1",
+   "maxW": 2400,
+   "page": "live-watch",
+   "text": "2.11, 2.12, 3.12 · Figures on the watch",
+   "w": 240,
+   "x": 0,
+   "y": 6970
+  },
+  "approved-top": {
+   "kind": "title1",
+   "maxW": 2400,
    "page": "approved",
-   "text": "Approved 6 Oct · Watch: 0 and 1.1–6.1 · being built",
+   "text": "Reference: watch style and form figures. The watch screens are on Live · Watch.",
    "w": 240,
    "x": 0,
    "y": -330

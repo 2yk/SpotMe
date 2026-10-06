@@ -46,3 +46,17 @@ Left, to come with the figure screens:
 3. 3.13: heart line missing.
 4. 2.13: hint row 9 pt lower than on the set screen (the Skip button's tap height).
 5. 3.14: a two-line summary runs under the round buttons; it gets the lines that fit.
+
+## Round 3 · final (6 Oct 2026, 60 screenshots, branch head f278e95, build 7)
+
+Passed. The five fixes are in, and the figure screens match: the still on the set screen (2.11), How with the
+moving figure, the Crown hint, then the cue (2.12, 2.14), the moving figure on the break (3.12), at 46 and
+42 mm. The builder reports 154 package tests and 15 watch UI tests passing, `docs/SPEC.md` updated.
+
+Not blocking, for later: on 3.12 the name may take three lines before it is cut; on 3.14 the chevron should
+stay after the last word.
+
+Only Yeshu's real watch can confirm: effort shows on the workout in Fitness; the controls icons no longer
+start small and grow.
+
+The 55 watch boards moved to the canvas page Live · Watch.
