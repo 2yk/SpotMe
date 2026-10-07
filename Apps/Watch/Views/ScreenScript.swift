@@ -106,7 +106,7 @@ enum ScreenScript {
             workout.discardWorkout()
         case "start-denied":
             workout.startProblem = WorkoutModel.accessDeniedMessage
-        case "complications":
+        case "complications", "complications-states":
             path.wrappedValue = [.complications]
         case "tap-start":
             // What a complication tap delivers (simctl can't open links on watchOS).
@@ -190,6 +190,8 @@ enum ScreenScript {
             let id = UserDefaults.standard.string(forKey: "item")
             show(today.day.items.first { $0.exerciseId == id }.map { [$0] } ?? today.queue.upNext)
             guard let flow = workout.flow else { return }
+            // How is behind the set screen, not the ramp-up.
+            if screen == "how" || screen == "break-how" { flow.skipRampUps() }
             if screen == "rest" {
                 // One rep under the range, so the rest screen shows the engine dropping the weight.
                 flow.reps = Double((flow.currentTarget.repMin ?? 6) - 1)

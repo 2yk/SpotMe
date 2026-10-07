@@ -212,6 +212,8 @@ final class WorkoutFlowUITests: XCTestCase {
         let bench = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'DB Bench Press'")).firstMatch
         XCTAssertTrue(bench.exists, "No DB Bench Press among the alternatives")
         bench.tap()
+        // DB Bench Press is a main lift with history of its own (the demo's Friday has it): it opens on its ramp-up.
+        skipRampUpIfShown(app)
         XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10), "Back on the set screen")
         XCTAssertTrue(app.staticTexts["DB Bench Press"].waitForExistence(timeout: 5), "The swapped-in exercise isn't shown")
         XCTAssertFalse(app.staticTexts["Machine Chest Press"].exists)

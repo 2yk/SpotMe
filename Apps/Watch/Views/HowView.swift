@@ -1,8 +1,7 @@
 import SwiftUI
 import RepCoachCore
 
-/// How to do the exercise: the figure moving at 125 pt (100 pt when the cue runs to three lines and there is a
-/// Swap button to fit), the Digital Crown turning it a full circle, with light haptic detents. Until the Crown
+/// How to do the exercise: the figure moving at 125 pt (100 pt when there is a Swap button to fit), the Digital Crown turning it a full circle, with light haptic detents. Until the Crown
 /// has been turned here once, the line says so; after that it is the cue. Under it, Swap exercise: take another
 /// exercise's place for today.
 struct HowView: View {
@@ -23,8 +22,9 @@ struct HowView: View {
     var body: some View {
         let yaw = exercise.figure.openingYaw + crown * Self.degreesPerTurn
         let canSwap = today.canSwap(item)
-        // A long cue and the button together need the figure a little smaller.
-        let figureSize = canSwap && hasTurned && exercise.cue.count > 60 ? pt(100) : pt(125)
+        // The figure, the name, the cue and the button together need the figure a little smaller (200 px on the
+        // board, 250 px without the button).
+        let figureSize = canSwap ? pt(100) : pt(125)
         VStack(spacing: 0) {
             FigureView(exercise: exercise, yaw: yaw, size: figureSize)
             Text(item.name)
