@@ -198,7 +198,7 @@
    "y": 6531
   },
   "P71-Today.dc.html": {
-   "h": 1800,
+   "h": 1840,
    "page": "review",
    "radius": 40,
    "title": "7.1 · Today · before the workout",
@@ -676,12 +676,12 @@
   },
   "W35-RestPaused.dc.html": {
    "h": 496,
-   "page": "review",
+   "page": "backlog",
    "radius": 96,
-   "title": "3.5 · Rest · paused",
+   "title": "3.5 · Rest · paused (dropped 7 Oct: the rest never pauses)",
    "w": 416,
-   "x": 1984,
-   "y": -2800
+   "x": 1040,
+   "y": 0
   },
   "W36-RestSuperset.dc.html": {
    "h": 496,
@@ -962,30 +962,30 @@
   },
   "P71A-TodayBig.dc.html": {
    "h": 956,
-   "page": "review",
+   "page": "backlog",
    "radius": 40,
-   "title": "7.1A · Today · A · Big numbers",
+   "title": "7.1A · Today · A · Big numbers (not chosen)",
    "w": 440,
-   "x": 0,
-   "y": -4200
+   "x": 1600,
+   "y": 0
   },
   "P71B-TodayDepth.dc.html": {
    "h": 956,
-   "page": "review",
+   "page": "approved",
    "radius": 40,
-   "title": "7.1B · Today · B · Depth",
+   "title": "0.2 · iPhone look (B · Depth), chosen 7 Oct",
    "w": 440,
-   "x": 520,
-   "y": -4200
+   "x": 1360,
+   "y": 5100
   },
   "P71C-TodayEditorial.dc.html": {
    "h": 956,
-   "page": "review",
+   "page": "backlog",
    "radius": 40,
-   "title": "7.1C · Today · C · Editorial",
+   "title": "7.1C · Today · C · Editorial (not chosen)",
    "w": 440,
-   "x": 1040,
-   "y": -4200
+   "x": 2120,
+   "y": 0
   },
   "P96-RearrangeDays.dc.html": {
    "h": 956,
@@ -1280,7 +1280,7 @@
    "kind": "title1",
    "maxW": 3000,
    "page": "review",
-   "text": "Pick a look · 7.1A, 7.1B, 7.1C · the Today screen three ways; the one you choose is applied to every iPhone screen",
+   "text": "Chosen 7 Oct: look B (Depth). Applied to Today first; History, Plan, Settings follow one by one. The reference board is on Approved.",
    "w": 240,
    "x": 0,
    "y": -4530
@@ -1293,7 +1293,17 @@
    "w": 560,
    "x": 1600,
    "y": -4200,
-   "text": "Afternoon of 7 Oct.\n\nLook · A, B or C for the iPhone? Or name the parts you like from each.\n\ny · No back button on workout screens (you said yes; done on all 38 boards, rows below).\nz · Rearrange days: a drag sheet from Plan's more menu (9.6) and from the onboarding preview (12.7)."
+   "text": "Afternoon of 7 Oct.\n\nLook: B chosen (Yeshu, 7 Oct). The Today screens below in the iPhone row are now in look B; say what to change before History gets the same treatment.\n\ny · No back button on workout screens: yes, done.\nz · Rearrange days: a drag sheet from Plan's more menu (9.6) and from the onboarding preview (12.7). Yes or no?\n\nAlso done from your last message: no 'Rest' title on rest screens; the rest never pauses (3.5 dropped)."
+  },
+  "backlog-rest": {
+   "fill": "gray",
+   "maxH": 160,
+   "page": "backlog",
+   "size": 24,
+   "text": "7 Oct: Yeshu: no need to pause the rest. The rest timer always runs; Pause stops the workout clock only. 3.5 kept here for reference.",
+   "w": 600,
+   "x": 1040,
+   "y": 560
   }
  },
  "order": [
