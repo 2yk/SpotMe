@@ -98,6 +98,10 @@ final class WorkoutFlowUITests: XCTestCase {
         app.buttons["Done"].tap()
         XCTAssertTrue(app.buttons["Skip rest"].waitForExistence(timeout: 5), "No rest after the ramp-up")
         XCTAssertFalse(app.buttons["Undo last set"].exists, "A ramp-up can't be undone")
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'next · ramp-up'")).firstMatch.exists,
+                      "The rest between ramp-ups doesn't name the next one")
+        XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'not counted'")).firstMatch.exists,
+                       "The rest between ramp-ups explains itself")
         app.buttons["Skip rest"].tap()
         XCTAssertTrue(app.staticTexts["2 of 2 · not counted"].waitForExistence(timeout: 5))
         app.buttons["Done"].tap()

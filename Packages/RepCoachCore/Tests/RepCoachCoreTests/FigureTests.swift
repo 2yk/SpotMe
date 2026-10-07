@@ -67,7 +67,9 @@ final class FigureTests: XCTestCase {
     func testTheBundleHasFiftyFiguresAndEveryExercisePointsAtOne() throws {
         let bundle = try library().bundle
         XCTAssertEqual(bundle.figures.count, 50)
-        XCTAssertEqual(bundle.exercises.count, 52)
+        // 52 plan exercises, and the chest press twice: under machine-chest-press and its old id.
+        XCTAssertEqual(bundle.exercises.count, 53)
+        XCTAssertNotNil(bundle.exercises["machine-chest-press"])
         for (exercise, entry) in bundle.exercises {
             XCTAssertNotNil(bundle.figures[entry.figure], "\(exercise) has no figure \(entry.figure)")
             XCTAssertLessThanOrEqual(entry.cue.count, 72, "\(exercise)'s cue is too long")

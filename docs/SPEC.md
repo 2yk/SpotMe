@@ -103,11 +103,11 @@ The look: one accent. Volt is what to tap and the value the Crown moves; ice mea
 
 **Ramp-up screen** (before the first working set; see Progression rules)
 - Opening an exercise that has ramp-ups, with no working set logged today and its ramp-ups neither done nor skipped today, shows **Ramp-up** first: the name, "1 of 2 · not counted", one tile that is not editable ("10 kg × 8", with "WORKING WEIGHT 22.5 KG" under it; bodyweight reads "BW × 5" and "WORKING WEIGHT +15 KG"), and Done. Skip drops all ramp-ups left for the exercise today and opens set 1 with no rest.
-- Done saves the set marked ramp-up (weight and reps as shown) and starts a 60 s rest (the usual rest screen, +30 and skip, no Undo). Between ramp-ups the rest says "NEXT · RAMP-UP 2 OF 2", the weight and "4 reps · not counted"; after the last it says "NEXT · SET 1 OF 4", the working weight and "Last time 10 reps". A superset pair does its ramp-ups back to back, then one rest.
+- Done saves the set marked ramp-up (weight and reps as shown) and starts a 60 s rest (the usual rest screen, +30 and skip, no Undo). Between ramp-ups the rest says "NEXT · RAMP-UP 2 OF 2" and the weight; after the last it says "NEXT · SET 1 OF 4", the working weight and "Last time 10 reps". A superset pair does its ramp-ups back to back, then one rest.
 
 **Rest screen**
 - Countdown from `restSec` (supersets: rest only after the second exercise). The timer line round the edge of the screen and the time in the middle are drawn from one clock, so they always agree: 15 times a second on screen, every second in Always On (dimmed).
-- No title and no reason. Shows "NEXT · SET 3 OF 4" and the next set's target (an arrow when the weight changed: ember down, volt up). The one line under it is only "Last time 10 reps" on the rest before the first working set, and "4 reps · not counted" between ramp-ups.
+- No title and no reason. Shows "NEXT · SET 3 OF 4" and the next set's target (an arrow when the weight changed: ember down, volt up). The one line under it is only "Last time 10 reps" on the rest before the first working set. Between ramp-ups the rest shows the countdown, the heart rate, "NEXT · RAMP-UP 2 OF 2" and the weight, nothing under it (the ramp-up screen already says "not counted").
 - Haptics at 10 s left and at 0. Round buttons: +30 s in one corner, skip in the other; Undo between them.
 - The heart rate from the running workout session is shown under the time.
 

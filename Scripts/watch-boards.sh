@@ -62,6 +62,7 @@ c)
   shot W110-TodayWaiting -day wednesday -fresh YES -screen running-waiting
   shot W213-RampUp -day wednesday -fresh YES -running YES -screen item -item incline-db-press
   shot W313-RestRampUp -day wednesday -fresh YES -running YES -screen item -item incline-db-press -ramps 2 -left 42 -of 60
+  shot W315-RestBetweenRampUps -day wednesday -fresh YES -running YES -screen item -item incline-db-press -ramps 1 -left 42 -of 60
   shot W314-BreakBack -day wednesday -fresh YES -screen break-back -left 27 -of 45
   shot W58-Effort -day wednesday -screen effort
   shot W59-SummaryEffort -day wednesday -screen summary-effort

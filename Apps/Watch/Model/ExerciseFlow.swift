@@ -113,8 +113,8 @@ final class ExerciseFlow {
         var value: String
         /// The weight went up or down since the set just logged.
         var change: Change?
-        /// "Last time 10 reps", before the first working set; between ramp-ups, "4 reps · not counted". Never why
-        /// the weight moved: SpotMe just does it.
+        /// "Last time 10 reps", before the first working set, and nothing else. Never why the weight moved
+        /// (SpotMe just does it), and not "not counted" between ramp-ups (the ramp-up screen says it).
         var reason: String?
     }
 
@@ -125,7 +125,7 @@ final class ExerciseFlow {
             let value = ramp.bodyweight ? "Bodyweight" : Format.kg(ramp.weight)
             _ = item
             return NextSet(eyebrow: "Next · ramp-up \(ramp.number) of \(ramp.of)", value: value, change: nil,
-                           reason: "\(ramp.reps) reps · not counted")
+                           reason: nil)
         }
         guard let step = current else { return NextSet(eyebrow: "", value: "", change: nil, reason: nil) }
         let item = items[step.item]

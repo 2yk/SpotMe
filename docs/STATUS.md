@@ -12,7 +12,6 @@ Build 9 notes for the Designer, where the build differs from the handoff:
 - With the Swap button the figure is always 100 pt (200 px), not only for a three-line cue: with a two-line cue and 125 pt the button ran off the screen. The shipped cue for Machine Chest Press (`figures.json`) is "Handles at mid-chest. Press out, control the way back."
 - `figures.json`'s `exercises` still keys the figure under `machine-chest-press-or-flat-bench`; the code maps the old id, so nothing breaks, but the next drop should key it `machine-chest-press`.
 - The complication shows the session's state (Start workout, "Up next" with the next item, "Done") through an app group, `group.com.yeshu.RepCoach`, on the watch app and the complication. No board draws it; `W62` is the first sketch. Tapping it follows `OpenFromOutside` (decided in Core, with tests).
-- Between ramp-ups the rest still says "4 reps · not counted" (information, not a reason).
 - While the workout is paused, a running rest shows "Paused" in amber in place of the heart rate.
 - Swap is offered only for an exercise nothing has been logged on (ramp-ups don't count).
 - The session also keeps time, energy and average heart rate (for the Finished card and the phone's History), and every Health workout saved for it (for Discard).
