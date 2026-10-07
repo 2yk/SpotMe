@@ -7,7 +7,9 @@ Reviewer and planner: Fable. Builders: Opus agents. Three things Yeshu said afte
 Yeshu: the back button sat on the rest timer's edge line. Design: no back button on any in-workout screen
 (set, ramp-up, rest, break, holds, tick-off items, controls, All done). Back only did what the controls page's
 List button does, and Apple's Workout app has none either. The bar title moves to `left: 44px; top: 24px`, in
-line with Today's "0/15". Sheets (How, Swap, Days, End, Discard, Summary, Effort) keep their close button.
+line with Today's "0/15". On the edge-timer screens (rest, break, holds) Yeshu found the title touching the
+line, so there it sits at `left: 52px; top: 34px`: drawn as content, not as the system title, 6 pt below
+the clock's line and clear of the line. Also: every board now says "Machine Chest Press" (decision s). Sheets (How, Swap, Days, End, Discard, Summary, Effort) keep their close button.
 Done by the planner in place on 38 boards. Spec: "Back always returns to Today" becomes "List, on the controls
 page, returns to Today"; the back button is hidden on workout screens.
 
