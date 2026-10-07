@@ -13,11 +13,6 @@ public enum ExerciseIdRenames {
 
     public static func current(_ id: String) -> String { all[id] ?? id }
 
-    /// The old ids that now read `id`.
-    public static func legacy(of id: String) -> [String] {
-        all.filter { $0.value == id }.map(\.key).sorted()
-    }
-
     /// The day's small state kept in UserDefaults (put-off and skipped-ramp-up marks) holds exercise ids under
     /// keys that start with one of these.
     static let defaultsPrefixes = ["waiting.", "rampSkipped."]

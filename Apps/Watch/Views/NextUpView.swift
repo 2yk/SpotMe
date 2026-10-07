@@ -84,7 +84,8 @@ struct NextUpView: View {
 
     /// The next item's name, with the chevron after its last word; a tap opens the list to pick another.
     private func nameButton(_ next: [PlanItem], alignment: HorizontalAlignment, lines: Int) -> some View {
-        Button { choosing = true } label: {
+        let name = next.map(\.name).joined(separator: " + ")
+        return Button { choosing = true } label: {
             // The chevron follows the last word, wherever the name breaks.
             // A no-break space ties the chevron to the last word: if they don't fit, the word comes down with it.
             (Text(next.map(\.name).joined(separator: " + ")) + Text("\u{00A0}")
@@ -92,10 +93,12 @@ struct NextUpView: View {
                     .foregroundColor(Theme.text3))
                 .role(alignment == .leading ? TextRole.title.size(14) : .title)
                 .multilineTextAlignment(alignment == .leading ? .leading : .center)
-                .lineLimit(lines)
-                .minimumScaleFactor(0.8)
+                // A short centred name stays on one line, a little smaller if it must (the board fits
+                // "Machine Chest Press" at 17 pt); a long one wraps.
+                .lineLimit(alignment == .center && name.count <= 20 ? 1 : lines)
+                .minimumScaleFactor(alignment == .center && name.count <= 20 ? 0.85 : 0.8)
                 .layoutPriority(1)
-                .padding(.horizontal, alignment == .leading ? 0 : pt(8))
+                .padding(.horizontal, alignment == .leading ? 0 : pt(6))
                 .frame(minHeight: pt(30))
         }
         .buttonStyle(.plain)

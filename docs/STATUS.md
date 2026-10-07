@@ -4,18 +4,9 @@ Kept by the builder session ("SpotMe - Frontend (Mac Studio)"). Read by `/next`.
 
 ## Now
 
-**Watch build 9** is built on branch `watch-build-9` (from `design/handoff/watch-2/BUILD.md`, sections 1–9 including 8a) and waits for the Designer's check of the screenshots in `design/built/watch-2/` (every board at 46 mm; set, rest, break, controls, Today finished and the break with a figure at 42 mm; `W81-TapRunning-before/after` is the complication check; `W62-ComplicationStates` the complication's new states). Package tests, both schemes and the watch UI tests pass. Not pushed yet (ask the owner first). After the Designer's OK the owner installs it from Xcode.
+**Watch build 9 passed the Designer's check** (7 Oct, `design/reviews/11-build-watch-2.md`) and is on `main` (`bbba61d`); the owner installs it from Xcode (`xcodegen generate`, run the RepCoach scheme with the watch paired; if Xcode complains about the App Group `group.com.yeshu.RepCoach`, add App Groups on the RepCoachWatch and RepCoachWidgets targets).
 
-Build 9 notes for the Designer, where the build differs from the handoff:
-- The break's figure opens How (so Swap reaches the break); the name still opens "Do next".
-- A swapped item's Swap sheet lists the plan's own exercise first ("Back to the plan's exercise"), to take the swap back.
-- With the Swap button the figure is always 100 pt (200 px), not only for a three-line cue: with a two-line cue and 125 pt the button ran off the screen. The shipped cue for Machine Chest Press (`figures.json`) is "Handles at mid-chest. Press out, control the way back."
-- `figures.json`'s `exercises` still keys the figure under `machine-chest-press-or-flat-bench`; the code maps the old id, so nothing breaks, but the next drop should key it `machine-chest-press`.
-- The complication shows the session's state (Start workout, "Up next" with the next item, "Done") through an app group, `group.com.yeshu.RepCoach`, on the watch app and the complication. No board draws it; `W62` is the first sketch. Tapping it follows `OpenFromOutside` (decided in Core, with tests).
-- While the workout is paused, a running rest shows "Paused" in amber in place of the heart rate.
-- Swap is offered only for an exercise nothing has been logged on (ramp-ups don't count).
-- The session also keeps time, energy and average heart rate (for the Finished card and the phone's History), and every Health workout saved for it (for Discard).
-- Not shot: 3.5 (withdrawn) and `F133-PlanFigures` (the Designer's own sheet).
+**Build 10 (branch `watch-build-10`, not pushed)** holds the Designer's three small notes from that check: the How sheet's name at full row size, the break's short name on one line with 14 pt sides, and the old-id figure fallback dropped (the bundle has both ids). Screenshots of the three screens are in `design/built/watch-3/`. The How sheet's seven dots are the Crown's turn position, not pages; they stay until the Designer draws them or says to hide them. Waits for more notes before it is worth a build.
 
 ## Next
 

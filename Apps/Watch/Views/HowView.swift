@@ -31,7 +31,6 @@ struct HowView: View {
                 .role(.row, .white)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .minimumScaleFactor(0.8)
                 .padding(.top, pt(2))
             Group {
                 if hasTurned {
