@@ -135,7 +135,7 @@
    "y": 8415
   },
   "O121-Plan.dc.html": {
-   "h": 1225,
+   "h": 1277,
    "page": "review",
    "radius": 40,
    "title": "12.1 · Your plan",
@@ -959,6 +959,51 @@
    "w": 440,
    "x": 3640,
    "y": 2260
+  },
+  "P71A-TodayBig.dc.html": {
+   "h": 956,
+   "page": "review",
+   "radius": 40,
+   "title": "7.1A · Today · A · Big numbers",
+   "w": 440,
+   "x": 0,
+   "y": -4200
+  },
+  "P71B-TodayDepth.dc.html": {
+   "h": 956,
+   "page": "review",
+   "radius": 40,
+   "title": "7.1B · Today · B · Depth",
+   "w": 440,
+   "x": 520,
+   "y": -4200
+  },
+  "P71C-TodayEditorial.dc.html": {
+   "h": 956,
+   "page": "review",
+   "radius": 40,
+   "title": "7.1C · Today · C · Editorial",
+   "w": 440,
+   "x": 1040,
+   "y": -4200
+  },
+  "P96-RearrangeDays.dc.html": {
+   "h": 956,
+   "page": "review",
+   "radius": 40,
+   "title": "9.6 · Plan · Rearrange days",
+   "w": 440,
+   "x": 2600,
+   "y": 4144
+  },
+  "O127-ChangeDays.dc.html": {
+   "h": 956,
+   "page": "review",
+   "radius": 40,
+   "title": "12.7 · Onboarding · Change days",
+   "w": 440,
+   "x": 3640,
+   "y": 10533
   }
  },
  "createdOnFiles": {
@@ -1230,6 +1275,25 @@
    "x": 4160,
    "y": -2800,
    "text": "Your nine notes of 7 Oct. Yes or no to each?\n\nv · The break screen also loses its result line, and All done its last-exercise line. The arrow still says up or down.\nw · Ten body points: weight, neck, shoulders, chest, arm, forearm, waist, hips, thigh, calf. Fewer if you want.\nx · Swap from the iPhone is for today only, like the watch. The Plan editor changes it for good.\n\nThe 12 redrawn figures are on 13.3 (Approved page) and in 2.11, 2.12, 2.15, 7.7."
+  },
+  "rowlook": {
+   "kind": "title1",
+   "maxW": 3000,
+   "page": "review",
+   "text": "Pick a look · 7.1A, 7.1B, 7.1C · the Today screen three ways; the one you choose is applied to every iPhone screen",
+   "w": 240,
+   "x": 0,
+   "y": -4530
+  },
+  "decide-look": {
+   "fill": "orange",
+   "maxH": 600,
+   "page": "review",
+   "size": 24,
+   "w": 560,
+   "x": 1600,
+   "y": -4200,
+   "text": "Afternoon of 7 Oct.\n\nLook · A, B or C for the iPhone? Or name the parts you like from each.\n\ny · No back button on workout screens (you said yes; done on all 38 boards, rows below).\nz · Rearrange days: a drag sheet from Plan's more menu (9.6) and from the onboarding preview (12.7)."
   }
  },
  "order": [
@@ -1339,7 +1403,12 @@
   "W216-Swap.dc.html",
   "P78-Swap.dc.html",
   "P87-Session.dc.html",
-  "P88-BodyPoint.dc.html"
+  "P88-BodyPoint.dc.html",
+  "P71A-TodayBig.dc.html",
+  "P71B-TodayDepth.dc.html",
+  "P71C-TodayEditorial.dc.html",
+  "P96-RearrangeDays.dc.html",
+  "O127-ChangeDays.dc.html"
  ],
  "pages": [
   {
