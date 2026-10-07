@@ -600,7 +600,7 @@
    "title": "3.11 · Break · after the max-rep set",
    "w": 416,
    "x": 496,
-   "y": -1800
+   "y": -2300
   },
   "W312-BreakFigure.dc.html": {
    "h": 496,
@@ -609,7 +609,7 @@
    "title": "3.12 · Break · with a figure",
    "w": 416,
    "x": 992,
-   "y": -1800
+   "y": -2300
   },
   "W313-RestRampUp.dc.html": {
    "h": 496,
@@ -627,7 +627,7 @@
    "title": "3.14 · Break · back to a waiting one",
    "w": 416,
    "x": 1488,
-   "y": -1800
+   "y": -2300
   },
   "W31A-RestEdge.dc.html": {
    "h": 496,
@@ -636,7 +636,7 @@
    "title": "3.1A · Rest · timer round the edge",
    "w": 416,
    "x": 0,
-   "y": -2300
+   "y": -2800
   },
   "W31B-RestRing.dc.html": {
    "h": 496,
@@ -654,7 +654,7 @@
    "title": "3.2 · Rest · next set lighter",
    "w": 416,
    "x": 496,
-   "y": -2300
+   "y": -2800
   },
   "W33-RestUp.dc.html": {
    "h": 496,
@@ -663,7 +663,7 @@
    "title": "3.3 · Rest · next set heavier",
    "w": 416,
    "x": 992,
-   "y": -2300
+   "y": -2800
   },
   "W34-RestReps.dc.html": {
    "h": 496,
@@ -672,7 +672,7 @@
    "title": "3.4 · Rest · reps exercise",
    "w": 416,
    "x": 1488,
-   "y": -2300
+   "y": -2800
   },
   "W35-RestPaused.dc.html": {
    "h": 496,
@@ -681,7 +681,7 @@
    "title": "3.5 · Rest · paused",
    "w": 416,
    "x": 1984,
-   "y": -2300
+   "y": -2800
   },
   "W36-RestSuperset.dc.html": {
    "h": 496,
@@ -690,7 +690,7 @@
    "title": "3.6 · Rest · after a superset pair",
    "w": 416,
    "x": 2480,
-   "y": -2300
+   "y": -2800
   },
   "W37-RestAlwaysOn.dc.html": {
    "h": 496,
@@ -699,7 +699,7 @@
    "title": "3.7 · Rest · wrist down",
    "w": 416,
    "x": 2976,
-   "y": -2300
+   "y": -2800
   },
   "W38-Break.dc.html": {
    "h": 496,
@@ -708,7 +708,7 @@
    "title": "3.8 · Break · next exercise",
    "w": 416,
    "x": 3472,
-   "y": -2300
+   "y": -2800
   },
   "W39-BreakChecklist.dc.html": {
    "h": 496,
@@ -717,7 +717,7 @@
    "title": "3.9 · Break · before a tick-off item",
    "w": 416,
    "x": 0,
-   "y": -1800
+   "y": -2300
   },
   "W41-HoldReady.dc.html": {
    "h": 496,
@@ -834,7 +834,7 @@
    "title": "5.5 · All done",
    "w": 416,
    "x": 1984,
-   "y": -1800
+   "y": -2300
   },
   "W56-Summary.dc.html": {
    "h": 496,
@@ -1219,7 +1219,7 @@
    "text": "Revised 7 Oct · rest and break without the reason line (3.1A–3.14, 5.5) · back to Live · Watch when built",
    "w": 240,
    "x": 0,
-   "y": -2630
+   "y": -3130
   },
   "decide-7octb": {
    "fill": "orange",
@@ -1228,7 +1228,7 @@
    "size": 24,
    "w": 560,
    "x": 4160,
-   "y": -2300,
+   "y": -2800,
    "text": "Your nine notes of 7 Oct. Yes or no to each?\n\nv · The break screen also loses its result line, and All done its last-exercise line. The arrow still says up or down.\nw · Ten body points: weight, neck, shoulders, chest, arm, forearm, waist, hips, thigh, calf. Fewer if you want.\nx · Swap from the iPhone is for today only, like the watch. The Plan editor changes it for good.\n\nThe 12 redrawn figures are on 13.3 (Approved page) and in 2.11, 2.12, 2.15, 7.7."
   }
  },
