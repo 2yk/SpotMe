@@ -157,7 +157,7 @@ Every plan exercise must be in the database, under exactly this id, with these `
 | Database id | planIds | Part |
 |---|---|---|
 | incline-db-press | incline-db-press | chest-triceps |
-| machine-chest-press | machine-chest-press-or-flat-bench | chest-triceps |
+| machine-chest-press | machine-chest-press, machine-chest-press-or-flat-bench | chest-triceps |
 | db-bench-press | db-bench-press | chest-triceps |
 | low-to-high-cable-fly | low-to-high-cable-fly | chest-triceps |
 | overhead-cable-extension | overhead-cable-extension, cable-overhead-extension | chest-triceps |

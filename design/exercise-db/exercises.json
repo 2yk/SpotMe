@@ -1510,6 +1510,7 @@
     "Chest Press Machine"
    ],
    "planIds": [
+    "machine-chest-press",
     "machine-chest-press-or-flat-bench"
    ],
    "bodyPart": "chest",
