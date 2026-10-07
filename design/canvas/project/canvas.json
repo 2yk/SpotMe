@@ -595,21 +595,21 @@
   },
   "W311-BreakMax.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.11 · Break · after the max-rep set",
    "w": 416,
-   "x": 0,
-   "y": 8200
+   "x": 5456,
+   "y": 3160
   },
   "W312-BreakFigure.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.12 · Break · with a figure",
    "w": 416,
-   "x": 496,
-   "y": 8200
+   "x": 992,
+   "y": 7300
   },
   "W313-RestRampUp.dc.html": {
    "h": 496,
@@ -622,21 +622,21 @@
   },
   "W314-BreakBack.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.14 · Break · back to a waiting one",
    "w": 416,
-   "x": 992,
-   "y": 8200
+   "x": 2976,
+   "y": 8716
   },
   "W31A-RestEdge.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.1A · Rest · timer round the edge",
    "w": 416,
    "x": 0,
-   "y": 7200
+   "y": 3160
   },
   "W31B-RestRing.dc.html": {
    "h": 496,
@@ -649,30 +649,30 @@
   },
   "W32-RestDrop.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.2 · Rest · next set lighter",
    "w": 416,
-   "x": 496,
-   "y": 7200
+   "x": 992,
+   "y": 3160
   },
   "W33-RestUp.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.3 · Rest · next set heavier",
    "w": 416,
-   "x": 992,
-   "y": 7200
+   "x": 1488,
+   "y": 3160
   },
   "W34-RestReps.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.4 · Rest · reps exercise",
    "w": 416,
-   "x": 1488,
-   "y": 7200
+   "x": 1984,
+   "y": 3160
   },
   "W35-RestPaused.dc.html": {
    "h": 496,
@@ -685,39 +685,39 @@
   },
   "W36-RestSuperset.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.6 · Rest · after a superset pair",
    "w": 416,
-   "x": 1984,
-   "y": 7200
+   "x": 2976,
+   "y": 3160
   },
   "W37-RestAlwaysOn.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.7 · Rest · wrist down",
    "w": 416,
-   "x": 2480,
-   "y": 7200
+   "x": 3472,
+   "y": 3160
   },
   "W38-Break.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.8 · Break · next exercise",
    "w": 416,
-   "x": 2976,
-   "y": 7200
+   "x": 3968,
+   "y": 3160
   },
   "W39-BreakChecklist.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "3.9 · Break · before a tick-off item",
    "w": 416,
-   "x": 3472,
-   "y": 7200
+   "x": 4464,
+   "y": 3160
   },
   "W41-HoldReady.dc.html": {
    "h": 496,
@@ -829,12 +829,12 @@
   },
   "W55-AllDone.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "5.5 · All done",
    "w": 416,
-   "x": 1488,
-   "y": 8200
+   "x": 1984,
+   "y": 5160
   },
   "W56-Summary.dc.html": {
    "h": 496,
@@ -890,48 +890,48 @@
   },
   "W111-TodayFinished.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.11 · Today · finished, 3 left",
    "w": 416,
    "x": 0,
-   "y": 6200
+   "y": 9800
   },
   "W112-TodayFinishedAll.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.12 · Today · finished, all done",
    "w": 416,
    "x": 496,
-   "y": 6200
+   "y": 9800
   },
   "W113-TodaySwapped.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "1.13 · Today · a swapped exercise",
    "w": 416,
    "x": 992,
-   "y": 6200
+   "y": 9800
   },
   "W215-HowSwap.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.15 · How · with Swap",
    "w": 416,
    "x": 1488,
-   "y": 6200
+   "y": 9800
   },
   "W216-Swap.dc.html": {
    "h": 496,
-   "page": "approved",
+   "page": "live-watch",
    "radius": 96,
    "title": "2.16 · Swap",
    "w": 416,
    "x": 1984,
-   "y": 6200
+   "y": 9800
   },
   "P78-Swap.dc.html": {
    "h": 956,
@@ -1050,7 +1050,7 @@
    "maxH": 760,
    "page": "live-watch",
    "size": 24,
-   "text": "Approved by Yeshu on 6 Oct and built as build 7. To confirm on your watch: effort shows on the workout in Fitness, and the controls icons no longer start small.\n\n\nn · Ramp-up sets: two lighter sets before the first main lift (50% × 8, 75% × 4), one before other main lifts. Not counted, tapped off. Working sets and \"Last\" stay as they are.\no · Effort: the watch asks 1 to 10 after Finish and saves it with the workout, so Fitness shows it. Needs one more Health permission.\np · Skip in the controls jumps to the next exercise and leaves this one open; the workout comes back to it. Dropping one for the day is the swipe in Today.\nq · Figures store depth, so they can be turned with the Crown on the watch. Every exercise in the plan gets one.",
+   "text": "Approved by Yeshu on 6 Oct and built as build 7; revised 7 Oct and rebuilt as build 9 (no reason text, no back button, no Rest title). To confirm on your watch: effort shows on the workout in Fitness, and the controls icons no longer start small.\n\n\nn · Ramp-up sets: two lighter sets before the first main lift (50% × 8, 75% × 4), one before other main lifts. Not counted, tapped off. Working sets and \"Last\" stay as they are.\no · Effort: the watch asks 1 to 10 after Finish and saves it with the workout, so Fitness shows it. Needs one more Health permission.\np · Skip in the controls jumps to the next exercise and leaves this one open; the workout comes back to it. Dropping one for the day is the swipe in Today.\nq · Figures store depth, so they can be turned with the Crown on the watch. Every exercise in the plan gets one.",
    "w": 620,
    "x": 3968,
    "y": 8716
@@ -1267,23 +1267,14 @@
    "x": 1040,
    "y": 560
   },
-  "row-w2": {
+  "row15": {
    "kind": "title1",
-   "maxW": 4000,
-   "page": "approved",
-   "text": "Approved 7 Oct · watch build 2 · with the builder (handoff/watch-2): Finished, Start again, Swap",
+   "maxW": 3600,
+   "page": "live-watch",
+   "text": "Built 7 Oct · build 9 · Finished and Start again, Swap, no reasons, no back button, figures drop 3",
    "w": 240,
    "x": 0,
-   "y": 5870
-  },
-  "row-w2b": {
-   "kind": "title1",
-   "maxW": 4000,
-   "page": "approved",
-   "text": "Approved 7 Oct · rest, break and All done without reason text, no back button, no Rest title (also every other workout screen)",
-   "w": 240,
-   "x": 0,
-   "y": 6870
+   "y": 9470
   }
  },
  "order": [
