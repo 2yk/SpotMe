@@ -6,7 +6,7 @@ Kept by the builder session ("SpotMe - Frontend (Mac Studio)"). Read by `/next`.
 
 **Watch build 9 passed the Designer's check** (7 Oct, `design/reviews/11-build-watch-2.md`) and is on `main` (`bbba61d`); the owner installs it from Xcode (`xcodegen generate`, run the RepCoach scheme with the watch paired; if Xcode complains about the App Group `group.com.yeshu.RepCoach`, add App Groups on the RepCoachWatch and RepCoachWidgets targets).
 
-**Build 10 (branch `watch-build-10`, not pushed)** holds the Designer's three small notes from that check: the How sheet's name at full row size, the break's short name on one line with 14 pt sides, and the old-id figure fallback dropped (the bundle has both ids). Screenshots of the three screens are in `design/built/watch-3/`. The How sheet's seven dots are the Crown's turn position, not pages; they stay until the Designer draws them or says to hide them. Waits for more notes before it is worth a build.
+**Build 10 (branch `watch-build-10`, not pushed)** holds the Designer's three small notes from that check: the How sheet's name at full row size, the break's short name on one line with 14 pt sides, and the old-id figure fallback dropped (the bundle has both ids). Screenshots of the three screens are in `design/built/watch-3/`. The How sheet shows its hint and the seven turn dots only while the Crown turns (Designer, 7 Oct); at rest it shows the cue. Waits for more notes before it is worth a push.
 
 ## Next
 

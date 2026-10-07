@@ -78,7 +78,7 @@ d)
   FIG=()
   shot W211-SetFigure -day wednesday -screen set
   shot W212-How -day wednesday -screen how -turned YES
-  shot W214-HowTurn -day wednesday -screen how -turned NO
+  shot W214-HowTurn -day wednesday -screen how -turned NO -turning YES
   shot W312-BreakFigure -day wednesday -screen next -left 115 -of 150
   shot W215-HowSwap -day wednesday -fresh YES -screen how -item machine-chest-press -turned YES
   ;;

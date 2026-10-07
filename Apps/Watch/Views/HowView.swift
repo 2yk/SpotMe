@@ -1,9 +1,11 @@
 import SwiftUI
 import RepCoachCore
 
-/// How to do the exercise: the figure moving at 125 pt (100 pt when there is a Swap button to fit), the Digital Crown turning it a full circle, with light haptic detents. Until the Crown
-/// has been turned here once, the line says so; after that it is the cue. Under it, Swap exercise: take another
-/// exercise's place for today.
+/// How to do the exercise: the figure moving at 125 pt (100 pt when there is a Swap button to fit), the Digital
+/// Crown turning it a full circle, with light haptic detents. Under the name is the cue. While the Crown turns the
+/// figure (and until it has been turned once), one ice line, "Turn the Crown to look around", takes its place;
+/// with it, while it is turning, seven dots show where in the turn the figure is. About a second after the Crown
+/// stops the cue comes back and the dots go. Under it, Swap exercise: take another exercise's place for today.
 struct HowView: View {
     @Environment(TodayModel.self) private var today
     @Environment(WorkoutModel.self) private var workout
@@ -13,6 +15,9 @@ struct HowView: View {
     @State private var swapping = false
     @State private var crown = 0.0
     @State private var lastDetent = 0
+    /// The Crown moved in the last second.
+    @State private var turning = false
+    @State private var settle: Task<Void, Never>?
     @FocusState private var focused: Bool
     @AppStorage("figuresTurned") private var hasTurned = false
 
@@ -32,16 +37,22 @@ struct HowView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .padding(.top, pt(2))
-            Group {
-                if hasTurned {
-                    Text(exercise.cue).role(.small.weight(.medium), Theme.text2)
-                } else {
-                    Text("Turn the Crown to look around").role(.small, Theme.ice)
+            // The cue and the hint share one block, as tall as the cue, so nothing under it moves between them.
+            let showsHint = turning || !hasTurned
+            ZStack(alignment: .top) {
+                Text(exercise.cue)
+                    .role(.small.weight(.medium), Theme.text2)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .opacity(showsHint ? 0 : 1)
+                    .accessibilityHidden(showsHint)
+                VStack(spacing: pt(5)) {
+                    Text("Turn the Crown to look around").role(.small, Theme.ice).lineLimit(1)
+                    dots(yaw: yaw).opacity(turning ? 1 : 0)
                 }
+                .opacity(showsHint ? 1 : 0)
+                .accessibilityHidden(!showsHint)
             }
-            .multilineTextAlignment(.center)
-            .lineLimit(2)
-            .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, pt(8))
             .padding(.top, pt(1))
             if canSwap {
@@ -57,9 +68,6 @@ struct HowView: View {
                 .buttonStyle(.plain)
                 .padding(.top, pt(7))
                 .accessibilityLabel("Swap exercise")
-            } else {
-                dots(yaw: yaw)
-                    .padding(.top, pt(6))
             }
         }
         .padding(.top, Metrics.sheetTop - pt(4))
@@ -69,9 +77,22 @@ struct HowView: View {
         .focused($focused)
         .digitalCrownRotation($crown, from: -1000, through: 1000, by: nil, sensitivity: .medium, isContinuous: false,
                               isHapticFeedbackEnabled: false)
-        .onAppear { focused = true }
+        .onAppear {
+            focused = true
+            #if DEBUG
+            // `-turning YES`: the sheet as it looks while the Crown turns, for the board that shows it.
+            if LaunchOptions.demo, UserDefaults.standard.bool(forKey: "turning") { turning = true }
+            #endif
+        }
         .onChange(of: crown) {
             if abs(crown) > 0.02 { hasTurned = true }
+            // The hint and the dots stay for a second after the Crown stops.
+            turning = true
+            settle?.cancel()
+            settle = Task {
+                try? await Task.sleep(for: .seconds(1))
+                if !Task.isCancelled { turning = false }
+            }
             // A light detent every 30 degrees.
             let detent = Int((crown * Self.degreesPerTurn / 30).rounded(.down))
             if detent != lastDetent {
