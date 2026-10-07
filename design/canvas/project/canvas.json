@@ -887,6 +887,51 @@
    "w": 1280,
    "x": 0,
    "y": 3540
+  },
+  "W111-TodayFinished.dc.html": {
+   "h": 496,
+   "page": "review",
+   "radius": 96,
+   "title": "1.11 · Today · finished, 3 left",
+   "w": 416,
+   "x": 0,
+   "y": -1300
+  },
+  "W112-TodayFinishedAll.dc.html": {
+   "h": 496,
+   "page": "review",
+   "radius": 96,
+   "title": "1.12 · Today · finished, all done",
+   "w": 416,
+   "x": 496,
+   "y": -1300
+  },
+  "W113-TodaySwapped.dc.html": {
+   "h": 496,
+   "page": "review",
+   "radius": 96,
+   "title": "1.13 · Today · a swapped exercise",
+   "w": 416,
+   "x": 992,
+   "y": -1300
+  },
+  "W215-HowSwap.dc.html": {
+   "h": 496,
+   "page": "review",
+   "radius": 96,
+   "title": "2.15 · How · with Swap",
+   "w": 416,
+   "x": 1488,
+   "y": -1300
+  },
+  "W216-Swap.dc.html": {
+   "h": 496,
+   "page": "review",
+   "radius": 96,
+   "title": "2.16 · Swap",
+   "w": 416,
+   "x": 1984,
+   "y": -1300
   }
  },
  "createdOnFiles": {
@@ -1120,6 +1165,25 @@
    "w": 240,
    "x": 0,
    "y": -330
+  },
+  "row7oct": {
+   "kind": "title1",
+   "maxW": 2400,
+   "page": "review",
+   "text": "Review next · 7 Oct: Finished, and Swap (1.11–1.13, 2.15, 2.16)",
+   "w": 240,
+   "x": 0,
+   "y": -1630
+  },
+  "decide-7oct": {
+   "fill": "orange",
+   "maxH": 700,
+   "page": "review",
+   "size": 24,
+   "w": 560,
+   "x": 2600,
+   "y": -1300,
+   "text": "From your 7 Oct session. Yes or no to each?\n\nr · After Finish with items left, Today shows Finished with what is left. Start again picks them up in the same session; Health gets a second workout; effort is asked again.\ns · The plan slot becomes Machine Chest Press alone. Everything logged under \"(or Flat Bench)\" counts as Machine Chest Press. Say if most of it was on the bench.\nt · A swap on the watch is for today only. Changing the plan for good comes with the iPhone round.\nu · The swap list is the database's alternatives for the exercise, the same list onboarding uses.\n\nThe rest timer's corners are a build fix, waiting on a photo of your watch."
   }
  },
  "order": [
@@ -1221,7 +1285,12 @@
   "W314-BreakBack.dc.html",
   "W214-HowTurn.dc.html",
   "F132-Turn.dc.html",
-  "F133-PlanFigures.dc.html"
+  "F133-PlanFigures.dc.html",
+  "W111-TodayFinished.dc.html",
+  "W112-TodayFinishedAll.dc.html",
+  "W113-TodaySwapped.dc.html",
+  "W215-HowSwap.dc.html",
+  "W216-Swap.dc.html"
  ],
  "pages": [
   {
