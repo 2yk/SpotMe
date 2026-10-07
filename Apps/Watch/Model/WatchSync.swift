@@ -11,6 +11,8 @@ import RepCoachCore
 /// sessions, so targets never move mid-workout. The Health switch moves no targets and applies at once.
 /// The watch's own application context tells the phone which sessions it has and which it discarded: the
 /// phone sends back any the watch lost (a reinstalled app) and deletes the discarded ones.
+/// Today's swaps travel both ways, at once: as a message when the other device is reachable, and in the
+/// application contexts as the fallback. Whichever device made the later swap for an exercise wins.
 @MainActor @Observable
 final class WatchSync: NSObject {
     @ObservationIgnored private let today: TodayModel
@@ -20,6 +22,8 @@ final class WatchSync: NSObject {
     @ObservationIgnored var isBusy: () -> Bool = { false }
     /// Whether SpotMe may save workouts to Health; supplied by the app, nil when Health isn't in use.
     @ObservationIgnored var healthAccess: () -> HealthAccess? = { nil }
+    /// Called when the phone's swaps changed something here, so the screen on show can follow.
+    @ObservationIgnored var onSwapsReceived: () -> Void = {}
 
     private static let unsentKey = "unsentSessionIds"
     private static let awaitingKey = "sessionsAwaitingPhone"
@@ -73,12 +77,26 @@ final class WatchSync: NSObject {
         let status = WatchStatus(healthAccess: healthAccess(),
                                  sessions: try? today.recorder.sessionIds(since: since),
                                  since: since,
-                                 deleted: discardedIds.compactMap(UUID.init(uuidString:)))
+                                 deleted: discardedIds.compactMap(UUID.init(uuidString:)),
+                                 swaps: today.swapMarks)
         do {
             try WCSession.default.updateApplicationContext(status.applicationContext)
         } catch {
             Logger.sync.error("Couldn't send the watch status: \(error.localizedDescription)")
         }
+    }
+
+    /// A swap was made here: tell the phone now (a message), and keep it in the context for when it isn't
+    /// reachable.
+    func swapsMade() {
+        guard LaunchOptions.sync, canSend else { return }
+        let session = WCSession.default
+        if session.isReachable {
+            session.sendMessage(today.swapMarks.message, replyHandler: nil) { error in
+                Logger.sync.error("Couldn't send a swap: \(error.localizedDescription)")
+            }
+        }
+        sendStatus()
     }
 
     /// A workout was discarded: stop offering it, and have the phone delete its copy and never send it back.
@@ -164,7 +182,13 @@ final class WatchSync: NSObject {
         flush()
     }
 
+    /// The phone's swaps: applied at once, whatever the workout is doing.
+    fileprivate func received(swaps: SwapMarks) {
+        if today.applySwaps(from: swaps) { onSwapsReceived() }
+    }
+
     private func received(_ context: SyncContext) {
+        received(swaps: context.swaps)
         // Confirmations count straight away; settings wait for a gap between sessions.
         let confirmed = awaiting.intersection(context.received.map(\.uuidString))
         awaiting.subtract(confirmed)
@@ -229,6 +253,12 @@ extension WatchSync: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
         guard let context = SyncContext(applicationContext: applicationContext) else { return }
         Task { @MainActor in self.receivedContext(context) }
+    }
+
+    /// A swap made on the phone, while the watch was reachable.
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        guard let swaps = SwapMarks(message: message) else { return }
+        Task { @MainActor in self.received(swaps: swaps) }
     }
 
     /// Sessions the phone sends back after the watch lost them.

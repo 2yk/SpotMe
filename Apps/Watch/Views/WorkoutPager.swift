@@ -42,7 +42,7 @@ struct WorkoutPager: View {
         #if DEBUG
         .task {
             switch LaunchOptions.screen {
-            case "controls", "paused": page = .controls
+            case "controls", "paused", "controls-break": page = .controls
             case "media": page = .nowPlaying
             default: break
             }

@@ -1,8 +1,8 @@
 import SwiftUI
 import RepCoachCore
 
-/// Countdown between sets: the timer runs round the edge, the middle has the time and what to load next with the
-/// engine's one-line reason.
+/// Countdown between sets: the timer runs round the edge, the middle has the time and what to load next. It
+/// never says why the weight moved, and a running rest never pauses: Pause stops the workout's clock, not this.
 struct RestView: View {
     @Environment(HealthWorkout.self) private var health
     @Environment(WorkoutModel.self) private var workout
@@ -50,12 +50,12 @@ struct RestView: View {
         .ignoresSafeArea()
     }
 
-    /// Heart rate from the running workout; "Paused" in amber while the rest waits. Keeps its height without
-    /// either, so the lines under it don't jump.
+    /// Heart rate from the running workout; "Paused" in amber while the workout is paused (the rest runs on).
+    /// Keeps its height without either, so the lines under it don't jump.
     @ViewBuilder
     private var heartLine: some View {
         Group {
-            if rest.isPaused {
+            if workout.isPaused {
                 Text("Paused").role(.eyebrow, Theme.amber)
             } else if let bpm = health.heartRate, !dimmed {
                 HStack(spacing: pt(3)) {

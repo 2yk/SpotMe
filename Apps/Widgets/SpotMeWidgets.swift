@@ -18,7 +18,7 @@ struct StartWorkoutWidget: Widget {
                 .containerBackground(Theme.volt.gradient.opacity(0.3), for: .widget)
         }
         .configurationDisplayName("Start workout")
-        .description("Today's session. Tap to start it.")
+        .description("Today's session. Tap to start it, or to go back to it.")
         .supportedFamilies([.accessoryCircular, .accessoryCorner, .accessoryRectangular, .accessoryInline])
     }
 }
@@ -44,6 +44,7 @@ struct TodayProvider: TimelineProvider {
     }
 
     private func entry(on date: Date) -> TodayEntry {
-        TodayEntry(date: date, day: Self.plan?.day(for: date))
+        TodayEntry(date: date, day: Self.plan?.day(for: date),
+                   state: ComplicationState.load(on: SwapMarks.stamp(date)))
     }
 }

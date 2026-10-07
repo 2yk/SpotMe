@@ -131,6 +131,11 @@ public struct SwappedDay: Equatable, Sendable {
     public var day: PlanDay
     /// The plan's exercise each swapped-in exercise stands in for: swapped-in id → slot id.
     public var slotOf: [String: String]
+
+    public init(day: PlanDay, slotOf: [String: String] = [:]) {
+        self.day = day
+        self.slotOf = slotOf
+    }
 }
 
 extension ExerciseDatabase {
@@ -153,6 +158,19 @@ extension ExerciseDatabase {
 }
 
 extension PlanItem {
+    /// A database exercise as a plain item, for screens that show an exercise logged by a swap but not in the
+    /// plan: its name, kind and increment, and no prescription.
+    public init(database exercise: DatabaseExercise) {
+        let kind: ItemKind = switch exercise.logAs {
+        case "weighted": .weighted
+        case "timed": .timed
+        default: .reps
+        }
+        self.init(name: exercise.name, exerciseId: exercise.id, group: exercise.bodyPart.capitalized, kind: kind,
+                  perSide: exercise.perSide, loadable: exercise.logAs == "weighted" ? nil : exercise.loadable,
+                  increment: exercise.incrementKg)
+    }
+
     /// This slot with `exercise` in it: the slot's sets, reps, rest, section and superset group, the exercise's
     /// own id, name, kind, side and increment. Its history, targets and "Last" come from its own sessions.
     public func swapped(to exercise: DatabaseExercise) -> PlanItem {

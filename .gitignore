@@ -11,3 +11,6 @@ DerivedData/
 # Swift Package Manager
 .build/
 .swiftpm/
+
+# Derived data and screenshots work (Scripts/watch-shot.sh)
+/build/

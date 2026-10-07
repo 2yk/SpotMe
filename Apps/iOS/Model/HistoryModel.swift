@@ -73,6 +73,13 @@ final class HistoryModel {
             day.items.forEach { add($0, dayTitle: day.title) }
         }
         library.forEach { add($0, dayTitle: Self.notInPlan) }
+        // Exercises logged by a swap on the watch that are in no plan: by their own names.
+        let logged = (try? store.loggedExerciseIds()) ?? []
+        for id in logged.subtracting(seen).sorted() {
+            if let exercise = ExerciseDatabase.shared?.exercise(id: id) {
+                add(PlanItem(database: exercise), dayTitle: Self.notInPlan)
+            }
+        }
         self.exercises = exercises
         sessionCount = (try? context.fetchCount(FetchDescriptor<WorkoutSession>())) ?? 0
 

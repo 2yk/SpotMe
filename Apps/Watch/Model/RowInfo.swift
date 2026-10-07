@@ -17,10 +17,23 @@ struct RowInfo: Equatable {
     var isSkipped: Bool
     /// Lines the detail may take: a tick-off item's note runs to several.
     var detailLines = 1
+    /// Swapped in for today: the row shows the swap icon before its prescription.
+    var isSwapped = false
+    /// Swapped in with no history of its own: "First time" on the right, no weight yet.
+    var isFirstTime = false
 }
 
 extension TodayModel {
     func rowInfo(for item: PlanItem) -> RowInfo {
+        var info = plainRowInfo(for: item)
+        if isSwapped(item) {
+            info.isSwapped = true
+            info.isFirstTime = !info.isFinished && info.weight == nil && pastSessions(of: item.exerciseId).isEmpty
+        }
+        return info
+    }
+
+    private func plainRowInfo(for item: PlanItem) -> RowInfo {
         let target = target(for: item)
         let status = status(of: item)
         let weight = item.takesWeight ? target.weight.flatMap { $0 > 0 ? Format.kg($0) : nil } : nil

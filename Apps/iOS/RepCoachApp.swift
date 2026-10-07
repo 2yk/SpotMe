@@ -10,6 +10,7 @@ struct RepCoachApp: App {
     init() {
         let app = AppModel()
         let sync = PhoneSync(context: app.container.mainContext, settings: app.settings, today: app.today)
+        app.today.onSwapsChanged = { [weak sync] _ in sync?.swapsMade() }
         sync.activate()
         _app = State(initialValue: app)
         _sync = State(initialValue: sync)

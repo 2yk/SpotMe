@@ -6,6 +6,8 @@ import RepCoachCore
 struct ItemRow: View {
     @Environment(TodayModel.self) private var today
     let item: PlanItem
+    /// False for the open rows of a finished day, which show what is left, not what it asks.
+    var showsWeight = true
 
     var body: some View {
         let info = today.rowInfo(for: item)
@@ -16,17 +18,22 @@ struct ItemRow: View {
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
             HStack(spacing: pt(6)) {
-                Text(info.detail)
-                    .role(.detail, info.detailColor)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(info.detailLines)
-                    .fixedSize(horizontal: false, vertical: info.detailLines > 1)
+                HStack(spacing: pt(4)) {
+                    if info.isSwapped { SwapIcon() }
+                    Text(info.detail)
+                        .role(.detail, info.detailColor)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(info.detailLines)
+                        .fixedSize(horizontal: false, vertical: info.detailLines > 1)
+                }
                 Spacer(minLength: 0)
                 if info.isFinished, !info.isSkipped {
                     Image(systemName: "checkmark")
                         .font(.system(size: pt(13), weight: .heavy))
                         .foregroundStyle(Theme.mint)
-                } else {
+                } else if info.isFirstTime {
+                    Text("First time").role(.detail.weight(.bold), Theme.volt).lineLimit(1)
+                } else if showsWeight {
                     RowWeight(info: info)
                 }
             }

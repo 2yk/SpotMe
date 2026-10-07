@@ -2,13 +2,13 @@ import Foundation
 import OSLog
 import RepCoachCore
 
-/// Runs one exercise, or a superset pair, set by set: log → rest → next set → summary.
+/// Runs one exercise, or a superset pair, set by set: log → rest → next set → the break.
 @MainActor @Observable
 final class ExerciseFlow {
     enum Phase: Equatable {
         case set
         case rest(Countdown)
-        case finished([Summary])
+        case finished
     }
 
     /// One lighter set before the first working set: tapped off, never counted.
@@ -26,13 +26,9 @@ final class ExerciseFlow {
         var bodyweight: Bool
     }
 
-    struct Summary: Equatable, Identifiable {
-        var id: String
-        var name: String
-        var line: Coach.Line
-    }
-
     let items: [PlanItem]
+    /// The plan's exercise each item stands in for: its own id, or the slot it was swapped into today.
+    let slotIds: [String]
     let targets: [ItemTarget]
     let steps: [SetStep]
     private(set) var stepIndex = 0
@@ -50,8 +46,6 @@ final class ExerciseFlow {
     private var lastLoggedWeight: [Double?]
     /// Each item's counted sessions before today, newest first: "Last 9" and the first prefill.
     private let past: [[[LoggedSet]]]
-    /// The engine's verdict on each item's last set, shown while resting.
-    private var coaching: [Coach.Line?]
     /// The ramp-up sets still to do before the first working set, in the order they come.
     private(set) var rampSteps: [RampStep] = []
     private(set) var rampIndex = 0
@@ -66,7 +60,6 @@ final class ExerciseFlow {
         var stepIndex: Int
         var workingWeight: [Double]
         var lastLoggedWeight: [Double?]
-        var coaching: [Coach.Line?]
     }
 
     /// - Parameters:
@@ -75,6 +68,7 @@ final class ExerciseFlow {
     init(items: [PlanItem], today: TodayModel, onActivity: @escaping () -> Void = {},
          onFinished: @escaping () -> Void = {}) {
         self.items = items
+        slotIds = items.map { today.slotOf[$0.exerciseId] ?? $0.exerciseId }
         self.today = today
         self.onActivity = onActivity
         self.onFinished = onFinished
@@ -83,7 +77,6 @@ final class ExerciseFlow {
         workingWeight = targets.map { $0.weight ?? 0 }
         lastLoggedWeight = items.map { _ in nil }
         past = items.map { today.pastSessions(of: $0.exerciseId) }
-        coaching = items.map { _ in nil }
         offsets = items.map { _ in 0 }
         totals = items.map { _ in 0 }
         resume()
@@ -120,7 +113,8 @@ final class ExerciseFlow {
         var value: String
         /// The weight went up or down since the set just logged.
         var change: Change?
-        /// The part of the engine's line before " · ": "5 reps, below 6".
+        /// "Last time 10 reps", before the first working set; between ramp-ups, "4 reps · not counted". Never why
+        /// the weight moved: SpotMe just does it.
         var reason: String?
     }
 
@@ -146,7 +140,7 @@ final class ExerciseFlow {
             value = Format.perSet(item, targets[step.item]).map { item.kind == .timed || item.perSide == true ? $0 : "\($0) reps" }
                 ?? ""
         }
-        var reason = coaching[step.item].map { $0.text.components(separatedBy: " · ")[0] }
+        var reason: String?
         // After the last ramp-up: how the same set went last time.
         if rampSteps.count > 0, rampIndex >= rampSteps.count, lastLoggedWeight[step.item] == nil,
            let last = lastTimeReps(of: step.item, set: step.set) {
@@ -159,11 +153,6 @@ final class ExerciseFlow {
     private var currentRampStepAfterRest: RampStep? {
         guard case .rest = phase, rampIndex < rampSteps.count else { return nil }
         return rampSteps[rampIndex]
-    }
-
-    /// The engine's verdict on the last set of the item coming up next.
-    var coachingLine: Coach.Line? {
-        current.flatMap { coaching[$0.item] }
     }
 
     /// The same set in the last counted session, for "Last 9": reps, or seconds for a hold. nil with no history.
@@ -204,7 +193,7 @@ final class ExerciseFlow {
         guard let step = currentRamp else { return }
         let item = items[step.item]
         do {
-            let log = try today.recorder.log(for: item.exerciseId, in: try today.startSession())
+            let log = try today.writableLog(for: item)
             try today.recorder.addSet(to: log, weight: step.weight, reps: step.reps, isRampUp: true)
         } catch {
             Logger.store.error("Couldn't log a ramp-up: \(error.localizedDescription)")
@@ -273,7 +262,7 @@ final class ExerciseFlow {
         let loggedWeight = item.takesWeight ? weight : 0
         let loggedReps = Int(reps.rounded())
         do {
-            let log = try today.recorder.log(for: item.exerciseId, in: try today.startSession())
+            let log = try today.writableLog(for: item)
             try today.recorder.addSet(to: log, weight: loggedWeight, reps: seconds == nil ? loggedReps : 0,
                                       seconds: seconds)
         } catch {
@@ -281,7 +270,7 @@ final class ExerciseFlow {
             return
         }
         undoStack.append(Snapshot(stepIndex: stepIndex, workingWeight: workingWeight,
-                                  lastLoggedWeight: lastLoggedWeight, coaching: coaching))
+                                  lastLoggedWeight: lastLoggedWeight))
         Haptics.play(.logged)
         onActivity()
 
@@ -290,10 +279,8 @@ final class ExerciseFlow {
             let next = ProgressionEngine.nextSet(for: p, weight: loggedWeight, reps: loggedReps,
                                                  setIndex: step.set, totalSets: targets[step.item].sets)
             workingWeight[step.item] = next.weight
-            coaching[step.item] = Coach.nextSet(next, reps: loggedReps, repMin: p.repMin, repMax: p.repMax)
         } else {
             workingWeight[step.item] = loggedWeight
-            coaching[step.item] = rangeLine(item, target: targets[step.item], value: seconds ?? loggedReps)
         }
 
         holdStartedAt = nil
@@ -321,7 +308,6 @@ final class ExerciseFlow {
         stepIndex = snapshot.stepIndex
         workingWeight = snapshot.workingWeight
         lastLoggedWeight = snapshot.lastLoggedWeight
-        coaching = snapshot.coaching
         holdStartedAt = nil
         phase = .set
         prefill()
@@ -342,21 +328,6 @@ final class ExerciseFlow {
     func endRest() {
         restAlarm.cancel()
         if case .rest = phase { phase = .set }
-    }
-
-    /// The workout was paused: the rest holds where it is.
-    func pauseRest() {
-        guard case .rest(var rest) = phase, !rest.isPaused else { return }
-        rest.pause()
-        phase = .rest(rest)
-        restAlarm.cancel()
-    }
-
-    func resumeRest() {
-        guard case .rest(var rest) = phase, rest.isPaused else { return }
-        rest.resume()
-        phase = .rest(rest)
-        scheduleRest(rest)
     }
 
     /// Cancels pending rest and hold haptics; call before dropping the flow.
@@ -393,14 +364,10 @@ final class ExerciseFlow {
             guard let last = sets.last else { continue }
             workingWeight[index] = last.weight
             lastLoggedWeight[index] = last.weight
-            if items[index].kind != .weighted {
-                coaching[index] = rangeLine(items[index], target: targets[index], value: last.reps)
-            }
             if items[index].kind == .weighted, let p = Prescription(item: items[index]) {
                 let next = ProgressionEngine.nextSet(for: p, weight: last.weight, reps: last.reps,
                                                      setIndex: sets.count, totalSets: targets[index].sets)
                 workingWeight[index] = next.weight
-                coaching[index] = Coach.nextSet(next, reps: last.reps, repMin: p.repMin, repMax: p.repMax)
             }
         }
         if current == nil {
@@ -434,20 +401,6 @@ final class ExerciseFlow {
         }
     }
 
-    /// Reps and timed exercises don't change weight; their rest just says where the last set landed.
-    private func rangeLine(_ item: PlanItem, target: ItemTarget, value: Int) -> Coach.Line? {
-        switch item.kind {
-        case .reps:
-            guard let low = target.repMin, let high = target.repMax else { return nil }
-            return Coach.rangeLine(value, low: low, high: high)
-        case .timed:
-            guard let low = target.secMin, let high = target.secMax else { return nil }
-            return Coach.rangeLine(value, low: low, high: high)
-        default:
-            return nil
-        }
-    }
-
     #if DEBUG
     /// Screenshots: the hold as it looks `elapsed` seconds in.
     func debugHold(elapsed: TimeInterval) {
@@ -476,16 +429,11 @@ final class ExerciseFlow {
 
     private func finish(haptic: Bool = true) {
         stop()
-        guard let session = try? today.startSession() else { return }
-        var summaries: [Summary] = []
-        for (index, item) in items.enumerated() {
-            guard let log = try? today.recorder.log(for: item.exerciseId, in: session) else { continue }
+        for item in items {
+            guard let log = try? today.writableLog(for: item) else { continue }
             if log.completedAt == nil { try? today.recorder.complete(log) }
-            let sets = log.countedLoggedSets
-            summaries.append(Summary(id: item.exerciseId, name: item.name,
-                                     line: summary(item, target: targets[index], sets: sets, deload: session.isDeload)))
         }
-        phase = .finished(summaries)
+        phase = .finished
         today.refresh()
         // Only a set logged just now moves the workout on; reopening a finished exercise doesn't.
         if haptic {
@@ -493,26 +441,4 @@ final class ExerciseFlow {
             onFinished()
         }
     }
-
-    private func summary(_ item: PlanItem, target: ItemTarget, sets: [LoggedSet], deload: Bool) -> Coach.Line {
-        switch item.kind {
-        case .weighted:
-            guard let p = Prescription(item: item) else { return Coach.Line("Logged", .done) }
-            let next = ProgressionEngine.firstTarget(for: p, history: [sets] + today.pastSessions(of: item.exerciseId))
-            return Coach.weightedSummary(today: sets, next: next, prescription: p, deload: deload)
-        case .reps, .timed:
-            let timed = item.kind == .timed
-            let top = timed ? target.secMax : target.repMax
-            let reached = top.map { ProgressionEngine.reachedTopOfRange(sets, top: $0, plannedSets: target.sets) }
-            return Coach.rangeSummary(topReached: reached ?? false, top: top, timed: timed)
-        case .amrap:
-            let reps = sets.first?.reps ?? 0
-            return Coach.amrapSummary(reps: reps, volumeReps: ProgressionEngine.volumeReps(amrap: reps))
-        case .percentOfMax:
-            return Coach.Line("\(sets.count) × \(target.repMax ?? sets.first?.reps ?? 0) done", .done)
-        case .checklist:
-            return Coach.Line("Done", .done)
-        }
-    }
-
 }

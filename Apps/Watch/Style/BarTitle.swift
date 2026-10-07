@@ -1,23 +1,26 @@
 import SwiftUI
 
 extension View {
-    /// The short title in the system navigation bar, in `color` (volt; ice on rest and break; amber when paused),
-    /// after the back button. The bar keeps its clock; nothing else goes in it.
+    /// The short title beside the system bar's clock, in `color` (volt; ice on a break; amber when paused). The
+    /// bar keeps its clock and nothing else: workout screens have no back button (List, on the controls page,
+    /// is the way to Today).
     /// - Parameters:
-    ///   - root: the first screen of a stack: no back button.
-    ///   - close: a sheet: a close icon instead of the chevron.
-    func barTitle(_ title: String, _ color: Color = Theme.volt, root: Bool = false, close: Bool = false) -> some View {
-        modifier(BarTitle(title: title, color: color, root: root, close: close))
+    ///   - root: Today, the first screen of the stack.
+    ///   - close: a sheet: a close icon beside the title.
+    ///   - edge: a screen with the edge timer (break, hold): the title sits a little lower and further in, clear
+    ///     of the line, and is drawn as content, not as the navigation title.
+    func barTitle(_ title: String, _ color: Color = Theme.volt, root: Bool = false, close: Bool = false,
+                  edge: Bool = false) -> some View {
+        modifier(BarTitle(title: title, color: color, root: root, close: close, edge: edge))
     }
 }
 
 private struct BarTitle: ViewModifier {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.dimmed) private var dimmed
     let title: String
     let color: Color
     let root: Bool
     let close: Bool
+    let edge: Bool
 
     @ViewBuilder
     func body(content: Content) -> some View {
@@ -36,45 +39,28 @@ private struct BarTitle: ViewModifier {
                     }
                     .containerBackground(.black, for: .navigation)
             }
-        } else if root {
-            // The first screen has no back button; the title goes on the clock's line, at the left.
-            content
-                .navigationTitle("")
-                .overlay(alignment: .topLeading) {
-                    titleText
-                        .padding(.leading, pt(22))
-                        .padding(.top, pt(16))
-                        .ignoresSafeArea()
-                        .allowsHitTesting(false)
-                }
         } else {
+            // Today and the workout screens have no back button: the title goes on the clock's line, at the
+            // left, as Today's "0/15" does. With the edge timer it clears the line.
             content
                 .navigationTitle("")
                 .navigationBarBackButtonHidden(true)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        HStack(spacing: pt(6)) {
-                            button
-                            titleText
-                        }
-                    }
+                .overlay(alignment: .topLeading) {
+                    titleText
+                        .padding(.leading, pt(edge ? Self.edgeLeading : Self.leading))
+                        .padding(.top, pt(edge ? Self.edgeTop : Self.top))
+                        .ignoresSafeArea()
+                        .allowsHitTesting(false)
                 }
         }
     }
 
-    /// The back chevron, or the close icon of a sheet: a 30 pt raised circle.
-    private var button: some View {
-        Button { dismiss() } label: {
-            Image(systemName: close ? "xmark" : "chevron.left")
-                .font(.system(size: pt(14), weight: .bold))
-                .foregroundStyle(.white)
-                .frame(width: pt(30), height: pt(30))
-                .background(Circle().fill(Theme.raised))
-                .opacity(dimmed ? 0.35 : 1)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(close ? "Close" : "Back")
-    }
+    /// Today's title: 22 pt from the left, on the clock's line.
+    static let leading: CGFloat = 22
+    static let top: CGFloat = 16
+    /// On the edge-timer screens: 26 pt from the left and 5 pt lower (board 52 / 34 px at 2×).
+    static let edgeLeading: CGFloat = 26
+    static let edgeTop: CGFloat = 21
 
     private var titleText: some View {
         Text(title).role(.bar, color).lineLimit(1)

@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 import SwiftData
 import RepCoachCore
 
@@ -25,10 +26,24 @@ final class AppModel {
         }
         #endif
         container = Self.makeContainer(plan: plan)
+        Self.renameExercises(in: container.mainContext, defaults: defaults)
         today = TodayModel(plan: plan, context: container.mainContext, settings: settings,
                            dayKey: LaunchOptions.dayKey)
         today.defaults = defaults
         today.refresh()
+    }
+
+    /// Moves anything stored under an exercise id plan.json has renamed to its current id (once, at the first
+    /// launch of the build that renames it; later launches find nothing to move). The count is logged.
+    private static func renameExercises(in context: ModelContext, defaults: UserDefaults) {
+        do {
+            let report = try IdMigration.run(in: context, defaults: defaults)
+            guard !report.isEmpty else { return }
+            Logger.store.notice("Renamed exercise ids: \(report.summary, privacy: .public)")
+            defaults.set(report.summary, forKey: "exerciseRenameReport")
+        } catch {
+            Logger.store.error("Couldn't rename exercise ids: \(error.localizedDescription)")
+        }
     }
 
     /// Where settings and the day's small state live. The demo uses a throwaway suite, so a screenshot's deload

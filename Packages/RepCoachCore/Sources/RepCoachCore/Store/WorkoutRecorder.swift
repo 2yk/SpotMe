@@ -95,6 +95,12 @@ public struct WorkoutRecorder {
         try context.save()
     }
 
+    /// Start again: a finished session is open again. Everything logged stays; finishing again ends it again.
+    public func reopen(_ session: WorkoutSession) throws {
+        session.endedAt = nil
+        try context.save()
+    }
+
     /// Stores how hard the workout was, 1 to 10 (anything else is clamped); nil clears it.
     public func setEffort(_ effort: Int?, on session: WorkoutSession) throws {
         session.effort = effort.map { min(max($0, 1), 10) }
@@ -113,6 +119,12 @@ public struct WorkoutRecorder {
     public func finishAtLastActivity(_ session: WorkoutSession) throws {
         let moments = session.logs.flatMap { log in [log.completedAt].compactMap { $0 } + log.sets.map(\.timestamp) }
         try finish(session, at: moments.max() ?? session.date)
+    }
+
+    /// Deletes one exercise's log and what is in it, e.g. ramp-ups logged before the exercise was swapped.
+    public func delete(_ log: ExerciseLog) throws {
+        context.delete(log)
+        try context.save()
     }
 
     /// Deletes a session and everything logged in it: a discarded workout.

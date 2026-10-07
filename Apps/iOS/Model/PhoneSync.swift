@@ -7,6 +7,8 @@ import RepCoachCore
 /// Phone side of WatchConnectivity. Stores every session the watch sends, one copy per session UUID, and sends
 /// the watch the current settings and plan overrides whenever they change. From the watch's status it deletes
 /// the sessions discarded there and sends back any the watch lost, so a reinstalled watch app gets its history.
+/// Today's swaps travel both ways at once (a message when the watch is reachable, the application contexts as
+/// the fallback); the later swap for an exercise wins.
 @MainActor @Observable
 final class PhoneSync: NSObject {
     enum WatchState: Equatable {
@@ -67,12 +69,31 @@ final class PhoneSync: NSObject {
         guard session.activationState == .activated, session.isPaired, session.isWatchAppInstalled else { return }
         do {
             let payload = SyncContext(settings: settings.settings, overrides: try SyncContext.overrides(in: context),
-                                      plan: PlanEdits.load(from: context), received: receivedIds.compactMap(UUID.init))
+                                      plan: PlanEdits.load(from: context), received: receivedIds.compactMap(UUID.init),
+                                      swaps: today.swapMarks)
             try session.updateApplicationContext(payload.applicationContext)
             lastSent = .now
         } catch {
             Logger.sync.error("Couldn't send settings to the watch: \(error.localizedDescription)")
         }
+    }
+
+    /// A swap was made here: the watch gets it now (a message), and in the context otherwise.
+    func swapsMade() {
+        guard LaunchOptions.sync, WCSession.isSupported() else { return }
+        let session = WCSession.default
+        guard session.activationState == .activated, session.isPaired, session.isWatchAppInstalled else { return }
+        if session.isReachable {
+            session.sendMessage(today.swapMarks.message, replyHandler: nil) { error in
+                Logger.sync.error("Couldn't send a swap: \(error.localizedDescription)")
+            }
+        }
+        sendContext()
+    }
+
+    fileprivate func received(swaps: SwapMarks) {
+        guard today.applySwaps(from: swaps) else { return }
+        Logger.sync.notice("Applied the watch's swaps")
     }
 
     fileprivate func received(_ payload: SessionPayload) {
@@ -95,6 +116,7 @@ final class PhoneSync: NSObject {
     }
 
     fileprivate func receivedStatus(_ status: WatchStatus) {
+        received(swaps: status.swaps)
         if let access = status.healthAccess {
             watchHealthAccess = access
             defaults.set(access.rawValue, forKey: Self.healthAccessKey)
@@ -176,6 +198,12 @@ extension PhoneSync: WCSessionDelegate {
     /// The user switched watches; start talking to the new one.
     nonisolated func sessionDidDeactivate(_ session: WCSession) {
         session.activate()
+    }
+
+    /// A swap made on the watch, while the phone was reachable.
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        guard let swaps = SwapMarks(message: message) else { return }
+        Task { @MainActor in self.received(swaps: swaps) }
     }
 
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {

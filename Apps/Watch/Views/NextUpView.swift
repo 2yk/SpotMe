@@ -1,15 +1,15 @@
 import SwiftUI
 import RepCoachCore
 
-/// Between exercises: a break that starts the next item by itself, what's next (tap it to pick another), and
-/// how the last exercise went. With nothing left, the end of the day.
+/// Between exercises: a break that starts the next item by itself, and what's next (tap its name to pick
+/// another, its figure for how to do it, and there to swap it). With nothing left, the end of the day.
 struct NextUpView: View {
     @Environment(TodayModel.self) private var today
     @Environment(WorkoutModel.self) private var workout
     @Environment(\.dimmed) private var dimmed
-    let summaries: [ExerciseFlow.Summary]
     let onFinish: () -> Void
     @State private var choosing = false
+    @State private var showingHow = false
 
     var body: some View {
         let next = today.queue.upNext
@@ -28,7 +28,12 @@ struct NextUpView: View {
                     if let figure {
                         // The figure moves beside the name and the target.
                         HStack(spacing: pt(7)) {
-                            FigureView(exercise: figure, yaw: figure.figure.openingYaw, size: pt(62))
+                            // The figure opens How, where the exercise can be swapped.
+                            Button { showingHow = true } label: {
+                                FigureView(exercise: figure, yaw: figure.figure.openingYaw, size: pt(62))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("How to do it")
                             VStack(alignment: .leading, spacing: pt(1)) {
                                 nameButton(next, alignment: .leading, lines: 3)
                                 if skippedEarlier { resumeTarget(first) } else { target(info) }
@@ -40,21 +45,6 @@ struct NextUpView: View {
                     } else {
                         nameButton(next, alignment: .center, lines: 2)
                         if skippedEarlier { resumeTarget(first) } else { target(info) }
-                    }
-                    if let summary = summaries.first {
-                        // How the exercise just finished went, e.g. "✓ All sets 10 · next time 22.5 kg".
-                        HStack(alignment: .firstTextBaseline, spacing: pt(4)) {
-                            Image(systemName: "checkmark").font(.system(size: pt(10), weight: .bold))
-                            Text(summary.line.text)
-                        }
-                        .role(.small, summary.line.tone.color)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .padding(.horizontal, pt(16))
-                        .padding(.top, pt(3))
-                        // Whatever space is left above the round buttons (4 pt clear): the lines that fit, cut
-                        // with an ellipsis.
-                        .frame(maxHeight: .infinity, alignment: .top)
                     }
                 }
                 .padding(.horizontal, Metrics.side)
@@ -77,11 +67,18 @@ struct NextUpView: View {
                 }
             }
             .onChange(of: choosing) { if choosing { workout.holdBreak() } }
+            .sheet(isPresented: $showingHow, onDismiss: workout.releaseBreak) {
+                if let figure { HowView(item: first, exercise: figure) }
+            }
+            .onChange(of: showingHow) { if showingHow { workout.holdBreak() } }
             #if DEBUG
-            .task { if LaunchOptions.screen == "next-picker" { choosing = true } }
+            .task {
+                if LaunchOptions.screen == "next-picker" { choosing = true }
+                if LaunchOptions.screen == "break-how" { showingHow = true }
+            }
             #endif
         } else {
-            AllDoneView(summaries: summaries, onFinish: onFinish)
+            AllDoneView(onFinish: onFinish)
         }
     }
 
@@ -182,11 +179,10 @@ private struct NextPicker: View {
     }
 }
 
-/// The end of the day's plan: how the last exercise went, then Finish workout.
+/// The end of the day's plan: all done, the day and how long it took, then Finish workout.
 struct AllDoneView: View {
     @Environment(TodayModel.self) private var today
     @Environment(WorkoutModel.self) private var workout
-    let summaries: [ExerciseFlow.Summary]
     let onFinish: () -> Void
     @State private var appeared = false
 
@@ -200,14 +196,9 @@ struct AllDoneView: View {
                 .background(Circle().fill(Theme.mint.opacity(0.16)))
                 .symbolEffect(.bounce, value: appeared)
             Text("All \(today.queue.totalCount) done").role(.titleXL)
-            if let last = summaries.last {
-                Text(last.name).role(.small.weight(.bold)).lineLimit(1)
-                Text(last.line.text)
-                    .role(.small, last.line.tone.color)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .padding(.horizontal, pt(8))
-            }
+            Text(today.session.map { "\(today.day.headline) · \(Int(Date.now.timeIntervalSince($0.date) / 60)) min" }
+                 ?? today.day.headline)
+                .role(.detail, Theme.text2)
             Spacer(minLength: 0)
             if workout.canFinish {
                 Button("Finish workout", action: onFinish)

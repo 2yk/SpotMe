@@ -22,7 +22,7 @@ struct WorkoutScreen: View {
                     .id(item.exerciseId)
                     .transition(.moveIn)
             case .allDone:
-                AllDoneView(summaries: [], onFinish: onFinish)
+                AllDoneView(onFinish: onFinish)
                     .transition(.moveIn)
             case nil:
                 Color.clear.onAppear(perform: onList)

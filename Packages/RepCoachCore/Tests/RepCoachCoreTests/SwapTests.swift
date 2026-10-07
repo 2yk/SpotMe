@@ -270,3 +270,35 @@ final class SwapTests: StoreTestCase {
         XCTAssertEqual(decoded.settings.injuryAreas, ["lowerBack"])
     }
 }
+
+/// The complication never starts a second session.
+final class OpenFromOutsideTests: XCTestCase {
+    func testAWorkoutUnderWayIsContinuedWhateverTheTapSays() {
+        for start in [true, false] {
+            XCTAssertEqual(OpenFromOutside.decide(isRunning: true, isFinished: false, isComplete: false, wantsStart: start),
+                           .continueWorkout)
+            // Even a finished-looking day: a running workout (Start again's) is the one to return to.
+            XCTAssertEqual(OpenFromOutside.decide(isRunning: true, isFinished: true, isComplete: true, wantsStart: start),
+                           .continueWorkout)
+        }
+    }
+
+    func testAFinishedDayOpensFinishedAndNeverStartsAgain() {
+        XCTAssertEqual(OpenFromOutside.decide(isRunning: false, isFinished: true, isComplete: false, wantsStart: true),
+                       .showToday)
+        XCTAssertEqual(OpenFromOutside.decide(isRunning: false, isFinished: true, isComplete: true, wantsStart: true),
+                       .showToday)
+    }
+
+    func testOnlyADayWithNothingStartedStarts() {
+        XCTAssertEqual(OpenFromOutside.decide(isRunning: false, isFinished: false, isComplete: false, wantsStart: true),
+                       .startToday)
+    }
+
+    func testAPlainOpenOrAFullDayJustShowsToday() {
+        XCTAssertEqual(OpenFromOutside.decide(isRunning: false, isFinished: false, isComplete: false, wantsStart: false),
+                       .showToday)
+        XCTAssertEqual(OpenFromOutside.decide(isRunning: false, isFinished: false, isComplete: true, wantsStart: true),
+                       .showToday)
+    }
+}

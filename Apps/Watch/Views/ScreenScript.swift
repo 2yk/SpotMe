@@ -1,5 +1,6 @@
 #if DEBUG
 import SwiftUI
+import SwiftData
 import RepCoachCore
 
 /// Drives the demo app to one screen for screenshots: `-demo YES -day wednesday -screen rest`.
@@ -7,11 +8,12 @@ import RepCoachCore
 enum ScreenScript {
     static func run(today: TodayModel, workout: WorkoutModel, path: Binding<[TodayView.Route]>,
                     choosingDay: Binding<Bool>, confirmingFinish: Binding<Bool>, confirmingDiscard: Binding<Bool>,
-                    open: (URL) -> Void) {
+                    swapping: Binding<PlanItem?>, open: @escaping (URL) -> Void) {
         guard let screen = LaunchOptions.screen else { return }
         if ["workout", "rest", "alldone", "finish-dialog", "next", "next-picker", "controls", "paused", "media",
             "paused-rest", "skipped", "running", "running-paused", "running-end", "paused-set", "break-checklist",
-            "break-pick", "running-waiting", "break-back", "effort", "superset", "superset-next", "superset-rest", "how"].contains(screen) || UserDefaults.standard.bool(forKey: "running") {
+            "break-pick", "running-waiting", "break-back", "effort", "superset", "superset-next", "superset-rest", "how",
+            "tap-running", "break-how", "controls-break"].contains(screen) || UserDefaults.standard.bool(forKey: "running") {
             workout.health.pretendRunning(heartRate: 128, minutes: 24)
         }
         func show(_ items: [PlanItem]) {
@@ -59,6 +61,32 @@ enum ScreenScript {
             }
         case "list":
             break
+        case "finished", "finished-all":
+            // A day finished with items left (the last core items open), or with everything done.
+            let left = screen == "finished"
+                ? ["hanging-knee-to-elbow-twist", "russian-twist-weighted", "toe-touches"] : []
+            complete(today, except: left)
+            finishDay(today, minutes: screen == "finished" ? 48 : 62, effort: 7, energy: screen == "finished" ? 342 : 395)
+        case "swapped":
+            // Machine Chest Press swapped for DB Bench Press. The demo has history for it (Friday's plan has it);
+            // the board shows it without, so it is wiped first: First time.
+            forgetHistory(of: "db-bench-press", today)
+            swap(today, slot: "machine-chest-press", to: "db-bench-press")
+        case "swap":
+            // The Swap sheet for Machine Chest Press.
+            if let item = today.day.items.first(where: { $0.exerciseId == "machine-chest-press" }) {
+                swapping.wrappedValue = item
+            }
+        case "tap-running":
+            // A workout under way (rest running), then a complication tap two seconds later: the same rest, with
+            // the same clock, comes back. The Digital Crown can't be pressed on the simulator, so Today stays
+            // under the workout as it does when the app is brought back.
+            show(today.queue.upNext)
+            workout.flow?.logSet()
+            Task {
+                try? await Task.sleep(for: .seconds(2))
+                open(URL(string: "spotme://start")!)
+            }
         case "alldone":
             completeEverything(today)
         case "alldone-screen":
@@ -157,8 +185,10 @@ enum ScreenScript {
             show(today.queue.upNext)
             workout.flow?.logSet()
             workout.pause()
-        case "set", "rest", "next", "next-picker", "how":
-            show(today.queue.upNext)
+        case "set", "rest", "next", "next-picker", "how", "break-how", "controls-break":
+            // `-item machine-chest-press`: that exercise instead of the one up next.
+            let id = UserDefaults.standard.string(forKey: "item")
+            show(today.day.items.first { $0.exerciseId == id }.map { [$0] } ?? today.queue.upNext)
             guard let flow = workout.flow else { return }
             if screen == "rest" {
                 // One rep under the range, so the rest screen shows the engine dropping the weight.
@@ -185,6 +215,31 @@ enum ScreenScript {
     /// Seconds between launching and the screenshot (`Scripts/watch-shot.sh`).
     private static let shotDelay = 4.5
 
+    /// The day finished, as Finish workout leaves it: time, energy and effort kept with the session.
+    private static func finishDay(_ today: TodayModel, minutes: Double, effort: Int?, energy: Double) {
+        guard let session = try? today.startSession() else { return }
+        session.addPart(seconds: minutes * 60, energy: energy, averageHeartRate: 124)
+        session.healthKitWorkoutId = UUID()
+        try? today.recorder.setEffort(effort, on: session)
+        try? today.recorder.finish(session)
+        today.refresh()
+    }
+
+    /// Demo only: no past sessions of `id`, so it reads First time.
+    private static func forgetHistory(of id: String, _ today: TodayModel) {
+        let logs = (try? today.context.fetch(FetchDescriptor<ExerciseLog>(predicate: #Predicate { $0.exerciseId == id }))) ?? []
+        logs.forEach(today.context.delete)
+        try? today.context.save()
+        today.refresh()
+    }
+
+    /// Today's slot swapped for a database exercise, as the Swap sheet does it.
+    private static func swap(_ today: TodayModel, slot: String, to id: String) {
+        guard let item = today.day.items.first(where: { $0.exerciseId == slot }),
+              let choice = today.swapChoices(for: item).first(where: { $0.id == id }) else { return }
+        today.swap(item, to: choice)
+    }
+
     /// The first `count` items of the day done, with the sets the plan asks for.
     private static func complete(_ today: TodayModel, first count: Int) {
         let ids = Set(today.day.items.prefix(count).map(\.exerciseId))
@@ -200,7 +255,7 @@ enum ScreenScript {
         for item in today.day.items where !today.status(of: item).isFinished && ids?.contains(item.exerciseId) != false {
             if item.kind == .checklist {
                 today.complete(item)
-            } else if let log = try? today.recorder.log(for: item.exerciseId, in: today.startSession()) {
+            } else if let log = try? today.writableLog(for: item) {
                 _ = try? today.recorder.addSet(to: log, weight: today.target(for: item).weight ?? 0, reps: 10)
                 try? today.recorder.complete(log)
             }
@@ -214,6 +269,11 @@ enum ScreenScript {
         case "bottom", "running-end":
             try? await Task.sleep(for: .seconds(0.5))
             proxy.scrollTo(TodayView.endOfList, anchor: .bottom)
+        case "swapped":
+            try? await Task.sleep(for: .seconds(0.5))
+            proxy.scrollTo("incline-db-press", anchor: .top)
+        case "finished", "finished-all":
+            return
         case "list":
             try? await Task.sleep(for: .seconds(0.5))
             if let item = today.queue.upNext.first.map({ _ in today.day.items.filter { !today.status(of: $0).isFinished } })?.dropFirst(2).first {

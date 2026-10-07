@@ -27,6 +27,11 @@ struct RepCoachWatchApp: App {
         }
         workout.onSessionDiscarded = { [weak sync] id in sync?.sessionDiscarded(id) }
         workout.onStartAttempted = { [weak sync] in sync?.sendStatus() }
+        app.today.onSwapsChanged = { [weak sync] _ in sync?.swapsMade() }
+        app.today.onRefresh = { [weak today = app.today, weak workout] in
+            if let today, let workout { ComplicationPublisher.publish(today: today, workout: workout) }
+        }
+        sync.onSwapsReceived = { [weak workout] in workout?.swapsChanged() }
         sync.activate()
         _app = State(initialValue: app)
         _workout = State(initialValue: workout)

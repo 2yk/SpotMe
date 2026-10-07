@@ -10,7 +10,7 @@ Not an App Store product. No accounts, no analytics, no third-party dependencies
 - Apple Watch + iPhone, paid Apple Developer account.
 - Runs are handled by Nike Run Club and don't appear in this app. `plan.json` still lists them (as checklist items in "Run · NRC …" groups); the apps leave them out.
 - Units: kg only.
-- Back injury history: the plan is spine-safe. Never suggest exercises that are not in the plan.
+- Back injury history: the plan is spine-safe. **Swap** offers the exercise database's alternatives (`design/exercise-db/`, shipped as `exercises.json`), leaves out any rated 3 ("avoid") for one of the user's injury areas (`TrainingSettings.injuryAreas`, the lower back for now) and flags a 2 "Take care".
 
 ## The plan
 
@@ -27,6 +27,7 @@ Not an App Store product. No accounts, no analytics, no third-party dependencies
 | `amrap` | Reps, one set | Thursday Max-Rep Set |
 | `percentOfMax` | Reps; target = 60% of today's AMRAP | Thursday Volume Sets |
 
+- One exercise per slot: Wednesday's chest slot is **Machine Chest Press** (`machine-chest-press`, the database's id), not "Machine Chest Press (or Flat Bench)". Everything stored under the old id counts as Machine Chest Press: on first launch of watch build 9 (and of the matching phone build) `IdMigration` renames the id in exercise logs, per-exercise settings, plan edits and the day's put-off and ramp-up marks (idempotent; the count is logged once, "Renamed exercise ids: 12 sets in 4 logs"). A session that arrives from a device that still has the old id is stored under the new one (`ExerciseIdRenames`). To use a different exercise for a day, use Swap.
 - `perSide: true` means the logged reps are per side; show "/side" next to the number.
 - `supersetGroup`: items sharing a group alternate A1 → B1 → rest → A2 → B2 …
 
@@ -45,7 +46,7 @@ Not an App Store product. No accounts, no analytics, no third-party dependencies
 - Reps below the range → next set lighter: 5% per missing rep, capped at 20%, always at least one increment, rounded down to the increment.
 - Reps 2+ above the top of the range and not the last set → the weight felt light, so the next set is heavier: the weight this set's effort would lift for the top of the range (Epley), rounded down to the increment; at least one increment, at most two.
 - Otherwise → same weight.
-- Show the reason in one short line: "6 reps, below 8 · drop to 17.5 kg", "14 reps, above 12 · up to 22.5 kg", "Top of range · stay at 20 kg" or "In range · stay at 20 kg".
+- The engine still words the reason ("6 reps, below 8 · drop to 17.5 kg", "14 reps, above 12 · up to 22.5 kg", "Top of range · stay at 20 kg", "In range · stay at 20 kg"), and History and the CSV can use it. **The watch never shows it:** weights move by themselves; the rest screen only shows the next weight with an up or down arrow.
 
 **Ramp-up sets (`ProgressionEngine.rampUps`, reference in `docs/engine_reference.py`):** one or two lighter, short sets before the first working set, so the session doesn't start cold at last time's limit. The working sets, their weight and "beat last time" are unchanged.
 - A **main lift** is a weighted exercise with 2:00 or more of rest. The first main lift in the day's plan order gets two ramp-ups (50% × 8, then 75% × 4); every other main lift gets one (70% × 5). Smaller lifts get none, or one at 70% × 5 with the setting "Every weighted lift".
@@ -62,25 +63,29 @@ Increments come from `plan.json` (DB 2.5, DB lateral 1, cables 2.5, machines 5, 
 
 ## Watch app
 
-The look: one accent. Volt is what to tap and the value the Crown moves; ice means waiting (rest, break, ramp-up, an exercise put off), mint done, ember lighter than planned, red heart rate and Stop/End/Discard, amber paused. SF Rounded with tabular digits, designed for the 46 mm watch (208 × 248 pt); the 42 mm scales every size by 0.9 with one factor (`Metrics.scale`). The system's bar stays (back button, clock); the bar holds a short coloured title and nothing else, and the exercise's name is in the content. Tokens and sizes: `design/handoff/watch-1/BUILD.md`, section 3.
+The look: one accent. Volt is what to tap and the value the Crown moves; ice means waiting (rest, break, ramp-up, an exercise put off), mint done, ember lighter than planned, red heart rate and Stop/End/Discard, amber paused. SF Rounded with tabular digits, designed for the 46 mm watch (208 × 248 pt); the 42 mm scales every size by 0.9 with one factor (`Metrics.scale`). The system's bar stays (the clock); the bar holds a short coloured title and nothing else, and the exercise's name is in the content. **Workout screens have no back button** (set, ramp-up, rest, break, holds, tick-off items, controls, All done); the controls page's **List** is the way to Today. Sheets (How, Swap, Days, End, Discard, Summary, Effort, Health alert) keep their close button. The title sits at the clock's line, 22 pt from the left; on the edge-timer screens (break, holds) it is drawn as content 26 pt from the left and 5 pt lower, clear of the line. A rest has no title. Tokens and sizes: `design/handoff/watch-1/BUILD.md`, section 3.
 
 **Today**
 - Opens on today's weekday. Crown scrolls. The day's name opens the list of days.
 - Top: the day, its name and what it trains, then one big button, **Start workout**, or **Continue** with what's really next once the day has started (with the running Health workout's heart rate and time above it). A rest day (Saturday) has no button. Nothing else is highlighted.
 - Below: the open items in plan order, each with its prescription on the left and today's target weight on the right ("4 × 6–10", "22.5 kg"). An up arrow in volt before the weight when today's target is above the last working weight, a down arrow in ember when it is lower or a deload; both come from the engine's own reason for the target. Finished items move to the bottom, dimmed with a check.
-- Tapping any open item does it now (for when a machine is busy); the workout then carries on from there. Swipe actions: **Skip today** (drops the item for the day; its row then says "Skipped · tap to do it", and a tap reopens it and starts it), and Done for checklist items.
+- Tapping any open item does it now (for when a machine is busy); the workout then carries on from there. Swipe actions: **Skip today** (drops the item for the day; its row then says "Skipped · tap to do it", and a tap reopens it and starts it), **Swap** (see below) and Done for checklist items.
+- A swapped exercise's row has the swap icon before its prescription ("⇄ 3 × 8–10"), and "First time" in volt on the right when it has no history of its own.
+- **Finished.** After any Finish (the End sheet, Today's Finish workout, All done) the day is finished, whatever is left. Today then shows: the day line ("WEDNESDAY · PUSH A", opens the days); a **Finished** card (a mint check, "48 min · Hard 7", or "48 min · 342 kcal" without an effort; a tap opens the summary); when items are left a neutral **Start again** button ("3 left"), then NOT DONE with the open rows in plan order (no weights), then DONE, then Discard workout. With nothing left there is no Start again. The bar title ("12/15") is mint. There is no Continue and no Finish workout.
+- **Start again** (or a tap on a NOT DONE row, which starts on that row) reopens the same session: done items stay done, a new Health workout starts, the next open item opens as Start workout would, and Today is back in its running state. Finishing again saves a second Health workout (the session adds up their time, energy and average heart rate), asks the effort again starting from the first answer, and keeps the new answer. The phone gets the session again (same UUID).
+- **Discard workout** after a Finish deletes today's sets, here and on the phone, and every Health workout SpotMe saved for the session (Finish saves one, Start again another), with their energy samples. Today's swaps and put-off marks go too.
 - An item put off with Skip on the controls keeps its place and says "1 of 3 sets · waiting" (or "3 × 8–10 · waiting") in ice; tapping it does it now.
 - At the end: **Finish workout** and **Discard workout**.
 - Progress: "7/15" in the bar.
 
 **Workout flow**
 - Start workout (or Continue) opens the next open item in plan order; one already started comes first. The workout then moves through the day by itself.
-- After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target, and how the finished exercise went; when it runs out, the next item starts. +30 s, start now (the ▶ button or the countdown itself), or tap the next item's name to pick another to do first (the break waits while the list is open). The timer runs round the edge of the screen. Undo, for the last logged set, is here and on the rest screen, between the round buttons.
+- After an exercise's last set: a break as long as its rest (15 s before a checklist item) showing the next item and its target (no word on how the finished exercise went); when it runs out, the next item starts. +30 s, start now (the ▶ button or the countdown itself), tap the next item's name to pick another to do first, or tap its figure for How and Swap (the break waits while either is open). The timer runs round the edge of the screen. Undo, for the last logged set, is here and on the rest screen, between the round buttons.
 - Checklist items (warmup, neck, cooldown) show their steps with Done and Skip (Skip drops it for the day), then move on.
-- When everything is done and nothing waits: "All done" with Finish workout, which goes on to the effort question. Back always returns to Today.
+- When everything is done and nothing waits: "All done" (with the day and the minutes, "Push A · 62 min") and Finish workout, which goes on to the effort question. There is no back button; **List**, on the controls page, returns to Today.
 - Pages, as in Apple's Workout app: swipe right for the **controls**, left for **Now Playing** (the system player: play, pause, skip, volume on the Crown, for music on the watch or the iPhone). Three dots show the page.
 - Controls: **Pause/Resume**, **End**, **Skip** and **List** (back to Today), four buttons of fixed size (so nothing resizes when the page first appears). Under them: "Skip to …" and, when the exercise on screen stays open, "This one stays open".
-  - Pause stops the Health workout's time and heart rate, the rest and the break; they carry on from where they stopped. Logging a set or starting a hold resumes. Today shows the workout as paused, and so does a paused Health workout picked up after a relaunch.
+  - Pause stops the Health workout's time and heart rate. **A running rest or break never pauses:** it keeps counting and still ends with its haptic. Logging a set or starting a hold resumes the workout. Today shows the workout as paused, and so does a paused Health workout picked up after a relaunch.
   - **Skip means later.** It puts the exercise on screen off (or a tick-off item): it stays open with its logged sets, and the workout moves to the next open item. Waiting exercises come back by themselves after the last other open item that is not a tick-off item, so before the cooldown, in the order they were put off; the break before one says "Skipped earlier" and "Set 2 of 3 · 17.5 kg". During a rest between sets Skip puts the exercise off too (the rest is dropped; coming back opens the next set). From a break it starts the next item now. When the exercise on screen is the only open item, Skip is disabled. Waiting is kept for the day: it survives leaving the workout and a relaunch, and Discard workout clears it.
 - **End** opens one screen: Finish, Discard workout (which asks once more) and Keep going.
 
@@ -102,7 +107,7 @@ The look: one accent. Volt is what to tap and the value the Crown moves; ice mea
 
 **Rest screen**
 - Countdown from `restSec` (supersets: rest only after the second exercise). The timer line round the edge of the screen and the time in the middle are drawn from one clock, so they always agree: 15 times a second on screen, every second in Always On (dimmed).
-- Shows the next set's target (an arrow when the weight changed: ember down, volt up) and the one-line reason, the part of the engine's line before " · " ("5 reps, below 6"). Reps and timed exercises, which never change weight, say "In range", "Top of range" or "Below range".
+- No title and no reason. Shows "NEXT · SET 3 OF 4" and the next set's target (an arrow when the weight changed: ember down, volt up). The one line under it is only "Last time 10 reps" on the rest before the first working set, and "4 reps · not counted" between ramp-ups.
 - Haptics at 10 s left and at 0. Round buttons: +30 s in one corner, skip in the other; Undo between them.
 - The heart rate from the running workout session is shown under the time.
 
@@ -110,7 +115,13 @@ The look: one accent. Volt is what to tap and the value the Crown moves; ice mea
 
 **Checklist items:** Done or Skip in the workout; one swipe to done in the list. Warmups show their steps as a scrollable list; Done and Skip are at its end.
 
-**Exercise finished:** a one-line summary ("All sets 10 · next time 22.5 kg" or "Next time 20 kg · aim for more reps") on the break screen before the next item.
+**Exercise finished:** the break before the next item (no summary line: how it went is for History).
+
+**Swap (for today only)**
+- **How** has a text button, **Swap exercise**, under the cue (for an exercise nothing has been logged on yet; ramp-ups don't count). Today's open rows have a **Swap** swipe action beside Skip today. Both open the **Swap** sheet: "Instead of Machine Chest Press", then the exercise's `alternatives` from the database in the database's order, each with its name and why, a TAKE CARE chip (ember) for a 2, nothing for a 3; and the footer "Today only. It takes these sets and reps and keeps its own weights." One tap swaps and returns to where the user was, now showing the new exercise. A swapped item also offers the plan's own exercise first, to take the swap back. Only weighted, reps and timed items are swapped, a hold for a hold; checklist items, the max-rep set and volume sets have no Swap.
+- A swapped-in exercise takes the slot's sets, reps, rest, section and superset group, and its own id, name, kind, side and increment (the database's `incrementKg`). Its history, target, "Last" and "First time" come from **its own** past sessions (a swapped-in exercise that is also in the plan elsewhere has that history); nothing from the slot's exercise is mixed in. `ProgressionEngine` is unchanged: it works per exerciseId.
+- For the day: tomorrow's plan shows the slot's exercise again. The swap is kept for the day like the put-off marks (it survives leaving the workout and a relaunch). Today's log of the swapped-in exercise has `slotExerciseId`, so History can say "for Machine Chest Press".
+- Sync: see Data and sync.
 
 **Effort and summary**
 - After any Finish (End, Today, All done) the **Effort** sheet asks "How hard was it?" on Apple's 1 to 10 scale, moved with the Crown (a haptic click per step), starting at the last rated workout's value or 5: 1–3 Easy (mint), 4–6 Moderate (volt), 7–8 Hard (ember), 9–10 All Out (red). **Save** keeps it with the session (sent to the phone again) and, when the workout was saved to Health, writes it as the workout's effort rating (`workoutEffortScore`, related to the workout), so Fitness shows it and Training Load uses it; the watch asks for that permission once more. Closing the sheet saves the workout without an effort. With "Save workouts to Health" off the question is still asked and the answer stays in SpotMe. Discard never asks.
@@ -127,7 +138,7 @@ The look: one accent. Volt is what to tap and the value the Crown moves; ice mea
 
 **Complication ("Start workout")**
 - Circular, corner, rectangular and inline. Shows today's session from the plan ("Pull A · Strength & Thickness"; "Rest day" on Saturday), refreshed at midnight. The mark is drawn (watch faces drop large images), its dot in the face's accent colour.
-- Tapping it opens SpotMe on today and starts the workout, as Start workout does; on a rest day it only opens the app.
+- Tapping it opens SpotMe **where it is** and never starts a second session (`OpenFromOutside`): a workout under way (a rest, a break or paused included) returns to the screen it was on, with the same clock and the same set, without changing the day on show; a finished day opens Today's Finished state, never Start again by itself; only a day with nothing started starts, as Start workout does. On a rest day it only opens the app. The app icon (and any Siri or Shortcuts entry that opens the app) opens the app as it was.
 
 ## iPhone app
 
@@ -141,13 +152,15 @@ The look: one accent. Volt is what to tap and the value the Crown moves; ice mea
 ## Data and sync
 
 - SwiftData on both devices.
-- Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId?, endedAt?, effort? 1–10), `ExerciseLog` (session, exerciseId, order, completedAt?, skipped), `SetLog` (log, index, weight, reps, seconds?, timestamp, isRampUp), `ExerciseSettings` (exerciseId, overrides for name/increment/rep range/sets/rest/startWeight), `BodyMeasurement` (id, date, arm, waist, in inches; iPhone only), `PlanEditsRecord` (the user's `PlanEdits`: each changed day's exercise order, and the exercises they created, with ids starting "custom-").
+- Models: `WorkoutSession` (id UUID, date, weekday key, isDeload, healthKitWorkoutId? (the latest Health workout), endedAt?, effort? 1–10, activeSeconds?, energyKcal?, averageHeartRate? (over every Finish of the session), savedWorkoutIdList? (every Health workout saved for it, for Discard)), `ExerciseLog` (session, exerciseId, order, completedAt?, skipped, slotExerciseId? (the plan's exercise a swapped-in one stands in for)), `SetLog` (log, index, weight, reps, seconds?, timestamp, isRampUp), `ExerciseSettings` (exerciseId, overrides for name/increment/rep range/sets/rest/startWeight), `BodyMeasurement` (id, date, arm, waist, in inches; iPhone only), `PlanEditsRecord` (the user's `PlanEdits`: each changed day's exercise order, and the exercises they created, with ids starting "custom-").
 - `SetLog.index` is the order performed in the exercise, ramp-up sets included. `ExerciseLog.orderedSets` is every set (the CSV); anything that counts sets (`status`, `orderedCountedSets`, `HistoryStore`, `WorkoutSession.countedSetCount`) leaves ramp-up sets out. Both new fields are lightweight additions to the store: older stores open with no ramp-ups and no effort.
+- Both new fields groups are lightweight additions to the store (optional attributes): older stores open with none of them. `SessionPayload` carries them (`slotExerciseId` per log; time, energy and average heart rate per session) and decodes older payloads without.
 - **The watch works fully without the phone nearby.** It keeps its own store and the history it needs for targets.
 - WatchConnectivity:
   - Watch → phone: each finished `WorkoutSession` (with its logs, each set's ramp-up mark and the session's effort) via `transferUserInfo` (queued, delivered later). The phone de-duplicates by session UUID; sending a session again replaces the phone's copy, which is how an effort given after Finish arrives. Payloads from before ramp-ups and effort decode as working sets and no effort.
   - The watch's own application context (`WatchStatus`): its Health access, the ids of every session it has, and the ids it discarded. The phone deletes discarded sessions and never stores them again, and sends back (via `transferUserInfo`) every session the watch doesn't have, so a reinstalled watch app gets its history and today's progress back. A restored copy never overwrites a session the watch has.
-  - Phone → watch: settings (including the ramp-up setting), exercise overrides and plan edits via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
+  - **Swaps travel both ways at once** (`SwapMarks`): the watch's swap goes to the phone, and the phone's to the watch, as a `sendMessage` when the other device is reachable, and in the application contexts (`WatchStatus.swaps`, `SyncContext.swaps`) as the fallback. A mark is (day, date, slot, exercise, time); the later mark for a slot wins on either device, taking a swap back is a mark whose exercise is the slot, and Discard takes them all back. The receiving device applies them at once, even mid-workout, to the open item wherever it is (the screen on show moves to the swapped-in exercise; a break shows the new one by itself). The iPhone's own Swap screen comes with the iPhone redesign; the phone already accepts and shows the watch's swaps, and History and the CSV name a swapped-in exercise from the database.
+  - Phone → watch: settings (including the ramp-up setting and the injury areas), exercise overrides and plan edits via `updateApplicationContext`. The watch applies them at the next session start, except the Health switch, which moves no targets and applies at once.
 - Nothing is deleted automatically; only Discard workout deletes.
 
 ## Out of scope

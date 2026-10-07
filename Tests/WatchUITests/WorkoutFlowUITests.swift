@@ -117,7 +117,8 @@ final class WorkoutFlowUITests: XCTestCase {
 
     // MARK: Pause
 
-    func testPauseHoldsTheRestAndResumeCarriesOn() {
+    /// Pause stops the workout's clock and heart rate, never a running rest: it keeps counting.
+    func testPauseNeverPausesTheRest() {
         let app = launch(screen: "rest")
         let time = app.staticTexts["countdown"]
         XCTAssertTrue(time.waitForExistence(timeout: 10))
@@ -126,17 +127,108 @@ final class WorkoutFlowUITests: XCTestCase {
         app.buttons["Pause"].tap()
         XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 5))
         app.swipeLeft()
-        XCTAssertTrue(pausedLabel(app).waitForExistence(timeout: 5))
+        XCTAssertTrue(pausedLabel(app).waitForExistence(timeout: 5), "The paused workout isn't shown")
         let paused = time.label
         sleep(3)
-        XCTAssertEqual(time.label, paused, "The rest kept counting while paused")
+        XCTAssertNotEqual(time.label, paused, "The rest stopped counting while the workout was paused")
 
         app.swipeRight()
         app.buttons["Resume"].tap()
         XCTAssertTrue(app.buttons["Skip rest"].waitForExistence(timeout: 5), "Resume didn't go back to the rest")
-        sleep(3)
-        XCTAssertNotEqual(time.label, paused, "The rest didn't carry on after Resume")
         XCTAssertFalse(pausedLabel(app).exists)
+    }
+
+    // MARK: No back button, no reasons
+
+    /// A workout screen has no back button, and Today is reached from the controls page's List.
+    func testWorkoutScreensHaveNoBackButton() {
+        let app = launch(screen: "set")
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["Back"].exists, "The set screen has a back button")
+        XCTAssertEqual(app.navigationBars.buttons.count, 0, "The bar holds a button on the set screen")
+        app.swipeRight()
+        XCTAssertTrue(app.buttons["List"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["Back"].exists, "The controls page has a back button")
+        app.buttons["List"].tap()
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label CONTAINS 'Continue'")).firstMatch
+            .waitForExistence(timeout: 5), "List didn't go to Today")
+    }
+
+    /// A rest has no "Rest" title and never says why the weight moved.
+    func testARestHasNoTitleAndNoReason() {
+        let app = launch(screen: "rest")
+        XCTAssertTrue(app.buttons["Skip rest"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["Rest"].exists, "A rest has a title")
+        let reasons = app.staticTexts.matching(NSPredicate(
+            format: "label CONTAINS[c] 'below' OR label CONTAINS[c] 'above' OR label CONTAINS[c] 'in range' "
+                + "OR label CONTAINS[c] 'stay at' OR label CONTAINS[c] 'drop to' OR label CONTAINS[c] 'up to'"))
+        XCTAssertEqual(reasons.count, 0, "The rest explains the weight: \(reasons.firstMatch.label)")
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'next'")).firstMatch.exists)
+    }
+
+    /// The break shows what's next and nothing about how the last exercise went.
+    func testTheBreakHasNoResultLine() {
+        let app = launch(screen: "next")
+        XCTAssertTrue(startNow(app).waitForExistence(timeout: 10))
+        let results = app.staticTexts.matching(NSPredicate(
+            format: "label CONTAINS[c] 'next time' OR label CONTAINS[c] 'all sets' OR label CONTAINS[c] 'aim for' "
+                + "OR label CONTAINS[c] 'top of range' OR label == 'Logged'"))
+        XCTAssertEqual(results.count, 0, "The break says how it went: \(results.firstMatch.label)")
+    }
+
+    // MARK: Finished
+
+    /// After a Finish with items left, Today says Finished and offers Start again; the same day picks up.
+    func testAFinishedDayOffersStartAgain() {
+        let app = launch(screen: "finished", extra: ["-fresh", "YES"])
+        XCTAssertTrue(app.staticTexts["Finished"].waitForExistence(timeout: 10), "No Finished card")
+        let again = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Start again'")).firstMatch
+        XCTAssertTrue(again.exists, "No Start again")
+        XCTAssertFalse(app.buttons.matching(NSPredicate(format: "label CONTAINS 'Continue'")).firstMatch.exists)
+        XCTAssertFalse(app.buttons["Finish workout"].exists)
+        again.tap()
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10), "Start again didn't open the next item")
+    }
+
+    /// A day finished with everything done has no Start again.
+    func testAFinishedDayWithNothingLeftHasNoStartAgain() {
+        let app = launch(screen: "finished-all", extra: ["-fresh", "YES"])
+        XCTAssertTrue(app.staticTexts["Finished"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons.matching(NSPredicate(format: "label CONTAINS 'Start again'")).firstMatch.exists)
+    }
+
+    // MARK: Swap
+
+    /// Swap exercise, from the How sheet: pick an alternative and the set screen shows it.
+    func testSwapFromTheHowSheet() {
+        let app = launch(screen: "item", extra: ["-fresh", "YES", "-item", "machine-chest-press"])
+        skipRampUpIfShown(app)
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10))
+        app.buttons["How to do it"].tap()
+        let swap = app.buttons["Swap exercise"]
+        XCTAssertTrue(swap.waitForExistence(timeout: 5), "How has no Swap exercise")
+        swap.tap()
+        XCTAssertTrue(app.staticTexts["Instead of Machine Chest Press"].waitForExistence(timeout: 5))
+        let bench = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'DB Bench Press'")).firstMatch
+        XCTAssertTrue(bench.exists, "No DB Bench Press among the alternatives")
+        bench.tap()
+        XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10), "Back on the set screen")
+        XCTAssertTrue(app.staticTexts["DB Bench Press"].waitForExistence(timeout: 5), "The swapped-in exercise isn't shown")
+        XCTAssertFalse(app.staticTexts["Machine Chest Press"].exists)
+    }
+
+    // MARK: Outside
+
+    /// A complication tap while a rest runs returns to that rest: no second session, no fresh start.
+    func testTheComplicationReturnsToTheWorkoutUnderWay() {
+        let app = launch(screen: "tap-running")
+        XCTAssertTrue(app.buttons["Skip rest"].waitForExistence(timeout: 10), "No rest under way")
+        let time = app.staticTexts["countdown"]
+        let before = time.label
+        sleep(5) // the tap comes after two seconds
+        XCTAssertTrue(app.buttons["Skip rest"].exists, "The tap left the rest")
+        XCTAssertFalse(app.buttons["Skip the ramp-up"].exists, "The tap started something again")
+        XCTAssertNotEqual(time.label, before, "The rest stopped")
     }
 
     // MARK: Pages

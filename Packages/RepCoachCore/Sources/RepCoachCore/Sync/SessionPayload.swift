@@ -55,6 +55,7 @@ public struct SessionPayload: Codable, Equatable, Sendable {
     /// The Health workout(s)' time and energy; nil in payloads sent before they were kept.
     public var activeSeconds: Double?
     public var energyKcal: Double?
+    public var averageHeartRate: Double?
     public var logs: [Log]
 
     /// A snapshot of `session` and everything logged in it.
@@ -68,6 +69,7 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         effort = session.effort
         activeSeconds = session.activeSeconds
         energyKcal = session.energyKcal
+        averageHeartRate = session.averageHeartRate
         logs = session.logs.sorted { $0.order < $1.order }.map { log in
             Log(exerciseId: log.exerciseId, order: log.order, completedAt: log.completedAt, skipped: log.skipped,
                 slotExerciseId: log.slotExerciseId,
@@ -128,6 +130,7 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         session.effort = effort
         session.activeSeconds = activeSeconds
         session.energyKcal = energyKcal
+        session.averageHeartRate = averageHeartRate
 
         for entry in logs {
             insert(entry, order: entry.order, into: session, context: context)

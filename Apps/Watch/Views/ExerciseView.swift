@@ -10,7 +10,7 @@ struct ExerciseView: View {
 
     var body: some View {
         content
-            .barTitle(title.text, title.color)
+            .barTitle(title.text, title.color, edge: workout.showsEdgeTimer)
             .animation(.snappy, value: flow.phase)
     }
 
@@ -27,21 +27,21 @@ struct ExerciseView: View {
             }
         case .rest(let rest):
             RestView(flow: flow, rest: rest)
-        case .finished(let summaries):
-            NextUpView(summaries: summaries, onFinish: onFinish)
+        case .finished:
+            NextUpView(onFinish: onFinish)
         }
     }
 
-    /// The bar holds only a short title; the exercise's name is in the content.
+    /// The bar holds only a short title; the exercise's name is in the content. A rest has none at all.
     private var title: (text: String, color: Color) {
-        if workout.isPaused { return ("Paused", Theme.amber) }
         switch flow.phase {
         case .set:
+            if workout.isPaused { return ("Paused", Theme.amber) }
             if flow.currentRamp != nil { return ("Ramp-up", Theme.ice) }
             if flow.currentItem.kind == .amrap { return ("Max reps", Theme.volt) }
             return ("Set \(flow.current?.set ?? 1) of \(flow.currentTarget.sets)", Theme.volt)
         case .rest:
-            return ("Rest", dimmed ? Theme.ice.opacity(0.55) : Theme.ice)
+            return ("", Theme.ice)
         case .finished:
             return workout.breakTime == nil ? ("", Theme.mint) : ("Next", dimmed ? Theme.ice.opacity(0.55) : Theme.ice)
         }

@@ -54,8 +54,8 @@ final class WorkoutModel {
     @ObservationIgnored private var stepDay: String?
     /// The break after an exercise; when it runs out, the next item starts by itself.
     private(set) var breakTime: Countdown?
-    /// Paused from the controls (the Health workout, the rest and the break all wait), or a Health workout that's
-    /// paused, as one picked up after a relaunch can be.
+    /// Paused from the controls (the workout's clock and heart rate stop; a running rest or break doesn't), or a
+    /// Health workout that's paused, as one picked up after a relaunch can be.
     var isPaused: Bool { pausedHere || health.state == .paused }
     private var pausedHere = false
     /// The break waits while the next item is being picked.
@@ -67,6 +67,8 @@ final class WorkoutModel {
     @ObservationIgnored private var pendingSummary: Summary?
     @ObservationIgnored private var finishedSession: WorkoutSession?
     @ObservationIgnored private var finishedWorkoutId: UUID?
+    /// When the part of the session being run now began: Start again moves it. nil: with the session.
+    @ObservationIgnored private var partStart: Date?
     /// Why Start workout couldn't start the Health workout, shown as an alert.
     var startProblem: String?
     /// Called after each Health start, when access may have just been allowed or refused, to tell the phone.
@@ -299,17 +301,12 @@ final class WorkoutModel {
 
     // MARK: Pause and the break
 
-    /// Pause, from the controls: the Health workout's time and heart rate, a rest and a break all wait.
+    /// Pause, from the controls: the workout's time and heart rate stop. A rest or a break that is running
+    /// keeps counting and still ends with its haptic.
     func pause() {
         guard !isPaused else { return }
         pausedHere = true
         health.pause()
-        flow?.pauseRest()
-        if var countdown = breakTime {
-            countdown.pause()
-            breakTime = countdown
-            breakAlarm.cancel()
-        }
     }
 
     /// Carries on after a pause. Logging a set or starting a hold does this too.
@@ -317,12 +314,6 @@ final class WorkoutModel {
         guard isPaused else { return }
         pausedHere = false
         health.resume()
-        flow?.resumeRest()
-        if !breakHeld, var countdown = breakTime {
-            countdown.resume()
-            breakTime = countdown
-            scheduleBreak(countdown)
-        }
     }
 
     func extendBreak(by seconds: Int) {
@@ -341,17 +332,24 @@ final class WorkoutModel {
         breakHeld = true
     }
 
-    /// Carries on with what was left of the break, at least a few seconds, unless the workout is paused.
+    /// Carries on with what was left of the break, at least a few seconds.
     func releaseBreak() {
         guard breakHeld else { return }
         breakHeld = false
-        guard !isPaused, var countdown = breakTime else { return }
+        guard var countdown = breakTime else { return }
         countdown.resume(minimum: 5)
         breakTime = countdown
         scheduleBreak(countdown)
     }
 
     // MARK: Finishing
+
+    /// The day is finished (Finish workout): Today shows Finished until Start again.
+    var isDayFinished: Bool { today.isFinished }
+
+    /// A workout is under way: a Health workout, or a screen on show. Whatever opens the app from outside (the
+    /// complication, the icon) returns to it instead of starting another.
+    var isRunning: Bool { step != nil || health.isActive }
 
     /// Today's session is open: logged into and not finished yet, or a Health workout is under way.
     var canFinish: Bool {
@@ -364,10 +362,12 @@ final class WorkoutModel {
     }
 
     /// Ends the Health workout, if one is under way, and marks today's session finished. The workout is saved to
-    /// Health without asking when saving is on in the phone's Settings, and thrown away when it's off.
+    /// Health without asking when saving is on in the phone's Settings, and thrown away when it's off. Finishing
+    /// again after Start again saves a second Health workout; the session adds up their time and energy.
     func finishWorkout() async {
         stopEverything()
-        let duration = health.elapsed ?? today.session.map { Date.now.timeIntervalSince($0.date) }
+        let started = partStart ?? today.session?.date ?? .now
+        let duration = health.elapsed ?? Date.now.timeIntervalSince(started)
         let average = health.averageHeartRate
         let energy = health.energy
         let workoutId: UUID?
@@ -378,21 +378,49 @@ final class WorkoutModel {
             workoutId = nil
         }
         if let session = today.session {
-            if let workoutId { session.healthKitWorkoutId = workoutId }
+            if let workoutId { session.saveWorkout(workoutId) }
+            session.addPart(seconds: duration, energy: energy, averageHeartRate: average)
             try? today.recorder.finish(session)
             onSessionFinished?(session)
         }
+        partStart = nil
         finishedSession = today.session
         finishedWorkoutId = workoutId
         let sets = today.session?.countedSetCount ?? 0
         pendingSummary = Summary(title: today.day.headline, savedToHealth: workoutId != nil, duration: duration,
                                  averageHeartRate: average, energy: energy, sets: sets)
         today.refresh()
-        effortPrompt = EffortPrompt(initial: today.lastEffort() ?? 5)
+        // The first time it starts from the last rated workout; after Start again, from the first answer.
+        effortPrompt = EffortPrompt(initial: today.session?.effort ?? today.lastEffort() ?? 5)
     }
 
-    /// Save on the Effort sheet: kept with the session (and sent to the phone again), and given to Health as the
-    /// workout's effort rating when the workout was saved there.
+    /// The summary of a finished day, for the Finished card: what the session kept (time, energy, average heart
+    /// rate, effort), over every part.
+    func finishedSummary() -> Summary? {
+        guard let session = today.session, let ended = session.endedAt else { return nil }
+        var summary = Summary(title: today.day.headline, savedToHealth: session.healthKitWorkoutId != nil,
+                              duration: session.activeSeconds ?? ended.timeIntervalSince(session.date),
+                              averageHeartRate: session.averageHeartRate, energy: session.energyKcal,
+                              sets: session.countedSetCount)
+        summary.effort = session.effort
+        return summary
+    }
+
+    /// Start again, from a finished Today: the same session picks up its open items. Done items stay done, a
+    /// new Health workout starts, and the next open item (or the one tapped) opens as Start workout would.
+    func startAgain(opening item: PlanItem? = nil) {
+        guard let session = today.session, session.endedAt != nil else { return }
+        try? today.recorder.reopen(session)
+        today.refresh()
+        partStart = .now
+        autoStartFailed = false
+        reconcile()
+        startHealth(explicitly: true)
+        if let item { open(item) } else { advance() }
+    }
+
+    /// Save on the Effort sheet: kept with the session (and sent to the phone again) and given to Health as the
+    /// workout's effort rating when the workout was saved there. A second answer replaces the first.
     func saveEffort(_ effort: Int) {
         pendingSummary?.effort = effort
         if let session = finishedSession {
@@ -414,25 +442,47 @@ final class WorkoutModel {
     }
 
     /// Throws today's workout away: everything logged today is deleted, here and on the phone, a Health workout
-    /// under way isn't saved, and one saved at Finish is deleted from Health.
+    /// under way isn't saved, and every workout SpotMe saved to Health for it (Finish saves one, Start again
+    /// another) is deleted. Today's swaps go too.
     func discardWorkout() {
         stopEverything()
         health.discard()
         if let session = today.session {
             let id = session.id
-            let savedWorkout = session.healthKitWorkoutId
+            let savedWorkouts = session.savedWorkoutIds
             do {
                 try today.recorder.delete(session)
                 onSessionDiscarded?(id)
             } catch {
                 Logger.store.error("Couldn't discard the workout: \(error.localizedDescription)")
             }
-            if let savedWorkout {
-                Task { await health.deleteWorkout(id: savedWorkout) }
+            if !savedWorkouts.isEmpty {
+                Task { for saved in savedWorkouts { await health.deleteWorkout(id: saved) } }
             }
         }
+        partStart = nil
         autoStartFailed = false
         today.clearWaiting()
+        today.clearSwaps()
+    }
+
+    // MARK: Swap
+
+    /// Swaps `item` (on screen, or next up) for today; the screen on show moves to the swapped-in exercise.
+    func swap(_ item: PlanItem, to choice: SwapChoice) {
+        today.swap(item, to: choice)
+        swapsChanged()
+    }
+
+    /// Today's swaps changed, here or on the phone: an exercise on screen that was swapped becomes the
+    /// swapped-in one, wherever it is in its sets, with its own history. A break shows the new one by itself.
+    func swapsChanged() {
+        guard case .exercise(let flow) = step, !flow.isFinished else { return }
+        let items = flow.slotIds.compactMap { slot in
+            today.day.items.first { $0.exerciseId == slot || today.slotOf[$0.exerciseId] == slot }
+        }
+        guard items.count == flow.items.count, items.map(\.exerciseId) != flow.itemIds else { return }
+        show(items)
     }
 
     // MARK: Health workout
@@ -482,6 +532,7 @@ final class WorkoutModel {
         guard let session = today.session, session.endedAt != nil else { return }
         session.endedAt = nil
         try? today.context.save()
+        today.refresh()
     }
 
     /// An exercise's last set: a break as long as its rest (a short one before a checklist item), then the

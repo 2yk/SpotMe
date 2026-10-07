@@ -24,7 +24,11 @@ struct SetsExport: Transferable {
     @MainActor
     static func current(context: ModelContext, today: TodayModel) -> SetsExport {
         let sessions = (try? context.fetch(FetchDescriptor<WorkoutSession>())) ?? []
-        let names = Dictionary(today.library.map { ($0.exerciseId, $0.name) }, uniquingKeysWith: { first, _ in first })
+        var names = Dictionary(today.library.map { ($0.exerciseId, $0.name) }, uniquingKeysWith: { first, _ in first })
+        // An exercise swapped in on the watch is in no plan: the database knows its name.
+        for log in sessions.flatMap(\.logs) where names[log.exerciseId] == nil {
+            names[log.exerciseId] = ExerciseDatabase.shared?.name(forExerciseId: log.exerciseId)
+        }
         let days = Dictionary(today.plan.days.map { ($0.key, $0.title) }, uniquingKeysWith: { first, _ in first })
         return SetsExport(csv: SetsCSV.make(sessions: sessions, names: names, dayTitles: days), date: .now,
                           sessions: sessions.count)

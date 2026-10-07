@@ -26,11 +26,24 @@ final class TodayModel {
     private(set) var statuses: [String: ItemStatus] = [:]
     private(set) var isDeload = false
     private(set) var promotedId: String?
+    /// The day's session was finished (Finish workout). Today then shows Finished, with what is left, until Start
+    /// again reopens it.
+    private(set) var isFinished = false
+    /// The plan's exercise each swapped-in exercise of today stands in for: swapped-in id → slot id.
+    private(set) var slotOf: [String: String] = [:]
+    /// Called after a swap made here, with every mark, so the other device gets it.
+    @ObservationIgnored var onSwapsChanged: ((SwapMarks) -> Void)?
+    /// Called at the end of every `refresh()`: the watch tells its complication where the day stands.
+    @ObservationIgnored var onRefresh: (() -> Void)?
     /// Exercises put off for later with Skip, in the order they were put off (watch). They stay open; they come
     /// back after the last other exercise. Kept for the day, so they survive leaving the workout and a relaunch.
     private(set) var waiting: [String] = []
     /// Where the day's small state (waiting, ramp-ups skipped) is kept. The demo uses a throwaway suite.
-    @ObservationIgnored var defaults: UserDefaults = .standard
+    @ObservationIgnored var defaults: UserDefaults = .standard {
+        didSet { swapMarks = SwapMarks.load(from: defaults) }
+    }
+    /// Today's swaps and the last few days', as both devices keep them.
+    @ObservationIgnored private(set) var swapMarks = SwapMarks.load(from: .standard)
     /// False once the user picks another day, so midnight doesn't move them.
     private var followsToday: Bool
 
@@ -130,6 +143,7 @@ final class TodayModel {
     /// screens redraw only when something they show did.
     func refresh() {
         let recorder = recorder
+        let stamp = SwapMarks.stamp(.now, calendar: calendar)
         let session = try? recorder.session(for: dayKey, on: .now)
         if session !== self.session { self.session = session }
         update(\.isDeload, session?.isDeload ?? settings.isDeload(on: .now, plan: plan, calendar: calendar))
@@ -144,8 +158,16 @@ final class TodayModel {
             edited.days[index].items = edited.days[index].items.map { $0.applying(overrides[$0.exerciseId]) }
         }
         update(\.editedPlan, edited)
-        guard let day = edited.days.first(where: { $0.key == dayKey }) else { return }
+        guard let planned = edited.days.first(where: { $0.key == dayKey }) else { return }
+        // Today's swaps stand in the plan's slots; everything below then works on the swapped-in exercises.
+        let swapped = ExerciseDatabase.shared?.applying(swapMarks.swaps(dayKey: dayKey, date: stamp), to: planned)
+            ?? SwappedDay(day: planned)
+        var day = swapped.day
+        // A swapped-in exercise has the user's own settings for it, if any (an increment, a name).
+        day.items = day.items.map { $0.applying(overrides[$0.exerciseId]) }
+        update(\.slotOf, swapped.slotOf)
         update(\.day, day)
+        update(\.isFinished, session?.endedAt != nil)
         update(\.statuses, session?.statuses ?? [:])
         let open = Set(day.items.filter { !(statuses[$0.exerciseId]?.isFinished ?? false) }.map(\.exerciseId))
         update(\.waiting, (defaults.stringArray(forKey: stateKey("waiting")) ?? []).filter(open.contains))
@@ -165,6 +187,7 @@ final class TodayModel {
 
         if let promotedId, statuses[promotedId]?.isFinished == true { self.promotedId = nil }
         update(\.queue, TodayQueue(items: day.items, statuses: statuses, promoted: promotedId, waiting: waiting))
+        onRefresh?()
     }
 
     private func update<Value: Equatable>(_ keyPath: ReferenceWritableKeyPath<TodayModel, Value>, _ value: Value) {
@@ -184,6 +207,84 @@ final class TodayModel {
         promotedId = item.exerciseId
         stopWaiting([item])
         update(\.queue, TodayQueue(items: day.items, statuses: statuses, promoted: promotedId, waiting: waiting))
+    }
+
+    // MARK: Logging
+
+    /// The log of `item` in today's session, made on first use. A swapped-in exercise's log says which slot it
+    /// stands in for.
+    func writableLog(for item: PlanItem) throws -> ExerciseLog {
+        try recorder.log(for: item.exerciseId, slot: slotOf[item.exerciseId], in: startSession())
+    }
+
+    // MARK: Swap (for today only)
+
+    /// The plan's own exercise in the slot `item` stands in for (`item` itself when it isn't swapped).
+    func slot(of item: PlanItem) -> PlanItem {
+        let id = slotOf[item.exerciseId] ?? item.exerciseId
+        let planned = editedPlan.days.first { $0.key == dayKey }?.items.first { $0.exerciseId == id }
+        return planned.map { $0.applying(overrides[$0.exerciseId]) } ?? item
+    }
+
+    func isSwapped(_ item: PlanItem) -> Bool { slotOf[item.exerciseId] != nil }
+
+    /// Swap is offered for an open exercise nothing has been logged on yet (ramp-ups don't count) that the
+    /// database has alternatives for.
+    func canSwap(_ item: PlanItem) -> Bool {
+        guard let database = ExerciseDatabase.shared, !status(of: item).isFinished,
+              (log(for: item)?.countedSets.isEmpty ?? true) else { return false }
+        return database.canSwap(slot(of: item))
+    }
+
+    /// The Swap sheet's rows for `item`.
+    func swapChoices(for item: PlanItem) -> [SwapChoice] {
+        let slot = slot(of: item)
+        let taken = Set(day.items.map(\.exerciseId)).subtracting([item.exerciseId, slot.exerciseId])
+        return ExerciseDatabase.shared?.choices(for: item, slot: slot, injuryAreas: settings.injuryAreas,
+                                                excluding: taken) ?? []
+    }
+
+    /// Today's item for the slot `item` stands in for now takes the chosen exercise (or the plan's own, taking
+    /// the swap back). Whatever ramp-up sets the old exercise logged go with it.
+    func swap(_ item: PlanItem, to choice: SwapChoice) {
+        let slotId = slot(of: item).exerciseId
+        if let log = log(for: item), log.countedSets.isEmpty { perform { try $0.delete(log) } }
+        if promotedId == item.exerciseId { promotedId = choice.id }
+        record(SwapMark(dayKey: dayKey, date: SwapMarks.stamp(.now, calendar: calendar), slot: slotId,
+                        exercise: choice.id))
+    }
+
+    /// Takes back all of today's swaps (Discard workout).
+    func clearSwaps() {
+        var marks = swapMarks
+        marks.clear(dayKey: dayKey, date: SwapMarks.stamp(.now, calendar: calendar))
+        store(marks, notify: true)
+    }
+
+    /// The other device's marks. Returns whether anything here changed (the screen on show may need to move to
+    /// the swapped-in exercise).
+    @discardableResult
+    func applySwaps(from other: SwapMarks) -> Bool {
+        var marks = swapMarks
+        guard marks.merge(other) else { return false }
+        store(marks, notify: false)
+        return true
+    }
+
+    private func record(_ mark: SwapMark) {
+        var marks = swapMarks
+        marks.record(mark)
+        store(marks, notify: true)
+    }
+
+    private func store(_ marks: SwapMarks, notify: Bool) {
+        var marks = marks
+        marks.prune(before: SwapMarks.stamp(calendar.date(byAdding: .day, value: -3, to: .now) ?? .now,
+                                            calendar: calendar))
+        swapMarks = marks
+        marks.save(to: defaults)
+        refresh()
+        if notify { onSwapsChanged?(marks) }
     }
 
     // MARK: Waiting (watch)
@@ -245,7 +346,7 @@ final class TodayModel {
     }
 
     func skip(_ item: PlanItem) {
-        perform { try $0.skip(try $0.log(for: item.exerciseId, in: try self.startSession())) }
+        perform { try $0.skip(try self.writableLog(for: item)) }
     }
 
     func reopen(_ item: PlanItem) {
@@ -255,7 +356,7 @@ final class TodayModel {
 
     /// Ticks off a checklist item, or finishes an exercise with the sets logged so far.
     func complete(_ item: PlanItem) {
-        perform { try $0.complete(try $0.log(for: item.exerciseId, in: try self.startSession())) }
+        perform { try $0.complete(try self.writableLog(for: item)) }
     }
 
     private func perform(_ change: (WorkoutRecorder) throws -> Void) {

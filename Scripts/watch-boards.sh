@@ -1,6 +1,6 @@
 #!/bin/bash
 # Screenshots of the watch boards from the demo store, named like the boards (design/built/watch-1/).
-#   WATCH_DD=<derived data> Scripts/watch-boards.sh <46|42> [part...]     parts: a (Today, set, rest, break), b (hold, tick-offs, controls, end, summary), c (waiting, ramp-ups, effort), d (figures)
+#   WATCH_DD=<derived data> Scripts/watch-boards.sh <46|42> [part...]     parts: a (Today, set, rest, break), b (hold, tick-offs, controls, end, summary), c (waiting, ramp-ups, effort), d (figures), e (finished, swap), f (the 42 mm boards)
 # Each line is: board, then the launch arguments that drive the demo app to that board's state.
 set -e
 size=${1:-46}; shift || true
@@ -34,7 +34,6 @@ a)
   shot W32-RestDrop -day wednesday -screen rest -left 120 -of 150
   shot W33-RestUp -day wednesday -running YES -screen item -item cable-lateral-raise -log 1 -reps 17 -left 27 -of 45
   shot W34-RestReps -day wednesday -running YES -screen item -item hanging-leg-raise -log 1 -reps 10 -left 20 -of 45
-  shot W35-RestPaused -day wednesday -screen paused-rest
   shot W36-RestSuperset -day friday -screen superset-rest -left 52 -of 75
   shot W37-RestAlwaysOn -day wednesday -screen rest -left 108 -of 150 -dim YES
   shot W38-Break -day wednesday -screen next -left 115 -of 150
@@ -67,12 +66,20 @@ c)
   shot W58-Effort -day wednesday -screen effort
   shot W59-SummaryEffort -day wednesday -screen summary-effort
   ;;
+e)
+  shot W111-TodayFinished -day wednesday -fresh YES -screen finished
+  shot W112-TodayFinishedAll -day wednesday -fresh YES -screen finished-all
+  shot W113-TodaySwapped -day wednesday -fresh YES -screen swapped
+  shot W216-Swap -day wednesday -fresh YES -screen swap
+  shot W51-Controls -day wednesday -screen controls-break -left 115 -of 150
+  ;;
 d)
   FIG=()
   shot W211-SetFigure -day wednesday -screen set
   shot W212-How -day wednesday -screen how -turned YES
   shot W214-HowTurn -day wednesday -screen how -turned NO
   shot W312-BreakFigure -day wednesday -screen next -left 115 -of 150
+  shot W215-HowSwap -day wednesday -fresh YES -screen how -item machine-chest-press -turned YES
   ;;
 esac
 done

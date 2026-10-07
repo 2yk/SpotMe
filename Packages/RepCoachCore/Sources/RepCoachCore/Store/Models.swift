@@ -21,6 +21,11 @@ public final class WorkoutSession {
     public var activeSeconds: Double?
     /// Active kilocalories of the Health workout(s), added up the same way.
     public var energyKcal: Double?
+    /// Average heart rate over the Health workout(s), weighted by their time.
+    public var averageHeartRate: Double?
+    /// Every Health workout saved for this session, comma-separated: Finish saves one, Start again and a second
+    /// Finish another. Discard deletes them all from Health. (`healthKitWorkoutId` is the latest.)
+    public var savedWorkoutIdList: String?
 
     @Relationship(deleteRule: .cascade, inverse: \ExerciseLog.session)
     public var logs: [ExerciseLog] = []
@@ -150,6 +155,36 @@ public enum ItemStatus: Hashable, Sendable {
 }
 
 extension WorkoutSession {
+    /// The Health workouts SpotMe saved for this session, oldest first.
+    public var savedWorkoutIds: [UUID] {
+        var ids = (savedWorkoutIdList ?? "").split(separator: ",").compactMap { UUID(uuidString: String($0)) }
+        if let latest = healthKitWorkoutId, !ids.contains(latest) { ids.append(latest) }
+        return ids
+    }
+
+    /// Adds one part of the session (a Finish; Start again makes another) to its time, energy and average heart
+    /// rate. The average is weighted by time.
+    public func addPart(seconds: TimeInterval, energy: Double?, averageHeartRate average: Double?) {
+        let before = activeSeconds ?? 0
+        activeSeconds = before + seconds
+        if let energy { energyKcal = (energyKcal ?? 0) + energy }
+        if let average {
+            if let current = averageHeartRate, before + seconds > 0 {
+                averageHeartRate = (current * before + average * seconds) / (before + seconds)
+            } else {
+                averageHeartRate = average
+            }
+        }
+    }
+
+    /// Notes a Health workout saved for this session; it becomes the latest.
+    public func saveWorkout(_ id: UUID) {
+        var ids = savedWorkoutIds.filter { $0 != id }
+        ids.append(id)
+        savedWorkoutIdList = ids.map(\.uuidString).joined(separator: ",")
+        healthKitWorkoutId = id
+    }
+
     public func log(for exerciseId: String) -> ExerciseLog? {
         logs.first { $0.exerciseId == exerciseId }
     }
