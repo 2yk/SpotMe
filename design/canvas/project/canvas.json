@@ -252,7 +252,7 @@
    "y": 0
   },
   "P77-ExerciseFigure.dc.html": {
-   "h": 956,
+   "h": 1080,
    "page": "review",
    "radius": 40,
    "title": "7.7 · Exercise sheet with a figure",
@@ -261,7 +261,7 @@
    "y": 0
   },
   "P81-History.dc.html": {
-   "h": 1424,
+   "h": 1258,
    "page": "review",
    "radius": 40,
    "title": "8.1 · History",
@@ -297,7 +297,7 @@
    "y": 2260
   },
   "P85-BodyWarning.dc.html": {
-   "h": 956,
+   "h": 1057,
    "page": "review",
    "radius": 40,
    "title": "8.5 · Body · waist warning",
@@ -306,7 +306,7 @@
    "y": 2260
   },
   "P86-Measurement.dc.html": {
-   "h": 956,
+   "h": 968,
    "page": "review",
    "radius": 40,
    "title": "8.6 · New measurement",
@@ -315,7 +315,7 @@
    "y": 2260
   },
   "P91-Plan.dc.html": {
-   "h": 1927,
+   "h": 1883,
    "page": "review",
    "radius": 40,
    "title": "9.1 · Plan · a day",
@@ -595,21 +595,21 @@
   },
   "W311-BreakMax.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.11 · Break · after the max-rep set",
    "w": 416,
-   "x": 5456,
-   "y": 3160
+   "x": 496,
+   "y": -1800
   },
   "W312-BreakFigure.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.12 · Break · with a figure",
    "w": 416,
    "x": 992,
-   "y": 7300
+   "y": -1800
   },
   "W313-RestRampUp.dc.html": {
    "h": 496,
@@ -622,21 +622,21 @@
   },
   "W314-BreakBack.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.14 · Break · back to a waiting one",
    "w": 416,
-   "x": 2976,
-   "y": 8716
+   "x": 1488,
+   "y": -1800
   },
   "W31A-RestEdge.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.1A · Rest · timer round the edge",
    "w": 416,
    "x": 0,
-   "y": 3160
+   "y": -2300
   },
   "W31B-RestRing.dc.html": {
    "h": 496,
@@ -649,75 +649,75 @@
   },
   "W32-RestDrop.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.2 · Rest · next set lighter",
    "w": 416,
-   "x": 992,
-   "y": 3160
+   "x": 496,
+   "y": -2300
   },
   "W33-RestUp.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.3 · Rest · next set heavier",
    "w": 416,
-   "x": 1488,
-   "y": 3160
+   "x": 992,
+   "y": -2300
   },
   "W34-RestReps.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.4 · Rest · reps exercise",
    "w": 416,
-   "x": 1984,
-   "y": 3160
+   "x": 1488,
+   "y": -2300
   },
   "W35-RestPaused.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.5 · Rest · paused",
    "w": 416,
-   "x": 2480,
-   "y": 3160
+   "x": 1984,
+   "y": -2300
   },
   "W36-RestSuperset.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.6 · Rest · after a superset pair",
    "w": 416,
-   "x": 2976,
-   "y": 3160
+   "x": 2480,
+   "y": -2300
   },
   "W37-RestAlwaysOn.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.7 · Rest · wrist down",
    "w": 416,
-   "x": 3472,
-   "y": 3160
+   "x": 2976,
+   "y": -2300
   },
   "W38-Break.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.8 · Break · next exercise",
    "w": 416,
-   "x": 3968,
-   "y": 3160
+   "x": 3472,
+   "y": -2300
   },
   "W39-BreakChecklist.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "3.9 · Break · before a tick-off item",
    "w": 416,
-   "x": 4464,
-   "y": 3160
+   "x": 0,
+   "y": -1800
   },
   "W41-HoldReady.dc.html": {
    "h": 496,
@@ -829,12 +829,12 @@
   },
   "W55-AllDone.dc.html": {
    "h": 496,
-   "page": "live-watch",
+   "page": "review",
    "radius": 96,
    "title": "5.5 · All done",
    "w": 416,
    "x": 1984,
-   "y": 5160
+   "y": -1800
   },
   "W56-Summary.dc.html": {
    "h": 496,
@@ -932,6 +932,33 @@
    "w": 416,
    "x": 1984,
    "y": -1300
+  },
+  "P78-Swap.dc.html": {
+   "h": 956,
+   "page": "review",
+   "radius": 40,
+   "title": "7.8 · Swap · from Today",
+   "w": 440,
+   "x": 3640,
+   "y": 0
+  },
+  "P87-Session.dc.html": {
+   "h": 1678,
+   "page": "review",
+   "radius": 40,
+   "title": "8.7 · One session",
+   "w": 440,
+   "x": 3120,
+   "y": 2260
+  },
+  "P88-BodyPoint.dc.html": {
+   "h": 956,
+   "page": "review",
+   "radius": 40,
+   "title": "8.8 · Body · one point",
+   "w": 440,
+   "x": 3640,
+   "y": 2260
   }
  },
  "createdOnFiles": {
@@ -1000,7 +1027,7 @@
    "size": 24,
    "text": "iPhone: what changes besides the look. Yes or no to each?\n\ng · Today's card counts what goes up and what goes lighter today.\nh · Rows lose the kind icons and the chevrons. Target weight and its tag sit on the right.",
    "w": 520,
-   "x": 3640,
+   "x": 4160,
    "y": 0
   },
   "decide-watch": {
@@ -1184,6 +1211,25 @@
    "x": 2600,
    "y": -1300,
    "text": "From your 7 Oct session. Yes or no to each?\n\nr · After Finish with items left, Today shows Finished with what is left. Start again picks them up in the same session; Health gets a second workout; effort is asked again.\ns · The plan slot becomes Machine Chest Press alone. Everything logged under \"(or Flat Bench)\" counts as Machine Chest Press. Say if most of it was on the bench.\nt · A swap on the watch is for today only. Changing the plan for good comes with the iPhone round.\nu · The swap list is the database's alternatives for the exercise, the same list onboarding uses.\n\nThe rest timer's corners are a build fix, waiting on a photo of your watch."
+  },
+  "row7octb": {
+   "kind": "title1",
+   "maxW": 4000,
+   "page": "review",
+   "text": "Revised 7 Oct · rest and break without the reason line (3.1A–3.14, 5.5) · back to Live · Watch when built",
+   "w": 240,
+   "x": 0,
+   "y": -2630
+  },
+  "decide-7octb": {
+   "fill": "orange",
+   "maxH": 600,
+   "page": "review",
+   "size": 24,
+   "w": 560,
+   "x": 4160,
+   "y": -2300,
+   "text": "Your nine notes of 7 Oct. Yes or no to each?\n\nv · The break screen also loses its result line, and All done its last-exercise line. The arrow still says up or down.\nw · Ten body points: weight, neck, shoulders, chest, arm, forearm, waist, hips, thigh, calf. Fewer if you want.\nx · Swap from the iPhone is for today only, like the watch. The Plan editor changes it for good.\n\nThe 12 redrawn figures are on 13.3 (Approved page) and in 2.11, 2.12, 2.15, 7.7."
   }
  },
  "order": [
@@ -1290,7 +1336,10 @@
   "W112-TodayFinishedAll.dc.html",
   "W113-TodaySwapped.dc.html",
   "W215-HowSwap.dc.html",
-  "W216-Swap.dc.html"
+  "W216-Swap.dc.html",
+  "P78-Swap.dc.html",
+  "P87-Session.dc.html",
+  "P88-BodyPoint.dc.html"
  ],
  "pages": [
   {

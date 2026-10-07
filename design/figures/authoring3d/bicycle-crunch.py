@@ -6,9 +6,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rig import L, P, along, joint, trunk, write
 
 PELVIS = [108, 176, 0]
-CURL = 205                            # pelvis -> neck: shoulders about 25 off the floor
-TURN = 20                             # shoulder turn toward the bent knee: about 10 units of depth between them
+CURL = 212                            # pelvis -> neck: shoulders about 25 off the floor
+TURN = 50                             # shoulder turn toward the bent knee: the far elbow reaches across to it
 LEG_LONG = -15                        # the long leg
+KNEE_ANG = -110                       # the tucked thigh: knee pulled in toward the chest
+KNEE_OUT, LONG_OUT = -14, -18         # the tucked knee comes in toward the midline, the long leg goes a little wide
+KNEE_IN = P([PELVIS[0], PELVIS[1], 9], KNEE_ANG, L["thigh"], out=KNEE_OUT)
 
 
 def start_pose():
@@ -27,16 +30,18 @@ def start_pose():
         # elbow forward toward the knees and a little out; the hand goes back from it to the ear
         p["elbow" + s] = along(p["shoulder" + s], [front[0] * 0.95 - up[0] * 0.1, front[1] * 0.95 - up[1] * 0.1,
                                                    k * 0.3], L["upper"])
+        if s == "R":                  # the far elbow reaches across toward the tucked knee
+            p["elbowR"] = along(p["shoulderR"], [KNEE_IN[i] - p["shoulderR"][i] for i in range(3)], L["upper"])
         p["hand" + s] = along(p["elbow" + s], [ear[i] - p["elbow" + s][i] for i in range(3)], L["fore"])
     for s, bent in (("L", True), ("R", False)):
         hip = p["hip" + s]
         if bent:
-            p["knee" + s] = P(hip, -90, L["thigh"])
-            p["ankle" + s] = P(p["knee" + s], 0, L["shin"])
+            p["knee" + s] = P(hip, KNEE_ANG, L["thigh"], out=KNEE_OUT)
+            p["ankle" + s] = P(p["knee" + s], 18, L["shin"])
             p["toe" + s] = P(p["ankle" + s], -45, L["foot"])
         else:
-            p["knee" + s] = P(hip, LEG_LONG, L["thigh"])
-            p["ankle" + s] = P(p["knee" + s], LEG_LONG, L["shin"])
+            p["knee" + s] = P(hip, LEG_LONG, L["thigh"], out=LONG_OUT)
+            p["ankle" + s] = P(p["knee" + s], LEG_LONG, L["shin"], out=LONG_OUT)
             p["toe" + s] = P(p["ankle" + s], -75, L["foot"])
     return p
 
@@ -56,4 +61,4 @@ def swap_legs(p):
 
 start = start_pose()
 end = swap_legs(start)
-write("bicycle-crunch", start, end, (), {"type": "none"}, tempo=2.6, yaw=10)
+write("bicycle-crunch", start, end, (), {"type": "none"}, tempo=2.6, yaw=45)

@@ -5,7 +5,7 @@ from rig import L, P, along, trunk, mirror, line, write
 
 RAIL_Y, RAIL_Z = 110, 22
 HAND = [72, RAIL_Y - 4, RAIL_Z]
-RAIL_HALF = 14                         # short rails: legs hover beyond their ends
+RAIL_HALF = 7                          # short handles: the hips hang between the two bars
 
 
 def pose(lift):
@@ -32,4 +32,4 @@ for z in (-RAIL_Z, RAIL_Z):
     props.append(line([[HAND[0] - RAIL_HALF, RAIL_Y, z], [HAND[0] + RAIL_HALF, RAIL_Y, z]], 6))
     props.append(line([[HAND[0], RAIL_Y, z], [HAND[0], 181, z]], 5))
     props.append(line([[HAND[0] - 10, 181, z], [HAND[0] + 10, 181, z]], 5))     # foot of the post
-write("l-sit", start, end, props, None, tempo=4, hold=True, yaw=30)
+write("l-sit", start, end, props, None, tempo=4, hold=True, yaw=320)

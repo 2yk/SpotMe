@@ -4,7 +4,7 @@ import os, sys, math
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rig import L, P, joint, trunk, mirror, slab, line, write
 
-PELVIS = [72, 106, 0]
+PELVIS = [72, 103, 0]
 INCLINE = 35                    # torso (and pad) angle from the floor, rising to the right
 PAD = 10                        # pad surface below the body's centre line
 HAND_Z = 19                     # arms hang just outside the pad
@@ -15,8 +15,8 @@ KNEE_BEND = [1, 0.3, 0]
 
 def pose(pulled):
     p = trunk(PELVIS, -INCLINE, head_ang=-INCLINE + 5)
-    p["ankleL"] = [50, 173, 11]
-    p["toeL"] = [61.5, 179, 11]
+    p["ankleL"] = [60, 175, 11]
+    p["toeL"] = [72.5, 179, 11]
     p["kneeL"] = joint(p["hipL"], p["ankleL"], L["thigh"], L["shin"], [1, 0.3, 0])
     sh = p["shoulderL"]
     if pulled:
@@ -38,7 +38,7 @@ def stagger(p, dx):
     return p
 
 
-start, end = stagger(pose(False), 6), stagger(pose(True), 6)
+start, end = stagger(pose(False), 4), stagger(pose(True), 4)
 for k in ("ankleL", "toeL", "kneeL", "ankleR", "toeR", "kneeR"):
     end[k] = start[k]
 a = math.radians(INCLINE)

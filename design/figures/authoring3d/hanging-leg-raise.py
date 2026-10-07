@@ -5,8 +5,8 @@ from rig import L, P, joint, trunk, mirror, line, write
 
 BAR = [96, 12]                 # bar seen end-on, hands on it a little behind the head (as the flat figure)
 NECK = [114.6, 58.5, 0]
-HAND_Z = 18
-FRAME_X, FRAME_Z = 26, 32      # a rack behind: the bar runs across, arms back to two posts
+HAND_Z = 15
+FRAME_X, FRAME_Z = 26, 34      # a rack behind: the bar runs across, arms back to two posts
 
 
 def pose(torso_ang, thigh_ang, shin_ang, toe_ang):
@@ -26,7 +26,8 @@ start = pose(94, 79, 104, 38)
 end = pose(106, -6, -6, -32)
 for k in ("neck", "head", "shoulderL", "shoulderR", "handL", "handR"):
     end[k] = list(start[k])
-props = [line([[BAR[0], BAR[1], -FRAME_Z], [BAR[0], BAR[1], FRAME_Z]], 6)]
+RAIL_END = BAR[0] + 13         # the top rails run past the bar, so the hands are not at the end of a line from the side
+props = [line([[BAR[0], BAR[1], -FRAME_Z - 6], [BAR[0], BAR[1], FRAME_Z + 6]], 6)]
 for z in (-FRAME_Z, FRAME_Z):
-    props.append(line([[BAR[0], BAR[1], z], [FRAME_X, BAR[1], z], [FRAME_X, 196, z]], 5))
+    props.append(line([[RAIL_END, BAR[1], z], [FRAME_X, BAR[1], z], [FRAME_X, 196, z]], 5))
 write("hanging-leg-raise", start, end, props, None, tempo=3.0, floor=197)

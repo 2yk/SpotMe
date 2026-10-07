@@ -1,0 +1,67 @@
+{
+ "W311-BreakMax.dc.html": {
+  "page": "live-watch",
+  "x": 5456,
+  "y": 3160
+ },
+ "W312-BreakFigure.dc.html": {
+  "page": "live-watch",
+  "x": 992,
+  "y": 7300
+ },
+ "W314-BreakBack.dc.html": {
+  "page": "live-watch",
+  "x": 2976,
+  "y": 8716
+ },
+ "W31A-RestEdge.dc.html": {
+  "page": "live-watch",
+  "x": 0,
+  "y": 3160
+ },
+ "W32-RestDrop.dc.html": {
+  "page": "live-watch",
+  "x": 992,
+  "y": 3160
+ },
+ "W33-RestUp.dc.html": {
+  "page": "live-watch",
+  "x": 1488,
+  "y": 3160
+ },
+ "W34-RestReps.dc.html": {
+  "page": "live-watch",
+  "x": 1984,
+  "y": 3160
+ },
+ "W35-RestPaused.dc.html": {
+  "page": "live-watch",
+  "x": 2480,
+  "y": 3160
+ },
+ "W36-RestSuperset.dc.html": {
+  "page": "live-watch",
+  "x": 2976,
+  "y": 3160
+ },
+ "W37-RestAlwaysOn.dc.html": {
+  "page": "live-watch",
+  "x": 3472,
+  "y": 3160
+ },
+ "W38-Break.dc.html": {
+  "page": "live-watch",
+  "x": 3968,
+  "y": 3160
+ },
+ "W39-BreakChecklist.dc.html": {
+  "page": "live-watch",
+  "x": 4464,
+  "y": 3160
+ },
+ "W55-AllDone.dc.html": {
+  "page": "live-watch",
+  "x": 1984,
+  "y": 5160
+ }
+}

@@ -22,6 +22,7 @@ def pose(side):
     for s, k in (("L", 1), ("R", -1)):
         p["shoulder" + s] = [neck[i] + l[i] * 15 * k for i in range(3)]
     plate = [neck[i] - up[i] * PLATE_DOWN + f[i] * PLATE_OUT for i in range(3)]
+    plate = [plate[0] + 10, plate[1] + 8, plate[2]]          # forward and lower: clear of the chin
     for s, k in (("L", 1), ("R", -1)):
         hand = [plate[i] + l[i] * 10 * k for i in range(3)]
         p["hand" + s] = hand

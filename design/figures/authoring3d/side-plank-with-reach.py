@@ -6,6 +6,8 @@ from rig import L, P, along, joint, trunk, mirror, slab, line, write
 
 GROUND = 177.5
 SHOULDER_R = [146, GROUND - L["upper"], 0]   # bottom shoulder straight above the bottom elbow
+ROLL = 35                                    # end: chest turned toward the floor (degrees)
+REACH = [104, 148, -10]                      # end: the top hand, under the waist toward the hips
 ANKLE_Y = 174                                # bottom ankle, foot on its side on the floor
 
 
@@ -34,14 +36,22 @@ def pose(reach):
         p["elbowL"] = P(sh, -92, L["upper"])
         p["handL"] = P(p["elbowL"], -92, L["fore"])
     else:
-        hand = [neck[0] - 16, GROUND - 14, -20]     # under the ribs, through to the back
+        # chest turned toward the floor: the top shoulder rolls toward the viewer (the bottom one stays over its elbow)
+        t = math.radians(ROLL)
+        roll = [left[i] * math.cos(t) + [0, 0, 1][i] * math.sin(t) for i in range(3)]
+        p["shoulderL"] = add(neck, roll, 15)
+        sh = p["shoulderL"]
+        p["head"] = along(neck, [head_dir[0], head_dir[1] + 0.25, 0.3], L["head"])   # looking down after the hand
+        hand = list(REACH)                          # under the waist toward the hips, behind the torso
         p["handL"] = hand
-        p["elbowL"] = joint(sh, hand, L["upper"], L["fore"], [0, 0, 1])
+        p["elbowL"] = joint(sh, hand, L["upper"], L["fore"], [0.3, -1, 0.6])
     return p
 
 
 start, end = pose(False), pose(True)
 for k in start:
-    if not k.endswith("L") or k in ("shoulderL", "hipL", "kneeL", "ankleL", "toeL"):
+    if k in ("shoulderL", "head"):
+        continue
+    if not k.endswith("L") or k in ("hipL", "kneeL", "ankleL", "toeL"):
         end[k] = start[k]
 write("side-plank-with-reach", start, end, [], None, tempo=3)

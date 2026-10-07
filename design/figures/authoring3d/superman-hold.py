@@ -11,9 +11,9 @@ LEG_OUT = 7
 
 
 def pose(lift):
-    chest = -6 * lift                  # torso angle: 0 flat, negative = chest up
-    leg = 179.5 + 8.5 * lift           # legs back and up
-    arm = 1.5 - 11.5 * lift            # arms on the floor, then up past the head
+    chest = -19 * lift                 # torso angle: 0 flat, negative = chest up
+    leg = 179.5 + 14.5 * lift          # legs back and up
+    arm = 1.5 - 23.5 * lift           # arms on the floor, then up past the head
     p = trunk(PELVIS, chest, head_ang=chest - 16)
     for s, k in (("L", 1), ("R", -1)):
         p["elbow" + s] = P(p["shoulder" + s], arm, L["upper"], out=k * ARM_OUT)
