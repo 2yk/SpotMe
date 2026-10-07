@@ -145,6 +145,15 @@ Build and board match; the real glass cuts the line's corners. We still need Yes
 line in rather than thinning it; 5 pt weight and the 18% track stay. If the photo is ambiguous, your
 calibration build is fine, as a separate build only, with Yeshu's OK. Don't block build 9 on this.
 
+## 8a · The complication never starts a second session (Yeshu, 7 Oct, a concern, not yet seen)
+
+Tapping the "Up next" complication today starts the day's session. Rule: the complication **opens the app
+where it is**. If a workout is running (including on a rest or break, or paused), it returns to that screen
+and continues; if the day is finished, it opens Today's Finished state (section 4), never Start again by
+itself; only when nothing has been started today does it start the session as now. Same for the app icon
+and for Siri/Shortcuts if they start a workout. Please add a check for it: start a workout, press the
+Crown to go home, tap the complication, confirm the same session continues (same elapsed time, same set).
+
 ## 9 · What I need back
 
 - Branch off `main`, build **9**. Screenshots at 46 mm of every board in `boards/`, named by board, plus the
