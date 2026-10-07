@@ -8,6 +8,8 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         public var order: Int
         public var completedAt: Date?
         public var skipped: Bool
+        /// The plan's exercise this one was swapped in for today; nil for the plan's own.
+        public var slotExerciseId: String?
         public var sets: [SetEntry]
     }
 
@@ -50,6 +52,9 @@ public struct SessionPayload: Codable, Equatable, Sendable {
     public var healthKitWorkoutId: UUID?
     /// How hard the workout was, 1 to 10; nil when not given (and in payloads sent before it existed).
     public var effort: Int?
+    /// The Health workout(s)' time and energy; nil in payloads sent before they were kept.
+    public var activeSeconds: Double?
+    public var energyKcal: Double?
     public var logs: [Log]
 
     /// A snapshot of `session` and everything logged in it.
@@ -61,8 +66,11 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         endedAt = session.endedAt
         healthKitWorkoutId = session.healthKitWorkoutId
         effort = session.effort
+        activeSeconds = session.activeSeconds
+        energyKcal = session.energyKcal
         logs = session.logs.sorted { $0.order < $1.order }.map { log in
             Log(exerciseId: log.exerciseId, order: log.order, completedAt: log.completedAt, skipped: log.skipped,
+                slotExerciseId: log.slotExerciseId,
                 sets: log.orderedSets.map {
                     SetEntry(index: $0.index, weight: $0.weight, reps: $0.reps, seconds: $0.seconds,
                              timestamp: $0.timestamp, isRampUp: $0.isRampUp)
@@ -118,6 +126,8 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         session.endedAt = endedAt
         session.healthKitWorkoutId = healthKitWorkoutId
         session.effort = effort
+        session.activeSeconds = activeSeconds
+        session.energyKcal = energyKcal
 
         for entry in logs {
             insert(entry, order: entry.order, into: session, context: context)
@@ -131,7 +141,8 @@ public struct SessionPayload: Codable, Equatable, Sendable {
     public func merge(into local: WorkoutSession, context: ModelContext) throws {
         let kept = Set(local.logs.map(\.exerciseId))
         var order = (local.logs.map(\.order).max() ?? -1) + 1
-        for entry in logs.sorted(by: { $0.order < $1.order }) where !kept.contains(entry.exerciseId) {
+        for entry in logs.sorted(by: { $0.order < $1.order })
+        where !kept.contains(ExerciseIdRenames.current(entry.exerciseId)) {
             insert(entry, order: order, into: local, context: context)
             order += 1
         }
@@ -139,11 +150,14 @@ public struct SessionPayload: Codable, Equatable, Sendable {
     }
 
     private func insert(_ entry: Log, order: Int, into session: WorkoutSession, context: ModelContext) {
-        let log = ExerciseLog(exerciseId: entry.exerciseId, order: order)
+        // A session from a device that still has an old id (a watch not updated yet, a reinstall) is stored
+        // under the current one.
+        let log = ExerciseLog(exerciseId: ExerciseIdRenames.current(entry.exerciseId), order: order)
         context.insert(log)
         log.session = session
         log.completedAt = entry.completedAt
         log.skipped = entry.skipped
+        log.slotExerciseId = entry.slotExerciseId.map(ExerciseIdRenames.current)
         for set in entry.sets {
             let row = SetLog(index: set.index, weight: set.weight, reps: set.reps, seconds: set.seconds,
                              timestamp: set.timestamp, isRampUp: set.isRampUp)

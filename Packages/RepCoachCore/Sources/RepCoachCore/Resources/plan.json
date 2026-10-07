@@ -322,8 +322,8 @@
           "restSec": 150
         },
         {
-          "name": "Machine Chest Press (or Flat Bench)",
-          "exerciseId": "machine-chest-press-or-flat-bench",
+          "name": "Machine Chest Press",
+          "exerciseId": "machine-chest-press",
           "group": "Chest",
           "note": "Machine lets you push close to failure safely. Feet planted.",
           "display": "3 × 8–10",

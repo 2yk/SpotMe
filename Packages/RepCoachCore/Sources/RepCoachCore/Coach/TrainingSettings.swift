@@ -13,15 +13,23 @@ public struct TrainingSettings: Codable, Hashable, Sendable {
     public var healthWorkouts: Bool
     /// Lighter sets before the first working set; they aren't counted.
     public var rampUps: RampUpSetting
+    /// The user's injury areas (the exercise database's: neck, shoulder, elbow, wrist, lowerBack, hip, knee,
+    /// ankle). Swap leaves out exercises rated "avoid" for one of them and flags "take care".
+    public var injuryAreas: [String]
 
     public init(programStart: Date? = nil, manualDeloadSetOn: Date? = nil, restHaptics: Bool = true,
-                healthWorkouts: Bool = true, rampUps: RampUpSetting = .mainLifts) {
+                healthWorkouts: Bool = true, rampUps: RampUpSetting = .mainLifts,
+                injuryAreas: [String] = TrainingSettings.defaultInjuryAreas) {
         self.programStart = programStart
         self.manualDeloadSetOn = manualDeloadSetOn
         self.restHaptics = restHaptics
         self.healthWorkouts = healthWorkouts
         self.rampUps = rampUps
+        self.injuryAreas = injuryAreas
     }
+
+    /// The owner's: the lower back. Edited on the iPhone once its Settings has the control.
+    public static let defaultInjuryAreas = ["lowerBack"]
 
     /// Settings saved before a switch existed (or with a value this build doesn't know) get its default.
     public init(from decoder: Decoder) throws {
@@ -31,6 +39,7 @@ public struct TrainingSettings: Codable, Hashable, Sendable {
         restHaptics = try container.decodeIfPresent(Bool.self, forKey: .restHaptics) ?? true
         healthWorkouts = try container.decodeIfPresent(Bool.self, forKey: .healthWorkouts) ?? true
         rampUps = (try? container.decodeIfPresent(RampUpSetting.self, forKey: .rampUps)) ?? .mainLifts
+        injuryAreas = try container.decodeIfPresent([String].self, forKey: .injuryAreas) ?? Self.defaultInjuryAreas
     }
 
     /// 1-based program week containing `date`; nil without a start date or before it.

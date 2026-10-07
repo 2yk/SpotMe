@@ -147,7 +147,7 @@ public enum DemoData {
         "incline-db-curl": 10, "hammer-curl": 12.5,
         "leg-press": 110, "bulgarian-split-squat-dbs": 12.5, "hip-thrust": 60, "lying-hamstring-curl": 30,
         "leg-extension": 40, "standing-calf-raise": 50,
-        "incline-db-press": 20, "machine-chest-press-or-flat-bench": 45, "seated-db-shoulder-press": 15,
+        "incline-db-press": 20, "machine-chest-press": 45, "seated-db-shoulder-press": 15,
         "cable-lateral-raise": 5, "overhead-cable-extension": 17.5, "rope-pushdown": 22.5,
         "cable-crunch": 30, "russian-twist-weighted": 5,
         "single-arm-cable-row": 20, "straight-arm-pulldown": 20, "reverse-pec-deck": 30, "preacher-curl": 17.5,

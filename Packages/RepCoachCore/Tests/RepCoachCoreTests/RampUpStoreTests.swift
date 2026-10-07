@@ -109,7 +109,7 @@ final class RampUpStoreTests: StoreTestCase {
 
     func testSessionSetCountsSkipRampUps() throws {
         let (session, _) = try loggedWithRampUps(on: sept(16), working: [(20, 12), (20, 11)])
-        let row = try recorder.log(for: "machine-chest-press-or-flat-bench", in: session)
+        let row = try recorder.log(for: "machine-chest-press", in: session)
         try recorder.addSet(to: row, weight: 30, reps: 5, isRampUp: true)
         try recorder.addSet(to: row, weight: 45, reps: 10)
         XCTAssertEqual(session.countedSetCount, 3)

@@ -208,7 +208,10 @@ public struct FigureLibrary: Sendable {
 
     /// The figure of a plan exercise and its cue. nil for exercises without one (the user's own).
     public func figure(forExercise exerciseId: String) -> (figure: Figure, cue: String)? {
-        guard let entry = bundle.exercises[exerciseId], let figure = bundle.figures[entry.figure] else { return nil }
+        // The bundle may still list an exercise under an id plan.json has renamed since.
+        let entry = bundle.exercises[exerciseId]
+            ?? ExerciseIdRenames.legacy(of: exerciseId).lazy.compactMap { bundle.exercises[$0] }.first
+        guard let entry, let figure = bundle.figures[entry.figure] else { return nil }
         return (figure, entry.cue)
     }
 }

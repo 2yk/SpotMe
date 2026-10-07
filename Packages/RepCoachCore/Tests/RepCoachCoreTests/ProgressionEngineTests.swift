@@ -221,7 +221,7 @@ final class ProgressionEngineTests: XCTestCase {
         XCTAssertEqual(role("monday", "weighted-pull-ups"), .first)
         XCTAssertEqual(role("monday", "chest-supported-db-row"), .main)
         XCTAssertEqual(role("wednesday", "incline-db-press"), .first)
-        XCTAssertEqual(role("wednesday", "machine-chest-press-or-flat-bench"), .main)
+        XCTAssertEqual(role("wednesday", "machine-chest-press"), .main)
     }
 
     func testRampUpSettingStoresStableStrings() throws {

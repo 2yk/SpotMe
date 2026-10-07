@@ -26,12 +26,16 @@ public struct WatchStatus: Codable, Equatable, Sendable {
     public var since: Date?
     /// Sessions discarded on the watch, most recent last.
     public var deleted: [UUID]
+    /// Today's swaps as the watch has them; the phone takes the later mark for each exercise.
+    public var swaps: SwapMarks
 
-    public init(healthAccess: HealthAccess?, sessions: [UUID]? = nil, since: Date? = nil, deleted: [UUID] = []) {
+    public init(healthAccess: HealthAccess?, sessions: [UUID]? = nil, since: Date? = nil, deleted: [UUID] = [],
+                swaps: SwapMarks = SwapMarks()) {
         self.healthAccess = healthAccess
         self.sessions = sessions
         self.since = since
         self.deleted = deleted
+        self.swaps = swaps
     }
 
     /// Statuses sent before the session lists existed read as "sessions unknown".
@@ -41,6 +45,7 @@ public struct WatchStatus: Codable, Equatable, Sendable {
         sessions = try container.decodeIfPresent([UUID].self, forKey: .sessions)
         since = try container.decodeIfPresent(Date.self, forKey: .since)
         deleted = try container.decodeIfPresent([UUID].self, forKey: .deleted) ?? []
+        swaps = try container.decodeIfPresent(SwapMarks.self, forKey: .swaps) ?? SwapMarks()
     }
 
     /// Of the phone's sessions, the ones to send the watch: in the window, missing there and not discarded

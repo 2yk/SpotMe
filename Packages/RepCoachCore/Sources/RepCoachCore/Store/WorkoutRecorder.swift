@@ -34,9 +34,11 @@ public struct WorkoutRecorder {
     }
 
     /// The log for `exerciseId` in `session`, created on first use.
-    public func log(for exerciseId: String, in session: WorkoutSession) throws -> ExerciseLog {
+    /// - Parameter slot: for an exercise swapped in for today, the plan's exercise it stands in for.
+    public func log(for exerciseId: String, slot: String? = nil, in session: WorkoutSession) throws -> ExerciseLog {
         if let existing = session.log(for: exerciseId) { return existing }
         let log = ExerciseLog(exerciseId: exerciseId, order: session.logs.count)
+        log.slotExerciseId = slot
         context.insert(log)
         log.session = session
         try context.save()

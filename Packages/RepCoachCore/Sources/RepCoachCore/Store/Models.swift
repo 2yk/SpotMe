@@ -16,6 +16,11 @@ public final class WorkoutSession {
     public var endedAt: Date?
     /// How hard the workout was, 1 to 10, asked for after Finish. nil: not given.
     public var effort: Int?
+    /// Seconds the Health workout(s) of this session ran, added up over every Finish (Start again adds a part).
+    /// nil: not recorded (older sessions, or no Health workout).
+    public var activeSeconds: Double?
+    /// Active kilocalories of the Health workout(s), added up the same way.
+    public var energyKcal: Double?
 
     @Relationship(deleteRule: .cascade, inverse: \ExerciseLog.session)
     public var logs: [ExerciseLog] = []
@@ -39,6 +44,9 @@ public final class ExerciseLog {
     public var completedAt: Date?
     /// Skipped from Today without logging.
     public var skipped: Bool = false
+    /// Swapped in for today: the plan's exercise this one stands in for ("machine-chest-press"). nil: it is the
+    /// plan's own exercise.
+    public var slotExerciseId: String?
 
     @Relationship(deleteRule: .cascade, inverse: \SetLog.log)
     public var sets: [SetLog] = []

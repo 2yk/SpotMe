@@ -12,14 +12,17 @@ public struct SyncContext: Codable, Equatable, Sendable {
     public var plan: PlanEdits
     /// Ids of the sessions the phone most recently stored.
     public var received: [UUID]
+    /// Today's swaps as the phone has them. Unlike the rest of this context they apply at once, mid-workout.
+    public var swaps: SwapMarks
     public var sentAt: Date
 
     public init(settings: TrainingSettings, overrides: [String: ExerciseOverrides], plan: PlanEdits = PlanEdits(),
-                received: [UUID] = [], sentAt: Date = .now) {
+                received: [UUID] = [], swaps: SwapMarks = SwapMarks(), sentAt: Date = .now) {
         self.settings = settings
         self.overrides = overrides
         self.plan = plan
         self.received = received
+        self.swaps = swaps
         self.sentAt = sentAt
     }
 
@@ -30,6 +33,7 @@ public struct SyncContext: Codable, Equatable, Sendable {
         overrides = try container.decode([String: ExerciseOverrides].self, forKey: .overrides)
         plan = try container.decodeIfPresent(PlanEdits.self, forKey: .plan) ?? PlanEdits()
         received = try container.decodeIfPresent([UUID].self, forKey: .received) ?? []
+        swaps = try container.decodeIfPresent(SwapMarks.self, forKey: .swaps) ?? SwapMarks()
         sentAt = try container.decode(Date.self, forKey: .sentAt)
     }
 
@@ -49,7 +53,9 @@ public struct SyncContext: Codable, Equatable, Sendable {
     /// Makes the overrides in `context` exactly these: changed rows are updated, missing ones added, and rows
     /// for exercises no longer overridden deleted.
     public func applyOverrides(to context: ModelContext) throws {
-        var remaining = overrides
+        // An exercise renamed since the sender's build keeps its settings under the current id.
+        var remaining = Dictionary(overrides.map { (ExerciseIdRenames.current($0.key), $0.value) },
+                                   uniquingKeysWith: { first, _ in first })
         for row in try context.fetch(FetchDescriptor<ExerciseSettings>()) {
             if let wanted = remaining.removeValue(forKey: row.exerciseId) {
                 row.overrides = wanted
