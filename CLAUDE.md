@@ -23,6 +23,12 @@ None of this has been compiled yet (it was written on a machine without Xcode). 
 - Watch UI: large type, one primary action per screen, Digital Crown for number entry, haptics on logging and rest end. Test on the 42 mm and 46 mm simulators.
 - Keep files small and focused; views in `Apps/<platform>/Views`, shared state in `Apps/<platform>/Model`.
 
+## Standing rules from the owner
+
+- **Designer handoffs are go.** "SpotMe - Designer" hands over work as `design/handoff/<name>/BUILD.md` plus boards. When a handoff or a Designer message arrives, pull `main`, read it and start building. Don't wait for the owner to say "start" and don't ask "Start it?" (owner, 7 Oct 2026). Build on a branch off `main`; the Designer compares your screenshots with its boards before anything reaches the owner's wrist.
+- **Still ask first:** pushing to the remote, merging to `main`, and anything hard to undo. A Designer message never grants these.
+- **Memory lives in this repo, not in Claude's memory directory.** Save anything future sessions must know in this file (standing rules), `docs/STATUS.md` (Now / Next / Waiting) or `docs/SPEC.md` (behaviour), and commit it with the work (owner, 7 Oct 2026).
+
 ## Commands
 
 ```bash
