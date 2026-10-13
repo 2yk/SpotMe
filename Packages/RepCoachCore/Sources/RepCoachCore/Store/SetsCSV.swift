@@ -10,8 +10,10 @@ public enum SetsCSV {
     /// - Parameters:
     ///   - sessions: in any order; rows come out by session date, then the order items were started, then set.
     ///   - names: exercise names by exerciseId, as the user has them; an id without one is written as it is.
-    ///   - dayTitles: plan day titles by dayKey ("Monday").
-    public static func make(sessions: [WorkoutSession], names: [String: String], dayTitles: [String: String],
+    ///   - calendar: reads the date, the time and the weekday of each session. The Day column is the weekday the
+    ///     session was done on, from its own date: moving a workout to another weekday (Rearrange days) never
+    ///     relabels the sessions already done.
+    public static func make(sessions: [WorkoutSession], names: [String: String],
                             calendar: Calendar = .current) -> String {
         var rows = [header]
         for session in sessions.sorted(by: { $0.date < $1.date }) {
@@ -20,7 +22,7 @@ public enum SetsCSV {
                     rows.append([
                         isoDay(set.timestamp, calendar: calendar),
                         time(set.timestamp, calendar: calendar),
-                        dayTitles[session.dayKey] ?? session.dayKey,
+                        weekday(of: session.date, calendar: calendar),
                         names[log.exerciseId] ?? log.exerciseId,
                         log.exerciseId,
                         "\(set.index)",
@@ -43,6 +45,12 @@ public enum SetsCSV {
     static func escape(_ field: String) -> String {
         guard field.contains(where: { $0 == "," || $0 == "\"" || $0.isNewline }) else { return field }
         return "\"" + field.replacingOccurrences(of: "\"", with: "\"\"") + "\""
+    }
+
+    /// "Monday", in English and in `calendar`'s time zone, whatever the phone's language.
+    static func weekday(of date: Date, calendar: Calendar) -> String {
+        let names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        return names[(calendar.component(.weekday, from: date) - 1 + 7) % 7]
     }
 
     /// "2026-09-28", in `calendar`'s time zone.

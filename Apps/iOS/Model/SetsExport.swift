@@ -29,9 +29,7 @@ struct SetsExport: Transferable {
         for log in sessions.flatMap(\.logs) where names[log.exerciseId] == nil {
             names[log.exerciseId] = ExerciseDatabase.shared?.name(forExerciseId: log.exerciseId)
         }
-        let days = Dictionary(today.plan.days.map { ($0.key, $0.title) }, uniquingKeysWith: { first, _ in first })
-        return SetsExport(csv: SetsCSV.make(sessions: sessions, names: names, dayTitles: days), date: .now,
-                          sessions: sessions.count)
+        return SetsExport(csv: SetsCSV.make(sessions: sessions, names: names), date: .now, sessions: sessions.count)
     }
 }
 

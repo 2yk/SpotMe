@@ -15,7 +15,7 @@ final class SetsCSVTests: StoreTestCase {
 
         let csv = SetsCSV.make(sessions: [wednesday, monday],
                                names: ["incline-db-press": "Incline DB Press", "weighted-plank": "Plank, weighted"],
-                               dayTitles: ["monday": "Monday", "wednesday": "Wednesday"], calendar: calendar)
+                               calendar: calendar)
         XCTAssertEqual(csv, """
             Date,Time,Day,Exercise,Exercise ID,Set,Weight (kg),Reps,Seconds,Deload,Skipped,Session,Ramp-up,Effort
             2026-09-07,06:00,Monday,weighted-pull-ups,weighted-pull-ups,1,15,5,,yes,,\(monday.id.uuidString),,
@@ -41,7 +41,7 @@ final class SetsCSVTests: StoreTestCase {
 
         let csv = SetsCSV.make(sessions: [friday, wednesday],
                                names: ["incline-db-press": "Incline DB Press", "incline-db-curl": "Incline DB Curl"],
-                               dayTitles: ["wednesday": "Wednesday", "friday": "Friday"], calendar: calendar)
+                               calendar: calendar)
         let id = wednesday.id.uuidString
         XCTAssertEqual(csv, """
             Date,Time,Day,Exercise,Exercise ID,Set,Weight (kg),Reps,Seconds,Deload,Skipped,Session,Ramp-up,Effort
@@ -55,12 +55,25 @@ final class SetsCSVTests: StoreTestCase {
     }
 
     func testNothingLoggedIsJustTheHeader() {
-        XCTAssertEqual(SetsCSV.make(sessions: [], names: [:], dayTitles: [:]), SetsCSV.header.joined(separator: ",") + "\n")
+        XCTAssertEqual(SetsCSV.make(sessions: [], names: [:]), SetsCSV.header.joined(separator: ",") + "\n")
     }
 
     func testQuotesAndCommasAreEscaped() {
         XCTAssertEqual(SetsCSV.escape("Biceps · 15\" Goal"), "\"Biceps · 15\"\" Goal\"")
         XCTAssertEqual(SetsCSV.escape("Row, bent over"), "\"Row, bent over\"")
         XCTAssertEqual(SetsCSV.escape("Face Pulls"), "Face Pulls")
+    }
+
+    /// A workout moved to another weekday (Rearrange days) keeps the weekday its old sessions were done on: the Day
+    /// column comes from the session's own date, not from the workout's current weekday.
+    func testTheDayIsTheWeekdayTheSessionWasDoneOn() throws {
+        // Push A is Wednesday's workout; this session was done on Wednesday 9 Sep, whatever day it is now.
+        let wednesday = try logSession("incline-db-press", on: sept(9), dayKey: "wednesday", [(22.5, 8)])
+        let csv = SetsCSV.make(sessions: [wednesday], names: [:], calendar: calendar)
+        XCTAssertTrue(csv.contains("2026-09-09,06:00,Wednesday,incline-db-press"), csv)
+        // A session of the same workout done on a Thursday (after the workout moved there) says Thursday.
+        let moved = try logSession("incline-db-press", on: sept(10), dayKey: "wednesday", [(22.5, 8)])
+        XCTAssertTrue(SetsCSV.make(sessions: [moved], names: [:], calendar: calendar)
+            .contains("2026-09-10,06:00,Thursday,incline-db-press"))
     }
 }
