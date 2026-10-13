@@ -49,7 +49,7 @@ Ids and history:
 Copy `design/exercise-db/exercises.json` to `Resources/exercises.json`. The only change: the eight new lifts have
 their own `planIds`, so Swap finds their alternatives. Removed exercises keep their `planIds` (history uses them).
 
-## 3 · A figure for every swap (follows within a few hours)
+## 3 · A figure for every swap (landed 13 Oct)
 
 Today 46 of the exercises a swap can offer have a figure; 130 don't, and the figure bundle is keyed only by plan id,
 so a swapped item never shows one. Both are being fixed:
@@ -60,10 +60,11 @@ so a swapped item never shows one. Both are being fixed:
   How and set screens, the Plan rows), use the swapped-to database id when the item is swapped today, else the
   plan's `exerciseId`. The Swap sheet (7.8) rows show each alternative's 44 px still by its database id. Without
   a figure the slot stays empty, as now.
-- **The figures:** 130 new ones are being drawn (all alternatives of the v12 plan's lifts, except those rated
-  "avoid" for the lower back, which Swap never offers). I check each one, then commit
-  `design/figures/bundle/figures.json` and message you. Copy it to `Resources/figures.json`. Watch the bundle size
-  on the watch (about 180 figures); tell me if it matters.
+- **The figures:** 130 new ones, checked (all alternatives of the v12 plan's lifts, except those rated "avoid" for
+  the lower back, which Swap never offers, plus the eight new lifts). Copy `design/figures/bundle/figures.json` to
+  `Resources/figures.json`: 180 figures under 192 ids, 226 KB. No new load types: everything is drawn with the
+  parts `FigureRenderer` already has, so the Swift side needs no renderer change. Tell me if any figure draws
+  differently from `figure3d.py`.
 
 ## 4 · What I need back
 
