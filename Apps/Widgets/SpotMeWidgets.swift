@@ -44,7 +44,9 @@ struct TodayProvider: TimelineProvider {
     }
 
     private func entry(on date: Date) -> TodayEntry {
-        TodayEntry(date: date, day: Self.plan?.day(for: date),
-                   state: ComplicationState.load(on: SwapMarks.stamp(date)))
+        // The workout on that weekday, as the user has arranged the days (the app writes them to the app group).
+        let plan = Self.plan.map { PlanEdits(schedule: ComplicationState.loadSchedule()).scheduled($0) }
+        return TodayEntry(date: date, day: plan?.day(for: date),
+                          state: ComplicationState.load(on: SwapMarks.stamp(date)))
     }
 }

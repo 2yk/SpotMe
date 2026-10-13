@@ -7,6 +7,8 @@ import RepCoachCore
 @MainActor
 enum ComplicationPublisher {
     static func publish(today: TodayModel, workout: WorkoutModel) {
+        // Which workout is on which weekday, when the user has rearranged them: the complication follows it.
+        if ComplicationState.saveSchedule(today.planEdits.schedule) { WidgetCenter.shared.reloadTimelines(ofKind: "StartWorkout") }
         // The complication is about the calendar day's plan day, not another day picked in the app.
         guard today.isToday, today.queue.totalCount > 0 else { return }
         let started = workout.isRunning || today.session.map { !$0.logs.isEmpty } == true
