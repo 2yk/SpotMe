@@ -17,12 +17,9 @@ Phone screenshots: `Scripts/phone-shot.sh <Board> <launch args>` on the "SpotMe 
 
 ## Waiting
 
-- The owner's OK to push `iphone-build-11` so the Designer can check the screenshots (and then to merge it to `main`).
-- The owner's try-out of build 11 on the phone and watch: Swap from the phone (the watch changes within a second or two), Start workout from the phone, Rearrange days (the watch's Today and complication follow), the body log keeps his arm and waist (the phone logs how many rows at first launch, `bodyMigrationReport`).
+- **The Designer's check of build 11** (the owner's rule, 13 Oct 2026: the Designer approves first, then the build comes to the owner for his device install and testing). The Designer needs the screenshots in `design/built/iphone-1/`, which means the branch `iphone-build-11` on the remote: that push needs the owner's OK.
+- After the Designer approves: the owner's try-out of build 11 on the phone and watch: Swap from the phone (the watch changes within a second or two), Start workout from the phone, Rearrange days (the watch's Today and complication follow), the body log keeps his arm and waist (the phone logs how many rows at first launch, `bodyMigrationReport`).
 - Which build is on the owner's watch: Swap is in watch builds 9 and 10 only (swipe left on an open row in Today; the small figure on a set or break screen → How → Swap exercise).
-
-- The owner's edge-timer photo.
-- The owner's check on the real watch: the effort shows on the workout in Fitness (the watch asks for that Health permission once more), and the controls page icons no longer start small and grow.
 - Nothing is pushed or merged without the owner's OK.
 
 ## Log

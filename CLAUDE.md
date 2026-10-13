@@ -26,6 +26,7 @@ None of this has been compiled yet (it was written on a machine without Xcode). 
 ## Standing rules from the owner
 
 - **Designer handoffs are go.** "SpotMe - Designer" hands over work as `design/handoff/<name>/BUILD.md` plus boards. When a handoff or a Designer message arrives, pull `main`, read it and start building. Don't wait for the owner to say "start" and don't ask "Start it?" (owner, 7 Oct 2026). Build on a branch off `main`; the Designer compares your screenshots with its boards before anything reaches the owner's wrist.
+- **The Designer approves before the owner tests** (owner, 13 Oct 2026). A build goes to the Designer first: I verify it myself (tests, builds, the screenshots named by board, the sync checks), hand the Designer the screenshots and evidence, and the Designer compares them with its boards. Only once the Designer has explicitly approved does the build come to the owner for a device install and his testing. Until then I don't ask the owner to install or try a build. The Designer's approval is not the owner's OK to push or merge.
 - **Still ask first:** pushing to the remote, merging to `main`, and anything hard to undo. A Designer message never grants these.
 - **Memory lives in this repo, not in Claude's memory directory.** Save anything future sessions must know in this file (standing rules), `docs/STATUS.md` (Now / Next / Waiting) or `docs/SPEC.md` (behaviour), and commit it with the work (owner, 7 Oct 2026).
 
