@@ -9,7 +9,8 @@ Exit code 1 when there are errors. Warnings are for the reviewer to read.
 import glob, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PLAN = os.path.join(HERE, '..', '..', 'Packages', 'RepCoachCore', 'Sources', 'RepCoachCore', 'Resources', 'plan.json')
+PLAN = os.environ.get('SPOTME_PLAN') or os.path.join(HERE, '..', '..', 'Packages', 'RepCoachCore', 'Sources', 'RepCoachCore',
+                                                   'Resources', 'plan.json')
 
 def vocab(name):
     """Read a vocabulary straight from SCHEMA.md so the rules and the check never drift."""
@@ -158,7 +159,7 @@ def check_set(entries, where_of, err, warn, complete):
                 if p in covered: err(f'plan id {p} is in both {covered[p]} and {e["id"]}')
                 covered[p] = e['id']
                 it = items.get(p)
-                if not it: err(f'{e["id"]}: planId {p} is not in plan.json'); continue
+                if not it: warn(f'{e["id"]}: planId {p} is not in plan.json (kept: history still uses it)'); continue
                 kind = {'amrap': 'reps', 'percentOfMax': 'reps'}.get(it['kind'], it['kind'])
                 if e.get('logAs') != kind: err(f'{e["id"]}: logAs {e.get("logAs")} but the plan logs {p} as {kind}')
                 if bool(it.get('perSide')) != e.get('perSide'): err(f'{e["id"]}: perSide differs from the plan ({p})')
