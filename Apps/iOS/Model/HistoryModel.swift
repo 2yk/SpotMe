@@ -116,11 +116,12 @@ final class HistoryModel {
         sessions = stored.map { session in
             let day = plan.days.first { $0.key == session.dayKey }
             let seconds = session.activeSeconds ?? session.endedAt.map { $0.timeIntervalSince(session.date) }
-            return SessionRow(session: session, name: day?.headline ?? session.dayKey.capitalized,
+            let retired = PlanKeyMigration.retiredHeadline(of: session, in: plan)
+            return SessionRow(session: session, name: retired ?? day?.headline ?? session.dayKey.capitalized,
                               minutes: seconds.flatMap { $0 >= 60 ? Int(($0 / 60).rounded()) : nil },
                               kcal: session.energyKcal.map { Int($0.rounded()) }, effort: session.effort,
                               done: session.logs.filter { $0.completedAt != nil }.count,
-                              total: day?.items.count ?? session.logs.count)
+                              total: retired == nil ? day?.items.count ?? session.logs.count : session.logs.count)
         }
 
         let timestamps = (try? store.countedSetTimestamps()) ?? []

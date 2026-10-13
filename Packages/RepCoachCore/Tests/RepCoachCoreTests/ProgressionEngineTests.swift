@@ -212,7 +212,7 @@ final class ProgressionEngineTests: XCTestCase {
                        [nil, .first, .main, .main, .small, nil])
         XCTAssertEqual(ProgressionEngine.rampUpRole(dayItems: [item(.weighted)], index: 0), .small, "no rest set")
 
-        // The real week: pull-ups lead Monday, the incline press leads Wednesday.
+        // The real week: pull-ups lead Monday, the barbell bench leads Wednesday.
         let plan = try Plan.bundled()
         func role(_ day: String, _ id: String) -> RampUpRole? {
             let items = plan.days.first { $0.key == day }!.items
@@ -220,7 +220,8 @@ final class ProgressionEngineTests: XCTestCase {
         }
         XCTAssertEqual(role("monday", "weighted-pull-ups"), .first)
         XCTAssertEqual(role("monday", "chest-supported-db-row"), .main)
-        XCTAssertEqual(role("wednesday", "incline-db-press"), .first)
+        XCTAssertEqual(role("wednesday", "barbell-bench-press"), .first)
+        XCTAssertEqual(role("wednesday", "incline-db-press"), .main)
         XCTAssertEqual(role("wednesday", "machine-chest-press"), .main)
     }
 

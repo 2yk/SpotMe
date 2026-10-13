@@ -47,7 +47,7 @@ public struct SyncContext: Codable, Equatable, Sendable {
     /// Makes the plan's customisation in `context` exactly this: the overrides and the plan edits.
     public func applyPlan(to context: ModelContext) throws {
         try applyOverrides(to: context)
-        try plan.save(to: context)
+        try plan.onCurrentPlanKeys().save(to: context)
     }
 
     /// Makes the overrides in `context` exactly these: changed rows are updated, missing ones added, and rows

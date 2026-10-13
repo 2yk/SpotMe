@@ -160,14 +160,16 @@ public enum DemoData {
         "incline-db-curl": 10, "hammer-curl": 12.5,
         "leg-press": 110, "bulgarian-split-squat-dbs": 12.5, "hip-thrust": 60, "lying-hamstring-curl": 30,
         "leg-extension": 40, "standing-calf-raise": 50,
-        "incline-db-press": 20, "machine-chest-press": 45, "seated-db-shoulder-press": 15,
+        "hack-squat": 60, "reverse-lunge": 12.5, "seated-leg-curl": 35, "cable-pull-through": 25,
+        "seated-calf-raise": 40,
+        "barbell-bench-press": 40, "incline-db-press": 20, "machine-chest-press": 45, "seated-db-shoulder-press": 15,
         "cable-lateral-raise": 5, "overhead-cable-extension": 17.5, "rope-pushdown": 22.5,
         "cable-crunch": 30, "russian-twist-weighted": 5,
-        "single-arm-cable-row": 20, "straight-arm-pulldown": 20, "reverse-pec-deck": 30, "preacher-curl": 17.5,
+        "seated-cable-row": 40, "straight-arm-pulldown": 20, "reverse-pec-deck": 30, "preacher-curl": 17.5,
         "cable-curl-drop-set": 17.5,
         "db-bench-press": 22.5, "low-to-high-cable-fly": 10, "machine-shoulder-press": 35, "db-lateral-raise": 7,
         "ez-bar-skull-crusher": 20, "bayesian-cable-curl": 10, "cable-overhead-extension": 17.5,
-        "pallof-press": 12.5, "suitcase-carry": 20, "weighted-plank": 10,
+        "weighted-plank": 10,
     ]
 }
 #endif

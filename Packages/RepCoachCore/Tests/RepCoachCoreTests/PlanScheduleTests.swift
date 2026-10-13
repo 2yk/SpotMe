@@ -66,20 +66,20 @@ final class PlanScheduleTests: StoreTestCase {
 
     func testARestDayMovesLikeAnyWorkout() {
         var edits = PlanEdits()
-        edits.swapWorkouts(on: saturday, and: tuesday, plan: plan)
+        edits.swapWorkouts(on: sunday, and: tuesday, plan: plan)
         let result = edits.applied(to: plan)
 
         let rest = day(result, weekday: tuesday)
-        XCTAssertEqual(rest.key, "saturday")
+        XCTAssertEqual(rest.key, "sunday")
         XCTAssertEqual(rest.title, "Tuesday")
         XCTAssertEqual(rest.focus, "Full Rest")
-        XCTAssertEqual(rest.items, workout(plan, key: "saturday").items)
+        XCTAssertEqual(rest.items, workout(plan, key: "sunday").items)
 
-        let legs = day(result, weekday: saturday)
+        let legs = day(result, weekday: sunday)
         XCTAssertEqual(legs.key, "tuesday")
-        XCTAssertEqual(legs.title, "Saturday")
+        XCTAssertEqual(legs.title, "Sunday")
         XCTAssertTrue(legs.items.contains { $0.kind == .weighted })
-        XCTAssertEqual(result.day(forWeekday: saturday)?.key, "tuesday")
+        XCTAssertEqual(result.day(forWeekday: sunday)?.key, "tuesday")
     }
 
     func testThreeWorkoutsCanMoveAtOnce() {

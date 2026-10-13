@@ -17,19 +17,29 @@ public struct PlanEdits: Codable, Hashable, Sendable {
     /// weekday → workout key. A weekday not listed has the workout the plan puts there. The listed and unlisted
     /// workouts must still fill the seven weekdays once each; anything else is ignored.
     public var schedule: [Int: String]
+    /// The plan version whose workout keys `days` and `schedule` use. Plan 12 moved Push B from "friday" to
+    /// "saturday" and put Legs B on Friday, so edits saved before it (no value here: version 11) are moved to the
+    /// new keys by `PlanKeyMigration`. New edits are made on the current keys.
+    public var planKeys: Int
+
+    /// The plan version whose workout keys new edits use.
+    public static let currentPlanKeys = 12
 
     public init(days: [String: [String]] = [:], custom: [String: PlanItem] = [:], schedule: [Int: String] = [:]) {
         self.days = days
         self.custom = custom
         self.schedule = schedule
+        planKeys = Self.currentPlanKeys
     }
 
-    /// Edits saved before the weekdays could be rearranged have no schedule.
+    /// Edits saved before the weekdays could be rearranged have no schedule; edits saved before plan 12 have no
+    /// `planKeys`, and use plan 11's workout keys.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         days = try container.decodeIfPresent([String: [String]].self, forKey: .days) ?? [:]
         custom = try container.decodeIfPresent([String: PlanItem].self, forKey: .custom) ?? [:]
         schedule = try container.decodeIfPresent([Int: String].self, forKey: .schedule) ?? [:]
+        planKeys = try container.decodeIfPresent(Int.self, forKey: .planKeys) ?? 11
     }
 
     public var isEmpty: Bool { days.isEmpty && custom.isEmpty && schedule.isEmpty }

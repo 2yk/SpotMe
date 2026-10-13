@@ -27,6 +27,7 @@ final class AppModel {
         #endif
         container = Self.makeContainer(plan: plan)
         Self.renameExercises(in: container.mainContext, defaults: defaults)
+        Self.moveWorkoutKeys(in: container.mainContext, plan: plan, defaults: defaults)
         #if os(iOS)
         Self.reportBodyPoints(in: container.mainContext, defaults: defaults)
         #endif
@@ -46,6 +47,20 @@ final class AppModel {
             defaults.set(report.summary, forKey: "exerciseRenameReport")
         } catch {
             Logger.store.error("Couldn't rename exercise ids: \(error.localizedDescription)")
+        }
+    }
+
+    /// Plan 12 moved Push B from key "friday" to "saturday" (and Full Rest from "saturday" to "sunday"): sessions
+    /// and plan edits made under the old keys move to the workout's new key. Looks at what was logged, so later
+    /// launches find nothing to move. What moved is logged and kept in `planKeyMigrationReport`.
+    private static func moveWorkoutKeys(in context: ModelContext, plan: Plan, defaults: UserDefaults) {
+        do {
+            let report = try PlanKeyMigration.run(in: context, plan: plan)
+            guard !report.isEmpty else { return }
+            Logger.store.notice("Moved workout keys: \(report.summary, privacy: .public)")
+            defaults.set(report.summary, forKey: "planKeyMigrationReport")
+        } catch {
+            Logger.store.error("Couldn't move workout keys: \(error.localizedDescription)")
         }
     }
 

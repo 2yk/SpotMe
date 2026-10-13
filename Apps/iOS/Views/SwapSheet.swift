@@ -51,6 +51,8 @@ struct SwapSheet: View {
 
     private func choices(_ item: PlanItem) -> some View {
         let choices = today.swapChoices(for: item)
+        // The 44 pt slot is there for every row once any of them has a figure, so the names line up.
+        let figures = choices.contains { ExerciseFigure.of(exerciseId: $0.id) != nil }
         return VStack(alignment: .leading, spacing: 8) {
             Text("Same movement, your equipment")
                 .depthEyebrow()
@@ -60,7 +62,7 @@ struct SwapSheet: View {
                     Button {
                         today.swap(item, to: choice)
                         dismiss()
-                    } label: { row(choice) }
+                    } label: { row(choice, figures: figures) }
                         .buttonStyle(RowPressStyle())
                     if choice.id != choices.last?.id { DepthDivider(inset: 16) }
                 }
@@ -69,8 +71,9 @@ struct SwapSheet: View {
         }
     }
 
-    private func row(_ choice: SwapChoice) -> some View {
+    private func row(_ choice: SwapChoice, figures: Bool) -> some View {
         HStack(spacing: 12) {
+            if figures { ChoiceFigure(exerciseId: choice.id) }
             VStack(alignment: .leading, spacing: 0) {
                 Text(choice.name)
                     .font(PhoneFont.headline)
@@ -97,5 +100,22 @@ extension TodayModel {
     /// into its place.
     func item(inSlot slotId: String) -> PlanItem? {
         day.items.first { slot(of: $0).exerciseId == slotId }
+    }
+}
+
+/// The 44 pt still of a swap choice, by its database id; the slot stays empty without a figure.
+private struct ChoiceFigure: View {
+    let exerciseId: String
+
+    var body: some View {
+        Group {
+            if let figure = ExerciseFigure.of(exerciseId: exerciseId) {
+                FigureView(exercise: figure, yaw: figure.figure.openingYaw, size: 44, moving: false)
+            } else {
+                Color.clear
+            }
+        }
+        .frame(width: 44, height: 44)
+        .accessibilityHidden(true)
     }
 }

@@ -135,6 +135,8 @@ public struct SessionPayload: Codable, Equatable, Sendable {
         for entry in logs {
             insert(entry, order: entry.order, into: session, context: context)
         }
+        // A session from a device still on plan 11's weekday keys is stored under the workout it was done in.
+        if let plan = try? Plan.bundled() { PlanKeyMigration.relocate(session, plan: plan) }
         try context.save()
         return session
     }

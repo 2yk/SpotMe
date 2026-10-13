@@ -9,13 +9,18 @@ struct ExerciseFigure {
 
     @MainActor private static var crops: [String: FigureCrop] = [:]
 
+    /// The item's figure: a swapped item carries the swapped-in exercise's own id, so it shows that exercise's.
     @MainActor
-    static func of(_ item: PlanItem) -> ExerciseFigure? {
+    static func of(_ item: PlanItem) -> ExerciseFigure? { of(exerciseId: item.exerciseId) }
+
+    /// The figure of the exercise with this id: a plan exerciseId or a database id.
+    @MainActor
+    static func of(exerciseId: String) -> ExerciseFigure? {
         #if DEBUG
         // `-figures NO`: the screens as they look without one, for the boards that show that.
         if LaunchOptions.demo, UserDefaults.standard.string(forKey: "figures") == "NO" { return nil }
         #endif
-        guard let found = FigureLibrary.shared?.figure(forExercise: item.exerciseId) else { return nil }
+        guard let found = FigureLibrary.shared?.figure(forExercise: exerciseId) else { return nil }
         let crop = crops[found.figure.id] ?? FigureRenderer.crop(found.figure)
         crops[found.figure.id] = crop
         return ExerciseFigure(figure: found.figure, cue: found.cue, crop: crop)
