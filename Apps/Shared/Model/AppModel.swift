@@ -68,6 +68,9 @@ final class AppModel {
                                   inProgress: LaunchOptions.demoFresh ? nil
                                       : LaunchOptions.dayKey ?? plan.day(for: .now)?.key)
                 if LaunchOptions.sampleEdits { try seedSampleEdits(container.mainContext, plan: plan) }
+                if let weekdays = UserDefaults.standard.string(forKey: "swapDays") {
+                    try swapDays(weekdays, in: container.mainContext, plan: plan)
+                }
                 if LaunchOptions.demoWeeks > 0 {
                     try DemoData.seedBody(container.mainContext, lastDaysAgo: LaunchOptions.screen == "body-due" ? 16 : 3,
                                           waistWarning: LaunchOptions.screen == "body-warning")
@@ -86,6 +89,16 @@ final class AppModel {
     }
 
     #if DEBUG
+    /// `-swapDays 3,4`: the workouts on two weekdays (calendar numbers, 2 = Monday … 1 = Sunday) trade places, as
+    /// Rearrange days would have done it.
+    private static func swapDays(_ weekdays: String, in context: ModelContext, plan: Plan) throws {
+        let pair = weekdays.split(separator: ",").compactMap { Int($0) }
+        guard pair.count == 2 else { return }
+        var edits = PlanEdits.load(from: context)
+        edits.swapWorkouts(on: pair[0], and: pair[1], plan: plan)
+        try edits.save(to: context)
+    }
+
     /// `-sampleEdits YES`: Monday with Barbell Row added, Face Pulls removed and Hammer Curl renamed.
     private static func seedSampleEdits(_ context: ModelContext, plan: Plan) throws {
         guard let monday = plan.days.first(where: { $0.key == "monday" }) else { return }

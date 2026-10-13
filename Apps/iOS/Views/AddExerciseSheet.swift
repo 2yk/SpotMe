@@ -1,8 +1,8 @@
 import SwiftUI
 import RepCoachCore
 
-/// Adds an exercise to a day: a new one, or one from another day (which brings its history with it). It goes
-/// after the day's last exercise, ahead of the cooldown; Edit on the Plan tab moves it.
+/// Adds an exercise to a day (boards 9.4, 9.5): a new one, or one from another day (which brings its history with
+/// it). It goes after the day's last exercise, ahead of the cooldown; Edit on the Plan tab moves it.
 struct AddExerciseSheet: View {
     /// The plan's own day, which edits are made against.
     let day: PlanDay
@@ -10,102 +10,108 @@ struct AddExerciseSheet: View {
     @Environment(TodayModel.self) private var today
     @Environment(PhoneSync.self) private var sync
     @Environment(\.dismiss) private var dismiss
-    @State private var source = Source.new
+    @State private var source: Source
     @State private var search = ""
     @State private var draft = Draft()
     @FocusState private var nameFocused: Bool
 
-    enum Source: Hashable {
+    enum Source: Hashable, Identifiable {
         case new, plan
+
+        var id: Self { self }
     }
 
+    init(day: PlanDay, source: Source = .new) {
+        self.day = day
+        _source = State(initialValue: source)
+        #if DEBUG
+        // `-draftName "Close-Grip Push-up" -draftKind reps`: a filled form for a screenshot.
+        var draft = Draft()
+        draft.name = UserDefaults.standard.string(forKey: "draftName") ?? ""
+        if UserDefaults.standard.string(forKey: "draftKind") == "reps" { draft.kind = .reps }
+        _draft = State(initialValue: draft)
+        #endif
+    }
+
+    /// The weekday its workout stands on now ("Wednesday").
+    private var dayTitle: String { today.plan.days.first { $0.key == day.key }?.title ?? day.title }
+
     var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    Picker("Add", selection: $source) {
-                        Text("New exercise").tag(Source.new)
-                        Text("From the plan").tag(Source.plan)
-                    }
-                    .pickerStyle(.segmented)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                }
-                switch source {
-                case .new: newExercise
-                case .plan: fromThePlan
-                }
-            }
-            .scrollContentBackground(.hidden)
-            .background(Theme.canvas)
-            .navigationTitle("Add to \(day.title)")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
-                }
-                if source == .new {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Add", action: addNew)
-                            .fontWeight(.bold)
-                            .disabled(draft.trimmedName.isEmpty)
+        ZStack(alignment: .top) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    SpotSegmented(selection: $source, options: [(value: .new, title: "New exercise"),
+                                                                (value: .plan, title: "From the plan")])
+                    switch source {
+                    case .new: newExercise
+                    case .plan: fromThePlan
                     }
                 }
+                .padding(.horizontal, 16)
+                .padding(.top, 76)
+                .padding(.bottom, 32)
             }
-            .onAppear {
-                draft.group = today.editedPlan.days.first { $0.key == day.key }?.items
-                    .last { $0.kind != .checklist }?.group ?? "Extra"
-                nameFocused = true
-            }
+            .scrollIndicators(.hidden)
+            .scrollDismissesKeyboard(.interactively)
+            SpotSheetBar(title: "Add to \(dayTitle)", trailing: source == .new ? "Add" : nil,
+                         trailingEnabled: !draft.trimmedName.isEmpty, onLeading: { dismiss() }, onTrailing: addNew)
         }
-        .presentationDragIndicator(.visible)
+        .background(Theme.sheet)
+        .sheetSurface()
+        .onAppear {
+            // The section of the day's last exercise.
+            draft.group = today.editedPlan.days.first { $0.key == day.key }?.items
+                .last { $0.kind != .checklist }?.group ?? "Extra"
+            #if DEBUG
+            // A screenshot shouldn't have the keyboard over the form.
+            if let group = UserDefaults.standard.string(forKey: "draftGroup") { draft.group = group }
+            if LaunchOptions.screen == nil, UserDefaults.standard.string(forKey: "sheet") == nil { nameFocused = true }
+            #else
+            nameFocused = true
+            #endif
+        }
     }
 
     // MARK: A new exercise
 
     @ViewBuilder
     private var newExercise: some View {
-        Section {
-            TextField("Name", text: $draft.name)
-                .textInputAutocapitalization(.words)
-                .focused($nameFocused)
-            Picker("Logged as", selection: $draft.kind) {
-                ForEach(Draft.Kind.allCases, id: \.self) { Text($0.title).tag($0) }
-            }
-            TextField("Section", text: $draft.group)
-                .textInputAutocapitalization(.words)
-        } footer: {
-            Text(draft.kind.explanation)
+        SpotFormGroup(footnotes: [draft.kind.explanation]) {
+            SpotTextRow(prompt: "Name", text: $draft.name, focus: $nameFocused)
+            SpotMenuRow(title: "Logged as", selection: $draft.kind,
+                        options: Draft.Kind.allCases.map { (value: $0, title: $0.title) })
+            SpotTextRow(prompt: "Section", text: $draft.group)
         }
-        .listRowBackground(Theme.card)
 
         if draft.kind != .checklist {
-            Section("Prescription") {
-                Stepper("Sets  \(draft.sets)", value: $draft.sets, in: 1...10)
+            SpotFormGroup(title: "Prescription") {
+                SpotStepperRow(title: "Sets", value: $draft.sets, range: 1...10, step: 1, text: { "\($0)" },
+                               decrementLabel: "Fewer sets", incrementLabel: "More sets")
                 switch draft.kind {
                 case .weighted, .reps:
-                    Stepper("Reps, low  \(draft.repMin)", value: $draft.repMin, in: 1...max(1, draft.repMax))
-                    Stepper("Reps, high  \(draft.repMax)", value: $draft.repMax, in: max(1, draft.repMin)...50)
+                    SpotStepperRow(title: "Reps, low", value: $draft.repMin, range: 1...max(1, draft.repMax), step: 1,
+                                   text: { "\($0)" }, decrementLabel: "Lower", incrementLabel: "Higher")
+                    SpotStepperRow(title: "Reps, high", value: $draft.repMax, range: max(1, draft.repMin)...50, step: 1,
+                                   text: { "\($0)" }, decrementLabel: "Lower", incrementLabel: "Higher")
                 case .timed:
-                    Stepper("Seconds, low  \(draft.secMin)", value: $draft.secMin, in: 5...max(5, draft.secMax),
-                            step: 5)
-                    Stepper("Seconds, high  \(draft.secMax)", value: $draft.secMax, in: max(5, draft.secMin)...600,
-                            step: 5)
+                    SpotStepperRow(title: "Seconds, low", value: $draft.secMin, range: 5...max(5, draft.secMax),
+                                   step: 5, text: { "\($0)" }, decrementLabel: "Lower", incrementLabel: "Higher")
+                    SpotStepperRow(title: "Seconds, high", value: $draft.secMax, range: max(5, draft.secMin)...600,
+                                   step: 5, text: { "\($0)" }, decrementLabel: "Lower", incrementLabel: "Higher")
                 case .checklist:
                     EmptyView()
                 }
-                Stepper("Rest  \(Format.clock(draft.rest))", value: $draft.rest, in: 15...600, step: 15)
-                Toggle("Per side", isOn: $draft.perSide)
+                SpotStepperRow(title: "Rest", value: $draft.rest, range: 15...600, step: 15, text: { Format.clock($0) },
+                               decrementLabel: "Shorter", incrementLabel: "Longer")
+                SpotSwitchRow(title: "Per side", isOn: $draft.perSide)
                 if draft.kind != .weighted {
-                    Toggle("Can add weight", isOn: $draft.loadable)
+                    SpotSwitchRow(title: "Can add weight", isOn: $draft.loadable)
                 }
                 if draft.kind == .weighted || draft.loadable {
-                    Picker("Increment", selection: $draft.increment) {
-                        ForEach([0.5, 1, 1.25, 2, 2.5, 5, 10], id: \.self) { Text(Format.kg($0)).tag($0) }
-                    }
+                    SpotMenuRow(title: "Increment", selection: $draft.increment,
+                                options: [0.5, 1, 1.25, 2, 2.5, 5, 10].map { (value: $0, title: Format.kg($0)) })
                 }
             }
-            .listRowBackground(Theme.card)
         }
     }
 
@@ -128,32 +134,43 @@ struct AddExerciseSheet: View {
                 && (search.isEmpty || item.name.localizedCaseInsensitiveContains(search)
                     || item.group.localizedCaseInsensitiveContains(search))
         }
-        Section {
-            TextField("Search", text: $search)
-                .textInputAutocapitalization(.never)
+        SpotFormGroup {
+            SpotTextRow(prompt: "Search", text: $search, capitalization: .never)
         }
-        .listRowBackground(Theme.card)
-        Section {
-            if candidates.isEmpty {
-                Text("Nothing else to add").foregroundStyle(Theme.secondary)
-            }
-            ForEach(candidates) { item in
-                Button { add(item) } label: {
-                    HStack(spacing: 12) {
-                        ItemBadge(item: item, size: 32)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(item.name).font(.rounded(.body, .semibold)).foregroundStyle(.white)
-                            Text(detail(item))
-                                .font(.rounded(.footnote))
-                                .foregroundStyle(Theme.secondary)
-                        }
-                    }
+        VStack(alignment: .leading, spacing: 0) {
+            LazyVStack(spacing: 0) {
+                if candidates.isEmpty {
+                    Text("Nothing else to add")
+                        .font(PhoneFont.body)
+                        .foregroundStyle(Theme.text2)
+                        .padding(.horizontal, 16)
+                        .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
+                }
+                ForEach(candidates) { item in
+                    Button { add(item) } label: { candidateRow(item) }
+                        .buttonStyle(RowPressStyle())
+                    if item.id != candidates.last?.id { DepthDivider(inset: 16) }
                 }
             }
-        } footer: {
+            .depthRows()
             Text("It keeps its history and its prescription, and a change to either shows on every day it's on.")
+                .font(PhoneFont.foot)
+                .foregroundStyle(Theme.text3)
+                .padding(.horizontal, 16)
+                .padding(.top, 8)
         }
-        .listRowBackground(Theme.card)
+    }
+
+    private func candidateRow(_ item: PlanItem) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(item.name).font(PhoneFont.headline).foregroundStyle(.white)
+            Text(detail(item)).font(PhoneFont.foot).foregroundStyle(Theme.text2)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
     }
 
     private func add(_ item: PlanItem) {
