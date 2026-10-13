@@ -64,16 +64,32 @@ final class FigureTests: XCTestCase {
 
     // MARK: The bundle
 
-    func testTheBundleHasFiftyFiguresAndEveryExercisePointsAtOne() throws {
+    func testTheBundleHasEveryFigureAndEveryExercisePointsAtOne() throws {
         let bundle = try library().bundle
-        XCTAssertEqual(bundle.figures.count, 50)
-        // 52 plan exercises, and the chest press twice: under machine-chest-press and its old id.
-        XCTAssertEqual(bundle.exercises.count, 53)
+        // Plan 12's bundle: 180 figures under 192 ids. The plan's exercises are under their plan ids, every
+        // database exercise a swap can bring in under its database id.
+        XCTAssertEqual(bundle.figures.count, 180)
+        XCTAssertEqual(bundle.exercises.count, 192)
         XCTAssertNotNil(bundle.exercises["machine-chest-press"])
         for (exercise, entry) in bundle.exercises {
             XCTAssertNotNil(bundle.figures[entry.figure], "\(exercise) has no figure \(entry.figure)")
             XCTAssertLessThanOrEqual(entry.cue.count, 72, "\(exercise)'s cue is too long")
         }
+    }
+
+    /// Every exercise Swap can offer for a lift of the plan has a figure for its 44 pt still (the ones rated "avoid"
+    /// for the lower back are never offered).
+    func testEverySwapChoiceHasAFigure() throws {
+        let library = try library()
+        let database = try XCTUnwrap(ExerciseDatabase.shared)
+        var missing: [String] = []
+        for slot in try Plan.bundled().days.flatMap(\.items) where database.canSwap(slot) {
+            for choice in database.choices(for: slot, slot: slot, injuryAreas: TrainingSettings.defaultInjuryAreas)
+            where library.figure(forExercise: choice.id) == nil {
+                missing.append("\(slot.exerciseId) → \(choice.id)")
+            }
+        }
+        XCTAssertEqual(missing, [], "Swap choices without a figure")
     }
 
     func testEveryTrainedExerciseOfThePlanHasAFigure() throws {
@@ -82,6 +98,29 @@ final class FigureTests: XCTestCase {
             .filter { $0.kind != .checklist && library.figure(forExercise: $0.exerciseId) == nil }
             .map(\.exerciseId)
         XCTAssertEqual(missing, [], "Exercises of the plan without a figure")
+    }
+
+    func testASwappedInExerciseFindsItsFigureByDatabaseIdOrByItsPlanId() throws {
+        let real = try library().bundle
+        let plank = try XCTUnwrap(real.exercises["weighted-plank"])
+        let press = try XCTUnwrap(real.exercises["incline-db-press"])
+        // A bundle that lists the database exercise "plank" under its database id, the plan's "weighted-plank"
+        // under the plan id, and "incline-db-press" under its plan id only.
+        let bundle = FigureBundle(version: 1, exercises: ["plank": plank, "weighted-plank": plank, "incline-db-press": press],
+                                  figures: real.figures)
+        let library = FigureLibrary(bundle: bundle)
+        let database = try XCTUnwrap(ExerciseDatabase.shared)
+
+        XCTAssertEqual(library.figure(forExercise: "plank", database: database)?.figure.id, plank.figure, "database id")
+        XCTAssertEqual(library.figure(forExercise: "weighted-plank", database: database)?.figure.id, plank.figure)
+        XCTAssertEqual(library.figure(forExercise: "incline-db-press", database: database)?.cue, press.cue)
+
+        // Only the plan id listed: the swapped-in database id of the same exercise still finds it.
+        let planOnly = FigureLibrary(bundle: FigureBundle(version: 1, exercises: ["weighted-plank": plank],
+                                                          figures: real.figures))
+        XCTAssertEqual(planOnly.figure(forExercise: "plank", database: database)?.figure.id, plank.figure)
+        XCTAssertNil(planOnly.figure(forExercise: "custom-barbell-row", database: database))
+        XCTAssertNil(planOnly.figure(forExercise: "hack-squat", database: database), "No figure yet: the slot stays empty")
     }
 
     func testAnExerciseTheUserMadeHasNoFigure() throws {

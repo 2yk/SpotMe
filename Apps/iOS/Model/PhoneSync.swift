@@ -83,6 +83,7 @@ final class PhoneSync: NSObject {
         guard LaunchOptions.sync, WCSession.isSupported() else { return }
         let session = WCSession.default
         guard session.activationState == .activated, session.isPaired, session.isWatchAppInstalled else { return }
+        Logger.sync.notice("Sending a swap (watch reachable: \(session.isReachable, privacy: .public))")
         if session.isReachable {
             session.sendMessage(today.swapMarks.message, replyHandler: nil) { error in
                 Logger.sync.error("Couldn't send a swap: \(error.localizedDescription)")

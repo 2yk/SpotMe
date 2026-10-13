@@ -42,6 +42,23 @@ public struct ComplicationState: Codable, Equatable, Sendable {
         return true
     }
 
+    private static let scheduleKey = "complicationSchedule"
+
+    /// The user's rearranged weekdays (`PlanEdits.schedule`), for the complication, which can't read the app's
+    /// store. Returns whether it differs from what was stored.
+    @discardableResult
+    public static func saveSchedule(_ schedule: [Int: String], to defaults: UserDefaults? = ComplicationState.shared) -> Bool {
+        guard let defaults, loadSchedule(from: defaults) != schedule,
+              let data = try? JSONEncoder().encode(schedule) else { return false }
+        defaults.set(data, forKey: scheduleKey)
+        return true
+    }
+
+    /// The weekdays the app last stored; the plan's own when it has stored none.
+    public static func loadSchedule(from defaults: UserDefaults? = ComplicationState.shared) -> [Int: String] {
+        defaults?.data(forKey: scheduleKey).flatMap { try? JSONDecoder().decode([Int: String].self, from: $0) } ?? [:]
+    }
+
     /// The stored state, when it is for `date` (any date when nil).
     public static func load(from defaults: UserDefaults? = ComplicationState.shared, on date: String?) -> ComplicationState? {
         guard let data = defaults?.data(forKey: key),

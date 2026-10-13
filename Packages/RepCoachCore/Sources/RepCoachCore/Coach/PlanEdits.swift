@@ -1,25 +1,56 @@
 import Foundation
 import SwiftData
 
-/// The user's changes to the plan's days: exercises added, removed or moved, and exercises they created.
-/// plan.json never changes; these apply on top of it. Renames and prescriptions are per exercise, in
-/// `ExerciseOverrides`.
+/// The user's changes to the plan's days: exercises added, removed or moved, exercises they created, and which
+/// weekday each workout is on. plan.json never changes; these apply on top of it. Renames and prescriptions are
+/// per exercise, in `ExerciseOverrides`.
+///
+/// A plan day is a workout (its `key`: "monday" is the Pull A workout, whatever weekday it is on) standing on a
+/// weekday (`weekday`; `title` is that weekday's name). History, swaps and exercise lists belong to the workout's
+/// key; rearranging the days changes only which weekday each workout stands on.
 public struct PlanEdits: Codable, Hashable, Sendable {
     /// By dayKey: the day's exerciseIds in order, for the days the user changed.
     public var days: [String: [String]]
     /// Exercises the user created, by exerciseId.
     public var custom: [String: PlanItem]
+    /// The workout on each weekday (1 = Sunday … 7 = Saturday, as `PlanDay.weekday`) where it isn't the plan's:
+    /// weekday → workout key. A weekday not listed has the workout the plan puts there. The listed and unlisted
+    /// workouts must still fill the seven weekdays once each; anything else is ignored.
+    public var schedule: [Int: String]
+    /// The plan version whose workout keys `days` and `schedule` use. Plan 12 moved Push B from "friday" to
+    /// "saturday" and put Legs B on Friday, so edits saved before it (no value here: version 11) are moved to the
+    /// new keys by `PlanKeyMigration`. New edits are made on the current keys.
+    public var planKeys: Int
 
-    public init(days: [String: [String]] = [:], custom: [String: PlanItem] = [:]) {
+    /// The plan version whose workout keys new edits use.
+    public static let currentPlanKeys = 12
+
+    public init(days: [String: [String]] = [:], custom: [String: PlanItem] = [:], schedule: [Int: String] = [:]) {
         self.days = days
         self.custom = custom
+        self.schedule = schedule
+        planKeys = Self.currentPlanKeys
     }
 
-    public var isEmpty: Bool { days.isEmpty && custom.isEmpty }
+    /// Edits saved before the weekdays could be rearranged have no schedule; edits saved before plan 12 have no
+    /// `planKeys`, and use plan 11's workout keys.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        days = try container.decodeIfPresent([String: [String]].self, forKey: .days) ?? [:]
+        custom = try container.decodeIfPresent([String: PlanItem].self, forKey: .custom) ?? [:]
+        schedule = try container.decodeIfPresent([Int: String].self, forKey: .schedule) ?? [:]
+        planKeys = try container.decodeIfPresent(Int.self, forKey: .planKeys) ?? 11
+    }
 
-    /// `plan` with the days' lists changed. An exercise from another day comes with that day's prescription;
-    /// ids that no longer exist are left out.
+    public var isEmpty: Bool { days.isEmpty && custom.isEmpty && schedule.isEmpty }
+
+    /// `plan` as the user has it: the days' lists changed (an exercise from another day comes with that day's
+    /// prescription; ids that no longer exist are left out) and the workouts on their weekdays.
     public func applied(to plan: Plan) -> Plan {
+        scheduled(itemsApplied(to: plan))
+    }
+
+    private func itemsApplied(to plan: Plan) -> Plan {
         guard !days.isEmpty else { return plan }
         let catalog = Self.catalog(plan: plan, custom: custom)
         var result = plan

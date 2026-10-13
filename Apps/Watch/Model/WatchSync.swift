@@ -184,7 +184,9 @@ final class WatchSync: NSObject {
 
     /// The phone's swaps: applied at once, whatever the workout is doing.
     fileprivate func received(swaps: SwapMarks) {
-        if today.applySwaps(from: swaps) { onSwapsReceived() }
+        let changed = today.applySwaps(from: swaps)
+        Logger.sync.notice("Got the phone's swaps (changed here: \(changed, privacy: .public))")
+        if changed { onSwapsReceived() }
     }
 
     private func received(_ context: SyncContext) {

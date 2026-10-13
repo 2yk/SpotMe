@@ -207,7 +207,9 @@
     "Flat Bench Press",
     "Bench Press"
    ],
-   "planIds": [],
+   "planIds": [
+    "barbell-bench-press"
+   ],
    "bodyPart": "chest",
    "primaryMuscles": [
     "mid-chest"
@@ -3943,7 +3945,9 @@
     "Low Row",
     "V-Bar Cable Row"
    ],
-   "planIds": [],
+   "planIds": [
+    "seated-cable-row"
+   ],
    "bodyPart": "back",
    "primaryMuscles": [
     "upper-back",
@@ -12313,7 +12317,9 @@
    "aliases": [
     "Pull-Through"
    ],
-   "planIds": [],
+   "planIds": [
+    "cable-pull-through"
+   ],
    "bodyPart": "glutes",
    "primaryMuscles": [
     "glutes",
@@ -13317,7 +13323,9 @@
     "Reverse Lunge",
     "Backward Lunge"
    ],
-   "planIds": [],
+   "planIds": [
+    "reverse-lunge"
+   ],
    "bodyPart": "quads",
    "primaryMuscles": [
     "quads",
@@ -13792,7 +13800,9 @@
    "aliases": [
     "Machine Hack Squat"
    ],
-   "planIds": [],
+   "planIds": [
+    "hack-squat"
+   ],
    "bodyPart": "quads",
    "primaryMuscles": [
     "quads",
@@ -15075,7 +15085,9 @@
    "aliases": [
     "Seated Hamstring Curl"
    ],
-   "planIds": [],
+   "planIds": [
+    "seated-leg-curl"
+   ],
    "bodyPart": "hamstrings",
    "primaryMuscles": [
     "hamstrings"
@@ -15540,7 +15552,9 @@
    "id": "seated-calf-raise",
    "name": "Seated Calf Raise",
    "aliases": [],
-   "planIds": [],
+   "planIds": [
+    "seated-calf-raise"
+   ],
    "bodyPart": "calves",
    "primaryMuscles": [
     "soleus",
@@ -15806,7 +15820,9 @@
     "Wall Tib Raise",
     "Toe Raise"
    ],
-   "planIds": [],
+   "planIds": [
+    "tibialis-raise"
+   ],
    "bodyPart": "calves",
    "primaryMuscles": [
     "tibialis"

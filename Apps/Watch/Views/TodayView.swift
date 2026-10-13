@@ -46,6 +46,11 @@ struct TodayView: View {
                 }
             }
             .onOpenURL(perform: open)
+            .onChange(of: StartRequests.shared.pending, initial: true) { _, pending in
+                guard pending else { return }
+                StartRequests.shared.pending = false
+                if let url = URL(string: "spotme://start") { open(url) }
+            }
             // Another day picked, or midnight: a workout step from the old day no longer applies.
             .onChange(of: today.dayKey) { workout.reconcile() }
             .sheet(isPresented: $choosingDay) {

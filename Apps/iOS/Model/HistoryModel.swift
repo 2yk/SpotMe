@@ -33,6 +33,32 @@ final class HistoryModel {
         var id: Date { date }
     }
 
+    /// One logged workout, for the SESSIONS list (board 8.1).
+    struct SessionRow: Identifiable {
+        let session: WorkoutSession
+        /// "Push A".
+        let name: String
+        let minutes: Int?
+        let kcal: Int?
+        let effort: Int?
+        /// Items finished (done or skipped) and the day's items.
+        let done: Int
+        let total: Int
+
+        var id: UUID { session.id }
+        var date: Date { session.date }
+        var isFinished: Bool { total > 0 && done >= total }
+
+        /// "Wed 7 Oct · 48 min · 342 kcal · Hard 7", whatever of it is known.
+        var detail: String {
+            var parts = [date.weekdayDayMonth]
+            if let minutes { parts.append("\(minutes) min") }
+            if let kcal { parts.append("\(kcal) kcal") }
+            if let effort { parts.append("\(EffortBand(effort).word) \(effort)") }
+            return parts.joined(separator: " · ")
+        }
+    }
+
     struct Week: Identifiable {
         let start: Date
         let sets: Int
@@ -43,6 +69,9 @@ final class HistoryModel {
     private(set) var exercises: [Exercise] = []
     private(set) var weeks: [Week] = []
     private(set) var sessionCount = 0
+    /// Newest first.
+    private(set) var sessions: [SessionRow] = []
+    private(set) var firstSessionDate: Date?
 
     /// Training weeks run Monday to Sunday, whatever the locale says.
     static let calendar: Calendar = {
@@ -66,7 +95,7 @@ final class HistoryModel {
             guard item.kind != .checklist, seen.insert(item.exerciseId).inserted else { return }
             let entries = (try? store.entries(for: item.exerciseId)) ?? []
             guard !entries.isEmpty else { return }
-            let points = entries.reversed().map { point(for: $0, kind: item.kind) }
+            let points = entries.reversed().map { Self.point(for: $0, kind: item.kind) }
             exercises.append(Exercise(item: item, dayTitle: dayTitle, entries: entries, points: points))
         }
         for day in plan.days {
@@ -81,7 +110,19 @@ final class HistoryModel {
             }
         }
         self.exercises = exercises
-        sessionCount = (try? context.fetchCount(FetchDescriptor<WorkoutSession>())) ?? 0
+        let stored = (try? context.fetch(FetchDescriptor<WorkoutSession>(sortBy: [SortDescriptor(\.date, order: .reverse)]))) ?? []
+        sessionCount = stored.count
+        firstSessionDate = stored.last?.date
+        sessions = stored.map { session in
+            let day = plan.days.first { $0.key == session.dayKey }
+            let seconds = session.activeSeconds ?? session.endedAt.map { $0.timeIntervalSince(session.date) }
+            let retired = PlanKeyMigration.retiredHeadline(of: session, in: plan)
+            return SessionRow(session: session, name: retired ?? day?.headline ?? session.dayKey.capitalized,
+                              minutes: seconds.flatMap { $0 >= 60 ? Int(($0 / 60).rounded()) : nil },
+                              kcal: session.energyKcal.map { Int($0.rounded()) }, effort: session.effort,
+                              done: session.logs.filter { $0.completedAt != nil }.count,
+                              total: retired == nil ? day?.items.count ?? session.logs.count : session.logs.count)
+        }
 
         let timestamps = (try? store.countedSetTimestamps()) ?? []
         let thisWeek = calendar.dateInterval(of: .weekOfYear, for: .now)?.start ?? .now
@@ -92,7 +133,14 @@ final class HistoryModel {
         }
     }
 
-    private func point(for entry: HistoryEntry, kind: ItemKind) -> Point {
+    /// One exercise with every session logged for it (today's included), for its own screen.
+    static func exercise(for item: PlanItem, dayTitle: String, context: ModelContext) -> Exercise {
+        let entries = (try? HistoryStore(context: context).entries(for: item.exerciseId)) ?? []
+        return Exercise(item: item, dayTitle: dayTitle, entries: entries,
+                        points: entries.reversed().map { point(for: $0, kind: item.kind) })
+    }
+
+    private static func point(for entry: HistoryEntry, kind: ItemKind) -> Point {
         if kind == .weighted {
             return Point(date: entry.date, value: entry.sets.map(\.weight).max() ?? 0,
                          e1rm: entry.sets.map { ProgressionEngine.estimated1RM(weight: $0.weight, reps: $0.reps) }.max(),

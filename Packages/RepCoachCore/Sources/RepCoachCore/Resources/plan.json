@@ -1,5 +1,5 @@
 {
-  "planVersion": 11,
+  "planVersion": 12,
   "deloadEveryNthWeek": 6,
   "days": [
     {
@@ -261,17 +261,17 @@
           "restSec": 75
         },
         {
-          "name": "Copenhagen Plank",
-          "exerciseId": "copenhagen-plank",
-          "group": "Legs · Muscle + Running Durability",
-          "note": "Top leg on bench. Inner thigh — prevents groin strains.",
-          "display": "2 × 20s/side",
-          "sets": 2,
-          "perSide": true,
+          "name": "Weighted Plank",
+          "exerciseId": "weighted-plank",
+          "group": "Core",
+          "note": "Plate on back. Glutes squeezed, no sag.",
+          "display": "3 × 30–45s",
+          "sets": 3,
+          "perSide": false,
           "kind": "timed",
-          "secMin": 20,
-          "secMax": 20,
-          "loadable": false,
+          "secMin": 30,
+          "secMax": 45,
+          "loadable": true,
           "restSec": 45
         },
         {
@@ -289,7 +289,7 @@
       "weekday": 4,
       "title": "Wednesday",
       "focus": "Push A · Chest & Shoulders + Core A",
-      "time": "~70 min · no run",
+      "time": "~80 min · no run",
       "items": [
         {
           "name": "Warmup · 7 min",
@@ -307,10 +307,25 @@
           "display": "7 min"
         },
         {
+          "name": "Barbell Bench Press",
+          "exerciseId": "barbell-bench-press",
+          "group": "Chest",
+          "note": "Shoulder blades pinned, feet planted. Bar to the lower chest, elbows about 45°. Set the safeties or use a spotter.",
+          "display": "4 × 5–8",
+          "sets": 4,
+          "perSide": false,
+          "kind": "weighted",
+          "repMin": 5,
+          "repMax": 8,
+          "increment": 2.5,
+          "sessionsAtTopToProgress": 1,
+          "restSec": 180
+        },
+        {
           "name": "Incline DB Press",
           "exerciseId": "incline-db-press",
           "group": "Chest",
-          "note": "30° bench. Deep stretch at bottom, drive up. Main chest builder.",
+          "note": "30° bench. Deep stretch at the bottom, drive up.",
           "display": "4 × 6–10",
           "sets": 4,
           "perSide": false,
@@ -567,19 +582,19 @@
           "restSec": 45
         },
         {
-          "name": "Single-Arm Cable Row",
-          "exerciseId": "single-arm-cable-row",
+          "name": "Seated Cable Row",
+          "exerciseId": "seated-cable-row",
           "group": "Back · Width",
-          "note": "Seated or half-kneeling. Stretch forward, pull elbow to hip.",
-          "display": "3 × 10–12/side",
+          "note": "Both arms, V-handle. Sit tall, let the shoulders stretch forward, pull to the belly. No rocking.",
+          "display": "3 × 10–12",
           "sets": 3,
-          "perSide": true,
+          "perSide": false,
           "kind": "weighted",
           "repMin": 10,
           "repMax": 12,
           "increment": 2.5,
           "sessionsAtTopToProgress": 1,
-          "restSec": 75
+          "restSec": 90
         },
         {
           "name": "Straight-Arm Pulldown",
@@ -663,6 +678,126 @@
       "key": "friday",
       "weekday": 6,
       "title": "Friday",
+      "focus": "Legs B · Strength + Posterior Chain",
+      "time": "~55 min · no run",
+      "items": [
+        {
+          "name": "Warmup · 7 min",
+          "exerciseId": "legs-b-warmup",
+          "group": "Warmup",
+          "kind": "checklist",
+          "steps": [
+            "Light cardio 3 min (bike or incline walk)",
+            "Leg swings · 10/side, front-back and side to side",
+            "Glute bridges · 1 × 15",
+            "Bodyweight reverse lunge · 1 × 6/leg",
+            "Hack squat · 2 light sets × 10 before working weight"
+          ],
+          "display": "7 min"
+        },
+        {
+          "name": "Hack Squat",
+          "exerciseId": "hack-squat",
+          "group": "Legs B · Strength + Posterior Chain",
+          "note": "Back flat on the pad, feet mid-platform. Down to parallel, drive through the whole foot. Spine stays supported.",
+          "display": "4 × 6–10",
+          "sets": 4,
+          "perSide": false,
+          "kind": "weighted",
+          "repMin": 6,
+          "repMax": 10,
+          "increment": 5.0,
+          "sessionsAtTopToProgress": 1,
+          "restSec": 150
+        },
+        {
+          "name": "Reverse Lunge (DBs)",
+          "exerciseId": "reverse-lunge",
+          "group": "Legs B · Strength + Posterior Chain",
+          "note": "DBs at the sides. Step back, back knee just above the floor, push up through the front heel.",
+          "display": "3 × 8–10/leg",
+          "sets": 3,
+          "perSide": true,
+          "kind": "weighted",
+          "repMin": 8,
+          "repMax": 10,
+          "increment": 2.5,
+          "sessionsAtTopToProgress": 1,
+          "restSec": 120
+        },
+        {
+          "name": "Seated Leg Curl",
+          "exerciseId": "seated-leg-curl",
+          "group": "Legs B · Strength + Posterior Chain",
+          "note": "Thigh pad snug, lean forward a little. Curl fully, 3-sec lower. Zero spinal load.",
+          "display": "3 × 10–12",
+          "sets": 3,
+          "perSide": false,
+          "kind": "weighted",
+          "repMin": 10,
+          "repMax": 12,
+          "increment": 5.0,
+          "sessionsAtTopToProgress": 1,
+          "restSec": 75
+        },
+        {
+          "name": "Cable Pull-Through",
+          "exerciseId": "cable-pull-through",
+          "group": "Legs B · Strength + Posterior Chain",
+          "note": "Face away, rope between the legs. Hips back with a flat back, squeeze the glutes to stand tall.",
+          "display": "3 × 12–15",
+          "sets": 3,
+          "perSide": false,
+          "kind": "weighted",
+          "repMin": 12,
+          "repMax": 15,
+          "increment": 2.5,
+          "sessionsAtTopToProgress": 1,
+          "restSec": 75
+        },
+        {
+          "name": "Seated Calf Raise",
+          "exerciseId": "seated-calf-raise",
+          "group": "Legs B · Strength + Posterior Chain",
+          "note": "Soleus, the runner's calf. Full stretch, 2-sec pause at the bottom.",
+          "display": "4 × 12–15",
+          "sets": 4,
+          "perSide": false,
+          "kind": "weighted",
+          "repMin": 12,
+          "repMax": 15,
+          "increment": 5.0,
+          "sessionsAtTopToProgress": 1,
+          "restSec": 75
+        },
+        {
+          "name": "Tibialis Raise",
+          "exerciseId": "tibialis-raise",
+          "group": "Legs B · Strength + Posterior Chain",
+          "note": "Back on the wall, heels a foot out. Toes up high, lower slowly. Shin insurance for running.",
+          "display": "2 × 15–20",
+          "sets": 2,
+          "perSide": false,
+          "kind": "reps",
+          "repMin": 15,
+          "repMax": 20,
+          "loadable": false,
+          "restSec": 45
+        },
+        {
+          "name": "Cooldown stretches",
+          "exerciseId": "legs-b-cooldown",
+          "group": "Cooldown",
+          "kind": "checklist",
+          "note": "Couch stretch · standing calf stretch · seated hamstring stretch. 60s each.",
+          "display": "5 min"
+        }
+      ]
+    },
+    {
+      "key": "saturday",
+      "weekday": 7,
+      "title": "Saturday",
       "focus": "Tempo Run + Push B · Arms Focus + Core C",
       "time": "~35 min run + ~70 min gym",
       "items": [
@@ -676,7 +811,7 @@
         },
         {
           "name": "Warmup · 6 min",
-          "exerciseId": "friday-warmup",
+          "exerciseId": "saturday-warmup",
           "group": "Warmup",
           "kind": "checklist",
           "steps": [
@@ -881,7 +1016,7 @@
         },
         {
           "name": "Cooldown stretches",
-          "exerciseId": "friday-cooldown",
+          "exerciseId": "saturday-cooldown",
           "group": "Cooldown",
           "kind": "checklist",
           "note": "Doorway pec stretch · overhead triceps stretch · couch stretch (after the tempo).",
@@ -890,9 +1025,9 @@
       ]
     },
     {
-      "key": "saturday",
-      "weekday": 7,
-      "title": "Saturday",
+      "key": "sunday",
+      "weekday": 1,
+      "title": "Sunday",
       "focus": "Full Rest",
       "time": "Nothing planned",
       "items": [
@@ -908,150 +1043,9 @@
           "name": "Eat + Sleep",
           "exerciseId": "eat-sleep",
           "group": "Recovery Is Where Muscle Grows",
-          "note": "Hit protein. Aim for 8 hours tonight — tomorrow is the long run.",
+          "note": "Hit protein. Aim for 8 hours tonight; Monday starts the week.",
           "display": "—",
           "kind": "checklist"
-        }
-      ]
-    },
-    {
-      "key": "sunday",
-      "weekday": 1,
-      "title": "Sunday",
-      "focus": "Long Run + Mobility + Core B",
-      "time": "Run per NRC + ~30 min",
-      "items": [
-        {
-          "name": "Long Run",
-          "exerciseId": "long-run",
-          "group": "Run · NRC Long",
-          "note": "Easy, in your Zone 2 (HR 132–143). Start slow, keep it conversational. Distance per NRC.",
-          "display": "per plan",
-          "kind": "checklist"
-        },
-        {
-          "name": "90/90 Hip Flow",
-          "exerciseId": "90-90-hip-flow",
-          "group": "Mobility · 15 min",
-          "note": "Opens hips locked by sitting and running.",
-          "display": "5 min",
-          "kind": "checklist"
-        },
-        {
-          "name": "Thoracic Rotations",
-          "exerciseId": "thoracic-rotations",
-          "group": "Mobility · 15 min",
-          "note": "Upper-back mobility — fixes rounded posture.",
-          "display": "2 × 8/side",
-          "kind": "checklist"
-        },
-        {
-          "name": "Pigeon Pose",
-          "exerciseId": "pigeon-pose",
-          "group": "Mobility · 15 min",
-          "note": "Glutes + hips.",
-          "display": "60s/side",
-          "kind": "checklist"
-        },
-        {
-          "name": "Couch Stretch",
-          "exerciseId": "couch-stretch",
-          "group": "Mobility · 15 min",
-          "note": "Hip flexors — protects the lower back.",
-          "display": "60s/side",
-          "kind": "checklist"
-        },
-        {
-          "name": "Doorway Pec + Overhead Lat Stretch",
-          "exerciseId": "doorway-pec-overhead-lat-stretch",
-          "group": "Mobility · 15 min",
-          "note": "Elbow above shoulder for pec minor. Opens the chest.",
-          "display": "45s each",
-          "kind": "checklist"
-        },
-        {
-          "name": "Pallof Press",
-          "exerciseId": "pallof-press",
-          "group": "Core B · Functional",
-          "note": "Cable at chest height. Press out, resist rotation.",
-          "display": "3 × 10/side",
-          "sets": 3,
-          "perSide": true,
-          "kind": "reps",
-          "repMin": 10,
-          "repMax": 10,
-          "loadable": true,
-          "restSec": 45
-        },
-        {
-          "name": "Suitcase Carry",
-          "exerciseId": "suitcase-carry",
-          "group": "Core B · Functional",
-          "note": "One heavy DB at one side, walk 30s, switch.",
-          "display": "3 × 30s/side",
-          "sets": 3,
-          "perSide": true,
-          "kind": "timed",
-          "secMin": 30,
-          "secMax": 30,
-          "loadable": true,
-          "restSec": 45
-        },
-        {
-          "name": "Ab Wheel Rollout (knees)",
-          "exerciseId": "ab-wheel-rollout-knees",
-          "group": "Core B · Functional",
-          "note": "Only if your back has felt solid for 6+ weeks. Brace hard.",
-          "display": "3 × 8–10",
-          "sets": 3,
-          "perSide": false,
-          "kind": "reps",
-          "repMin": 8,
-          "repMax": 10,
-          "loadable": false,
-          "restSec": 45
-        },
-        {
-          "name": "Weighted Plank",
-          "exerciseId": "weighted-plank",
-          "group": "Core B · Functional",
-          "note": "Plate on back. Glutes squeezed, no sag.",
-          "display": "3 × 30–45s",
-          "sets": 3,
-          "perSide": false,
-          "kind": "timed",
-          "secMin": 30,
-          "secMax": 45,
-          "loadable": true,
-          "restSec": 45
-        },
-        {
-          "name": "Side Plank with Reach",
-          "exerciseId": "side-plank-with-reach",
-          "group": "Core B · Functional",
-          "note": "Reach top arm under and through.",
-          "display": "3 × 8/side",
-          "sets": 3,
-          "perSide": true,
-          "kind": "reps",
-          "repMin": 8,
-          "repMax": 8,
-          "loadable": false,
-          "restSec": 45
-        },
-        {
-          "name": "L-Sit (progression)",
-          "exerciseId": "l-sit-progression",
-          "group": "Core B · Functional",
-          "note": "Tucked → one leg → full. Build to 30 sec.",
-          "display": "3 × max",
-          "sets": 3,
-          "perSide": false,
-          "kind": "timed",
-          "secMin": 10,
-          "secMax": 30,
-          "loadable": false,
-          "restSec": 45
         }
       ]
     }

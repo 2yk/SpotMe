@@ -361,6 +361,11 @@ final class StoreMigrationTests: XCTestCase {
                        [[LoggedSet(weight: 20, reps: 10), LoggedSet(weight: 20, reps: 9)]])
         XCTAssertEqual(try context.fetch(FetchDescriptor<ExerciseSettings>()).first?.name, "Incline Press")
         XCTAssertEqual(try context.fetch(FetchDescriptor<BodyMeasurement>()).map(\.id), [measurementId])
+        // The old arm and waist keep their values; the eight new points are empty.
+        let body = try XCTUnwrap(try context.fetch(FetchDescriptor<BodyMeasurement>()).first)
+        XCTAssertEqual(body.arm, 14.5)
+        XCTAssertEqual(body.waist, 33)
+        XCTAssertEqual(BodyPoint.allCases.filter { body[$0] != nil }, [.arm, .waist])
 
         // New writes work on the migrated store, and survive a save.
         let recorder = WorkoutRecorder(context: context)

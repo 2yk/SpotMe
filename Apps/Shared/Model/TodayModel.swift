@@ -6,7 +6,12 @@ import RepCoachCore
 /// One plan day as it stands today: targets, order and progress. Shared by the watch and the phone.
 @MainActor @Observable
 final class TodayModel {
-    let plan: Plan
+    /// The plan as shipped, weekdays as plan.json has them.
+    let shippedPlan: Plan
+    /// The plan with the user's weekdays: each workout (`key`) on the weekday and with the title it was
+    /// rearranged to, in Monday to Sunday order. Items are the plan's own. Today, the day strips and the watch's
+    /// day list look days up here.
+    private(set) var plan: Plan
     let context: ModelContext
     @ObservationIgnored let settingsStore: SettingsStore
     @ObservationIgnored var calendar = Calendar.current
@@ -47,7 +52,10 @@ final class TodayModel {
     /// False once the user picks another day, so midnight doesn't move them.
     private var followsToday: Bool
 
-    init(plan: Plan, context: ModelContext, settings: SettingsStore, dayKey: String? = nil) {
+    init(plan shipped: Plan, context: ModelContext, settings: SettingsStore, dayKey: String? = nil) {
+        // Today's workout is the one the user's weekdays put on today.
+        let plan = PlanEdits.load(from: context).scheduled(shipped)
+        self.shippedPlan = shipped
         self.plan = plan
         self.context = context
         self.settingsStore = settings
@@ -81,12 +89,12 @@ final class TodayModel {
 
     /// Every exercise there is, overrides applied: the plan's and the user's own, on a day or not.
     var library: [PlanItem] {
-        planEdits.library(plan: plan).map { $0.applying(overrides[$0.exerciseId]) }
+        planEdits.library(plan: shippedPlan).map { $0.applying(overrides[$0.exerciseId]) }
     }
 
     /// An exercise as the plan (or the user, for their own) defined it, before overrides.
     func baseItem(_ exerciseId: String) -> PlanItem? {
-        plan.days.lazy.flatMap(\.items).first { $0.exerciseId == exerciseId } ?? planEdits.custom[exerciseId]
+        shippedPlan.days.lazy.flatMap(\.items).first { $0.exerciseId == exerciseId } ?? planEdits.custom[exerciseId]
     }
 
     /// Changes the plan's days, stores the change and shows it.
@@ -144,6 +152,13 @@ final class TodayModel {
     func refresh() {
         let recorder = recorder
         let stamp = SwapMarks.stamp(.now, calendar: calendar)
+        // The user's edits first: rearranged weekdays can change which workout is today's.
+        update(\.planEdits, PlanEdits.load(from: context))
+        update(\.plan, planEdits.scheduled(shippedPlan))
+        if followsToday, let key = plan.day(for: .now, calendar: calendar)?.key, key != dayKey {
+            dayKey = key
+            promotedId = nil
+        }
         let session = try? recorder.session(for: dayKey, on: .now)
         if session !== self.session { self.session = session }
         update(\.isDeload, session?.isDeload ?? settings.isDeload(on: .now, plan: plan, calendar: calendar))
@@ -152,8 +167,7 @@ final class TodayModel {
             ((try? context.fetch(FetchDescriptor<ExerciseSettings>())) ?? []).map { ($0.exerciseId, $0.overrides) },
             uniquingKeysWith: { first, _ in first })
         update(\.overrides, overrides)
-        update(\.planEdits, PlanEdits.load(from: context))
-        var edited = planEdits.applied(to: plan)
+        var edited = planEdits.applied(to: shippedPlan)
         for index in edited.days.indices {
             edited.days[index].items = edited.days[index].items.map { $0.applying(overrides[$0.exerciseId]) }
         }

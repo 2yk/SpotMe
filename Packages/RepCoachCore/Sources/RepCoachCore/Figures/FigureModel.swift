@@ -206,9 +206,17 @@ public struct FigureLibrary: Sendable {
         self.bundle = bundle
     }
 
-    /// The figure of a plan exercise and its cue. nil for exercises without one (the user's own).
-    public func figure(forExercise exerciseId: String) -> (figure: Figure, cue: String)? {
-        guard let entry = bundle.exercises[exerciseId], let figure = bundle.figures[entry.figure] else { return nil }
-        return (figure, entry.cue)
+    /// The figure of an exercise and its cue, by the id it is shown under: the plan's `exerciseId`, or the
+    /// database id of the exercise a swap brought in (the bundle lists both). An exercise the bundle knows only
+    /// under its other id (a plan exercise whose database id differs, "weighted-plank" and "plank") still finds
+    /// it. nil for exercises without one (the user's own).
+    public func figure(forExercise exerciseId: String,
+                       database: ExerciseDatabase? = ExerciseDatabase.shared) -> (figure: Figure, cue: String)? {
+        var ids = [exerciseId]
+        if let entry = database?.entry(forExerciseId: exerciseId) { ids += [entry.id] + entry.planIds }
+        for id in ids {
+            if let entry = bundle.exercises[id], let figure = bundle.figures[entry.figure] { return (figure, entry.cue) }
+        }
+        return nil
     }
 }

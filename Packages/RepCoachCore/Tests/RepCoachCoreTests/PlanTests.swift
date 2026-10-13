@@ -5,7 +5,7 @@ final class PlanTests: XCTestCase {
 
     func testBundledPlanLoads() throws {
         let plan = try Plan.bundled()
-        XCTAssertEqual(plan.planVersion, 11)
+        XCTAssertEqual(plan.planVersion, 12)
         XCTAssertEqual(plan.days.count, 7)
         XCTAssertEqual(Set(plan.days.map(\.weekday)), Set(1...7))
     }
@@ -38,14 +38,14 @@ final class PlanTests: XCTestCase {
     func testWithoutRunsDropsOnlyTheRuns() throws {
         let plan = try Plan.bundled()
         let runs = plan.days.flatMap(\.items).filter(\.isRun).map(\.exerciseId)
-        XCTAssertEqual(runs, ["recovery-run", "speed-intervals", "recovery-run", "tempo-run", "long-run"])
+        XCTAssertEqual(runs, ["recovery-run", "speed-intervals", "recovery-run", "tempo-run"])
 
         let gym = plan.withoutRuns()
         XCTAssertEqual(gym.days.map(\.key), plan.days.map(\.key))
-        XCTAssertEqual(gym.days.flatMap(\.items).count, 77 - 5)
+        XCTAssertEqual(gym.days.flatMap(\.items).count, 74 - 4)
         XCTAssertEqual(gym.day(forWeekday: 2)?.items.first?.exerciseId, "monday-warmup")
         // "Legs · Muscle + Running Durability" is gym work, not a run.
-        XCTAssertEqual(gym.day(forWeekday: 3)?.items.filter { $0.group.contains("Running") }.count, 7)
+        XCTAssertEqual(gym.day(forWeekday: 3)?.items.filter { $0.group.contains("Running") }.count, 6)
         XCTAssertFalse(try XCTUnwrap(gym.day(forWeekday: 1)).items.isEmpty)
     }
 
@@ -54,11 +54,11 @@ final class PlanTests: XCTestCase {
         XCTAssertEqual(gym.days.map { "\($0.focus) | \($0.time)" }, [
             "Pull A · Strength & Thickness | ~65 min gym",
             "Legs · Run-Supportive | ~55 min gym",
-            "Push A · Chest & Shoulders + Core A | ~70 min",
+            "Push A · Chest & Shoulders + Core A | ~80 min",
             "Pull B · Pull-up Endurance | ~65 min gym",
+            "Legs B · Strength + Posterior Chain | ~55 min",
             "Push B · Arms Focus + Core C | ~70 min gym",
             "Full Rest | Nothing planned",
-            "Mobility + Core B | ~30 min",
         ])
     }
 

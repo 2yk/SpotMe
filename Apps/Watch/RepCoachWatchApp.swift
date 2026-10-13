@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import WatchKit
+import HealthKit
 import RepCoachCore
 
 @main
@@ -56,7 +57,20 @@ struct RepCoachWatchApp: App {
     }
 }
 
+/// The phone's Start workout (HealthKit's `startWatchApp`) arrives as a workout configuration before there is a
+/// screen to show; Today picks the request up when it appears, or at once if it already is.
+@MainActor @Observable
+final class StartRequests {
+    static let shared = StartRequests()
+    var pending = false
+}
+
 final class WatchAppDelegate: NSObject, WKApplicationDelegate {
+    /// The iPhone asked for the day's workout to start: the same as the complication's start link.
+    func handle(_ workoutConfiguration: HKWorkoutConfiguration) {
+        Task { @MainActor in StartRequests.shared.pending = true }
+    }
+
     /// The system relaunched the app while a workout was running: pick it back up.
     func handleActiveWorkoutRecovery() {
         Task { @MainActor in await HealthWorkout.shared.recover() }

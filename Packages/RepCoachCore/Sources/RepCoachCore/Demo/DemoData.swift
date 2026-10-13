@@ -5,20 +5,28 @@ import SwiftData
 /// Weeks of plausible training for the simulator, previews and screenshots. Debug builds only; never touches
 /// the on-disk store because the apps only seed an in-memory container.
 public enum DemoData {
-    /// Arm and waist every two weeks, the last `lastDaysAgo` days ago, with the arms creeping up. With
-    /// `waistWarning` the last one has the waist up an inch and a half while the arms stay put.
-    public static func seedBody(_ context: ModelContext, entries: Int = 5, lastDaysAgo: Int = 3, today: Date = .now,
+    /// Body measurements every two weeks, the last `lastDaysAgo` days ago: weight and the nine tape points, the arms
+    /// creeping up. With `waistWarning` the last one has the waist up 1.25 inches while the arm stays put.
+    public static func seedBody(_ context: ModelContext, entries: Int = 3, lastDaysAgo: Int = 3, today: Date = .now,
                                 calendar: Calendar = .current, waistWarning: Bool = false) throws {
-        let arms = [14.0, 14.25, 14.25, 14.5, 14.75, 15.0]
-        let waists = [32.0, 32.0, 32.25, 32.25, 32.5, 32.5]
-        let count = min(entries, arms.count)
+        // Oldest first: weight, neck, shoulders, chest, arm, forearm, waist, hips, thigh, calf.
+        let rows: [[Double]] = [
+            [71.8, 15, 45.5, 38, 14.25, 11.5, 32, 37, 21.75, 14.5],
+            [72.1, 15, 45.75, 38.25, 14.25, 11.5, 32.25, 37, 21.75, 14.5],
+            [72.4, 15, 46, 38.5, 14.5, 11.5, 32.25, 37, 22, 14.5],
+        ]
+        let count = min(max(entries, 1), rows.count)
         for index in 0..<count {
             let daysAgo = lastDaysAgo + 14 * (count - 1 - index)
             guard let date = calendar.date(byAdding: .day, value: -daysAgo, to: today) else { continue }
-            let last = index == count - 1
-            let arm = last && waistWarning ? arms[max(0, index - 1)] : arms[index]
-            let waist = last && waistWarning ? waists[max(0, index - 1)] + 1.5 : waists[index]
-            context.insert(BodyMeasurement(date: date, arm: arm, waist: waist))
+            var row = rows[rows.count - count + index]
+            if index == count - 1, waistWarning, count > 1 {
+                row[4] = rows[rows.count - count + index - 1][4]
+                row[6] = rows[rows.count - count + index - 1][6] + 1.25
+            }
+            let measurement = BodyMeasurement(date: date)
+            for (point, value) in zip(BodyPoint.allCases, row) { measurement[point] = value }
+            context.insert(measurement)
         }
         try context.save()
     }
@@ -46,6 +54,11 @@ public enum DemoData {
                 if !sets.isEmpty { history[item.exerciseId, default: []].insert(sets, at: 0) }
             }
             session.endedAt = date.addingTimeInterval((minutes + 5) * 60)
+            // What the watch sends at Finish.
+            session.activeSeconds = minutes * 60 + 12
+            session.energyKcal = (minutes * 6.9).rounded()
+            session.averageHeartRate = 112 + Double(Int(minutes) % 17)
+            session.effort = 4 + Int(minutes) % 5
         }
 
         if let dayKey, let day = plan.days.first(where: { $0.key == dayKey }) {
@@ -147,14 +160,16 @@ public enum DemoData {
         "incline-db-curl": 10, "hammer-curl": 12.5,
         "leg-press": 110, "bulgarian-split-squat-dbs": 12.5, "hip-thrust": 60, "lying-hamstring-curl": 30,
         "leg-extension": 40, "standing-calf-raise": 50,
-        "incline-db-press": 20, "machine-chest-press": 45, "seated-db-shoulder-press": 15,
+        "hack-squat": 60, "reverse-lunge": 12.5, "seated-leg-curl": 35, "cable-pull-through": 25,
+        "seated-calf-raise": 40,
+        "barbell-bench-press": 40, "incline-db-press": 20, "machine-chest-press": 45, "seated-db-shoulder-press": 15,
         "cable-lateral-raise": 5, "overhead-cable-extension": 17.5, "rope-pushdown": 22.5,
         "cable-crunch": 30, "russian-twist-weighted": 5,
-        "single-arm-cable-row": 20, "straight-arm-pulldown": 20, "reverse-pec-deck": 30, "preacher-curl": 17.5,
+        "seated-cable-row": 40, "straight-arm-pulldown": 20, "reverse-pec-deck": 30, "preacher-curl": 17.5,
         "cable-curl-drop-set": 17.5,
         "db-bench-press": 22.5, "low-to-high-cable-fly": 10, "machine-shoulder-press": 35, "db-lateral-raise": 7,
         "ez-bar-skull-crusher": 20, "bayesian-cable-curl": 10, "cable-overhead-extension": 17.5,
-        "pallof-press": 12.5, "suitcase-carry": 20, "weighted-plank": 10,
+        "weighted-plank": 10,
     ]
 }
 #endif

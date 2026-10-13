@@ -27,6 +27,10 @@ final class AppModel {
         #endif
         container = Self.makeContainer(plan: plan)
         Self.renameExercises(in: container.mainContext, defaults: defaults)
+        Self.moveWorkoutKeys(in: container.mainContext, plan: plan, defaults: defaults)
+        #if os(iOS)
+        Self.reportBodyPoints(in: container.mainContext, defaults: defaults)
+        #endif
         today = TodayModel(plan: plan, context: container.mainContext, settings: settings,
                            dayKey: LaunchOptions.dayKey)
         today.defaults = defaults
@@ -45,6 +49,34 @@ final class AppModel {
             Logger.store.error("Couldn't rename exercise ids: \(error.localizedDescription)")
         }
     }
+
+    /// Plan 12 moved Push B from key "friday" to "saturday" (and Full Rest from "saturday" to "sunday"): sessions
+    /// and plan edits made under the old keys move to the workout's new key. Looks at what was logged, so later
+    /// launches find nothing to move. What moved is logged and kept in `planKeyMigrationReport`.
+    private static func moveWorkoutKeys(in context: ModelContext, plan: Plan, defaults: UserDefaults) {
+        do {
+            let report = try PlanKeyMigration.run(in: context, plan: plan)
+            guard !report.isEmpty else { return }
+            Logger.store.notice("Moved workout keys: \(report.summary, privacy: .public)")
+            defaults.set(report.summary, forKey: "planKeyMigrationReport")
+        } catch {
+            Logger.store.error("Couldn't move workout keys: \(error.localizedDescription)")
+        }
+    }
+
+    #if os(iOS)
+    /// The body log grew from arm and waist to ten optional points (phone build 11). SwiftData moves the stored rows
+    /// by itself, arm and waist keeping their values and the other points empty; this notes once how many rows
+    /// that was, in the log and in `bodyMigrationReport`.
+    private static func reportBodyPoints(in context: ModelContext, defaults: UserDefaults) {
+        guard !defaults.bool(forKey: "bodyPointsReported") else { return }
+        let rows = (try? context.fetch(FetchDescriptor<BodyMeasurement>())) ?? []
+        let summary = "\(rows.count) body measurement(s) kept: arm and waist as they were, the eight new points empty"
+        Logger.store.notice("\(summary, privacy: .public)")
+        defaults.set(summary, forKey: "bodyMigrationReport")
+        defaults.set(true, forKey: "bodyPointsReported")
+    }
+    #endif
 
     /// Where settings and the day's small state live. The demo uses a throwaway suite, so a screenshot's deload
     /// week or skipped exercise never reaches the real ones.
@@ -68,6 +100,9 @@ final class AppModel {
                                   inProgress: LaunchOptions.demoFresh ? nil
                                       : LaunchOptions.dayKey ?? plan.day(for: .now)?.key)
                 if LaunchOptions.sampleEdits { try seedSampleEdits(container.mainContext, plan: plan) }
+                if let weekdays = UserDefaults.standard.string(forKey: "swapDays") {
+                    try swapDays(weekdays, in: container.mainContext, plan: plan)
+                }
                 if LaunchOptions.demoWeeks > 0 {
                     try DemoData.seedBody(container.mainContext, lastDaysAgo: LaunchOptions.screen == "body-due" ? 16 : 3,
                                           waistWarning: LaunchOptions.screen == "body-warning")
@@ -86,6 +121,16 @@ final class AppModel {
     }
 
     #if DEBUG
+    /// `-swapDays 3,4`: the workouts on two weekdays (calendar numbers, 2 = Monday … 1 = Sunday) trade places, as
+    /// Rearrange days would have done it.
+    private static func swapDays(_ weekdays: String, in context: ModelContext, plan: Plan) throws {
+        let pair = weekdays.split(separator: ",").compactMap { Int($0) }
+        guard pair.count == 2 else { return }
+        var edits = PlanEdits.load(from: context)
+        edits.swapWorkouts(on: pair[0], and: pair[1], plan: plan)
+        try edits.save(to: context)
+    }
+
     /// `-sampleEdits YES`: Monday with Barbell Row added, Face Pulls removed and Hammer Curl renamed.
     private static func seedSampleEdits(_ context: ModelContext, plan: Plan) throws {
         guard let monday = plan.days.first(where: { $0.key == "monday" }) else { return }
@@ -118,6 +163,8 @@ enum LaunchOptions {
     static var dayKey: String? { UserDefaults.standard.string(forKey: "day") }
     /// `-screen rest`: with `-demo`, drive the UI to a screen for screenshots. Debug builds only.
     static var screen: String? { demo ? UserDefaults.standard.string(forKey: "screen") : nil }
+    /// `-item incline-db-press`: with `-demo`, the exercise a screen is about.
+    static var item: String? { demo ? UserDefaults.standard.string(forKey: "item") : nil }
     /// `-tab history`: open the phone app on a tab. Navigation only, so it works without `-demo`.
     static var tab: String? { UserDefaults.standard.string(forKey: "tab") }
     /// HealthKit workouts. Off in demo mode, so screenshots don't stop at the Health permission sheet,

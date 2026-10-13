@@ -9,6 +9,9 @@ public enum ExerciseIdRenames {
     /// (watch build 9): everything logged under the old id counts as Machine Chest Press.
     public static let all: [String: String] = [
         "machine-chest-press-or-flat-bench": "machine-chest-press",
+        // Push B moved from Friday to Saturday (plan 12), and its warmup and cooldown took the new day's name.
+        "friday-warmup": "saturday-warmup",
+        "friday-cooldown": "saturday-cooldown",
     ]
 
     public static func current(_ id: String) -> String { all[id] ?? id }

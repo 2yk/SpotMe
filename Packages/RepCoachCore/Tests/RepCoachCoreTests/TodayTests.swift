@@ -34,7 +34,7 @@ final class TargetPlannerTests: XCTestCase {
         XCTAssertNil(TargetPlanner.target(for: legRaise, history: [[LoggedSet(weight: 5, reps: 12)]],
                                           deload: false).weight)
 
-        let plank = TargetPlanner.target(for: try planItem("weighted-plank", on: "sunday"),
+        let plank = TargetPlanner.target(for: try planItem("weighted-plank", on: "tuesday"),
                                          history: [[LoggedSet(weight: 10, reps: 40)]], deload: false)
         XCTAssertEqual(plank.weight, 10)
         XCTAssertEqual([plank.secMin, plank.secMax], [30, 45])
@@ -169,14 +169,14 @@ final class TodayQueueTests: XCTestCase {
     }
 
     func testSupersetComesUpAsAPair() throws {
-        let friday = try XCTUnwrap(try Plan.bundled().day(forWeekday: 6)).items
+        let pushB = try XCTUnwrap(try Plan.bundled().day(forWeekday: 7)).items
         let pair = ["bayesian-cable-curl", "cable-overhead-extension"]
 
-        let queue = TodayQueue(items: friday, statuses: [:], promoted: "cable-overhead-extension")
+        let queue = TodayQueue(items: pushB, statuses: [:], promoted: "cable-overhead-extension")
         XCTAssertEqual(ids(queue.upNext), pair)
         XCTAssertFalse(ids(queue.remaining).contains { pair.contains($0) })
 
-        let half = TodayQueue(items: friday, statuses: ["bayesian-cable-curl": .done(t0)],
+        let half = TodayQueue(items: pushB, statuses: ["bayesian-cable-curl": .done(t0)],
                               promoted: "cable-overhead-extension")
         XCTAssertEqual(ids(half.upNext), ["cable-overhead-extension"])
     }

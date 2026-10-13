@@ -2,14 +2,14 @@ import SwiftUI
 import Charts
 import RepCoachCore
 
-/// Mon … Sun. The selected day is filled; today has a dot.
+/// Mon … Sun. The selected day is filled volt; today has a dot.
 struct DayStrip: View {
     let days: [PlanDay]
     let selected: String
+    var todayWeekday = Calendar.current.component(.weekday, from: .now)
     let onSelect: (String) -> Void
 
     var body: some View {
-        let todayWeekday = Calendar.current.component(.weekday, from: .now)
         HStack(spacing: 6) {
             ForEach(days) { day in
                 let isSelected = day.key == selected
@@ -17,23 +17,34 @@ struct DayStrip: View {
                 Button { onSelect(day.key) } label: {
                     VStack(spacing: 6) {
                         Text(day.title.prefix(3))
-                            .font(.rounded(.footnote, .bold))
+                            .font(.system(size: 13, weight: isSelected ? .heavy : .bold, design: .rounded))
                         Circle()
                             .fill(isToday ? (isSelected ? Color.black : Theme.volt) : .clear)
                             .frame(width: 5, height: 5)
                     }
-                    .foregroundStyle(isSelected ? .black : isToday ? Theme.volt : Theme.secondary)
+                    .foregroundStyle(isSelected ? .black : isToday ? Theme.volt : Theme.text2)
                     .frame(maxWidth: .infinity)
-                    .padding(.top, 11)
-                    .padding(.bottom, 7)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .fill(isSelected ? Theme.volt : Theme.card)
-                    )
+                    .frame(height: 54)
+                    .background { pill(isSelected) }
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(isToday ? "\(day.title), today" : day.title)
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
+            }
+        }
+    }
+
+    private func pill(_ isSelected: Bool) -> some View {
+        let shape = RoundedRectangle(cornerRadius: 14, style: .continuous)
+        return ZStack {
+            if isSelected {
+                shape.fill(Theme.volt)
+                    .overlay { TopLight(radius: 14, opacity: 0.45) }
+                    .shadow(color: Theme.volt.opacity(0.25), radius: 9, y: 6)
+            } else {
+                shape.fill(LinearGradient(colors: [Color(hex: 0x232326), Color(hex: 0x1A1A1C)],
+                                          startPoint: .top, endPoint: .bottom))
+                    .overlay { TopLight(radius: 14, opacity: 0.08) }
             }
         }
     }

@@ -1,7 +1,7 @@
 import XCTest
 
 /// Real taps through the watch workout, on the simulator, against the demo store (`-demo YES`). Wednesday's
-/// demo session has Incline DB Press under way, then Machine Chest Press, Seated DB Shoulder Press and more.
+/// demo session has Barbell Bench Press under way, then Incline DB Press, Machine Chest Press and more.
 final class WorkoutFlowUITests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
@@ -91,7 +91,7 @@ final class WorkoutFlowUITests: XCTestCase {
 
     /// A main lift opens on its ramp-up: tap Done, rest 60 s with no Undo, then the next ramp-up, then set 1.
     func testRampUpsComeBeforeTheFirstWorkingSet() {
-        let app = launch(screen: "item", extra: ["-fresh", "YES", "-item", "incline-db-press"])
+        let app = launch(screen: "item", extra: ["-fresh", "YES", "-item", "barbell-bench-press"])
         let first = app.staticTexts["1 of 2 · not counted"]
         XCTAssertTrue(first.waitForExistence(timeout: 10), "No ramp-up first")
         XCTAssertFalse(app.buttons["Log set"].exists)
@@ -111,7 +111,7 @@ final class WorkoutFlowUITests: XCTestCase {
 
     /// Skip on the ramp-up screen drops the rest of them and opens set 1 with no rest.
     func testSkippingTheRampUpOpensSetOne() {
-        let app = launch(screen: "item", extra: ["-fresh", "YES", "-item", "incline-db-press"])
+        let app = launch(screen: "item", extra: ["-fresh", "YES", "-item", "barbell-bench-press"])
         let skip = app.buttons["Skip the ramp-up"]
         XCTAssertTrue(skip.waitForExistence(timeout: 10))
         skip.tap()
@@ -216,7 +216,7 @@ final class WorkoutFlowUITests: XCTestCase {
         let bench = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'DB Bench Press'")).firstMatch
         XCTAssertTrue(bench.exists, "No DB Bench Press among the alternatives")
         bench.tap()
-        // DB Bench Press is a main lift with history of its own (the demo's Friday has it): it opens on its ramp-up.
+        // DB Bench Press is a main lift with history of its own (the demo's Saturday has it): it opens on its ramp-up.
         skipRampUpIfShown(app)
         XCTAssertTrue(app.buttons["Log set"].waitForExistence(timeout: 10), "Back on the set screen")
         XCTAssertTrue(app.staticTexts["DB Bench Press"].waitForExistence(timeout: 5), "The swapped-in exercise isn't shown")
@@ -244,7 +244,7 @@ final class WorkoutFlowUITests: XCTestCase {
         let app = launch(screen: "set")
         let log = app.buttons["Log set"]
         XCTAssertTrue(log.waitForExistence(timeout: 10))
-        let title = "Incline DB Press"
+        let title = "Barbell Bench Press"
         XCTAssertTrue(app.staticTexts[title].exists)
         app.swipeLeft()
         XCTAssertTrue(app.staticTexts["Not Playing"].waitForExistence(timeout: 15)
