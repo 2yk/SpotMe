@@ -4,7 +4,9 @@ Kept by the builder session ("SpotMe - Frontend (Mac Studio)"). Read by `/next`.
 
 ## Now
 
-**iPhone build 1 (build 11), branch `iphone-build-11`, not pushed.** The Designer's handoff `design/handoff/iphone-1/BUILD.md` (13 Oct): Swap on the phone first, then every approved iPhone screen in look B, with watch build 10 inside. Done so far: Today in look B (7.1–7.4, 7.6), the exercise sheet with the progress chart (7.5, 7.7), the Swap sheet (7.8) and the live sync to the watch (checked on paired simulators: Today list, a set screen with nothing logged, a break; screenshots in `design/built/iphone-1/sync/`). Start workout on the phone asks the watch to start (`startWatchApp`; the watch handles it like the complication's start link). Still to build: History and Body (8.x), Plan and Rearrange days (9.x), Settings (10.1), and the section 9 check of Swap on the owner's watch.
+**iPhone build 1 (build 11) is built, on branch `iphone-build-11`, not pushed.** The Designer's handoff `design/handoff/iphone-1/BUILD.md` (13 Oct): Swap on the phone first, then every approved iPhone screen in look B, with watch build 10 inside. All of it is in: Today (7.1–7.6), the exercise sheet with the progress chart (7.5, 7.7), the Swap sheet (7.8) with the live sync to the watch (checked on paired simulators: Today list, a set screen with nothing logged, a break; frames in `design/built/iphone-1/sync/`), History as sessions with one session and one exercise (8.1–8.3, 8.7, 8.2), Body with ten points and the measurement sheet (8.4–8.6, 8.8), Plan with Rearrange days (9.1–9.6, an agent built these on `iphone-plan-settings`, merged) and Settings (10.1). Screenshots named by board are in `design/built/iphone-1/`. Tests: `swift test` 219 passed; the watch UI tests (21) passed; the iOS scheme (with the watch app) builds in Debug and Release.
+
+Start workout on the phone asks the watch to start (`HKHealthStore.startWatchApp`; the watch handles it like the complication's start link): only a real watch can show it works.
 
 Phone screenshots: `Scripts/phone-shot.sh <Board> <launch args>` on the "SpotMe iPhone 16 Pro Max" simulator (its own, paired with "SpotMe Watch 46mm", so other sessions' apps stay out of the shots).
 
@@ -14,6 +16,10 @@ Phone screenshots: `Scripts/phone-shot.sh <Board> <launch args>` on the "SpotMe 
 2. **iPhone handoff** (look B, Today screens approved; the Swap UI on the phone). Comes from the Designer after build 9.
 
 ## Waiting
+
+- The owner's OK to push `iphone-build-11` so the Designer can check the screenshots (and then to merge it to `main`).
+- The owner's try-out of build 11 on the phone and watch: Swap from the phone (the watch changes within a second or two), Start workout from the phone, Rearrange days (the watch's Today and complication follow), the body log keeps his arm and waist (the phone logs how many rows at first launch, `bodyMigrationReport`).
+- Which build is on the owner's watch: Swap is in watch builds 9 and 10 only (swipe left on an open row in Today; the small figure on a set or break screen → How → Swap exercise).
 
 - The owner's edge-timer photo.
 - The owner's check on the real watch: the effort shows on the workout in Fitness (the watch asks for that Health permission once more), and the controls page icons no longer start small and grow.
