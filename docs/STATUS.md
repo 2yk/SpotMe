@@ -4,9 +4,9 @@ Kept by the builder session ("SpotMe - Frontend (Mac Studio)"). Read by `/next`.
 
 ## Now
 
-**Watch build 9 passed the Designer's check** (7 Oct, `design/reviews/11-build-watch-2.md`) and is on `main` (`bbba61d`); the owner installs it from Xcode (`xcodegen generate`, run the RepCoach scheme with the watch paired; if Xcode complains about the App Group `group.com.yeshu.RepCoach`, add App Groups on the RepCoachWatch and RepCoachWidgets targets).
+**iPhone build 1 (build 11), branch `iphone-build-11`, not pushed.** The Designer's handoff `design/handoff/iphone-1/BUILD.md` (13 Oct): Swap on the phone first, then every approved iPhone screen in look B, with watch build 10 inside. Done so far: Today in look B (7.1–7.4, 7.6), the exercise sheet with the progress chart (7.5, 7.7), the Swap sheet (7.8) and the live sync to the watch (checked on paired simulators: Today list, a set screen with nothing logged, a break; screenshots in `design/built/iphone-1/sync/`). Start workout on the phone asks the watch to start (`startWatchApp`; the watch handles it like the complication's start link). Still to build: History and Body (8.x), Plan and Rearrange days (9.x), Settings (10.1), and the section 9 check of Swap on the owner's watch.
 
-**Build 10 (branch `watch-build-10`, not pushed)** holds the Designer's three small notes from that check: the How sheet's name at full row size, the break's short name on one line with 14 pt sides, and the old-id figure fallback dropped (the bundle has both ids). Screenshots of the three screens are in `design/built/watch-3/`. The How sheet shows its hint and the seven turn dots only while the Crown turns (Designer, 7 Oct); at rest it shows the cue. Waits for more notes before it is worth a push.
+Phone screenshots: `Scripts/phone-shot.sh <Board> <launch args>` on the "SpotMe iPhone 16 Pro Max" simulator (its own, paired with "SpotMe Watch 46mm", so other sessions' apps stay out of the shots).
 
 ## Next
 

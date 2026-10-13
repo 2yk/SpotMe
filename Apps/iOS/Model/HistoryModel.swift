@@ -66,7 +66,7 @@ final class HistoryModel {
             guard item.kind != .checklist, seen.insert(item.exerciseId).inserted else { return }
             let entries = (try? store.entries(for: item.exerciseId)) ?? []
             guard !entries.isEmpty else { return }
-            let points = entries.reversed().map { point(for: $0, kind: item.kind) }
+            let points = entries.reversed().map { Self.point(for: $0, kind: item.kind) }
             exercises.append(Exercise(item: item, dayTitle: dayTitle, entries: entries, points: points))
         }
         for day in plan.days {
@@ -92,7 +92,14 @@ final class HistoryModel {
         }
     }
 
-    private func point(for entry: HistoryEntry, kind: ItemKind) -> Point {
+    /// One exercise with every session logged for it (today's included), for its own screen.
+    static func exercise(for item: PlanItem, dayTitle: String, context: ModelContext) -> Exercise {
+        let entries = (try? HistoryStore(context: context).entries(for: item.exerciseId)) ?? []
+        return Exercise(item: item, dayTitle: dayTitle, entries: entries,
+                        points: entries.reversed().map { point(for: $0, kind: item.kind) })
+    }
+
+    private static func point(for entry: HistoryEntry, kind: ItemKind) -> Point {
         if kind == .weighted {
             return Point(date: entry.date, value: entry.sets.map(\.weight).max() ?? 0,
                          e1rm: entry.sets.map { ProgressionEngine.estimated1RM(weight: $0.weight, reps: $0.reps) }.max(),
