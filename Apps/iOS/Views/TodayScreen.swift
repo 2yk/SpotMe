@@ -7,6 +7,7 @@ import RepCoachCore
 struct TodayScreen: View {
     @Environment(TodayModel.self) private var today
     @Query(sort: \BodyMeasurement.date, order: .reverse) private var measurements: [BodyMeasurement]
+    @Environment(WatchLauncher.self) private var launcher
     @State private var detail: SlotRef?
     @State private var measuring = false
 
@@ -49,6 +50,12 @@ struct TodayScreen: View {
             }
             .sheet(isPresented: $measuring) {
                 AddMeasurementSheet(last: measurements.first)
+            }
+            .alert("Start workout", isPresented: Binding(get: { launcher.problem != nil },
+                                                          set: { if !$0 { launcher.problem = nil } })) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(launcher.problem ?? "")
             }
             #if DEBUG
             .task { await PhoneScript.today(today: today, detail: $detail) }
