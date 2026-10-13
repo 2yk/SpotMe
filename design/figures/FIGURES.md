@@ -284,3 +284,14 @@ Known soft spots, to improve when the other 200 are made:
   loses contrast.
 - Russian twist: the near arm partly covers the plate on the far side.
 - Stills under 45 pt: the app draws the end pose only, lines 1.4 times wider (not in `figure3d.py`).
+
+## Status (13 Oct 2026): every swap has a figure
+
+Yeshu: "make sure to have all the image references for all the replacement workouts". 130 more figures, drawn by
+13 Opus builders from the same rig and checked board by board: every alternative Swap can offer for the plan-12
+lifts (those rated "avoid" for the lower back are never offered, so not drawn), and the eight new plan lifts. 180 in
+all; `bundle.py` now lists each under its database id too (226 KB). Workarounds the renderer still lacks a part for:
+one dumbbell in one hand (a `machine` grip plus two `held` discs, as suitcase-carry), a stability ball (a `pad` 46
+wide, or a 54-wide zero-length grey `line`), a Smith machine and a box (lines and slabs), a landmine (a `machine`
+lever from a floor pivot). Grip direction (under, over, neutral) can't be shown: chin-ups vs pull-ups and reverse vs
+straight-bar pushdown differ only by grip width and elbow path.
