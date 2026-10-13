@@ -2,8 +2,8 @@ import SwiftUI
 import SwiftData
 import RepCoachCore
 
-/// One exercise: its name and prescription, stored as overrides in `ExerciseSettings` (plan.json itself is never
-/// changed), and taking it off the day. A new name shows everywhere the exercise does; history is kept.
+/// One exercise (board 9.3): its name and prescription, stored as overrides in `ExerciseSettings` (plan.json itself
+/// is never changed), and taking it off the day. A new name shows everywhere the exercise does; history is kept.
 struct PlanItemEditor: View {
     let exerciseId: String
     /// The plan's own day it was opened from.
@@ -27,119 +27,45 @@ struct PlanItemEditor: View {
     private var effective: PlanItem { item.applying(overrides) }
     private var hasReps: Bool { item.kind == .weighted || item.kind == .reps }
     private var isOnDay: Bool { today.planEdits.itemIds(for: day).contains(exerciseId) }
+    /// Where the day stands now: the weekday its workout was rearranged to.
+    private var dayTitle: String { today.plan.days.first { $0.key == day.key }?.title ?? day.title }
 
     var body: some View {
-        Form {
-            Section {
-                HStack(spacing: 14) {
-                    ItemBadge(item: item, size: 48)
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(item.group).eyebrow(item.tint, size: 11)
-                        Text(effective.name).font(.rounded(.title2, .bold))
-                    }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 14) {
+                header
+                SpotFormGroup(title: "Name", footnotes: overrides.name == nil ? [] : ["In the plan: \(item.name)"]) {
+                    SpotTextRow(prompt: item.name, text: $name, onSubmit: saveName)
                 }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: 4, leading: 4, bottom: 8, trailing: 4))
-                if let note = item.note {
-                    Text(note)
-                        .font(.rounded(.subheadline))
-                        .foregroundStyle(Theme.secondary)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 8, trailing: 4))
+                if let steps = item.steps { stepsGroup(steps) }
+                if item.kind != .checklist {
+                    prescriptionGroup
+                    if item.kind == .weighted { weightGroup }
                 }
-            }
-
-            Section {
-                TextField(item.name, text: $name)
-                    .textInputAutocapitalization(.words)
-                    .submitLabel(.done)
-                    .onSubmit(saveName)
-            } header: {
-                Text("Name")
-            } footer: {
-                if overrides.name != nil {
-                    Text("In the plan: \(item.name)")
-                }
-            }
-            .listRowBackground(Theme.card)
-
-            if let steps = item.steps {
-                Section("Steps") {
-                    ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
-                        Label {
-                            Text(step)
-                        } icon: {
-                            Text("\(index + 1)").font(.number(13, weight: .heavy)).foregroundStyle(Theme.ice)
+                if !overrides.isEmpty {
+                    SpotFormGroup(footnotes: ["History is kept. The watch picks up changes before its next session."]) {
+                        SpotActionRow(title: "Reset to plan", color: Theme.pulse) {
+                            update { $0 = ExerciseOverrides() }
+                            name = item.name
                         }
                     }
                 }
-                .listRowBackground(Theme.card)
-            }
-
-            if item.kind != .checklist {
-                Section("Prescription") {
-                    Stepper(value: number(\.sets, plan: item.sets ?? 1), in: 1...10) {
-                        ValueRow(title: "Sets", value: "\(effective.sets ?? 1)", plan: item.sets.map { "\($0)" })
-                    }
-                    if hasReps {
-                        Stepper(value: number(\.repMin, plan: item.repMin ?? 8), in: 1...max(1, effective.repMax ?? 50)) {
-                            ValueRow(title: "Reps, low", value: "\(effective.repMin ?? 0)", plan: item.repMin.map { "\($0)" })
-                        }
-                        Stepper(value: number(\.repMax, plan: item.repMax ?? 12), in: max(1, effective.repMin ?? 1)...50) {
-                            ValueRow(title: "Reps, high", value: "\(effective.repMax ?? 0)", plan: item.repMax.map { "\($0)" })
-                        }
-                    }
-                    Stepper(value: number(\.restSec, plan: item.restSec ?? 60), in: 15...600, step: 15) {
-                        ValueRow(title: "Rest", value: Format.clock(effective.restSec ?? 60),
-                                 plan: item.restSec.map(Format.clock))
+                if isOnDay {
+                    SpotFormGroup(footnotes: ["Its history is kept, and you can add it back with Add exercise."]) {
+                        SpotActionRow(title: "Remove from \(dayTitle)", color: Theme.pulse) { confirmingRemove = true }
                     }
                 }
-                .listRowBackground(Theme.card)
-
-                if item.kind == .weighted {
-                    Section {
-                        Picker("Increment", selection: incrementBinding) {
-                            ForEach(Self.increments, id: \.self) { Text(Format.kg($0)).tag($0) }
-                        }
-                        Stepper(value: startWeightBinding, in: 0...300, step: effective.increment ?? 2.5) {
-                            ValueRow(title: "Start weight", value: overrides.startWeight.map(Format.kg) ?? "Not set",
-                                     plan: nil)
-                        }
-                    } header: {
-                        Text("Weight")
-                    } footer: {
-                        Text("The increment is the smallest jump available. The start weight is only used the first time, before there's any history.")
-                    }
-                    .listRowBackground(Theme.card)
-                }
             }
-
-            if !overrides.isEmpty {
-                Section {
-                    Button("Reset to plan", role: .destructive) {
-                        update { $0 = ExerciseOverrides() }
-                        name = item.name
-                    }
-                } footer: {
-                    Text("History is kept. The watch picks up changes before its next session.")
-                }
-                .listRowBackground(Theme.card)
-            }
-
-            if isOnDay {
-                Section {
-                    Button("Remove from \(day.title)", role: .destructive) { confirmingRemove = true }
-                } footer: {
-                    Text("Its history is kept, and you can add it back with Add exercise.")
-                }
-                .listRowBackground(Theme.card)
-            }
+            .padding(.horizontal, 16)
+            .padding(.top, 8)
+            .padding(.bottom, 32)
         }
-        .scrollContentBackground(.hidden)
-        .background(Theme.canvas)
+        .scrollIndicators(.hidden)
+        .scrollDismissesKeyboard(.interactively)
+        .background(Theme.canvas.ignoresSafeArea())
         .navigationTitle(effective.name)
         .navigationBarTitleDisplayMode(.inline)
-        .confirmationDialog("Remove \(effective.name) from \(day.title)?", isPresented: $confirmingRemove,
+        .confirmationDialog("Remove \(effective.name) from \(dayTitle)?", isPresented: $confirmingRemove,
                             titleVisibility: .visible) {
             Button("Remove", role: .destructive) {
                 today.editPlan { $0.remove(exerciseId, from: day) }
@@ -151,6 +77,76 @@ struct PlanItemEditor: View {
         .onDisappear {
             saveName()
             today.refresh()
+        }
+    }
+
+    // MARK: Parts
+
+    /// "CHEST", the name and the exercise's note.
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(item.group).depthEyebrow()
+            Text(effective.name).font(PhoneFont.title2)
+            if let note = item.note {
+                Text(note)
+                    .font(PhoneFont.sub)
+                    .foregroundStyle(Theme.text2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(.horizontal, 6)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func stepsGroup(_ steps: [String]) -> some View {
+        SpotFormGroup(title: "Steps") {
+            ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
+                HStack(alignment: .firstTextBaseline, spacing: 12) {
+                    Text("\(index + 1)")
+                        .font(.system(size: 15, weight: .heavy, design: .rounded))
+                        .foregroundStyle(Theme.volt)
+                        .frame(width: 20, alignment: .leading)
+                    Text(step).font(PhoneFont.body)
+                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .frame(minHeight: 52)
+            }
+        }
+    }
+
+    private var prescriptionGroup: some View {
+        SpotFormGroup(title: "Prescription") {
+            SpotStepperRow(title: "Sets", value: number(\.sets, plan: item.sets ?? 1), range: 1...10, step: 1,
+                           text: { "\($0)" }, plan: item.sets.map { "\($0)" },
+                           decrementLabel: "Fewer sets", incrementLabel: "More sets")
+            if hasReps {
+                SpotStepperRow(title: "Reps, low", value: number(\.repMin, plan: item.repMin ?? 8),
+                               range: 1...max(1, effective.repMax ?? 50), step: 1, text: { "\($0)" },
+                               plan: item.repMin.map { "\($0)" }, decrementLabel: "Lower", incrementLabel: "Higher")
+                SpotStepperRow(title: "Reps, high", value: number(\.repMax, plan: item.repMax ?? 12),
+                               range: max(1, effective.repMin ?? 1)...50, step: 1, text: { "\($0)" },
+                               plan: item.repMax.map { "\($0)" }, decrementLabel: "Lower", incrementLabel: "Higher")
+            }
+            SpotStepperRow(title: "Rest", value: number(\.restSec, plan: item.restSec ?? 60), range: 15...600,
+                           step: 15, text: { Format.clock($0) }, plan: item.restSec.map { Format.clock($0) },
+                           decrementLabel: "Shorter", incrementLabel: "Longer")
+        }
+    }
+
+    private var weightGroup: some View {
+        SpotFormGroup(
+            title: "Weight",
+            footnotes: ["The increment is the smallest jump available. The start weight is only used the first time, before there's any history."]
+        ) {
+            SpotMenuRow(title: "Increment", selection: incrementBinding,
+                        options: Self.increments.map { (value: $0, title: Format.kg($0)) },
+                        highlighted: overrides.increment != nil)
+            SpotStepperRow(title: "Start weight", value: startWeightBinding, range: 0...300,
+                           step: effective.increment ?? 2.5, text: { Format.kg($0) },
+                           decrementLabel: "Lighter", incrementLabel: "Heavier",
+                           placeholder: overrides.startWeight == nil ? "Not set" : nil)
         }
     }
 
@@ -202,27 +198,5 @@ struct PlanItemEditor: View {
         try? context.save()
         today.refresh()
         sync.sendContext()
-    }
-}
-
-/// "Sets  5  (plan 4)": the value in the accent colour when it differs from the plan.
-private struct ValueRow: View {
-    let title: String
-    let value: String
-    let plan: String?
-
-    var body: some View {
-        let edited = plan != nil && plan != value
-        HStack {
-            Text(title)
-            Spacer()
-            if edited, let plan {
-                Text("plan \(plan)").font(.rounded(.footnote)).foregroundStyle(Theme.tertiary)
-            }
-            Text(value)
-                .font(.rounded(.body, .semibold))
-                .monospacedDigit()
-                .foregroundStyle(edited ? Theme.volt : Theme.secondary)
-        }
     }
 }
