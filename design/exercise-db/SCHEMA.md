@@ -206,6 +206,14 @@ Every plan exercise must be in the database, under exactly this id, with these `
 | plank | weighted-plank | core |
 | side-plank-with-reach | side-plank-with-reach | core |
 | l-sit | l-sit-progression | core |
+| barbell-bench-press | barbell-bench-press | chest-triceps |
+| seated-cable-row | seated-cable-row | back-neck |
+| hack-squat | hack-squat | legs |
+| reverse-lunge | reverse-lunge | legs |
+| seated-leg-curl | seated-leg-curl | legs |
+| cable-pull-through | cable-pull-through | legs |
+| seated-calf-raise | seated-calf-raise | legs |
+| tibialis-raise | tibialis-raise | legs |
 
 For a plan exercise, keep `logAs`, `perSide`, `loadable` and `incrementKg` (where the plan gives one) the same as `plan.json`
 (`../../Packages/RepCoachCore/Sources/RepCoachCore/Resources/plan.json`; `amrap` and `percentOfMax` are `reps`),

@@ -190,174 +190,174 @@
   },
   "P101-Settings.dc.html": {
    "h": 1424,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "10.1 · Settings",
    "w": 440,
    "x": 0,
-   "y": 13231
+   "y": 6531
   },
   "P71-Today.dc.html": {
    "h": 1840,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.1 · Today · before the workout",
    "w": 440,
    "x": 0,
-   "y": 6700
+   "y": 0
   },
   "P72-TodayRunning.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.2 · Today · part way",
    "w": 440,
    "x": 520,
-   "y": 6700
+   "y": 0
   },
   "P73-TodayDone.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.3 · Today · all done",
    "w": 440,
    "x": 1040,
-   "y": 6700
+   "y": 0
   },
   "P74-TodayDeload.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.4 · Today · deload week, body log due",
    "w": 440,
    "x": 1560,
-   "y": 6700
+   "y": 0
   },
   "P75-Exercise.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.5 · Exercise sheet",
    "w": 440,
    "x": 2080,
-   "y": 6700
+   "y": 0
   },
   "P76-TickOff.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.6 · Tick-off sheet",
    "w": 440,
    "x": 2600,
-   "y": 6700
+   "y": 0
   },
   "P77-ExerciseFigure.dc.html": {
    "h": 1080,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.7 · Exercise sheet with a figure",
    "w": 440,
    "x": 3120,
-   "y": 6700
+   "y": 0
   },
   "P81-History.dc.html": {
    "h": 1258,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.1 · History",
    "w": 440,
    "x": 0,
-   "y": 8960
+   "y": 2260
   },
   "P82-ExerciseHistory.dc.html": {
    "h": 1088,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.2 · History · one exercise",
    "w": 440,
    "x": 520,
-   "y": 8960
+   "y": 2260
   },
   "P83-HistoryEmpty.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.3 · History · nothing yet",
    "w": 440,
    "x": 1040,
-   "y": 8960
+   "y": 2260
   },
   "P84-Body.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.4 · Body",
    "w": 440,
    "x": 1560,
-   "y": 8960
+   "y": 2260
   },
   "P85-BodyWarning.dc.html": {
    "h": 1057,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.5 · Body · waist warning",
    "w": 440,
    "x": 2080,
-   "y": 8960
+   "y": 2260
   },
   "P86-Measurement.dc.html": {
    "h": 968,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.6 · New measurement",
    "w": 440,
    "x": 2600,
-   "y": 8960
+   "y": 2260
   },
   "P91-Plan.dc.html": {
    "h": 1883,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "9.1 · Plan · a day",
    "w": 440,
    "x": 0,
-   "y": 10844
+   "y": 4144
   },
   "P92-PlanEdit.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "9.2 · Plan · reorder",
    "w": 440,
    "x": 520,
-   "y": 10844
+   "y": 4144
   },
   "P93-Editor.dc.html": {
    "h": 1120,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "9.3 · Exercise editor",
    "w": 440,
    "x": 1040,
-   "y": 10844
+   "y": 4144
   },
   "P94-AddNew.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "9.4 · Add exercise · new",
    "w": 440,
    "x": 1560,
-   "y": 10844
+   "y": 4144
   },
   "P95-AddFromPlan.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "9.5 · Add exercise · from the plan",
    "w": 440,
    "x": 2080,
-   "y": 10844
+   "y": 4144
   },
   "W11-TodayStart.dc.html": {
    "h": 496,
@@ -935,30 +935,30 @@
   },
   "P78-Swap.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "7.8 · Swap · from Today",
    "w": 440,
    "x": 3640,
-   "y": 6700
+   "y": 0
   },
   "P87-Session.dc.html": {
    "h": 1678,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.7 · One session",
    "w": 440,
    "x": 3120,
-   "y": 8960
+   "y": 2260
   },
   "P88-BodyPoint.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "8.8 · Body · one point",
    "w": 440,
    "x": 3640,
-   "y": 8960
+   "y": 2260
   },
   "P71A-TodayBig.dc.html": {
    "h": 956,
@@ -989,12 +989,12 @@
   },
   "P96-RearrangeDays.dc.html": {
    "h": 956,
-   "page": "approved",
+   "page": "live-ios",
    "radius": 40,
    "title": "9.6 · Plan · Rearrange days",
    "w": 440,
    "x": 2600,
-   "y": 10844
+   "y": 4144
   },
   "O127-ChangeDays.dc.html": {
    "h": 956,
@@ -1068,12 +1068,12 @@
   "decide-phone": {
    "fill": "orange",
    "maxH": 520,
-   "page": "approved",
+   "page": "live-ios",
    "size": 24,
-   "text": "iPhone build 1, sent to the builder 13 Oct (handoff/iphone-1): every board here, 7.1–10.1. Today is drawn in look B; History, Plan and Settings are built with look B's parts on these layouts.\n\ng · Today's card counts what goes up and what goes lighter.\nh · No kind icons or chevrons.\nw · Ten body points. x · Swap from the iPhone, for today. z · Rearrange days.",
+   "text": "Built 13 Oct as iPhone build 12 (builds 11 and 12, reviews/13-build-iphone-1.md); every board here passed the design check. Look B on every screen.\n\ng · Today's card counts what goes up and what goes lighter.\nh · No kind icons or chevrons.\nw · Ten body points. x · Swap from the iPhone, for today, live to the watch. z · Rearrange days.",
    "w": 520,
    "x": 4160,
-   "y": 6700
+   "y": 0
   },
   "decide-watch": {
    "fill": "orange",
@@ -1097,11 +1097,11 @@
   "row10": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-ios",
    "text": "10.1 · iPhone · Settings",
    "w": 240,
    "x": 0,
-   "y": 12901
+   "y": 6201
   },
   "row11": {
    "kind": "title1",
@@ -1187,29 +1187,29 @@
   "row7": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
-   "text": "iPhone · 7.1–7.8 · Today, in look B. With the builder since 13 Oct (handoff iphone-1)",
+   "page": "live-ios",
+   "text": "7.1–7.8 · Today and Swap · built 13 Oct as iPhone build 12",
    "w": 240,
    "x": 0,
-   "y": 6370
+   "y": -330
   },
   "row8": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-ios",
    "text": "8.1–8.8 · iPhone · History and Body",
    "w": 240,
    "x": 0,
-   "y": 8630
+   "y": 1930
   },
   "row9": {
    "kind": "title1",
    "maxW": 2400,
-   "page": "approved",
+   "page": "live-ios",
    "text": "9.1–9.6 · iPhone · Plan and Rearrange days",
    "w": 240,
    "x": 0,
-   "y": 10514
+   "y": 3814
   },
   "top": {
    "kind": "title1",
@@ -1255,7 +1255,7 @@
    "w": 560,
    "x": 1600,
    "y": -4200,
-   "text": "13 Oct: every iPhone board (7.1–10.1) went to the builder as iPhone build 1, with Swap on the phone first (Approved page). Watch build 10 passed. Still for you here: onboarding (11.1–12.7, 1.9) and its decisions i–l."
+   "text": "13 Oct: the iPhone is built (build 12) and on Live · iPhone. Watch build 10 shipped with it. Still for you here: onboarding (11.1–12.7, 1.9) and its decisions i–l."
   },
   "backlog-rest": {
    "fill": "gray",

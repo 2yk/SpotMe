@@ -40,7 +40,7 @@ for the sessions that build the app; read it for how the app works, but don't ed
 
 ## Yeshu
 
-- Short, plain replies. Ask before anything hard to undo or anything that leaves this server (that includes
-  pushing this repo).
+- Short, plain replies. Ask before anything hard to undo or anything that leaves this server, except
+  committing and pushing your own `design/` files to `main`: that is allowed without asking (Yeshu, 13 Oct).
 - Commit only your own files under `design/` (never `commit -a`: others work in this repo too, e.g. an untracked
   `docs/BACKLOG.md`). No AI names in commits.

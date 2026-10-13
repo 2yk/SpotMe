@@ -154,7 +154,9 @@
    "Flat Bench Press",
    "Bench Press"
   ],
-  "planIds": [],
+  "planIds": [
+   "barbell-bench-press"
+  ],
   "bodyPart": "chest",
   "primaryMuscles": [
    "mid-chest"
