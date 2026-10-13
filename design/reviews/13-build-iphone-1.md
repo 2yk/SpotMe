@@ -36,3 +36,17 @@ Also accepted:
    NOW tile on 8.8.
 5. **9.5 From the plan:** list exercises only. Leave out tick-off items (warmups, cooldowns, Manual Neck
    Resistance), as the board does.
+
+## Round 2 · build 12 (`iphone-build-12` at a3870d0), 13 Oct
+
+Screenshots in `built/iphone-2/` on that branch. All five fixes are in:
+- 7.4 is Today in a deload week with the body log due.
+- 7.3's done card reads "62 min · 395 kcal · Hard 7".
+- The hero figure sits at the bottom right on 7.2–7.4.
+- 8.6 and 8.8 write "15″" with no space.
+- 9.5 lists exercises only.
+
+`P71-Today.png` caught the launch screen instead of Today. 7.2 shows the same hero with the fix, so this
+doesn't hold the build; a fresh 7.1 screenshot is asked for the record.
+
+**Build 12 approved** for Yeshu to install.
