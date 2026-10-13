@@ -34,9 +34,17 @@ enum PhoneScript {
             let index = min(UserDefaults.standard.integer(forKey: "choice"), max(choices.count - 1, 0))
             if let item, choices.indices.contains(index) { today.swap(item, to: choices[index]) }
         }
+        if let target = UserDefaults.standard.string(forKey: "swapTo"),
+           let item = LaunchOptions.item.flatMap({ id in today.day.items.first { $0.exerciseId == id } }),
+           let choice = today.swapChoices(for: item).first(where: { $0.id == target }) {
+            // `-item seated-leg-curl -swapTo stability-ball-leg-curl`: swapped to that database exercise before the
+            // screen opens, so `-screen detail` shows the swapped-in exercise.
+            today.swap(item, to: choice)
+        }
         switch screen {
         case "detail", "swap", "exercise", "tickoff":
             let item = LaunchOptions.item.flatMap { id in today.day.items.first { $0.exerciseId == id } }
+                ?? LaunchOptions.item.flatMap { id in today.day.items.first { today.slot(of: $0).exerciseId == id } }
                 ?? today.day.items.first { $0.kind == .weighted }
             if let item { detail.wrappedValue = SlotRef(id: today.slot(of: item).exerciseId) }
         default: break

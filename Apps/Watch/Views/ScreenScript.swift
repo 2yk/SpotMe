@@ -68,7 +68,7 @@ enum ScreenScript {
             complete(today, except: left)
             finishDay(today, minutes: screen == "finished" ? 48 : 62, effort: 7, energy: screen == "finished" ? 342 : 395)
         case "swapped":
-            // Machine Chest Press swapped for DB Bench Press. The demo has history for it (Friday's plan has it);
+            // Machine Chest Press swapped for DB Bench Press. The demo has history for it (Saturday's plan has it);
             // the board shows it without, so it is wiped first: First time.
             forgetHistory(of: "db-bench-press", today)
             swap(today, slot: "machine-chest-press", to: "db-bench-press")
@@ -188,7 +188,10 @@ enum ScreenScript {
         case "set", "rest", "next", "next-picker", "how", "break-how", "controls-break":
             // `-item machine-chest-press`: that exercise instead of the one up next.
             let id = UserDefaults.standard.string(forKey: "item")
-            show(today.day.items.first { $0.exerciseId == id }.map { [$0] } ?? today.queue.upNext)
+            // `-swapTo standing-cable-press`: that exercise is swapped in for the item first, as the Swap sheet would.
+            if let id, let to = UserDefaults.standard.string(forKey: "swapTo") { swap(today, slot: id, to: to) }
+            show(today.day.items.first { $0.exerciseId == id || today.slot(of: $0).exerciseId == id }.map { [$0] }
+                 ?? today.queue.upNext)
             guard let flow = workout.flow else { return }
             // How is behind the set screen, not the ramp-up.
             if screen == "how" || screen == "break-how" { flow.skipRampUps() }
