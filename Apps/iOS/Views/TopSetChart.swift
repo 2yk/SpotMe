@@ -26,46 +26,75 @@ struct TopSet: Identifiable, Equatable {
     }
 }
 
-/// The top set per session as a volt line with a glow, its reps above each dot (design board 7.5). Drawn by hand,
-/// as the board is: grid lines, a soft area, the line, 8 pt dots, the reps over them and the dates under them.
+/// The top set per session as a volt line with a glow, its reps above each dot (design board 7.5).
 struct TopSetChart: View {
     let points: [TopSet]
-    var height: CGFloat = 160
-
-    private static let left: CGFloat = 30
-    private static let top: CGFloat = 32
-    private static let bottom: CGFloat = 32
-    private static let side: CGFloat = 26
 
     var body: some View {
-        let axis = ChartAxis(values: points.map(\.value))
+        SeriesChart(dates: points.map(\.date), main: points.map(\.value), labels: points.map { "\($0.reps)" },
+                    height: 160, top: 32)
+            .accessibilityLabel("Top set per session")
+            .accessibilityValue(points.map { "\(Format.weight($0.value)) for \($0.reps)" }.joined(separator: ", "))
+    }
+}
+
+/// A line chart in look B, drawn by hand as the boards are (7.5, 8.2, 8.8): grid lines with their values on the
+/// left, a volt line with a glow and a soft area under it, 8 pt dots, an optional dashed white second line, and the
+/// dates under it. Points are evenly spaced, one per measurement.
+struct SeriesChart: View {
+    let dates: [Date]
+    let main: [Double]
+    var second: [Double]?
+    /// Written above each dot of the main line.
+    var labels: [String]?
+    var height: CGFloat = 220
+    /// Room above the top grid line (for `labels`) and under the bottom one (for the dates).
+    var top: CGFloat = 20
+    var bottom: CGFloat = 32
+    var maxTicks = 4
+    var format: (Double) -> String = { Format.weight($0) }
+
+    private static let side: CGFloat = 26
+    /// Room for the values on the left.
+    var left: CGFloat = 30
+
+    var body: some View {
+        let axis = ChartAxis(values: main + (second ?? []), maxTicks: maxTicks)
         GeometryReader { geo in
             let width = geo.size.width
-            let plotTop = Self.top, plotBottom = geo.size.height - Self.bottom
+            let plotTop = top, plotBottom = geo.size.height - bottom
             let x: (Int) -> CGFloat = { index in
-                guard points.count > 1 else { return (Self.left + width) / 2 }
-                let span = width - Self.left - 2 * Self.side
-                return Self.left + Self.side + span * CGFloat(index) / CGFloat(points.count - 1)
+                guard main.count > 1 else { return (left + width) / 2 }
+                let span = width - left - 2 * Self.side
+                return left + Self.side + span * CGFloat(index) / CGFloat(main.count - 1)
             }
             let y: (Double) -> CGFloat = { value in
                 let fraction = (value - axis.domain.lowerBound) / (axis.domain.upperBound - axis.domain.lowerBound)
                 return plotBottom - CGFloat(fraction) * (plotBottom - plotTop)
             }
-            let dots = points.enumerated().map { CGPoint(x: x($0.offset), y: y($0.element.value)) }
+            let dots = main.enumerated().map { CGPoint(x: x($0.offset), y: y($0.element)) }
             ZStack(alignment: .topLeading) {
                 Path { path in
                     for tick in axis.ticks {
-                        path.move(to: CGPoint(x: Self.left, y: y(tick)))
+                        path.move(to: CGPoint(x: left, y: y(tick)))
                         path.addLine(to: CGPoint(x: width, y: y(tick)))
                     }
                 }
                 .stroke(Color.white.opacity(0.08), lineWidth: 1)
                 ForEach(axis.ticks, id: \.self) { tick in
-                    Text(Format.weight(tick))
+                    Text(format(tick))
                         .font(PhoneFont.foot)
                         .foregroundStyle(Theme.text3)
-                        .frame(width: Self.left - 4, alignment: .leading)
-                        .position(x: (Self.left - 4) / 2, y: y(tick))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .frame(width: left - 4, alignment: .leading)
+                        .position(x: (left - 4) / 2, y: y(tick))
+                }
+                if let second, second.count > 1 {
+                    Path { path in
+                        path.addLines(second.enumerated().map { CGPoint(x: x($0.offset), y: y($0.element)) })
+                    }
+                    .stroke(Color.white.opacity(0.6), style: StrokeStyle(lineWidth: 2, lineCap: .round, dash: [4, 5]))
                 }
                 if dots.count > 1 {
                     Path { path in
@@ -84,12 +113,14 @@ struct TopSetChart: View {
                 }
                 ForEach(Array(dots.enumerated()), id: \.offset) { index, dot in
                     Circle().fill(Theme.volt).frame(width: 8, height: 8).position(dot)
-                    Text("\(points[index].reps)")
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
-                        .position(x: dot.x, y: dot.y - 17)
+                    if let labels, labels.indices.contains(index) {
+                        Text(labels[index])
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                            .position(x: dot.x, y: dot.y - 17)
+                    }
                 }
                 ForEach(labelled, id: \.self) { index in
-                    Text(points[index].date, format: .dateTime.day().month(.abbreviated))
+                    Text(dates[index], format: .dateTime.day().month(.abbreviated))
                         .font(PhoneFont.foot)
                         .foregroundStyle(Theme.text3)
                         .fixedSize()
@@ -99,15 +130,14 @@ struct TopSetChart: View {
         }
         .frame(height: height)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Top set per session")
-        .accessibilityValue(points.map { "\(Format.weight($0.value)) for \($0.reps)" }.joined(separator: ", "))
     }
 
-    /// Every session's date while they fit; from the newest back, every other one when there are many.
+    /// Every date while there are five or fewer; from the newest back, every second or third one when there are
+    /// more.
     private var labelled: [Int] {
-        let all = Array(points.indices)
-        guard all.count > 5 else { return all }
-        return all.filter { (all.count - 1 - $0) % 2 == 0 }
+        let count = min(dates.count, main.count)
+        let stride = max(1, Int((Double(count) / 5).rounded(.up)))
+        return (0..<count).filter { (count - 1 - $0) % stride == 0 }
     }
 }
 
@@ -116,18 +146,20 @@ struct ChartAxis {
     let ticks: [Double]
     let domain: ClosedRange<Double>
 
-    /// Three lines when they can be had: the smallest round step that covers the series with three.
-    init(values: [Double]) {
+    /// The smallest round step that covers the series with at most `maxTicks` lines.
+    init(values: [Double], maxTicks: Int = 3) {
         let low = values.min() ?? 0, high = values.max() ?? 1
         var ticks: [Double] = [], step = 100.0
-        for candidate in [1, 2, 2.5, 5, 10, 20, 25, 50, 100] as [Double] {
+        // A flat series (one session, or the same number every time) still gets lines a few per cent apart.
+        let minStep = high - low < 1e-9 ? max(high * 0.05, 0.1) : 0
+        for candidate in [0.1, 0.25, 0.5, 1, 2, 2.5, 4, 5, 10, 20, 25, 50, 100] as [Double] where candidate >= minStep {
             let first = (low / candidate).rounded(.down) * candidate
             var last = (high / candidate).rounded(.up) * candidate
             if last - high < candidate * 0.01 { last += candidate }
             let count = Int(((last - first) / candidate).rounded()) + 1
             ticks = (0..<count).map { first + Double($0) * candidate }
             step = candidate
-            if count <= 3 { break }
+            if count <= maxTicks { break }
         }
         self.ticks = ticks
         domain = max(0, ticks[0] - step)...(ticks[ticks.count - 1] + step * 0.2)

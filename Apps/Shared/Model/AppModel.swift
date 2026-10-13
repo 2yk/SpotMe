@@ -27,6 +27,9 @@ final class AppModel {
         #endif
         container = Self.makeContainer(plan: plan)
         Self.renameExercises(in: container.mainContext, defaults: defaults)
+        #if os(iOS)
+        Self.reportBodyPoints(in: container.mainContext, defaults: defaults)
+        #endif
         today = TodayModel(plan: plan, context: container.mainContext, settings: settings,
                            dayKey: LaunchOptions.dayKey)
         today.defaults = defaults
@@ -45,6 +48,20 @@ final class AppModel {
             Logger.store.error("Couldn't rename exercise ids: \(error.localizedDescription)")
         }
     }
+
+    #if os(iOS)
+    /// The body log grew from arm and waist to ten optional points (phone build 11). SwiftData moves the stored rows
+    /// by itself, arm and waist keeping their values and the other points empty; this notes once how many rows
+    /// that was, in the log and in `bodyMigrationReport`.
+    private static func reportBodyPoints(in context: ModelContext, defaults: UserDefaults) {
+        guard !defaults.bool(forKey: "bodyPointsReported") else { return }
+        let rows = (try? context.fetch(FetchDescriptor<BodyMeasurement>())) ?? []
+        let summary = "\(rows.count) body measurement(s) kept: arm and waist as they were, the eight new points empty"
+        Logger.store.notice("\(summary, privacy: .public)")
+        defaults.set(summary, forKey: "bodyMigrationReport")
+        defaults.set(true, forKey: "bodyPointsReported")
+    }
+    #endif
 
     /// Where settings and the day's small state live. The demo uses a throwaway suite, so a screenshot's deload
     /// week or skipped exercise never reaches the real ones.

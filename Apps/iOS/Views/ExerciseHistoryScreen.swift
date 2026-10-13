@@ -1,34 +1,33 @@
 import SwiftUI
-import Charts
 import RepCoachCore
 
-/// One exercise over time: top set and estimated 1RM, then every session with every set.
+/// One exercise over time (board 8.2): top set and estimated 1RM, then every session with every set.
 struct ExerciseHistoryScreen: View {
     let exercise: HistoryModel.Exercise
 
     var body: some View {
         let item = exercise.item
+        let points = exercise.points
         ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                HStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(spacing: 8) {
                     if item.kind == .weighted {
-                        StatTile(label: "Top set", value: Format.weight(exercise.points.map(\.value).max() ?? 0),
-                                 unit: "kg", tint: item.tint)
-                        StatTile(label: "Best e1RM", value: Format.weight(exercise.points.compactMap(\.e1rm).max() ?? 0),
-                                 unit: "kg", tint: Theme.ice)
+                        DepthTile(label: "Top set", value: Format.weight(points.map(\.value).max() ?? 0), unit: "kg",
+                                  tint: Theme.volt)
+                        DepthTile(label: "Best e1RM", value: Format.weight(points.compactMap(\.e1rm).max() ?? 0), unit: "kg")
                     } else {
-                        StatTile(label: item.kind == .timed ? "Longest" : "Best set",
-                                 value: "\(Int(exercise.points.map(\.value).max() ?? 0))",
-                                 unit: item.kind == .timed ? "s" : "reps", tint: item.tint)
+                        DepthTile(label: item.kind == .timed ? "Longest" : "Best set",
+                                  value: "\(Int(points.map(\.value).max() ?? 0))",
+                                  unit: item.kind == .timed ? "s" : "reps", tint: Theme.volt)
                     }
-                    StatTile(label: "Sessions", value: "\(exercise.entries.count)")
+                    DepthTile(label: "Sessions", value: "\(exercise.entries.count)")
                 }
 
-                if exercise.points.count > 1 {
-                    ProgressChart(exercise: exercise)
+                if points.count > 1 {
+                    chart(item, points)
                 }
 
-                Text("Sessions").eyebrow(Theme.tertiary, size: 12).padding(.leading, 6)
+                Text("Sessions").depthEyebrow().padding(.leading, 6).padding(.top, 8)
                 ForEach(exercise.entries, id: \.sessionId) { entry in
                     SessionCard(entry: entry, item: item)
                 }
@@ -41,79 +40,40 @@ struct ExerciseHistoryScreen: View {
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
     }
-}
 
-private struct ProgressChart: View {
-    let exercise: HistoryModel.Exercise
-
-    var body: some View {
-        let item = exercise.item
-        let points = exercise.points
-        let values = points.map(\.value) + points.compactMap(\.e1rm)
-        let low = (values.min() ?? 0) * 0.9
-        let high = (values.max() ?? 1) * 1.05
-        VStack(alignment: .leading, spacing: 12) {
+    private func chart(_ item: PlanItem, _ points: [HistoryModel.Point]) -> some View {
+        let weighted = item.kind == .weighted
+        return VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 14) {
-                Legend(color: item.tint, text: item.kind == .weighted ? "Top set" : "Best set")
-                if item.kind == .weighted {
-                    Legend(color: Theme.ice, text: "Est. 1RM", dashed: true)
-                }
+                Legend(text: weighted ? "Top set" : "Best set")
+                if weighted { Legend(text: "Est. 1RM", dashed: true) }
             }
-            Chart {
-                ForEach(points) { point in
-                    AreaMark(x: .value("Date", point.date), yStart: .value("Base", low),
-                             yEnd: .value("Top set", point.value))
-                        .interpolationMethod(.monotone)
-                        .foregroundStyle(LinearGradient(colors: [item.tint.opacity(0.32), item.tint.opacity(0)],
-                                                        startPoint: .top, endPoint: .bottom))
-                    LineMark(x: .value("Date", point.date), y: .value("Top set", point.value),
-                             series: .value("Series", "top"))
-                        .interpolationMethod(.monotone)
-                        .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round))
-                        .foregroundStyle(item.tint)
-                    PointMark(x: .value("Date", point.date), y: .value("Top set", point.value))
-                        .symbolSize(point.isDeload ? 20 : 36)
-                        .foregroundStyle(point.isDeload ? Theme.ember : item.tint)
-                    if let e1rm = point.e1rm {
-                        LineMark(x: .value("Date", point.date), y: .value("Est. 1RM", e1rm),
-                                 series: .value("Series", "e1rm"))
-                            .interpolationMethod(.monotone)
-                            .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, dash: [4, 5]))
-                            .foregroundStyle(Theme.ice)
-                    }
-                }
-            }
-            .chartYScale(domain: low...high)
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .weekOfYear, count: 2)) { _ in
-                    AxisGridLine().foregroundStyle(Theme.hairline)
-                    AxisValueLabel(format: .dateTime.day().month(.abbreviated)).foregroundStyle(Theme.tertiary)
-                }
-            }
-            .chartYAxis {
-                AxisMarks(position: .leading, values: .automatic(desiredCount: 4)) { _ in
-                    AxisGridLine().foregroundStyle(Theme.hairline)
-                    AxisValueLabel().foregroundStyle(Theme.tertiary)
-                }
-            }
-            .frame(height: 220)
+            SeriesChart(dates: points.map(\.date), main: points.map(\.value),
+                        second: weighted ? points.compactMap(\.e1rm) : nil, height: 220, top: 14, bottom: 32)
+                .accessibilityLabel("\(weighted ? "Top set" : "Best set") over time")
         }
         .padding(18)
-        .card(Theme.card, radius: 24)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .depthCard()
     }
 }
 
 private struct Legend: View {
-    let color: Color
     let text: String
     var dashed = false
 
     var body: some View {
         HStack(spacing: 6) {
-            Capsule()
-                .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: dashed ? [3, 3] : []))
-                .frame(width: 16, height: 3)
-            Text(text).font(.rounded(.footnote, .semibold)).foregroundStyle(Theme.secondary)
+            Path { path in
+                path.move(to: CGPoint(x: 1.5, y: 1.5))
+                path.addLine(to: CGPoint(x: 14.5, y: 1.5))
+            }
+            .stroke(dashed ? Color.white.opacity(0.6) : Theme.volt,
+                    style: StrokeStyle(lineWidth: dashed ? 2 : 3, lineCap: .round, dash: dashed ? [3, 3] : []))
+            .frame(width: 16, height: 3)
+            Text(text)
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.text2)
         }
     }
 }
@@ -123,27 +83,24 @@ private struct SessionCard: View {
     let item: PlanItem
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
-                Text(entry.date, format: .dateTime.weekday(.abbreviated).day().month(.abbreviated))
-                    .font(.rounded(.headline, .bold))
-                if entry.isDeload { Chip(text: "Deload", tint: Theme.ember) }
+                Text(entry.date.weekdayDayMonth)
+                    .font(PhoneFont.headline)
+                if entry.isDeload { Chip(text: "DELOAD", tint: Theme.ember) }
                 Spacer()
-                Text("\(entry.sets.count) sets").font(.rounded(.footnote, .medium)).foregroundStyle(Theme.tertiary)
+                Text("\(entry.sets.count) sets").font(PhoneFont.foot).foregroundStyle(Theme.text3)
             }
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 72), spacing: 8)], alignment: .leading, spacing: 8) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 4), alignment: .leading,
+                      spacing: 8) {
                 ForEach(Array(entry.sets.enumerated()), id: \.offset) { _, set in
-                    Text(label(for: set))
-                        .font(.rounded(.subheadline, .semibold))
-                        .monospacedDigit()
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 7)
-                        .background(Capsule().fill(Theme.cardRaised))
+                    SetCapsule(text: label(for: set))
                 }
             }
         }
         .padding(16)
-        .card(Theme.card, radius: 20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .depthCard()
     }
 
     private func label(for set: LoggedSet) -> String {

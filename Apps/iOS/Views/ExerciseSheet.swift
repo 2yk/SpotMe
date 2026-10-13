@@ -149,7 +149,7 @@ struct ExerciseSheet: View {
             HStack(alignment: .firstTextBaseline) {
                 Text("Last time").depthEyebrow()
                 Spacer()
-                Text(last.date, format: .dateTime.weekday(.abbreviated).day().month(.abbreviated))
+                Text(last.date.weekdayDayMonth)
                     .font(PhoneFont.foot)
                     .foregroundStyle(Theme.text3)
             }

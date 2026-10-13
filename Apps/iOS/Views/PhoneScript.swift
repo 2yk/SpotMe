@@ -48,5 +48,23 @@ enum PhoneScript {
         }
         today.refresh()
     }
+
+    /// History and what opens from it: `-screen session`, `exercise`, `body`, `body-warning`, `body-point`.
+    static func history(path: Binding<[HistoryRoute]>, model: HistoryModel, today: TodayModel) {
+        switch LaunchOptions.screen {
+        case "session":
+            if let row = model.sessions.first(where: { $0.isFinished }) ?? model.sessions.first {
+                path.wrappedValue = [.session(row.id)]
+            }
+        case "exercise":
+            let id = LaunchOptions.item ?? model.exercises.first(where: { $0.item.kind == .weighted })?.id
+            if let id { path.wrappedValue = [.exercise(id)] }
+        case "body", "body-warning", "body-add", "body-due":
+            path.wrappedValue = [.body]
+        case "body-point":
+            path.wrappedValue = [.body, .point(.arm)]
+        default: break
+        }
+    }
 }
 #endif

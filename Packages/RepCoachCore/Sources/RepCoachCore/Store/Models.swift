@@ -107,21 +107,41 @@ public final class ExerciseSettings {
     }
 }
 
-/// Flexed upper arm and waist, measured about every two weeks, in inches. iPhone only.
+/// One body measurement, about every two weeks: weight in kg and nine tape measurements in inches, every one
+/// optional (a point left blank stays blank). iPhone only.
 @Model
 public final class BodyMeasurement {
     @Attribute(.unique) public var id: UUID
     public var date: Date
+    /// Kilograms.
+    public var weight: Double?
+    public var neck: Double?
+    public var shoulders: Double?
+    public var chest: Double?
     /// Flexed upper arm, at its widest.
-    public var arm: Double
-    /// Waist, at the navel.
-    public var waist: Double
+    public var arm: Double?
+    public var forearm: Double?
+    /// At the navel, relaxed.
+    public var waist: Double?
+    public var hips: Double?
+    public var thigh: Double?
+    public var calf: Double?
 
-    public init(id: UUID = UUID(), date: Date = .now, arm: Double, waist: Double) {
+    public init(id: UUID = UUID(), date: Date = .now, weight: Double? = nil, neck: Double? = nil,
+                shoulders: Double? = nil, chest: Double? = nil, arm: Double? = nil, forearm: Double? = nil,
+                waist: Double? = nil, hips: Double? = nil, thigh: Double? = nil, calf: Double? = nil) {
         self.id = id
         self.date = date
+        self.weight = weight
+        self.neck = neck
+        self.shoulders = shoulders
+        self.chest = chest
         self.arm = arm
+        self.forearm = forearm
         self.waist = waist
+        self.hips = hips
+        self.thigh = thigh
+        self.calf = calf
     }
 }
 

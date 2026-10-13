@@ -12,6 +12,18 @@ extension Color {
     }
 }
 
+extension Date {
+    /// "Wed 7 Oct": the weekday, then the day and month, whatever the region's order.
+    var weekdayDayMonth: String {
+        "\(formatted(.dateTime.weekday(.abbreviated))) \(formatted(.dateTime.day().month(.abbreviated)))"
+    }
+
+    /// "Wed 7 Oct 2026".
+    var weekdayDayMonthYear: String {
+        "\(weekdayDayMonth) \(formatted(.dateTime.year()))"
+    }
+}
+
 extension Theme {
     /// A sheet's surface.
     static let sheet = Color(hex: 0x0B0B0C)
