@@ -19,11 +19,11 @@ Phone screenshots: `Scripts/phone-shot.sh <Board> <launch args>` on the "SpotMe 
 ## Next
 
 1. **Edge-timer corners.** Open bug on the real Series 10 46 mm: the rest screen's edge line (`Apps/Watch/Style/EdgeTimer.swift`) is cut off at the screen corners. Build and board 3.1A match to the pixel (5 pt line, outer edge 2 pt from the frame, outer corner radius about 47 pt). Simulator screenshots are unmasked rectangles, so they can't show glass clipping, and no public watchOS API returns the display's corner radius. No guessed radius. Wait for the owner's straight-on close-up photo of the rest screen (two corners). If it is ambiguous, build a throwaway calibration screen (hairlines at 0, 2, 4.5 pt inset) as a separate build, only with the owner's OK, never merged to `main`. If the glass hides more than about 2 pt, move the whole line inward and keep the 5 pt weight and the 18% track.
-2. After the Designer has approved build 13: the owner's device install (never before).
+2. **Small, not blocking** (the Designer, 13 Oct): Plan rows say "/side" where the plan's display says "/leg" (Reverse Lunge, Bulgarian split squat); it predates build 13. Wants a look at `Format` and the Plan row text, and the Designer's word on which one it should be.
 
 ## Waiting
 
-- **The Designer's check of build 13** (the owner's rule, 13 Oct 2026: the Designer approves first, then the build comes to the owner for his device install and testing). Screenshots in `design/built/plan-12/` on `plan-12-build-13`.
+- **The owner's OK to install build 13 on his devices.** The Designer approved it on 13 Oct (`design/reviews/14-build-plan-12.md`, ae8cbe3), which is the owner's rule satisfied for asking him, not his OK to release: it migrates his real store, so it waits for his word. Branch `plan-12-build-13` is pushed for the check; nothing is merged.
 - **The owner's try-out of build 12**, installed on his iPhone on 13 Oct (Release, SpotMe 1.0 (12), `devicectl device install app`; the embedded watch app installs through the iPhone's Watch app, not confirmed from here). Build 13 contains it. He tries: Swap from the phone (the watch changes within a second or two), Start workout from the phone, Rearrange days (the watch's Today and complication follow), the body log keeps his arm and waist (`bodyMigrationReport`).
 - After build 13 is on his devices: read `planKeyMigrationReport` (and the "Moved workout keys" log line) to tell the Designer what was moved, edited, dropped or reset in his real store. Nothing could be checked from here: his data is on the devices.
 - Which build is on the owner's watch: Swap is in watch builds 9 and 10 only (swipe left on an open row in Today; the small figure on a set or break screen → How → Swap exercise).
