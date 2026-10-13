@@ -199,11 +199,13 @@ struct DepthTile: View {
     var tint: Color = .white
     /// An SF symbol before the value.
     var arrow: String?
+    /// The unit follows the value without a space ("14.5″").
+    var tightUnit = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label).depthEyebrow()
-            HStack(alignment: .firstTextBaseline, spacing: 3) {
+            HStack(alignment: .firstTextBaseline, spacing: tightUnit ? 0 : 3) {
                 if let arrow {
                     Image(systemName: arrow)
                         .font(.system(size: 18, weight: .bold))
@@ -220,7 +222,7 @@ struct DepthTile: View {
                     Text(unit)
                         .font(.system(size: 13, weight: .bold, design: .rounded))
                         .foregroundStyle(Theme.text2)
-                        .padding(.leading, 2)
+                        .padding(.leading, tightUnit ? 0 : 2)
                 }
             }
         }

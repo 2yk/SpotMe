@@ -17,6 +17,8 @@ Phone screenshots: `Scripts/phone-shot.sh <Board> <launch args>` on the "SpotMe 
 
 ## Waiting
 
+- **Build 12 (branch `iphone-build-12`, off build 11) holds the Designer's five small fixes of 13 Oct** (`design/reviews/13-build-iphone-1.md`): Today in a deload week with the body log due (7.4), the done card's line is the session's numbers (7.3), the hero figure at the hero's bottom right (7.1–7.3), inch values without a space before ″ (8.6, 8.8), and From the plan lists exercises only (9.5). Screenshots in `design/built/iphone-2/`. Waits for the Designer's check; the owner tests build 11 meanwhile (approved by the Designer on 13 Oct).
+
 - **The Designer's check of build 11** (the owner's rule, 13 Oct 2026: the Designer approves first, then the build comes to the owner for his device install and testing). The screenshots are in `design/built/iphone-1/` on branch `iphone-build-11`, pushed for the Designer's check on 13 Oct (the owner OK'd it, and review branches are pushed without asking from now on).
 - After the Designer approves: the owner's try-out of build 11 on the phone and watch: Swap from the phone (the watch changes within a second or two), Start workout from the phone, Rearrange days (the watch's Today and complication follow), the body log keeps his arm and waist (the phone logs how many rows at first launch, `bodyMigrationReport`).
 - Which build is on the owner's watch: Swap is in watch builds 9 and 10 only (swipe left on an open row in Today; the small figure on a set or break screen → How → Swap exercise).

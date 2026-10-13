@@ -129,8 +129,10 @@ struct AddExerciseSheet: View {
     @ViewBuilder
     private var fromThePlan: some View {
         let onDay = Set(today.planEdits.itemIds(for: day))
+        // Exercises only: warmups, cooldowns and the other tick-off items are not offered.
         let candidates = today.library.filter { item in
-            !onDay.contains(item.exerciseId)
+            item.kind != .checklist
+                && !onDay.contains(item.exerciseId)
                 && (search.isEmpty || item.name.localizedCaseInsensitiveContains(search)
                     || item.group.localizedCaseInsensitiveContains(search))
         }

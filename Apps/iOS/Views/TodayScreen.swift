@@ -144,13 +144,14 @@ private struct HeroFigure: View {
     var body: some View {
         if let item = today.day.items.first(where: { $0.kind != .checklist && ExerciseFigure.of($0) != nil }),
            let figure = ExerciseFigure.of(item) {
-            ZStack {
+            ZStack(alignment: .bottomTrailing) {
                 RadialGradient(colors: [Theme.volt.opacity(0.10), Theme.volt.opacity(0)], center: .center,
                                startRadius: 0, endRadius: 120)
                     .frame(width: 240, height: 240)
+                    .offset(x: 40, y: 40)
                 FigureView(exercise: figure, yaw: figure.figure.openingYaw, size: 170)
+                    .offset(x: 0, y: 10)
             }
-            .offset(x: 22, y: 10)
             .padding(.trailing, 6)
             .accessibilityHidden(true)
         }
@@ -280,14 +281,17 @@ private struct AllDoneCard: View {
         .padding(.vertical, 4)
     }
 
-    /// "62 min · 395 kcal · Hard 7", whatever of it the watch has sent.
+    /// "62 min · 395 kcal · Hard 7": the session's numbers, whatever of them the watch has sent. Without the
+    /// watch's time, how long the session took from its first set to the last.
     private var summary: String? {
         guard let session = today.session else { return nil }
         var parts: [String] = []
-        if let seconds = session.activeSeconds, seconds > 0 { parts.append("\(Int((seconds / 60).rounded())) min") }
+        let seconds = session.activeSeconds
+            ?? session.logs.compactMap(\.completedAt).max().map { $0.timeIntervalSince(session.date) }
+        if let seconds, seconds >= 60 { parts.append("\(Int((seconds / 60).rounded())) min") }
         if let kcal = session.energyKcal, kcal > 0 { parts.append("\(Int(kcal.rounded())) kcal") }
         if let effort = session.effort { parts.append("\(EffortBand(effort).word) \(effort)") }
-        return parts.isEmpty ? "Great session. Recovery starts now." : parts.joined(separator: " · ")
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 }
 

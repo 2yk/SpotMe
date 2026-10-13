@@ -199,7 +199,7 @@ struct BodyPointScreen: View {
         let moved = (now != nil && first != nil && rows.count > 1) ? now! - first!.value : nil
         return HStack(spacing: 8) {
             DepthTile(label: "Now", value: now.map { Format.weight($0) } ?? "—",
-                      unit: now == nil ? nil : (point.isWeight ? "kg" : "″"), tint: Theme.volt)
+                      unit: now == nil ? nil : (point.isWeight ? "kg" : "″"), tint: Theme.volt, tightUnit: !point.isWeight)
             DepthTile(label: rows.count > 1 ? "Since \(first!.date.formatted(.dateTime.day().month(.abbreviated)))" : "Change",
                       value: moved.map { point.formatChange($0) } ?? "—")
             DepthTile(label: "Measured", value: "\(rows.count)")
@@ -300,7 +300,7 @@ private struct MeasurementRow: View {
         HStack(spacing: 8) {
             Text(point.title).font(PhoneFont.body)
             Spacer(minLength: 8)
-            HStack(spacing: 2) {
+            HStack(spacing: 0) {
                 TextField("—", value: $value, format: .number.precision(.fractionLength(0...2)))
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
@@ -311,6 +311,7 @@ private struct MeasurementRow: View {
                     .font(PhoneFont.body)
                     .foregroundStyle(Theme.text2)
                     .frame(width: point.isWeight ? 26 : 10, alignment: .leading)
+                    .offset(x: point.isWeight ? 0 : -1)
             }
             MeasureStepper(minus: { step(-1) }, plus: { step(1) })
         }

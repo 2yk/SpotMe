@@ -13,6 +13,14 @@ enum PhoneScript {
         case "running", "alldone":
             // Three items done (Warmup, Incline DB Press, Machine Chest Press).
             complete(today, first: screen == "alldone" ? today.day.items.count : 3)
+            if screen == "alldone", let session = today.session {
+                // What the watch sends at Finish.
+                session.activeSeconds = 62 * 60
+                session.energyKcal = 395
+                session.effort = 7
+                try? today.context.save()
+                today.refresh()
+            }
         default: break
         }
         if screen == "swap-later" || screen == "swapped" {
@@ -59,7 +67,7 @@ enum PhoneScript {
         case "exercise":
             let id = LaunchOptions.item ?? model.exercises.first(where: { $0.item.kind == .weighted })?.id
             if let id { path.wrappedValue = [.exercise(id)] }
-        case "body", "body-warning", "body-add", "body-due":
+        case "body", "body-warning", "body-add":
             path.wrappedValue = [.body]
         case "body-point":
             path.wrappedValue = [.body, .point(.arm)]
